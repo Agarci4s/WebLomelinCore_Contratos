@@ -1,0 +1,137 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_contrato>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_b_cg_contrato_tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_b_cg_contrato_estatu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.contrato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.renta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_inicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_termino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_anticipacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_obligado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.litigio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.observaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_revision)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.plazo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.base_revision)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.correo_especial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.especial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_envio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estatus)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_b_cg_contrato_tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_b_cg_contrato_estatu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.contrato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.renta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha_inicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha_termino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha_anticipacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha_obligado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.litigio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.observaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha_revision)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.plazo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.base_revision)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.correo_especial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.especial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha_envio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estatus)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

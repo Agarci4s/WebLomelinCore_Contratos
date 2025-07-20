@@ -1,0 +1,247 @@
+﻿@model WebColliersCore.Models.Localidad
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+</header>
+
+<div>
+    <h5>@Html.DisplayFor(model => model.TipoLocalidadAux)  @Html.DisplayFor(model => model.NumeroLocalidad)</h5>
+    <hr />
+
+    <table class="table table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdInmueble)</th>
+            <td>@Html.DisplayFor(model => model.InmuebleAux)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdUsoInmueble)</th>
+            <td>@Html.DisplayFor(model => model.TipoLocalidadAux)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+            <td>@Html.DisplayFor(model => model.EstatusAux)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdInquilino)</th>
+            <td>@Html.DisplayFor(model => model.ArrendatarioAux)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdNombreComercial)</th>
+            <td>@Html.DisplayFor(model => model.NombreComercialAux)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroLocalidad)</th>
+            <td>@Html.DisplayFor(model => model.NumeroLocalidad)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaIngreso)</th>
+            <td>@Html.DisplayFor(model => model.FechaIngreso)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.LocalesAgrupados)</th>
+            <td>@Html.DisplayFor(model => model.LocalesAgrupados)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PropTer)</th>
+            <td>@Html.DisplayFor(model => model.PropTer)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PagaAgua)</th>
+            <td>@Html.DisplayFor(model => model.PagaAgua)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PorcentajeAgua)</th>
+            <td>@Html.DisplayFor(model => model.PorcentajeAgua)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PagaAguaHelada)</th>
+            <td>@Html.DisplayFor(model => model.PagaAguaHelada)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PorcentajeAguaHelada)</th>
+            <td>@Html.DisplayFor(model => model.PorcentajeAguaHelada)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PagaEnergiaElectrica)</th>
+            <td>@Html.DisplayFor(model => model.PagaEnergiaElectrica)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PorcentajeEnergiaElectrica)</th>
+            <td>@Html.DisplayFor(model => model.PorcentajeEnergiaElectrica)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DepRta)</th>
+            <td>@Html.DisplayFor(model => model.DepRta)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Pagare)</th>
+            <td>@Html.DisplayFor(model => model.Pagare)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DiaVencimiento)</th>
+            <td>@Html.DisplayFor(model => model.DiaVencimiento)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DiaLimitePago)</th>
+            <td>@Html.DisplayFor(model => model.DiaLimitePago)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FolioContrato)</th>
+            <td>@Html.DisplayFor(model => model.FolioContrato)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Categoria)</th>
+            <td>@Html.DisplayFor(model => model.Categoria)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ObservacionDepositoGarantia)</th>
+            <td>@Html.DisplayFor(model => model.ObservacionDepositoGarantia)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroReferenciado)</th>
+            <td>@Html.DisplayFor(model => model.NumeroReferenciado)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroReferenciadoMtto)</th>
+            <td>@Html.DisplayFor(model => model.NumeroReferenciadoMtto)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaUltimaRenovacion)</th>
+            <td>@Html.DisplayFor(model => model.FechaUltimaRenovacion)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaTermino)</th>
+            <td>@Html.DisplayFor(model => model.FechaTermino)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaRevision)</th>
+            <td>@Html.DisplayFor(model => model.FechaRevision)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaOcupacion)</th>
+            <td>@Html.DisplayFor(model => model.FechaOcupacion)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaInicioContratoUno)</th>
+            <td>@Html.DisplayFor(model => model.FechaInicioContratoUno)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaFinContratoUno)</th>
+            <td>@Html.DisplayFor(model => model.FechaFinContratoUno)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoPFAnio)</th>
+            <td>@Html.DisplayFor(model => model.PlazoPFAnio)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoPFMes)</th>
+            <td>@Html.DisplayFor(model => model.PlazoPFMes)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoPFDia)</th>
+            <td>@Html.DisplayFor(model => model.PlazoPFDia)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoIFAnio)</th>
+            <td>@Html.DisplayFor(model => model.PlazoIFAnio)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoIFMes)</th>
+            <td>@Html.DisplayFor(model => model.PlazoIFMes)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoIFDia)</th>
+            <td>@Html.DisplayFor(model => model.PlazoIFDia)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoPVAnio)</th>
+            <td>@Html.DisplayFor(model => model.PlazoPVAnio)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoPVMes)</th>
+            <td>@Html.DisplayFor(model => model.PlazoPVMes)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoPVDia)</th>
+            <td>@Html.DisplayFor(model => model.PlazoPVDia)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoIVAnio)</th>
+            <td>@Html.DisplayFor(model => model.PlazoIVAnio)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoIVMes)</th>
+            <td>@Html.DisplayFor(model => model.PlazoIVMes)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PlazoIVDia)</th>
+            <td>@Html.DisplayFor(model => model.PlazoIVDia)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RevisionPorcentajeAdicional)</th>
+            <td>@Html.DisplayFor(model => model.RevisionPorcentajeAdicional)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RevisionPeriodo)</th>
+            <td>@Html.DisplayFor(model => model.RevisionPeriodo)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdRevisionBase)</th>
+            <td>@Html.DisplayFor(model => model.IdRevisionBase)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ObservacionesContrato)</th>
+            <td>@Html.DisplayFor(model => model.ObservacionesContrato)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FacturarConceptosIndividuales)</th>
+            <td>@Html.DisplayFor(model => model.FacturarConceptosIndividuales)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdModoFacturacion)</th>
+            <td>@Html.DisplayFor(model => model.IdModoFacturacion)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdMonedaPago)</th>
+            <td>@Html.DisplayFor(model => model.IdMonedaPago)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TipoCambioConvenio)</th>
+            <td>@Html.DisplayFor(model => model.TipoCambioConvenio)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PorVenta)</th>
+            <td>@Html.DisplayFor(model => model.PorVenta)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RentaGratis)</th>
+            <td>@Html.DisplayFor(model => model.RentaGratis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DerechoTanto)</th>
+            <td>@Html.DisplayFor(model => model.DerechoTanto)</td>
+        </tr>
+
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.AplicaComplementoTerceros)</th>
+            <td>@Html.DisplayFor(model => model.AplicaComplementoTerceros)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Incobrable)</th>
+            <td>@Html.DisplayFor(model => model.Incobrable)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Penalidad)</th>
+            <td>@Html.DisplayFor(model => model.Penalidad)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PorCPenalidad)</th>
+            <td>@Html.DisplayFor(model => model.PorCPenalidad)</td>
+        </tr>
+    </table>    
+</div>
+<div>
+    <a asp-action="Index">Regresar a la lista</a>
+</div>

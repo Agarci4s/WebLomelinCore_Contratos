@@ -1,0 +1,154 @@
+﻿@model IEnumerable<WebColliersCore.Models.Localidad>
+
+@{
+    ViewData["Title"] = "Catálogo de Localidades";
+}
+
+    <header>
+        <script src="~/js/core.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+        @if (ViewBag.Agregar)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    obj = document.getElementById('btnAgregar');
+                    obj.style.display = 'block';
+                });
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    obj = document.getElementById('btnAgregar');
+                    obj.style.display = 'none';
+                });
+            </script>
+        }
+        @if (ViewBag.Editar)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    obj = document.getElementById('btnAgregar');
+                    obj.style.display = 'block';
+                });
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    obj = document.getElementById('btnAgregar');
+                    obj.style.display = 'none';
+                });
+            </script>
+        }
+        @if (ViewBag.Eliminar)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    obj = document.getElementById('btnAgregar');
+                    obj.style.display = 'block';
+                });
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    obj = document.getElementById('btnAgregar');
+                    obj.style.display = 'none';
+                });
+            </script>
+        }
+    </header>
+
+<h3>Catálogo de Localidades</h3>
+
+<div id="btnAgregar">
+    <p>
+        <a asp-action="Create">Agregar nueva Localidad</a>
+    </p>
+</div>
+<table class="col-10 p-2">
+    <tr>
+        <td></td>
+        <td>
+            <div>
+                Clave del Inmueble: <input id="txtClapro" type="text" class="col form-control" />
+            </div>
+        </td>
+        <td>
+            <div>
+                Número de Localidad: <input id="txtNumLoc" type="text" class="col form-control" />
+            </div>
+        </td>
+        <td>
+            <div>
+                Nombre Comercial / Arrendatario: <input id="txtNombreComercial" type="text" class="col form-control" />
+            </div>
+        </td>
+        <td class="text-center" style="vertical-align: bottom;">
+            <div>
+                <input onclick="return SelectLocalidadesByInmuebles()" type="button" value="Buscar" class="btn btn-primary" />               
+            </div>
+        </td>
+    </tr>
+</table>
+@*<table >
+        <tr><td>Seleccione el Inmueble:</td><td><select id="cmbInmuebles" onchange="return SelectLocalidadesByInmuebles()" asp-items=ViewBag.lstInmuebles class="form-control"></select></td></tr>
+    </table>*@
+    <br/>
+<div id="localidades">
+
+</div>
+
+<script type="text/javascript">
+    function showDate() {
+        $("form").validate().settings.ignore = "";
+    }
+
+    $(document).ready(function () {        
+       if ($("#layoutACarteraNombre").text() == "COMPARTAMOS BANCO") {            
+            document.getElementById('thTipoGentera').style.display = 'block';
+            document.getElementById('tdTipoGentera').style.display = 'block';
+        } else {
+            document.getElementById('thTipoGentera').style.display = 'none';
+            document.getElementById('tdTipoGentera').style.display = 'none';
+        }        
+    });
+
+    function changeInmueble() {
+        var newId = $("#cmbInmuebles").val();
+        var url = "/Localidades/GetLocalidadesByInmuebleList";
+
+        $.getJSON(url, { id: newId }, function (data) {
+            var item = "";
+            $("#tbLocalidades").empty();
+
+            $("#tbLocalidades").html(item);
+
+        });
+    }
+
+    function SelectLocalidadesByInmuebles() {
+        var clapro = $("#txtClapro").val();
+        var numloc = $("#txtNumLoc").val();
+        var nomcom = $("#txtNombreComercial").val();
+        var url = "/Localidades/SelectLocalidades";
+        $.post(url,
+            {
+                clapro: clapro,
+                numloc: numloc,
+                nomcom: nomcom
+            }, function (result) {
+                $('#localidades').html(result);
+            });
+    };
+
+    function Permisos() {
+        obj = document.getElementById('btnAgregar');
+        obj.style.display = (@ViewBag.Agregar) ? 'block' : 'none';
+    };    
+</script>

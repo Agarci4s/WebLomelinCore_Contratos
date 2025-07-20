@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebColliersCore.Models.NotasLocalidad>
+
+<table id="tbNotas" class="table table-hover">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            
+            <td class="align-self-lg-center">
+                <input type="button" onclick="deleteNota(@item.IdNota)" value="Eliminar" class="btn-link" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

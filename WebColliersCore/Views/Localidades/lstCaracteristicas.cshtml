@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebColliersCore.Models.CaracteristicasInmueble>
+
+    <table id="tbCaracteristicas" class="table table-hover">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Caracteristica)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Caracteristica)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+
+                    <td class="align-self-lg-center">
+
+                        <input type="button" onclick="deleteCaracteristica(@item.IdConceptoUsoInmueble)" value="Eliminar" class="btn-link" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

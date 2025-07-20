@@ -1,0 +1,298 @@
+﻿@model IEnumerable<WebLomelinCore.Models.cat_Luz>
+
+@{
+    ViewData["Title"] = "Catálogo Cuentas de Luz";
+}
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+        .HeadLog {
+            overflow-y: auto;
+            background: lightgray;
+            color: white;
+        }
+
+        .BodyLog {
+            height: 200px;
+            overflow-y: scroll;
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 480px;
+            border: 1px solid rgba(11,59,126,1);
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: left;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                border: 0px solid white;
+                text-align: center;
+                background: rgba(11,59,126,1);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+            margin-right: 6px;
+        }
+
+        #tab tr.noSearch {
+            background: White;
+            font-size: 0.8em;
+        }
+
+            #tab tr.noSearch td {
+                padding-top: 10px;
+                text-align: center;
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .red {
+            color: Red;
+        }
+
+        #tab tr:hover {
+            background-color: aliceblue;
+        }
+    </style>
+</header>
+
+<nav class="navbar bg-light">
+    <div class="container-fluid">
+        <a href="@Url.ActionLink("Create", "CatLuz")" class=" btn btn-success btn-sm"><i class="fa-solid fa-square-plus"></i> Nuevo Registro</a>
+        <div class="d-flex">
+            <input id="inputSearch" class="form-control me-4" type="search" placeholder="Buscar..." aria-label="Search" onkeypress="Enter(event);">
+            <button class="btn btn-outline-success" onclick="return doSearch();"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+</nav>
+<br />
+
+<h4>Listado de Cuentas de Luz</h4>
+<div class="tableFixHead">
+    <table class="table table-responsive-sm table-sm small" id="tab">
+        <thead class="font-size-head">
+            <tr>
+                <th>
+                    Acciones
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InmuebleAux)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocalidadAux)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PeriodicidadAux)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CuentaLuz)
+                </th>
+            </tr>
+        </thead>
+        @if (Model != null)
+        {
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.ActionLink("Edit", "CatLuz", new { id = item.Id })" class="btn btn-warning btn-sm">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a href="@Url.ActionLink("Details", "CatLuz", new { id = item.Id })" class="btn btn-info btn-sm">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                            <a href="@Url.ActionLink("Delete", "CatLuz", new { id = item.Id })" class="btn btn-danger btn-sm">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                        <td style="max-width: 450px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                            <span title="@Html.DisplayFor(modelItem => item.InmuebleAux)">@Html.DisplayFor(modelItem => item.InmuebleAux)</span>
+                        </td>
+                        <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                            <span title="@Html.DisplayFor(modelItem => item.LocalidadAux)">@Html.DisplayFor(modelItem => item.LocalidadAux)</span>
+                        </td>
+                        <td style="max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                            <span title="@Html.DisplayFor(modelItem => item.PeriodicidadAux)">@Html.DisplayFor(modelItem => item.PeriodicidadAux)</span>
+                        </td>
+                        <td style="max-width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                            <span title="@item.CuentaLuz">@Html.DisplayFor(modelItem => item.CuentaLuz)</span>
+                        </td>
+                    </tr>
+                }
+                <tr class="noSearch hide">
+                    <td colspan="5"></td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
+<br />
+
+<div class="form-group">
+    <div id="accordion">
+        <div class="card mb-3">
+            <div class="card-header HeadLog">
+                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                    Log
+                </a>
+            </div>
+            <div id="collapseTwo" class="collapse BodyLog" data-parent="#accordion">
+                <div class="row card-body">
+                    <div id="Logs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('document').ready(function(){
+        ConsultarLog();
+    });
+
+    function Enter(e) {
+        if (e.keyCode === 13 && !e.shiftKey) {
+            e.preventDefault();
+            doSearch();
+        }
+    }
+
+    $('th').click(function () {
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+        setIcon($(this), this.asc);
+    })
+
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index),
+                valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).html()
+    }
+
+    function setIcon(element, asc) {
+        $("th").each(function (index) {
+            $(this).removeClass("sorting");
+            $(this).removeClass("asc");
+            $(this).removeClass("desc");
+        });
+        element.addClass("sorting");
+        if (asc) element.addClass("asc");
+        else element.addClass("desc");
+    }
+
+    function ConsultarLog() {
+        $('#Logs').empty();
+
+        var url = '@Url.Action("Logs")';
+        $.get(url, function (result) {
+            $('#Logs').html(result);
+        });
+    }
+
+    function doSearch()
+        {
+            const tableReg = document.getElementById('tab');
+            const searchText = document.getElementById('inputSearch').value.toLowerCase();
+            let total = 0;
+            // Recorremos todas las filas con contenido de la tabla
+
+            for (let i = 1; i < tableReg.rows.length; i++) {
+
+                // Si el td tiene la clase "noSearch" no se busca en su cntenido
+                if (tableReg.rows[i].classList.contains("noSearch")) {
+                    continue;
+                }
+
+                let found = false;
+                const cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+
+                // Recorremos todas las celdas
+                for (let j = 0; j < cellsOfRow.length && !found; j++) {
+                    const compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+
+                    // Buscamos el texto en el contenido de la celda
+                    if (searchText.length == 0 || compareWith.indexOf(searchText) > -1) {
+                        found = true;
+                        total++;
+                    }
+                }
+
+                if (found) {
+                    tableReg.rows[i].style.display = '';
+                } else {
+                    tableReg.rows[i].style.display = 'none';
+                }
+            }
+
+            // mostramos las coincidencias
+            const lastTR=tableReg.rows[tableReg.rows.length-1];
+            const td=lastTR.querySelector("td");
+
+            lastTR.classList.remove("hide", "red");
+            if (searchText == "") {
+                lastTR.classList.add("hide");
+            } else if (total) {
+                td.innerHTML="Se ha encontrado "+total+" coincidencia"+((total>1)?"s":"");
+            } else {
+                lastTR.classList.add("red");
+                td.innerHTML="No se han encontrado coincidencias";
+            }
+        }
+</script>

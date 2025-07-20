@@ -1,0 +1,68 @@
+﻿@model WebColliersCore.Models.B_inmuebles_comparativo
+
+<h3>¡Se eliminará la comparativa!</h3>
+<div>
+    <h4>Eliminar comparativa</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.cp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.cp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.municipio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.municipio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.colonia)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.colonia)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.noext)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.noext)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.manzana)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.manzana)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.lote)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.lote)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteComparativo">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        @Html.ActionLink("Regresar", "ListComparativo", new { id = Model.id_b_inmuebles})
+    </form>
+</div>

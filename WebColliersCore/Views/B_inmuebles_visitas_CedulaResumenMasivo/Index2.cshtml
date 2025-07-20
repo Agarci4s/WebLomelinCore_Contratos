@@ -1,0 +1,33 @@
+﻿@using Stimulsoft.Report.Web;
+@using Stimulsoft.Report.Mvc;
+
+@{
+    ViewData["Title"] = "Cedula Resumen";
+}
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<div>
+    @Html.StiNetCoreViewer(new StiNetCoreViewerOptions()
+    {
+    Actions = {
+    GetReport = "GetReport",
+    ViewerEvent = "ViewerEvent"
+    },
+    Toolbar = {
+    ShowPrintButton =false,
+    Zoom = 75
+    },
+    Server =
+    {
+    RequestTimeout = 5000
+    }
+    })
+</div>
+<hr />
+
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>

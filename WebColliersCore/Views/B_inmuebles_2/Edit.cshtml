@@ -1,0 +1,390 @@
+﻿@model WebColliersCore.Models.B_inmuebles
+
+<body onload="OnLoad()">
+    <h4>Editar inmueble</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form onsubmit="return OnSubmit()" asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="cr" class="control-label"></label>
+                    <input asp-for="cr" class="form-control" />
+                    <span asp-validation-for="cr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ue" class="control-label"></label>
+                    <input asp-for="ue" class="form-control" />
+                    <span asp-validation-for="ue" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="nombre" class="control-label"></label>
+                    <input asp-for="nombre" class="form-control" />
+                    <span asp-validation-for="nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="direccion" class="control-label"></label>
+                    <input asp-for="direccion" class="form-control" />
+                    <span asp-validation-for="direccion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="cp" class="control-label"></label>
+                    <input asp-for="cp" class="form-control" />
+                    <span asp-validation-for="cp" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="estado" class="control-label"></label>
+                    <input asp-for="estado" class="form-control" />
+                    <span asp-validation-for="estado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="municipio" class="control-label"></label>
+                    <input asp-for="municipio" class="form-control" />
+                    <span asp-validation-for="municipio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="colonia" class="control-label"></label>
+                    <input asp-for="colonia" class="form-control" />
+                    <span asp-validation-for="colonia" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="noext" class="control-label"></label>
+                    <input asp-for="noext" class="form-control" />
+                    <span asp-validation-for="noext" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="noint" class="control-label"></label>
+                    <input asp-for="noint" class="form-control" />
+                    <span asp-validation-for="noint" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="manzana" class="control-label"></label>
+                    <input asp-for="manzana" class="form-control" />
+                    <span asp-validation-for="manzana" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="lote" class="control-label"></label>
+                    <input asp-for="lote" class="form-control" />
+                    <span asp-validation-for="lote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="referencia_calle" class="control-label"></label>
+                    <input asp-for="referencia_calle" class="form-control" />
+                    <span asp-validation-for="referencia_calle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="referencia_calle2" class="control-label"></label>
+                    <input asp-for="referencia_calle2" class="form-control" />
+                    <span asp-validation-for="referencia_calle2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="latidud" class="control-label"></label>
+                    <input asp-for="latidud" class="form-control" />
+                    <span asp-validation-for="latidud" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="longitud" class="control-label"></label>
+                    <input asp-for="longitud" class="form-control" />
+                    <span asp-validation-for="longitud" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="link_maps" class="control-label"></label>
+                    <textarea asp-for="link_maps" class="form-control"></textarea>
+                    <span asp-validation-for="link_maps" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_b_cg_regimen" class="control-label"></label>
+                    <select id="select_id_b_cg_regimen" onchange="return ValorComercial()" asp-for="id_b_cg_regimen" asp-items=ViewBag.lstRegimen class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_regimen" class="text-danger"></span>
+                </div>
+                <div id="div_valor_comercial" class="form-group">
+                    <label asp-for="valor_comercial" class="control-label"></label>
+                    <input id="input_valor_comercial" asp-for="valor_comercial" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="valor_comercial" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_b_cg_inmuebles_estatus" class="control-label"></label>
+                    <select asp-for="id_b_cg_inmuebles_estatus" asp-items=ViewBag.lstEstatus class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_inmuebles_estatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_b_cg_clasificacion" class="control-label"></label>
+                    <select asp-for="id_b_cg_clasificacion" asp-items=ViewBag.lstClasificacion class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_clasificacion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_b_cg_subclasificacion" class="control-label"></label>
+                    <select asp-for="id_b_cg_subclasificacion" asp-items=ViewBag.lstSubClasificacion class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_subclasificacion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_b_cg_region" class="control-label"></label>
+                    <select asp-for="id_b_cg_region" asp-items=ViewBag.lstRegion class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_region" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="m2_terreno" class="control-label"></label>
+                    <input id="input_m2_terreno" asp-for="m2_terreno" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_terreno" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="area_rentable" class="control-label"></label>
+                    <input id="input_area_rentable" asp-for="area_rentable" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="area_rentable" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="m2_construccion" class="control-label"></label>
+                    <input id="input_m2_construccion" asp-for="m2_construccion" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_construccion" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="m2_estacionamiento" class="control-label"></label>
+                    <input id="input_m2_estacionamiento" asp-for="m2_estacionamiento" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_estacionamiento" class="text-danger"></span>
+                    *@
+                </div>
+                @*                <div class="form-group">
+                <label asp-for="m2_bodega" class="control-label"></label>
+                <input asp-for="m2_bodega" class="form-control" />
+                <span asp-validation-for="m2_bodega" class="text-danger"></span>
+                </div>*@
+
+                <div class="form-group">
+                    <label asp-for="cajones_estacionamiento" class="control-label"></label>
+                    <input asp-for="cajones_estacionamiento" class="form-control" />
+                    <span asp-validation-for="cajones_estacionamiento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="cajones_estacionamiento_ejecutivo" class="control-label"></label>
+                    <input asp-for="cajones_estacionamiento_ejecutivo" class="form-control" />
+                    <span asp-validation-for="cajones_estacionamiento_ejecutivo" class="text-danger"></span>
+                </div>
+                @*                <div class="form-group">
+                <label asp-for="cajones_pensiones" class="control-label"></label>
+                <input asp-for="cajones_pensiones" class="form-control" />
+                <span asp-validation-for="cajones_pensiones" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                <label asp-for="cortesias_boletos" class="control-label"></label>
+                <input asp-for="cortesias_boletos" class="form-control" />
+                <span asp-validation-for="cortesias_boletos" class="text-danger"></span>
+                </div>*@
+
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="opera_estacionamiento" /> @Html.DisplayNameFor(model => model.opera_estacionamiento)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="valet_parking" /> @Html.DisplayNameFor(model => model.valet_parking)
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="operador_estacionamiento" class="control-label"></label>
+                    <input asp-for="operador_estacionamiento" class="form-control" />
+                    <span asp-validation-for="operador_estacionamiento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="cajeros_automaticos" class="control-label"></label>
+                    <input asp-for="cajeros_automaticos" class="form-control" />
+                    <span asp-validation-for="cajeros_automaticos" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="practicajas" class="control-label"></label>
+                    <input asp-for="practicajas" class="form-control" />
+                    <span asp-validation-for="practicajas" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ventanillas" class="control-label"></label>
+                    <input asp-for="ventanillas" class="form-control" />
+                    <span asp-validation-for="ventanillas" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="contrato_renta" class="control-label"></label>
+                    <input id="input_contrato_renta" asp-for="contrato_renta" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="contrato_renta" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="m2_precio" class="control-label"></label>
+                    <input id="input_m2_precio" asp-for="m2_precio" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_precio" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="m2_rango_inf" class="control-label"></label>
+                    <input id="input_m2_rango_inf" asp-for="m2_rango_inf" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_rango_inf" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="m2_rango_sup" class="control-label"></label>
+                    <input id="input_m2_rango_sup" asp-for="m2_rango_sup" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_rango_sup" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_b_cg_valor_mercado" class="control-label"></label>
+                    <select asp-for="id_b_cg_valor_mercado" asp-items=ViewBag.lstValorMercado class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_valor_mercado" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label asp-for="contrato" class="control-label"></label>
+                    <input asp-for="contrato" class="form-control" />
+                    <span asp-validation-for="contrato" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="renta" class="control-label"></label>
+                    <input id="input_renta" asp-for="renta" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="renta" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="m2_local" class="control-label"></label>
+                    <input id="input_m2_local" asp-for="m2_local" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+@*                    <span asp-validation-for="m2_local" class="text-danger"></span>
+*@                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_inicio" class="control-label"></label>
+                    <input asp-for="fecha_inicio" class="form-control" type="date" />
+                    <span asp-validation-for="fecha_inicio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_termino" class="control-label"></label>
+                    <input asp-for="fecha_termino" class="form-control" type="date" />
+                    <span asp-validation-for="fecha_termino" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_obligado" class="control-label"></label>
+                    <input asp-for="fecha_obligado" class="form-control" type="date" />
+                    <span asp-validation-for="fecha_obligado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ingreso" class="control-label"></label>
+                    <input asp-for="ingreso" class="form-control" type="number" />
+                    <span asp-validation-for="ingreso" class="text-danger"></span>
+                </div>
+
+                @*                <div class="form-group">
+                <label asp-for="agua" class="control-label"></label>
+                <input asp-for="agua" class="form-control" />
+                <span asp-validation-for="agua" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                <label asp-for="luz" class="control-label"></label>
+                <input asp-for="luz" class="form-control" />
+                <span asp-validation-for="luz" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                <label asp-for="predial" class="control-label"></label>
+                <input asp-for="predial" class="form-control" />
+                <span asp-validation-for="predial" class="text-danger"></span>
+                </div>*@
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Regresar</a>
+    </div>
+</body>
+
+<script type="text/javascript">
+    function OnLoad() {
+
+        ValorComercial();
+    }
+
+    function OnSubmit() {
+        var aux = $("#input_valor_comercial").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_valor_comercial").val(aux);
+
+        aux = $("#input_m2_terreno").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_terreno").val(aux);
+
+        aux = $("#input_area_rentable").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_area_rentable").val(aux);
+
+        aux = $("#input_m2_construccion").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_construccion").val(aux);
+
+        aux = $("#input_m2_estacionamiento").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_estacionamiento").val(aux);
+
+        aux = $("#input_contrato_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_contrato_renta").val(aux);
+
+        aux = $("#input_m2_precio").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_precio").val(aux);
+
+        aux = $("#input_m2_rango_inf").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_rango_inf").val(aux);
+
+        aux = $("#input_m2_rango_sup").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_rango_sup").val(aux);
+
+        aux = $("#input_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_renta").val(aux);
+
+        aux = $("#input_m2_local").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_local").val(aux);
+
+
+
+        //const value = $("#input_m2_totales").val();
+        //$("#input_m2_totales").value = value;
+        //if (isValid) {
+        //    const value = $("#input_m2_totales").val();
+
+        //}
+    }
+
+    function ValorComercial() {
+        var total = 0;
+        if ($("#select_id_b_cg_regimen").val() == 3 || $("#select_id_b_cg_regimen").val() == 1) {
+            $("#div_valor_comercial").show();
+        }
+        else {
+            $("#div_valor_comercial").hide();
+        }
+
+    }
+
+    //Moneda y numero
+    function formatCurrency(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = '$' + value;
+    }
+    function formatNumber(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = value;
+    }
+
+    function formatRemove(input) {
+        const value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        input.value = value;
+    }
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

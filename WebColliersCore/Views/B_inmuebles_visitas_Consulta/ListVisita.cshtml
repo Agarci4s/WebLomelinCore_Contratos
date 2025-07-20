@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_visitas>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_visita)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_visita)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalle", "DetailsVisita", new {id=item.id_b_inmuebles_visita}) 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

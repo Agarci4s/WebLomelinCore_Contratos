@@ -1,0 +1,32 @@
+﻿@model IEnumerable<WebColliersCore.Models.RegistroSeries>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>           
+            <th>
+                @Html.DisplayNameFor(model => model.TipoComprobante)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.Serie)
+            </th>            
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoComprobante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Serie)
+            </td>
+            
+            @*<td class="align-self-lg-center">
+                <input type="button" onclick="deleteSerie(@item.IdCartera)" value="Eliminar" class="btn-link" />
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>

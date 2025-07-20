@@ -1,0 +1,30 @@
+﻿@model WebColliersCore.Models.B_inmuebles_contrato_correos
+
+@{
+    ViewData["Title"] = "DetailsCorreos";
+}
+
+<h3>Detalle Correos</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input readonly asp-for="nombre" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="correo" class="control-label"></label>
+                <input readonly asp-for="correo" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="telefono" class="control-label"></label>
+                <input readonly asp-for="telefono" class="form-control" />
+            </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Regresar", "Correos", new { id = ViewData["id_b_inmuebles_contrato"]})
+</div>

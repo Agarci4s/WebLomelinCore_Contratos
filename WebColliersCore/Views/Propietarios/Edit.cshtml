@@ -1,0 +1,492 @@
+﻿@model WebColliersCore.Models.CgPropietarios
+
+@{
+    ViewData["Title"] = "Editar Propietario";
+}
+
+<head>
+    <script type="text/javascript" src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    @{
+        try
+        {
+            if (ViewBag.ErrorFisicas)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#modalError").modal('show');
+                    });
+                </script>
+
+            }
+        }
+        catch (Exception) { }
+        try
+        {
+            if (ViewBag.ErrorMorales)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#modalError2").modal('show');
+                    });
+                </script>
+            }
+        }
+        catch (Exception) { }
+        try
+        {
+            if (ViewBag.ErrorRFC)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#modalErrorRFC").modal('show');
+                    });
+                </script>
+            }
+        }
+        catch (Exception) { }
+    }
+</head>
+
+<div class="container">
+
+    <div class="modal fade" id="modalError" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>¡Los campos "Nombre", "Apellido Paterno" y "Apellido Materno" son obligatorios!</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalError2" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>¡El campo Razón Social es obligatorio!</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalErrorRFC" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>¡El RFC es Inválido!</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<h4>Editar propietario</h4>
+<hr />
+<body onload="return addReadOnly()">
+</body>
+
+<div class="row col-md-12">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Propietario</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">Representante legal</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="home" class=" tab-pane active">
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                                Datos generales del propietario
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="Nombres" class="control-label"></label>
+                                    <input id="txtNombres" asp-for="Nombres" class="form-control" />
+                                    <span asp-validation-for="Nombres" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Paterno" class="control-label"></label>
+                                    <input id="txtPaterno" asp-for="Paterno" class="form-control" />
+                                    <span asp-validation-for="Paterno" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Materno" class="control-label"></label>
+                                    <input id="txtMaterno" asp-for="Materno" class="form-control" />
+                                    <span asp-validation-for="Materno" class="text-danger"></span>
+                                </div>                               
+                                <div class="form-group p-2">
+                                    <label asp-for="CURP" class="control-label"></label>
+                                    <input asp-for="CURP" class="form-control" />
+                                    <span asp-validation-for="CURP" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Fis_Mor" class="control-label"></label>
+                                    <select id="cmbPersona" asp-for="Fis_Mor" onchange="return addReadOnly();" asp-items=ViewBag.fis_mor class="form-control"></select>
+                                    <span asp-validation-for="Fis_Mor" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="RFC" class="control-label"></label>
+                                    <input asp-for="RFC" class="form-control" />
+                                    <span asp-validation-for="RFC" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Nombre" class="control-label"></label>
+                                    <input id="txtRazonSocial" asp-for="Nombre" class="form-control" />
+                                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="TipoIdentificacionAux" class="control-label"></label>
+                                    <select id="cmbTipoIdentificacionPF" asp-for="TipoIdentificacionAux" asp-items=ViewBag.tipoIdentificacion class="form-control"></select>
+                                    <span asp-validation-for="TipoIdentificacionAux" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="NumeroIdentificacionAux" class="control-label"></label>
+                                    <input id="txtNumIdentPF" asp-for="NumeroIdentificacionAux" class="form-control" />
+                                    <span asp-validation-for="NumeroIdentificacionAux" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Nacionalidad" class="control-label"></label>
+                                    <select asp-for="Nacionalidad" asp-items=ViewBag.lstNacionalidad class="form-control"></select>
+                                    <span asp-validation-for="Nacionalidad" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PropietarioDos" class="control-label"></label>
+                                    <input asp-for="PropietarioDos" class="form-control" />
+                                    <span asp-validation-for="PropietarioDos" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="idRegimenFiscal" class="control-label">Régimen Fiscal (Una vez seleccionado el dato no podrá ser modificado) *</label>
+                                    <select id="cmbRegimenFiscal" asp-for="idRegimenFiscal" asp-items="ViewBag.lstRegimenFiscal" class="form-control"></select>
+                                    <span asp-validation-for="idRegimenFiscal" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                                Domicilio del propietario
+                            </a>
+                        </div>
+                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                            <div class="row card-body">
+
+                                <div class="form-group p-2">
+                                    <label asp-for="Domicilio" class="control-label"></label>
+                                    <input asp-for="Domicilio" class="form-control" />
+                                    <span asp-validation-for="Domicilio" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Exterior" class="control-label"></label>
+                                    <input asp-for="Exterior" class="form-control" />
+                                    <span asp-validation-for="Exterior" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Interior" class="control-label"></label>
+                                    <input asp-for="Interior" class="form-control" />
+                                    <span asp-validation-for="Interior" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Colonia" class="control-label"></label>
+                                    <input asp-for="Colonia" class="form-control" />
+                                    <span asp-validation-for="Colonia" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Delegacion" class="control-label"></label>
+                                    <input asp-for="Delegacion" class="form-control" />
+                                    <span asp-validation-for="Delegacion" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Cp" class="control-label"></label>
+                                    <input onKeyPress="return soloNumeros(event)" asp-for="Cp" class="form-control" />
+                                    <span asp-validation-for="Cp" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Ciudad" class="control-label"></label>
+                                    <input asp-for="Ciudad" class="form-control" />
+                                    <span asp-validation-for="Ciudad" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Estado" class="control-label"></label>
+                                    <select asp-for="Estado" asp-items=ViewBag.lstEstados class="form-control" ></select>
+                                    <span asp-validation-for="Estado" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Pais" class="control-label"></label>
+                                    <select asp-for="Pais" asp-items=ViewBag.lstPaises class="form-control" ></select>
+                                    <span asp-validation-for="Pais" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Telefono1" class="control-label"></label>
+                                    <input onKeyPress="return soloNumeros(event)" asp-for="Telefono1" class="form-control" />
+                                    <span asp-validation-for="Telefono1" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Telefono2" class="control-label"></label>
+                                    <input onKeyPress="return soloNumeros(event)" asp-for="Telefono2" class="form-control" />
+                                    <span asp-validation-for="Telefono2" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Celular" class="control-label"></label>
+                                    <input onKeyPress="return soloNumeros(event)" asp-for="Celular" class="form-control" />
+                                    <span asp-validation-for="Celular" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="EMAIL" class="control-label"></label>
+                                    <input asp-for="EMAIL" class="form-control" />
+                                    <span asp-validation-for="EMAIL" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                                Domicilio fiscal
+                            </a>
+                        </div>
+                        <div id="collapseThree" class="collapse" data-parent="#accordion">
+                            <div class="row card-body">
+
+                                <div class="form-group p-2">
+                                    <label asp-for="DomFis" class="control-label"></label>
+                                    <input asp-for="DomFis" class="form-control" />
+                                    <span asp-validation-for="DomFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="ExteriorFis" class="control-label"></label>
+                                    <input asp-for="ExteriorFis" class="form-control" />
+                                    <span asp-validation-for="ExteriorFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="InteriorFis" class="control-label"></label>
+                                    <input asp-for="InteriorFis" class="form-control" />
+                                    <span asp-validation-for="InteriorFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="ColFis" class="control-label"></label>
+                                    <input asp-for="ColFis" class="form-control" />
+                                    <span asp-validation-for="ColFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="CPFis" class="control-label"></label>
+                                    <input onKeyPress="return soloNumeros(event)" asp-for="CPFis" class="form-control" />
+                                    <span asp-validation-for="CPFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="DelFis" class="control-label"></label>
+                                    <input asp-for="DelFis" class="form-control" />
+                                    <span asp-validation-for="DelFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="CiudadFis" class="control-label"></label>
+                                    <input asp-for="CiudadFis" class="form-control" />
+                                    <span asp-validation-for="CiudadFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="EstadoFis" class="control-label"></label>
+                                    <select asp-for="EstadoFis" asp-items=ViewBag.lstEstados class="form-control" ></select>
+                                    <span asp-validation-for="EstadoFis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="TelFis" class="control-label"></label>
+                                    <input onKeyPress="return soloNumeros(event)" asp-for="TelFis" class="form-control" />
+                                    <span asp-validation-for="TelFis" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="menu1" class="tab-pane fade">
+                <div id="accordion2">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#collapseOne2">
+                                Representante legal
+                            </a>
+                        </div>
+                        <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
+                            <div class="row card-body">
+
+                                <div class="form-group p-2">
+                                    <label asp-for="NombreRep" class="control-label"></label>
+                                    <input asp-for="NombreRep" class="form-control" />
+                                    <span asp-validation-for="NombreRep" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PaternoRep" class="control-label"></label>
+                                    <input asp-for="PaternoRep" class="form-control" />
+                                    <span asp-validation-for="PaternoRep" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="MaternoRep" class="control-label"></label>
+                                    <input asp-for="MaternoRep" class="form-control" />
+                                    <span asp-validation-for="MaternoRep" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="RFCRep" class="control-label"></label>
+                                    <input asp-for="RFCRep" class="form-control" />
+                                    <span asp-validation-for="RFCRep" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="CURPRep" class="control-label"></label>
+                                    <input asp-for="CURPRep" class="form-control" />
+                                    <span asp-validation-for="CURPRep" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo2">
+                                Identificación del representante legal
+                            </a>
+                        </div>
+                        <div id="collapseTwo2" class="collapse" data-parent="#accordion2">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="TipoIdentificacionRepresentanteAux" class="control-label"></label>
+                                    <select asp-for="TipoIdentificacionRepresentanteAux" asp-items=ViewBag.tipoIdentificacion class="form-control"></select>
+                                    <span asp-validation-for="TipoIdentificacionRepresentanteAux" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="NumeroIdentificacionRepresentanteAux" class="control-label"></label>
+                                    <input asp-for="NumeroIdentificacionRepresentanteAux" class="form-control" />
+                                    <span asp-validation-for="NumeroIdentificacionRepresentanteAux" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="FechaConstitucion" class="control-label"></label>
+                                    <input asp-for="FechaConstitucion" class="form-control" type="date" />
+                                    <span asp-validation-for="FechaConstitucion" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree2">
+                                Datos del poder del representante legal
+                            </a>
+                        </div>
+                        <div id="collapseThree2" class="collapse" data-parent="#accordion2">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="FechaPoder" class="control-label"></label>
+                                    <input asp-for="FechaPoder" class="form-control" type="date" />
+                                    <span asp-validation-for="FechaPoder" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="NumeroInstrumento" class="control-label"></label>
+                                    <input asp-for="NumeroInstrumento" class="form-control" />
+                                    <span asp-validation-for="NumeroInstrumento" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="NumeroNotaria" class="control-label"></label>
+                                    <input asp-for="NumeroNotaria" class="form-control" />
+                                    <span asp-validation-for="NumeroNotaria" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="EstadoNotaria" class="control-label"></label>
+                                    <input asp-for="EstadoNotaria" class="form-control" />
+                                    <span asp-validation-for="EstadoNotaria" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Fedatario" class="control-label"></label>
+                                    <input asp-for="Fedatario" class="form-control" />
+                                    <span asp-validation-for="Fedatario" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group p-2">
+            <input type="submit" value="Actualizar" class="btn btn-primary" />
+        </div>
+    </form>
+
+</div>
+
+<div>
+    <a asp-action="Index">Regresar a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    function addReadOnly() {
+        var tipo = $("#cmbPersona").val();
+        if (tipo == "M") {
+            $("#txtNombres").val("");
+            $("#txtPaterno").val("");
+            $("#txtMaterno").val("");
+            $("#txtNombres").attr("readonly", "readonly");
+            $("#txtPaterno").attr("readonly", "readonly");
+            $("#txtMaterno").attr("readonly", "readonly");
+            $("#cmbTipoIdentificacionPF").attr("readonly", "readonly");
+            $("#txtNumIdentPF").attr("readonly", "readonly");
+            $("#txtRazonSocial").removeAttr("readonly");
+        }
+        else {
+            $("#txtNombres").removeAttr("readonly");
+            $("#txtPaterno").removeAttr("readonly");
+            $("#txtMaterno").removeAttr("readonly");
+            $("#cmbTipoIdentificacionPF").removeAttr("readonly");
+            $("#txtNumIdentPF").removeAttr("readonly");
+            $("#txtRazonSocial").attr("readonly", "readonly");
+            $("#txtRazonSocial").val("");
+        }
+
+        var selectcmbRF = $("#cmbRegimenFiscal").val();
+        if (selectcmbRF != -1) {
+            $("#cmbRegimenFiscal").attr("disabled", "disabled");
+        }       
+    }
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return (key >= 48 && key <= 57)
+    }
+
+
+</script>

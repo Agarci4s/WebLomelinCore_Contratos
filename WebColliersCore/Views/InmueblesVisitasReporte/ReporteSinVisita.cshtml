@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_reporte>
+
+
+<table class="table table-striped" id="tab">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inmuebles_estatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.latidud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.longitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.link_maps)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.region)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inmuebles_estatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latidud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.longitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.link_maps)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

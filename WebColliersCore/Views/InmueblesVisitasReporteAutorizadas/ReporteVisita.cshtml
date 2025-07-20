@@ -1,0 +1,403 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_visitas_reporte>
+
+<table class="table table-striped" id="tab">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.contrato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inmuebles_estatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inmuebles_visitas_estatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_visita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.latidud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.longitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.link_maps)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2_terreno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.area_rentable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2_construccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.superficie_estacionamiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mapa_seguridad)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.marquesina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.letras_rotuladas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bandera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.paleta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unipolar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.totem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.no_anuncios)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.inclusion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.aire_acondicionado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.planta_emergencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.impermeabilizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medidor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medidor_direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.agua_toma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.agua_toma_direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.practicajas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.practicajas_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.practicajas_sin_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ventanillas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ventanillas_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ventanillas_sin_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajeros_automaticos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajeros_automaticos_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajeros_automaticos_sin_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajones_estacionamiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajones_estacionamiento_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajones_estacionamiento_sin_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajones_estacionamiento_ejecutivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajones_estacionamiento_ejecutivo_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cajones_estacionamiento_ejecutivo_sin_servicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.operador_estacionamiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valet_parking)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.personal_exterior)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.demanda_estacionamiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.contrato_renta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2_sucursal_precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2_totales)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.no_comparables)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valor_mercado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valor_comercial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2_rango_inf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2_rango_sup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2_promedio)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.conservacion)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.observaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.conclusiones)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.contrato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.region)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inmuebles_estatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inmuebles_visitas_estatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_visita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latidud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.longitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.link_maps)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.m2_terreno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.area_rentable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.m2_construccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.superficie_estacionamiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mapa_seguridad)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.marquesina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.letras_rotuladas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bandera)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.paleta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.unipolar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.totem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.no_anuncios)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.inclusion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.aire_acondicionado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.planta_emergencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.impermeabilizacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.medidor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.medidor_direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.agua_toma)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.agua_toma_direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.practicajas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.practicajas_servicio)
+                </td>
+                <td>
+                    @(item.practicajas - item.practicajas_servicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ventanillas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ventanillas_servicio)
+                </td>
+                <td>
+                    @(item.ventanillas - item.ventanillas_servicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cajeros_automaticos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cajeros_automaticos_servicio)
+                </td>
+                <td>
+                    @(item.cajeros_automaticos - item.cajeros_automaticos_servicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cajones_estacionamiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cajones_estacionamiento_servicio)
+                </td>
+                <td>
+                    @(item.cajones_estacionamiento - item.cajones_estacionamiento_servicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cajones_estacionamiento_ejecutivo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cajones_estacionamiento_ejecutivo_servicio)
+                </td>
+                <td>
+                    @(item.cajones_estacionamiento_ejecutivo - item.cajones_estacionamiento_ejecutivo_servicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.operador_estacionamiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.valet_parking)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.personal_exterior)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.demanda_estacionamiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.contrato_renta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.m2_sucursal_precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.m2_totales)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.no_comparables)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.valor_mercado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.valor_comercial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.m2_rango_inf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.m2_rango_sup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.m2_promedio)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.conservacion)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.observaciones)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.conclusiones)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

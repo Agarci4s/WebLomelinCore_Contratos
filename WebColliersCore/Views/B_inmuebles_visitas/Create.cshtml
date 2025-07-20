@@ -1,0 +1,1251 @@
+﻿@model WebColliersCore.Models.B_inmuebles_visitas;
+
+<header>
+    @*    <meta http-equiv='cache-control' content='no-cache'>
+    *@
+</header>
+
+<body onload="OnLoad()">
+
+    <h4>Registro de visita</h4>
+    <hr />
+    <div class="form-group col-md-10" style="background-color:lightblue">
+        <partial name="Inmueble" model="Model.b_inmuebles" />
+    </div>
+
+    @*    enctype="multipart/form-data"
+    *@
+    <div class="form-group col-md-10">
+        <form onsubmit="return OnSubmit()" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <hr />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="fecha_visita" class="control-label"></label>
+                    <input asp-for="fecha_visita" class="form-control" type="date" />
+                    <span asp-validation-for="fecha_visita" class="text-danger"></span>
+                </div>
+                @*                @Html.HiddenFor(m=>m.id_b_inmuebles)
+                *@
+            </div>
+
+            <h5>Proyecto cuida y mejora</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="inclusion" /> @Html.DisplayNameFor(model => model.inclusion)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="mapa_seguridad" /> @Html.DisplayNameFor(model => model.mapa_seguridad)
+                    </label>
+                </div>
+            </div>
+            <h5>Anuncios </h5>
+            <hr />
+            <div class="form-row">
+
+                <div class="form-group col-md-4">
+                    <label asp-for="marquesina" class="control-label"></label>
+                    <input onchange="return  SumaAnuncios()" id="input_marquesina" asp-for="marquesina" class="form-control" />
+                    <span asp-validation-for="marquesina" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="letras_rotuladas" class="control-label"></label>
+                    <input onchange="return  SumaAnuncios()" id="input_letras_rotuladas" asp-for="letras_rotuladas" class="form-control" />
+                    <span asp-validation-for="letras_rotuladas" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="bandera" class="control-label"></label>
+                    <input onchange="return  SumaAnuncios()" id="input_bandera" asp-for="bandera" class="form-control" />
+                    <span asp-validation-for="bandera" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="paleta" class="control-label"></label>
+                    <input onchange="return  SumaAnuncios()" id="input_paleta" asp-for="paleta" class="form-control" />
+                    <span asp-validation-for="paleta" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="unipolar" class="control-label"></label>
+                    <input onchange="return  SumaAnuncios()" id="input_unipolar" asp-for="unipolar" class="form-control" />
+                    <span asp-validation-for="unipolar" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="totem" class="control-label"></label>
+                    <input onchange="return  SumaAnuncios()" id="input_totem" asp-for="totem" class="form-control" />
+                    <span asp-validation-for="totem" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="no_anuncios" class="control-label"></label>
+                    <input id="input_no_anuncios" asp-for="no_anuncios" class="form-control" />
+                    <span asp-validation-for="no_anuncios" class="text-danger"></span>
+                </div>
+            </div>
+            <h5>Información de contrato actual</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="contrato_renta" class="control-label"></label>
+                    <input id="input_contrato_renta" onchange="return calculaM2()" asp-for="contrato_renta" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                    @*                    <span asp-validation-for="contrato_renta" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="m2_totales" class="control-label"></label>
+                    <input id="input_m2_totales" onchange="return calculaM2()" asp-for="m2_totales" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_totales" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group col-md-4">
+                    @if (Model.b_inmuebles.id_b_cg_clasificacion == 3 || Model.b_inmuebles.id_b_cg_clasificacion == 1)
+                    {
+                        <label asp-for="m2_sucursal_precio" class="control-label">Precio por M.2 de estacionamiento</label>
+                    }
+                    else
+                    {
+                        <label asp-for="m2_sucursal_precio" class="control-label">Precio por M.2 de sucursal</label>
+                    }
+                    <input id="input_m2_sucursal_precio" asp-for="m2_sucursal_precio" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                    @*                    <span asp-validation-for="m2_sucursal_precio" class="text-danger"></span>
+                    *@
+                </div>
+            </div>
+            <h5>Servicios del inmueble</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="planta_emergencia" class="control-label"></label>
+                    <select asp-for="planta_emergencia" asp-items=ViewBag.lst_planta_emergencia class="form-control"></select>
+                    <span asp-validation-for="planta_emergencia" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="impermeabilizacion" class="control-label"></label>
+                    <select asp-for="impermeabilizacion" asp-items=ViewBag.lst_impermeabilizacion class="form-control"></select>
+                    <span asp-validation-for="impermeabilizacion" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="medidor" class="control-label"></label>
+                    <select id="select_medidor" onchange="return MostrarDireccion()" asp-for="medidor" asp-items=ViewBag.lst_medidor class="form-control"></select>
+                    <span asp-validation-for="medidor" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="medidor_direccion" class="control-label"></label>
+                    <input id="input_medidor_direccion" asp-for="medidor_direccion" class="form-control" />
+                    <span asp-validation-for="medidor_direccion" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="agua_toma" class="control-label"></label>
+                    <select id="select_agua_toma" onchange="return MostrarDireccion()" asp-for="agua_toma" asp-items=ViewBag.lst_agua_toma class="form-control"></select>
+                    <span asp-validation-for="agua_toma" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="agua_toma_direccion" class="control-label"></label>
+                    <input id="input_agua_toma_direccion" asp-for="agua_toma_direccion" class="form-control" />
+                    <span asp-validation-for="agua_toma_direccion" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input id="input_aire_acondicionado" onchange="return AireAcondicionado()" class="form-check-input" asp-for="aire_acondicionado" /> @Html.DisplayNameFor(model => model.aire_acondicionado)
+                    </label>
+                </div>
+                <div id="div_aire_acondicionado2" class="form-group col-md-4">
+                    <label asp-for="aire_acondicionado2" class="control-label"></label>
+                    <select asp-for="aire_acondicionado2" asp-items=ViewBag.lst_aire_acondicionado2 class="form-control"></select>
+                    <span asp-validation-for="aire_acondicionado2" class="text-danger"></span>
+                </div>
+
+            </div>
+            <h5>Cajas, practicajas y ventanillas</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="practicajas" class="control-label"></label>
+                    <input id="input_practicajas" onchange="return ActualizaServicio()" asp-for="practicajas" class="form-control" />
+                    <span asp-validation-for="practicajas" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="practicajas_servicio" class="control-label"></label>
+                    <input id="input_practicajas_servicio" onchange="return ActualizaServicio()" asp-for="practicajas_servicio" class="form-control" />
+                    <span asp-validation-for="practicajas_servicio" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Fuera de servicio</label>
+                    <input readonly id="input_practicajas_diferencia" class="form-control" type="number" />
+                </div>
+                <br />
+                <div class="form-group col-md-4">
+                    <label asp-for="ventanillas" class="control-label"></label>
+                    <input id="input_ventanillas" onchange="return ActualizaServicio()" asp-for="ventanillas" class="form-control" />
+                    <span asp-validation-for="ventanillas" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="ventanillas_servicio" class="control-label"></label>
+                    <input id="input_ventanillas_servicio" onchange="return ActualizaServicio()" asp-for="ventanillas_servicio" class="form-control" />
+                    <span asp-validation-for="ventanillas_servicio" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Fuera de servicio</label>
+                    <input id="input_ventanillas_diferencia" readonly class="form-control" type="number" />
+                </div>
+                <br />
+                <div class="form-group col-md-4">
+                    <label asp-for="cajeros_automaticos" class="control-label"></label>
+                    <input id="input_cajeros_automaticos" onchange="return ActualizaServicio()" asp-for="cajeros_automaticos" class="form-control" />
+                    <span asp-validation-for="cajeros_automaticos" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="cajeros_automaticos_servicio" class="control-label"></label>
+                    <input id="input_cajeros_automaticos_servicio" onchange="return ActualizaServicio()" asp-for="cajeros_automaticos_servicio" class="form-control" />
+                    <span asp-validation-for="cajeros_automaticos_servicio" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Fuera de servicio</label>
+                    <input id="input_cajeros_automaticos_diferencia" readonly class="form-control" type="number" />
+                </div>
+            </div>
+            <h5>Estacionamiento</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="cajones_estacionamiento" class="control-label"></label>
+                    <input onchange="return ActualizaServicio()" id="input_cajones_estacionamiento" asp-for="cajones_estacionamiento" class="form-control" />
+                    <span asp-validation-for="cajones_estacionamiento" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="cajones_estacionamiento_servicio" class="control-label"></label>
+                    <input onchange="return ActualizaServicio()" id="input_cajones_estacionamiento_servicio" asp-for="cajones_estacionamiento_servicio" class="form-control" />
+                    <span asp-validation-for="cajones_estacionamiento_servicio" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Fuera de servicio</label>
+                    <input id="input_cajones_estacionamiento_diferencia" readonly class="form-control" type="number" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="cajones_estacionamiento_ejecutivo" class="control-label"></label>
+                    <input onchange="return ActualizaServicio()" id="input_cajones_estacionamiento_ejecutivo" asp-for="cajones_estacionamiento_ejecutivo" class="form-control" />
+                    <span asp-validation-for="cajones_estacionamiento_ejecutivo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="cajones_estacionamiento_ejecutivo_servicio" class="control-label"></label>
+                    <input onchange="return ActualizaServicio()" id="input_cajones_estacionamiento_ejecutivo_servicio" asp-for="cajones_estacionamiento_ejecutivo_servicio" class="form-control" />
+                    <span asp-validation-for="cajones_estacionamiento_ejecutivo_servicio" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Fuera de servicio</label>
+                    <input id="input_cajones_estacionamiento_ejecutivo_diferencia" readonly class="form-control" type="number" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="operador_estacionamiento" class="control-label"></label>
+                    <select asp-for="operador_estacionamiento" asp-items=ViewBag.lst_b_cg_operador_estacionamiento class="form-control"></select>
+                    <span asp-validation-for="operador_estacionamiento" class="text-danger"></span>
+                </div>
+                @*                <div class="form-group col-md-4">
+                <label asp-for="operador_estacionamiento_servicio" class="control-label"></label>
+                <input asp-for="operador_estacionamiento_servicio" class="form-control" />
+                <span asp-validation-for="operador_estacionamiento_servicio" class="text-danger"></span>
+                </div>*@
+                <div class="form-group col-md-4">
+                    <label asp-for="demanda_estacionamiento" class="control-label"></label>
+                    <select asp-for="demanda_estacionamiento" asp-items=ViewBag.lst_si_no class="form-control"></select>
+                    <span asp-validation-for="demanda_estacionamiento" class="text-danger"></span>
+                </div>
+                
+                @* <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="libre" /> @Html.DisplayNameFor(model => model.libre)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="cortesias" /> @Html.DisplayNameFor(model => model.cortesias)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="concesionaria" /> @Html.DisplayNameFor(model => model.concesionaria)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="valet_parking" /> @Html.DisplayNameFor(model => model.valet_parking)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="personal_exterior" /> @Html.DisplayNameFor(model => model.personal_exterior)
+                    </label>
+                </div> *@
+            </div>
+
+            <h5>Información del inmueble por Lomelín</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="m2_terreno" class="control-label"></label>
+                    <input id="input_m2_terreno" asp-for="m2_terreno" class="form-control" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_terreno" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="area_rentable" class="control-label"></label>
+                    <input id="input_area_rentable" asp-for="area_rentable" class="form-control" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="area_rentable" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="m2_construccion" class="control-label"></label>
+                    <input id="input_m2_construccion" asp-for="m2_construccion" class="form-control" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="m2_construccion" class="text-danger"></span>
+                    *@
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="superficie_estacionamiento" class="control-label"></label>
+                    <input id="input_superficie_estacionamiento" asp-for="superficie_estacionamiento" class="form-control" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                    @*                    <span asp-validation-for="superficie_estacionamiento" class="text-danger"></span>
+                    *@
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="no_comparables" class="control-label"></label>
+                    <input readonly asp-for="no_comparables" class="form-control" />
+                    <span asp-validation-for="no_comparables" class="text-danger"></span>
+                </div>
+
+                @if (Model.b_inmuebles.id_b_cg_regimen != 2)
+                {
+                    <div class="form-group col-md-4">
+                        @* @if (Model.b_inmuebles.id_b_cg_regimen == 3 || Model.b_inmuebles.id_b_cg_regimen == 1)
+                    {
+                    //m2_rango_inf2 solo para rentados 2
+                    <label asp-for="m2_rango_inf" class="control-label">Precio por M.2 comercial del mercado rango inferior</label>
+                    }
+                    else
+                    {
+                    <label asp-for="m2_rango_inf" class="control-label"></label>
+                    } *@
+                        <label asp-for="m2_rango_inf" class="control-label"></label>
+                        <input id="input_m2_rango_inf" asp-for="m2_rango_inf" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                        @*                    <span asp-validation-for="m2_rango_inf" class="text-danger"></span>
+                    *@
+                    </div>
+                    <div class="form-group col-md-4">
+                        @* @if (Model.b_inmuebles.id_b_cg_regimen == 3 || Model.b_inmuebles.id_b_cg_regimen == 1)
+                    {
+                    //m2_rango_inf2 solo para rentados
+                    <label asp-for="m2_rango_sup" class="control-label">Precio por M.2 comercial del mercado rango superior</label>
+                    }
+                    else
+                    {
+                    <label asp-for="m2_rango_sup" class="control-label"></label>
+                    } *@
+                        <label asp-for="m2_rango_sup" class="control-label"></label>
+                        <input id="input_m2_rango_sup" asp-for="m2_rango_sup" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                    </div>
+                }
+
+                @if (Model.b_inmuebles.id_b_cg_regimen == 2 || Model.b_inmuebles.id_b_cg_regimen == 3 || Model.b_inmuebles.id_b_cg_regimen == 1)
+                {
+                    <div class="form-group col-md-4">
+                        <label asp-for="m2_rango_inf2" class="control-label"></label>
+                        <input id="input_m2_rango_inf2" asp-for="m2_rango_inf2" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="m2_rango_sup2" class="control-label"></label>
+                        <input id="input_m2_rango_sup2" asp-for="m2_rango_sup2" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                    </div>
+                    @if (Model.b_inmuebles.id_b_cg_regimen == 3 || Model.b_inmuebles.id_b_cg_regimen == 1)
+                    {
+                        <div class="form-group col-md-4">
+                            <label asp-for="valor_comercial" class="control-label"></label>
+                            <input id="input_valor_comercial" asp-for="valor_comercial" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                        </div>
+                    }
+                }
+
+                <div class="form-group col-md-4">
+                    <label asp-for="id_b_cg_valor_mercado" class="control-label"></label>
+                    <select asp-for="id_b_cg_valor_mercado" asp-items=ViewBag.lstValorMercado class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_valor_mercado" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="id_b_variacion_inmueble" class="control-label"></label>
+                    <select asp-for="id_b_variacion_inmueble" asp-items=ViewBag.lstVariacionInmueble class="form-control"></select>
+                    <span asp-validation-for="id_b_variacion_inmueble" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="m2_rango_inf3" class="control-label"></label>
+                    <input id="input_m2_rango_inf3" asp-for="m2_rango_inf3" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="m2_rango_sup3" class="control-label"></label>
+                    <input id="input_m2_rango_sup3" asp-for="m2_rango_sup3" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                </div>
+                <hr />
+
+
+                @if (Model.b_inmuebles.id_b_cg_regimen == 2 || Model.b_inmuebles.id_b_cg_regimen == 3)
+                {
+                    <div class="form-group col-md-4">
+                        <label asp-for="areas_convivencia" class="control-label"></label>
+                        <select id="select_areas_convivencia" onchange="return CambioAreasConvivencia()" asp-for="areas_convivencia" asp-items=ViewBag.lst_areas_convivencia class="form-control"></select>
+                        <span asp-validation-for="areas_convivencia" class="text-danger"></span>
+                    </div>
+
+                    <div id="div_areas_convivencia_desc" class="form-group col-md-4">
+                        <label asp-for="areas_convivencia_desc" class="control-label"></label>
+                        <input id="input_areas_convivencia_desc" asp-for="areas_convivencia_desc" class="form-control" />
+                        <span asp-validation-for="areas_convivencia_desc" class="text-danger"></span>
+                    </div>
+                }
+
+
+
+                <div class="form-group col-md-4">
+                    <label asp-for="id_b_cg_conservacion" class="control-label"></label>
+                    <select id="select_id_b_cg_conservacion" onchange="return CambioConservacion()" asp-for="id_b_cg_conservacion" asp-items=ViewBag.lstConservacion class="form-control"></select>
+                    <span asp-validation-for="id_b_cg_conservacion" class="text-danger"></span>
+                </div>
+                <div id="div_mantenimiento" class="form-group col-md-4">
+                    <label asp-for="mantenimiento" class="control-label"></label>
+                    <select asp-for="mantenimiento" asp-items=ViewBag.lst_mantenimiento class="form-control"></select>
+                    <span asp-validation-for="mantenimiento" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="tipificacion" class="control-label"></label>
+                    <select asp-for="tipificacion" asp-items=ViewBag.lst_tipificacion class="form-control"></select>
+                    <span asp-validation-for="tipificacion" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="desocupado" class="control-label"></label>
+                    <select asp-for="desocupado" asp-items=ViewBag.lst_desocupado class="form-control"></select>
+                    <span asp-validation-for="desocupado" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="vandalizado" class="control-label"></label>
+                    <select asp-for="vandalizado" asp-items=ViewBag.lst_vandalizado class="form-control"></select>
+                    <span asp-validation-for="vandalizado" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="invadido" class="control-label"></label>
+                    <select asp-for="invadido" asp-items=ViewBag.lst_invadido class="form-control"></select>
+                    <span asp-validation-for="invadido" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <label asp-for="NSE_1" class="control-label"></label>
+                    <input asp-for="NSE_1" class="form-control" />
+                    <span asp-validation-for="NSE_1" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="NSE_2" class="control-label"></label>
+                    <input asp-for="NSE_2" class="form-control" />
+                    <span asp-validation-for="NSE_2" class="text-danger"></span>
+                </div>
+
+
+                @* Nuevos valores *@
+
+
+                @*        <div class="form-group col-md-4">
+                <label asp-for="estacionamiento2" class="control-label"></label>
+                <select asp-for="estacionamiento2" asp-items=ViewBag.lst_estacionamiento2 class="form-control"></select>
+                <span asp-validation-for="estacionamiento2" class="text-danger"></span>
+                </div> *@
+                <div class="form-group col-md-4">
+                    <label asp-for="tendencia" class="control-label"></label>
+                    <select asp-for="tendencia" asp-items=ViewBag.lst_tendencia class="form-control"></select>
+                    <span asp-validation-for="tendencia" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="asentamiento" class="control-label"></label>
+                    <select asp-for="asentamiento" asp-items=ViewBag.lst_asentamiento class="form-control"></select>
+                    <span asp-validation-for="asentamiento" class="text-danger"></span>
+                </div>
+
+                @*   <div class="form-group col-md-4">
+                <label asp-for="segmento" class="control-label"></label>
+                <select asp-for="segmento" asp-items=ViewBag.lst_segmento class="form-control"></select>
+                <span asp-validation-for="segmento" class="text-danger"></span>
+                </div> *@
+
+
+            </div>
+
+            <h5>Fotografías</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="sucursal" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_sucursal', '@Model.id_b_inmuebles','sucursal', '#div_sucursal')" id="input_sucursal" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_sucursal" asp-for="sucursal" class="form-control" />
+                    <span asp-validation-for="sucursal" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="cksucursal" /> @Html.DisplayNameFor(model => model.cksucursal)
+                    </label>
+                    </div>*@
+                    <div id="div_sucursal" class="col-md-12">
+                        @if (Model.sucursal != null && Model.sucursal.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.sucursal" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="geolocalizacion" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_geolocalizacion', '@Model.id_b_inmuebles','geolocalizacion','#div_geolocalizacion')" id="input_geolocalizacion" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_geolocalizacion" asp-for="geolocalizacion" class="form-control" />
+                    <span asp-validation-for="geolocalizacion" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckgeolocalizacion" /> @Html.DisplayNameFor(model => model.ckgeolocalizacion)
+                    </label>
+                    </div>*@
+                    <div id="div_geolocalizacion" class="col-md-12">
+                        @if (Model.geolocalizacion != null && Model.geolocalizacion.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.geolocalizacion" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <b><label asp-for="exterior1" class="control-label"></label></b>
+                    <input type="file" onChange="return SaveImage('input_exterior1', '@Model.id_b_inmuebles','exterior1','#div_exterior1')" id="input_exterior1" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_exterior1" asp-for="exterior1" class="form-control" />
+                    <span asp-validation-for="exterior1" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckexterior1" /> @Html.DisplayNameFor(model => model.ckexterior1)
+                    </label>
+                    </div>*@
+                    <div id="div_exterior1" class="col-md-12">
+                        @if (Model.exterior1 != null && Model.exterior1.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.exterior1" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <b>
+                        <label asp-for="exterior2" class="control-label"></label>
+                    </b>
+                    <input type="file" onChange="return SaveImage('input_exterior2', '@Model.id_b_inmuebles','exterior2','#div_exterior2')" id="input_exterior2" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_exterior2" asp-for="exterior2" class="form-control" />
+                    <span asp-validation-for="exterior2" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckexterior2" /> @Html.DisplayNameFor(model => model.ckexterior2)
+                    </label>
+                    </div>*@
+                    <div id="div_exterior2" class="col-md-12">
+                        @if (Model.exterior2 != null && Model.exterior2.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.exterior2" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="circundante_norte" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_circundante_norte', '@Model.id_b_inmuebles','circundante_norte','#div_circundante_norte')" id="input_circundante_norte" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_circundante_norte" asp-for="circundante_norte" class="form-control" />
+                    <span asp-validation-for="circundante_norte" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckcircundante_norte" /> @Html.DisplayNameFor(model => model.ckcircundante_norte)
+                    </label>
+                    </div>*@
+                    <div id="div_circundante_norte" class="col-md-12">
+                        @if (Model.circundante_norte != null && Model.circundante_norte.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.circundante_norte" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="circundante_sur" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_circundante_sur', '@Model.id_b_inmuebles','circundante_sur','#div_circundante_sur')" id="input_circundante_sur" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_circundante_sur" asp-for="circundante_sur" class="form-control" />
+                    <span asp-validation-for="circundante_sur" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckcircundante_sur" /> @Html.DisplayNameFor(model => model.ckcircundante_sur)
+                    </label>
+                    </div>*@
+                    <div id="div_circundante_sur" class="col-md-12">
+                        @if (Model.circundante_sur != null && Model.circundante_sur.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.circundante_sur" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="circundante_oriente" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_circundante_oriente', '@Model.id_b_inmuebles','circundante_oriente','#div_circundante_oriente')" id="input_circundante_oriente" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_circundante_oriente" asp-for="circundante_oriente" class="form-control" />
+                    <span asp-validation-for="circundante_oriente" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckcircundante_oriente" /> @Html.DisplayNameFor(model => model.ckcircundante_oriente)
+                    </label>
+                    </div>*@
+                    <div id="div_circundante_oriente" class="col-md-12">
+                        @if (Model.circundante_oriente != null && Model.circundante_oriente.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.circundante_oriente" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="circundante_poniente" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_circundante_poniente', '@Model.id_b_inmuebles','circundante_poniente','#div_circundante_poniente')" id="input_circundante_poniente" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_circundante_poniente" asp-for="circundante_poniente" class="form-control" />
+                    <span asp-validation-for="circundante_poniente" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckcircundante_poniente" /> @Html.DisplayNameFor(model => model.ckcircundante_poniente)
+                    </label>
+                    </div>*@
+                    <div id="div_circundante_poniente" class="col-md-12">
+                        @if (Model.circundante_poniente != null && Model.circundante_poniente.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.circundante_poniente" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <b>
+                        <label asp-for="interior1" class="control-label"></label>
+                    </b>
+                    <input type="file" onChange="return SaveImage('input_interior1', '@Model.id_b_inmuebles','interior1','#div_interior1')" id="input_interior1" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_interior1" asp-for="interior1" class="form-control" />
+                    <span asp-validation-for="interior1" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckinterior1" /> @Html.DisplayNameFor(model => model.ckinterior1)
+                    </label>
+                    </div>*@
+                    <div id="div_interior1" class="col-md-12">
+                        @if (Model.interior1 != null && Model.interior1.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.interior1" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <b>
+                        <label asp-for="interior2" class="control-label"></label>
+                    </b>
+                    <input type="file" onChange="return SaveImage('input_interior2', '@Model.id_b_inmuebles','interior2','#div_interior2')" id="input_interior2" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_interior2" asp-for="interior2" class="form-control" />
+                    <span asp-validation-for="interior2" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckinterior2" /> @Html.DisplayNameFor(model => model.ckinterior2)
+                    </label>
+                    </div>*@
+                    <div id="div_interior2" class="col-md-12">
+                        @if (Model.interior2 != null && Model.interior2.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.interior2" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="espacio1" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_espacio1', '@Model.id_b_inmuebles','espacio1','#div_espacio1')" id="input_espacio1" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_espacio1" asp-for="espacio1" class="form-control" />
+                    <span asp-validation-for="espacio1" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckespacio1" /> @Html.DisplayNameFor(model => model.ckespacio1)
+                    </label>
+                    </div>*@
+                    <div id="div_espacio1" class="col-md-12">
+                        @if (Model.espacio1 != null && Model.espacio1.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.espacio1" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="espacio2" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_espacio2', '@Model.id_b_inmuebles','espacio2','#div_espacio2')" id="input_espacio2" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_espacio2" asp-for="espacio2" class="form-control" />
+                    <span asp-validation-for="espacio2" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckespacio2" /> @Html.DisplayNameFor(model => model.ckespacio2)
+                    </label>
+                    </div>*@
+                    <div id="div_espacio2" class="col-md-12">
+                        @if (Model.espacio2 != null && Model.espacio2.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.espacio2" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="mantenimiento1" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_mantenimiento1', '@Model.id_b_inmuebles','mantenimiento1','#div_mantenimiento1')" id="input_mantenimiento1" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_mantenimiento1" asp-for="mantenimiento1" class="form-control" />
+                    <span asp-validation-for="mantenimiento1" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckmantenimiento1" /> @Html.DisplayNameFor(model => model.ckmantenimiento1)
+                    </label>
+                    </div>*@
+                    <div id="div_mantenimiento1" class="col-md-12">
+                        @if (Model.mantenimiento1 != null && Model.mantenimiento1.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.mantenimiento1" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="mantenimiento2" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_mantenimiento2', '@Model.id_b_inmuebles','mantenimiento2','#div_mantenimiento2')" id="input_mantenimiento2" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_mantenimiento2" asp-for="mantenimiento2" class="form-control" />
+                    <span asp-validation-for="mantenimiento2" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckmantenimiento2" /> @Html.DisplayNameFor(model => model.ckmantenimiento2)
+                    </label>
+                    </div>*@
+                    <div id="div_mantenimiento2" class="col-md-12">
+                        @if (Model.mantenimiento2 != null && Model.mantenimiento2.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.mantenimiento2" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="planta_emergencia2" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_planta_emergencia2', '@Model.id_b_inmuebles','planta_emergencia2','#div_planta_emergencia2')" id="input_planta_emergencia2" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_planta_emergencia2" asp-for="planta_emergencia2" class="form-control" />
+                    <span asp-validation-for="planta_emergencia2" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckplanta_emergencia2" /> @Html.DisplayNameFor(model => model.ckplanta_emergencia2)
+                    </label>
+                    </div>*@
+                    <div id="div_planta_emergencia2" class="col-md-12">
+                        @if (Model.planta_emergencia2 != null && Model.planta_emergencia2.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.planta_emergencia2" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="medidor_energia" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_medidor_energia', '@Model.id_b_inmuebles','medidor_energia','#div_medidor_energia')" id="input_medidor_energia" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_medidor_energia" asp-for="medidor_energia" class="form-control" />
+                    <span asp-validation-for="medidor_energia" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckmedidor_energia" /> @Html.DisplayNameFor(model => model.ckmedidor_energia)
+                    </label>
+                    </div>*@
+                    <div id="div_medidor_energia" class="col-md-12">
+                        @if (Model.medidor_energia != null && Model.medidor_energia.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.medidor_energia" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="toma_agua" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_toma_agua', '@Model.id_b_inmuebles','toma_agua','#div_toma_agua')" id="input_toma_agua" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_toma_agua" asp-for="toma_agua" class="form-control" />
+                    <span asp-validation-for="toma_agua" class="text-danger"></span>
+                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="cktoma_agua" /> @Html.DisplayNameFor(model => model.cktoma_agua)
+                    </label>
+                    </div>*@
+                    <div id="div_toma_agua" class="col-md-12">
+                        @if (Model.toma_agua != null && Model.toma_agua.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.toma_agua" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="impermeabilizante" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_impermeabilizante', '@Model.id_b_inmuebles','impermeabilizante','#div_impermeabilizante')" id="input_impermeabilizante" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_impermeabilizante" asp-for="impermeabilizante" class="form-control" />
+                    <span asp-validation-for="impermeabilizante" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckimpermeabilizante" /> @Html.DisplayNameFor(model => model.ckimpermeabilizante)
+                    </label>
+                    </div>*@
+                    <div id="div_impermeabilizante" class="col-md-12">
+                        @if (Model.impermeabilizante != null && Model.impermeabilizante.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.impermeabilizante" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    @if (Model.b_inmuebles.id_b_cg_regimen == 3 || Model.b_inmuebles.id_b_cg_regimen == 1)
+                    {
+                        <label asp-for="arquitectonico" class="control-label">Por capitalización de rentas</label>
+                    }
+                    else
+                    {
+                        <label asp-for="arquitectonico" class="control-label"></label>
+                    }
+                    <input type="file" onChange="return SaveImage('input_arquitectonico', '@Model.id_b_inmuebles','arquitectonico','#div_arquitectonico')" id="input_arquitectonico" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_arquitectonico" asp-for="arquitectonico" class="form-control" />
+                    <span asp-validation-for="arquitectonico" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckarquitectonico" /> @Html.DisplayNameFor(model => model.ckarquitectonico)
+                    </label>
+                    </div>*@
+                    <div id="div_arquitectonico" class="col-md-12">
+                        @if (Model.arquitectonico != null && Model.arquitectonico.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.arquitectonico" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="inclusion2" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_inclusion2', '@Model.id_b_inmuebles','inclusion2','#div_inclusion2')" id="input_inclusion2" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_inclusion2" asp-for="inclusion2" class="form-control" />
+                    <span asp-validation-for="inclusion2" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckinclusion2" /> @Html.DisplayNameFor(model => model.ckinclusion2)
+                    </label>
+                    </div>*@
+                    <div id="div_inclusion2" class="col-md-12">
+                        @if (Model.inclusion2 != null && Model.inclusion2.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.inclusion2" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="estacionamiento" class="control-label"></label>
+                    <input type="file" onChange="return SaveImage('input_estacionamiento', '@Model.id_b_inmuebles','estacionamiento','#div_estacionamiento')" id="input_estacionamiento" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                    <input hidden id="input2_estacionamiento" asp-for="estacionamiento" class="form-control" />
+                    <span asp-validation-for="estacionamiento" class="text-danger"></span>
+                    @*<div class="form-group form-check col-md-12" style="padding-left:25px">
+                    <label class="form-check-label">
+                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckestacionamiento" /> @Html.DisplayNameFor(model => model.ckestacionamiento)
+                    </label>
+                    </div>*@
+                    <div id="div_estacionamiento" class="col-md-12">
+                        @if (Model.estacionamiento != null && Model.estacionamiento.Length > 4)
+                        {
+                            <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.estacionamiento" class="img-fluid" style="height:100px" />
+                        }
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <h5>Datos generales</h5>
+            <hr />
+            <div class="form-row">
+                <div class="form-group form-check col-md-4" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input id="input_especial" onchange="return OnChangeEspecial()" class="form-check-input" asp-for="especial" /> @Html.DisplayNameFor(model => model.especial)
+                    </label>
+                </div>
+@*                 <div id="div_especial" class="form-row col-md-12 justify-content-md-center" style="background-color:lightblue"> *@
+                <div id="div_especial" class="form-row col-md-12" style="background-color:lightblue">
+                    @for (int i = 0; i < Model.b_inmuebles_visitas_motivo_especial.Count; i++)
+                    {
+                        if (Model.b_inmuebles_visitas_motivo_especial[i].id_b_cg_motivo_especial == 12)
+                        {
+                            <div class="form-group form-check col-md-3" style="padding-left:18px">
+                                <label class="form-check-label">
+                                    <input onchange="return OnChangeEspecialOtro()" id="@("chk_especial_" + Model.b_inmuebles_visitas_motivo_especial[i].id_b_cg_motivo_especial)" name="VisitasMotivoEspecial" name="VisitasMotivoEspecial" value="@Model.b_inmuebles_visitas_motivo_especial[i].id_b_cg_motivo_especial" class="form-check-input" asp-for="b_inmuebles_visitas_motivo_especial[i].status" />
+                                    @Model.b_inmuebles_visitas_motivo_especial[i].descripcion
+                                </label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group form-check col-md-3" style="padding-left:18px">
+                                <label class="form-check-label">
+                                    <input id="@("chk_especial_" + Model.b_inmuebles_visitas_motivo_especial[i].id_b_cg_motivo_especial)" name="VisitasMotivoEspecial" name="VisitasMotivoEspecial" value="@Model.b_inmuebles_visitas_motivo_especial[i].id_b_cg_motivo_especial" class="form-check-input" asp-for="b_inmuebles_visitas_motivo_especial[i].status" />
+                                    @Model.b_inmuebles_visitas_motivo_especial[i].descripcion
+                                </label>
+                            </div>
+                        }
+
+
+                    }
+
+
+                    <div id="div_especial_otro" class="form-group col-md-12">
+                        @*                         <label asp-for="especial_otro" class="control-label"></label>
+                        *@                        <input asp-for="especial_otro" class="form-control" />
+                        <span asp-validation-for="especial_otro" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group col-md-12">
+                    <label asp-for="observaciones" class="control-label"></label>
+                    <textarea asp-for="observaciones" class="form-control"></textarea>
+                    <span asp-validation-for="observaciones" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label asp-for="conclusiones" class="control-label"></label>
+                    <textarea asp-for="conclusiones" class="form-control"> </textarea>
+                    <span asp-validation-for="conclusiones" class="text-danger"></span>
+                </div>
+                <div hidden class="form-group col-md-12">
+                    <label asp-for="id_b_inmuebles" class="control-label"></label>
+                    <input asp-for="id_b_inmuebles" class="form-control" />
+                </div>
+
+                @*         <div class="form-group col-md-12">
+                <label asp-for="vinculo_mapa" class="control-label"></label>
+                <input asp-for="vinculo_mapa" class="form-control" />
+                <span asp-validation-for="vinculo_mapa" class="text-danger"></span>
+                </div>*@
+            </div>
+
+            <h5>Comparativa</h5>
+            <hr />
+            <div class="form-group col-md-12 overflow-auto" style="background-color:lightblue">
+                <partial name="Comparativo" model="Model.b_inmuebles_comparativo" />
+            </div>
+
+            <h5>Guardar</h5>
+            <hr />
+            <div class="row">
+                @if (ViewBag.rol == 1 || ViewBag.rol == 52)
+                {
+                    <div class="form-group form-check col-md-3" style="padding-left:25px">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="revisado" /> @Html.DisplayNameFor(model => model.revisado)
+                        </label>
+                    </div>
+                }
+
+                <div class="form-group form-check col-md-3" style="padding-left:25px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="vistado" /> @Html.DisplayNameFor(model => model.vistado)
+                    </label>
+                </div>
+                <div class="form-group col-md-3">
+                    <select asp-for="estatus_visita" asp-items=ViewBag.lstEstatusVisita class="form-control alert-warning"></select>
+                    <span asp-validation-for="estatus_visita" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    @*                    <input type="submit" value="Guardar" class="btn btn-primary" id="@Model.id_b_inmuebles" />
+                    *@
+                    <input type="submit" value="Guardar" class="btn btn-primary" id="inputGuardar" />
+
+                </div>
+            </div>
+        </form>
+
+
+
+
+    </div>
+
+
+
+    <hr />
+
+    <div>
+        <a asp-action="Index">Regresar</a>
+    </div>
+
+</body>
+
+
+<script type="text/javascript">
+
+    function OnLoad() {
+        ActualizaServicio();
+        MostrarDireccion();
+        SumaAnuncios();
+        AireAcondicionado();
+        CambioConservacion();
+        CambioAreasConvivencia();
+        $('#inputGuardar').removeAttr('disabled');
+        OnChangeEspecial();
+
+    }
+
+    function CambioAreasConvivencia() {
+        try {
+            var aux = $("#select_areas_convivencia option:selected").val();
+            if (aux == 'Si')
+                $("#div_areas_convivencia_desc").show();
+            else
+            {
+                $("#div_areas_convivencia_desc").hide();
+                $("#input_areas_convivencia_desc").val("");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    function OnSubmit() {
+        $('#inputGuardar').prop('disabled', true);
+
+        var aux = $("#input_m2_sucursal_precio").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_sucursal_precio").val(aux);
+
+        aux = $("#input_contrato_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_contrato_renta").val(aux);
+
+        aux = $("#input_m2_totales").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_totales").val(aux);
+
+        aux = $("#input_m2_terreno").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_terreno").val(aux);
+
+        aux = $("#input_area_rentable").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_area_rentable").val(aux);
+
+        aux = $("#input_m2_construccion").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_construccion").val(aux);
+
+        aux = $("#input_superficie_estacionamiento").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_superficie_estacionamiento").val(aux);
+
+
+        aux = $("#input_m2_rango_inf3").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_rango_inf3").val(aux);
+
+        aux = $("#input_m2_rango_sup3").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_rango_sup3").val(aux);
+
+
+        try {
+            aux = $("#input_m2_rango_inf2").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+            $("#input_m2_rango_inf2").val(aux);
+
+            aux = $("#input_m2_rango_sup2").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+            $("#input_m2_rango_sup2").val(aux);
+
+            aux = $("#input_valor_comercial").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+            $("#input_valor_comercial").val(aux);
+
+        } catch (error) {
+            console.error(error);
+            // Expected output: ReferenceError: nonExistentFunction is not defined
+            // (Note: the exact output may be browser-dependent)
+        }
+
+        try {
+            aux = $("#input_m2_rango_inf").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+            $("#input_m2_rango_inf").val(aux);
+
+            aux = $("#input_m2_rango_sup").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+            $("#input_m2_rango_sup").val(aux);
+        } catch (error) {
+            console.error(error);
+            // Expected output: ReferenceError: nonExistentFunction is not defined
+            // (Note: the exact output may be browser-dependent)
+        }
+
+
+
+        $('#inputGuardar').removeAttr('disabled');
+
+    }
+    function OnChangeEspecialOtro() {
+        var aux2 = document.getElementById("chk_especial_12").checked;
+        if (aux2)
+            $("#div_especial_otro").show();
+        else
+            $("#div_especial_otro").hide();
+    }
+
+    function OnChangeEspecial() {
+        var aux = document.getElementById("input_especial").checked;
+
+
+        if (aux) {
+            $("#div_especial").show();
+
+            OnChangeEspecialOtro();
+        }
+        else
+            $("#div_especial").hide();
+    }
+
+
+    function AireAcondicionado() {
+        var aux = document.getElementById("input_aire_acondicionado").checked;
+
+        if (aux)
+            $("#div_aire_acondicionado2").show();
+        else
+            $("#div_aire_acondicionado2").hide();
+    }
+
+    function CambioConservacion() {
+        var aux = $("#select_id_b_cg_conservacion option:selected").val();
+        if (aux >= 2)
+            $("#div_mantenimiento").show();
+        else
+            $("#div_mantenimiento").hide();
+    }
+
+    function calculaM2() {
+        var total = 0;
+        var a1 = parseInt($("#input_contrato_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2'));
+        var a2 = parseInt($("#input_m2_totales").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2'));
+        if (a2 != 0)
+            total = a1 / a2;
+        $("#input_m2_sucursal_precio").val(total.toFixed(2));
+    }
+
+    function ActualizaServicio() {
+        var total = 0;
+        var a1 = parseInt($("#input_practicajas").val());
+        var a2 = parseInt($("#input_practicajas_servicio").val());
+        total = a1 - a2;
+        $("#input_practicajas_diferencia").val(total);
+
+        var b1 = parseInt($("#input_ventanillas").val());
+        var b2 = parseInt($("#input_ventanillas_servicio").val());
+        total = b1 - b2;
+        $("#input_ventanillas_diferencia").val(total);
+
+        var c1 = parseInt($("#input_cajeros_automaticos").val());
+        var c2 = parseInt($("#input_cajeros_automaticos_servicio").val());
+        total = c1 - c2;
+        $("#input_cajeros_automaticos_diferencia").val(total);
+
+        var d1 = parseInt($("#input_cajones_estacionamiento").val());
+        var d2 = parseInt($("#input_cajones_estacionamiento_servicio").val());
+        total = d1 - d2;
+        $("#input_cajones_estacionamiento_diferencia").val(total);
+
+        var c1 = parseInt($("#input_cajones_estacionamiento_ejecutivo").val());
+        var c2 = parseInt($("#input_cajones_estacionamiento_ejecutivo_servicio").val());
+        total = c1 - c2;
+        $("#input_cajones_estacionamiento_ejecutivo_diferencia").val(total);
+    }
+
+
+    function SaveImage(id, idInmueble, nameArchivo, NameDiv) {
+        var input = document.getElementById(id);
+        var files = input.files;
+        var formData = new FormData();
+        var input2 = '#input2_' + nameArchivo;
+        var ext = input.files[0].name.split('.').pop();;//input.files[0].type;
+        $(NameDiv).empty();
+        const d = new Date();
+        var fecha = " " + d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2) + ("0" + d.getHours()).slice(-2) + ("0" + d.getMinutes()).slice(-2) + ("0" + d.getSeconds()).slice(-2);
+
+        for (var i = 0; i != files.length; i++) {
+            formData.append("files", files[i]);
+        }
+        formData.append("idInmueble", idInmueble);
+        formData.append("nameArchivo", nameArchivo + fecha);
+
+        $.ajax({
+            type: "POST",
+            url: "/B_inmuebles_visitas/UploadFiles",
+            data: formData, // In the controller it receives IFormFile image
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                $(NameDiv).html(result);
+                $(input2).val(nameArchivo + fecha + '.' + ext);
+            },
+            error: function (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+
+    }
+
+    function SumaAnuncios() {
+
+        var total = 0;
+        var a1 = parseInt($("#input_marquesina").val());
+        var a2 = parseInt($("#input_letras_rotuladas").val());
+        var a3 = parseInt($("#input_bandera").val());
+        var a4 = parseInt($("#input_paleta").val());
+        var a5 = parseInt($("#input_unipolar").val());
+        var a6 = parseInt($("#input_totem").val());
+        total = a1 + a2 + a3 + a4 + a5 + a6;
+        $("#input_no_anuncios").val(total);
+    }
+
+    function MostrarDireccion() {
+        var medidor = $("#select_medidor option:selected").text();
+        var agua = $("#select_agua_toma option:selected").text();
+
+        if (medidor == 'No' || medidor == 'N/A') {
+            document.getElementById('input_medidor_direccion').readOnly = true;
+            document.getElementById('input_medidor_direccion').value = '';
+        }
+        else {
+            document.getElementById('input_medidor_direccion').readOnly = false;
+        }
+
+        if (agua == 'No' || agua == 'N/A') {
+            document.getElementById('input_agua_toma_direccion').readOnly = true;
+            document.getElementById('input_agua_toma_direccion').value = '';
+        }
+        else
+            document.getElementById('input_agua_toma_direccion').readOnly = false;
+    }
+
+    //Moneda y numero
+    function formatCurrency(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = '$' + value;
+    }
+    function formatNumber(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = value;
+    }
+
+    function formatRemove(input) {
+        const value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        input.value = value;
+    }
+
+
+
+</script>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

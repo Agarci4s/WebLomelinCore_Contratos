@@ -1,0 +1,449 @@
+﻿@model WebColliersCore.Models.Localidad
+
+    <header>
+        <script src="~/js/core.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+        @{
+            try
+            {
+                if (ViewBag.ErrorLocalidad)
+                {
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#modalError").modal('show');
+                        });
+                    </script>
+
+                }
+            }
+            catch (Exception) { }            
+        }
+    </header>
+
+    <div class="container">
+
+        <div class="modal fade" id="modalError" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Aviso</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <label>¡@ViewBag.Mensaje!</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+
+    </div>
+<h4>Agregar nueva localidad</h4>
+<hr />
+<div class="row">
+
+    <form asp-action="Create">
+        <div class="row card-body">
+            <div class="form-group p-2 p2">
+                <label asp-for="IdInmueble" class="control-label">Inmueble *</label>
+                <select asp-for="IdInmueble" asp-items=ViewBag.lstInmuebles class="form-control"></select>
+                <span asp-validation-for="IdInmueble" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <label asp-for="IdUsoInmueble" class="control-label">Tipo de Localidad *</label>
+                <select asp-for="IdUsoInmueble" asp-items=ViewBag.lstUso class="form-control"></select>
+                <span asp-validation-for="IdUsoInmueble" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <label asp-for="Estado" class="control-label">Estatus *</label>
+                <select id="cmbEstado" onchange="return changeEstado()" asp-for="Estado" asp-items=ViewBag.lstEstado class="form-control"></select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <label asp-for="IdInquilino" class="control-label">Arrendatario *</label>
+                <select id="cmbArrendatarios" onchange="return changeArrendatario()" asp-for="IdInquilino" asp-items=ViewBag.lstArrendatarios class="form-control"></select>
+                <span asp-validation-for="IdInquilino" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <label asp-for="IdNombreComercial" class="control-label">Nombre Comercial *</label>
+                <select id="cmbNombreComercial" asp-for="IdNombreComercial" asp-items=ViewBag.lstNombreComercial class="form-control"></select>
+                <span asp-validation-for="IdNombreComercial" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <label asp-for="NumeroLocalidad" class="control-label">Localidad *</label>
+                <input asp-for="NumeroLocalidad" class="form-control" />
+                <span asp-validation-for="NumeroLocalidad" class="text-danger"></span>
+            </div>            
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Contrato</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">Plazos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Revisión</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu3">Prorrateos</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="home" class=" tab-pane active">
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                                Datos Generales
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="LocalesAgrupados" class="control-label"></label>
+                                    <input asp-for="LocalesAgrupados" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="LocalesAgrupados" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PropTer" class="control-label"></label>
+                                    <select asp-for="PropTer" asp-items=ViewBag.lstPropioTercero class="form-control"></select>
+                                    <span asp-validation-for="PropTer" class="text-danger"></span>
+                                </div>                                
+                                <div class="form-group p-2">
+                                    <label asp-for="DepRta" class="control-label"></label>
+                                    <input asp-for="DepRta" class="form-control" value="0" />
+                                    <span asp-validation-for="DepRta" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Pagare" class="control-label"></label>
+                                    <input asp-for="Pagare" class="form-control" />
+                                    <span asp-validation-for="Pagare" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="DiaVencimiento" class="control-label"></label>
+                                    <input asp-for="DiaVencimiento" class="form-control" value="1" min="0" />
+                                    <span asp-validation-for="DiaVencimiento" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="DiaLimitePago" class="control-label"></label>
+                                    <input asp-for="DiaLimitePago" class="form-control" value="10" min="0" />
+                                    <span asp-validation-for="DiaLimitePago" class="text-danger"></span>
+                                </div>
+                                @*<div class="form-group p-2">
+                                <label asp-for="Ruta" class="control-label"></label>
+                                <select asp-for="Ruta" class="form-control"></select>
+                                <span asp-validation-for="Ruta" class="text-danger"></span>
+                            </div>
+                            <div class="form-group p-2">
+                                <label asp-for="DivisionRuta" class="control-label"></label>
+                                <select asp-for="DivisionRuta" class="form-control"></select>
+                                <span asp-validation-for="DivisionRuta" class="text-danger"></span>
+                            </div>*@
+                                <div class="form-group p-2">
+                                    <label asp-for="FolioContrato" class="control-label"></label>
+                                    <input asp-for="FolioContrato" class="form-control" />
+                                    <span asp-validation-for="FolioContrato" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="Categoria" class="control-label"></label>
+                                    <select asp-for="Categoria" asp-items=ViewBag.lstCategorias class="form-control"></select>
+                                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="ObservacionDepositoGarantia" class="control-label"></label>
+                                    <input asp-for="ObservacionDepositoGarantia" class="form-control" />
+                                    <span asp-validation-for="ObservacionDepositoGarantia" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="NumeroReferenciado" class="control-label"></label>
+                                    <input asp-for="NumeroReferenciado" class="form-control" />
+                                    <span asp-validation-for="NumeroReferenciado" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="NumeroReferenciadoMtto" class="control-label"></label>
+                                    <input asp-for="NumeroReferenciadoMtto" class="form-control" />
+                                    <span asp-validation-for="NumeroReferenciadoMtto" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="menu1" class="tab-pane fade">
+                <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
+                    <div class="row card-body">
+                        <div class="form-group p-2">
+                            <label asp-for="FechaUltimaRenovacion" class="control-label"></label>
+                            <input asp-for="FechaUltimaRenovacion" class="form-control" type="date" value="1900-01-01" />
+                            <span asp-validation-for="FechaUltimaRenovacion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="FechaTermino" class="control-label"></label>
+                            <input asp-for="FechaTermino" class="form-control" type="date" value="1900-01-01" />
+                            <span asp-validation-for="FechaTermino" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="FechaOcupacion" class="control-label"></label>
+                            <input asp-for="FechaOcupacion" class="form-control" type="date" value="1900-01-01" />
+                            <span asp-validation-for="FechaOcupacion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="FechaInicioContratoUno" class="control-label"></label>
+                            <input asp-for="FechaInicioContratoUno" class="form-control" type="date" value="1900-01-01" />
+                            <span asp-validation-for="FechaInicioContratoUno" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="FechaFinContratoUno" class="control-label"></label>
+                            <input asp-for="FechaFinContratoUno" class="form-control" type="date" value="1900-01-01" />
+                            <span asp-validation-for="FechaFinContratoUno" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordion2">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo2">
+                                Arrendador Forzoso
+                            </a>
+                        </div>
+                        <div id="collapseTwo2" class="collapse" data-parent="#accordion2">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoPFAnio" class="control-label"></label>
+                                    <input asp-for="PlazoPFAnio" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoPFAnio" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoPFMes" class="control-label"></label>
+                                    <input asp-for="PlazoPFMes" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoPFMes" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoPFDia" class="control-label"></label>
+                                    <input asp-for="PlazoPFDia" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoPFDia" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo3">
+                                Arrendatario Forzoso
+                            </a>
+                        </div>
+                        <div id="collapseTwo3" class="collapse" data-parent="#accordion2">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoIFAnio" class="control-label"></label>
+                                    <input asp-for="PlazoIFAnio" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoIFAnio" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoIFMes" class="control-label"></label>
+                                    <input asp-for="PlazoIFMes" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoIFMes" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoIFDia" class="control-label"></label>
+                                    <input asp-for="PlazoIFDia" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoIFDia" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo4">
+                                Arrendador Voluntario
+                            </a>
+                        </div>
+                        <div id="collapseTwo4" class="collapse" data-parent="#accordion2">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoPVAnio" class="control-label"></label>
+                                    <input asp-for="PlazoPVAnio" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoPVAnio" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoPVMes" class="control-label"></label>
+                                    <input asp-for="PlazoPVMes" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoPVMes" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoPVDia" class="control-label"></label>
+                                    <input asp-for="PlazoPVDia" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoPVDia" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo5">
+                                Arrendatario Voluntario
+                            </a>
+                        </div>
+                        <div id="collapseTwo5" class="collapse" data-parent="#accordion2">
+                            <div class="row card-body">
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoIVAnio" class="control-label"></label>
+                                    <input asp-for="PlazoIVAnio" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoIVAnio" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoIVMes" class="control-label"></label>
+                                    <input asp-for="PlazoIVMes" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoIVMes" class="text-danger"></span>
+                                </div>
+                                <div class="form-group p-2">
+                                    <label asp-for="PlazoIVDia" class="control-label"></label>
+                                    <input asp-for="PlazoIVDia" class="form-control" value="0" min="0" />
+                                    <span asp-validation-for="PlazoIVDia" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="menu2" class="tab-pane fade">
+                <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
+                    <div class="row card-body">
+                        <div class="form-group p-2">
+                            <label asp-for="FechaRevision" class="control-label"></label>
+                            <input asp-for="FechaRevision" class="form-control" type="date" value="1900-01-01" />
+                            <span asp-validation-for="FechaRevision" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="RevisionPorcentajeAdicional" class="control-label"></label>
+                            <input asp-for="RevisionPorcentajeAdicional" class="form-control" value="0" />
+                            <span asp-validation-for="RevisionPorcentajeAdicional" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="RevisionPeriodo" class="control-label"></label>
+                            <select asp-for="RevisionPeriodo" asp-items=ViewBag.lstRevisionPlazo class="form-control"></select>
+                            <span asp-validation-for="RevisionPeriodo" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="IdRevisionBase" class="control-label"></label>
+                            <select asp-for="IdRevisionBase" asp-items=ViewBag.lstRevision class="form-control"></select>
+                            <span asp-validation-for="IdRevisionBase" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-2">
+                            <label asp-for="ObservacionesContrato" class="control-label"></label>
+                            <input asp-for="ObservacionesContrato" class="form-control" />
+                            <span asp-validation-for="ObservacionesContrato" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12 p-2">
+                            <label asp-for="ClausulasTerminacion" class="control-label"></label>
+                            <textarea asp-for="ClausulasTerminacion" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="ClausulasTerminacion" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @*tab de prorrateos*@
+            <div id="menu3" class="tab-pane fade">
+                <div id="collapseOne3" class="collapse show" data-parent="#accordion3">
+                    <div class="row card-body">
+                        <div class="row col-md-3">
+                            <div class="form-group p-2" style="text-align:center;">
+                                <label asp-for="PagaAgua" class="control-label"></label><br />                                
+                                <input asp-for="PagaAgua" class="form-check-input" type="checkbox" />
+                                <span asp-validation-for="PagaAgua" class="text-danger"></span>
+                            </div>
+                            <div class="form-group p-2">
+                                <label asp-for="PorcentajeAgua" class="control-label"></label>
+                                <input asp-for="PorcentajeAgua" class="form-control" value="0" readonly />
+                                <span asp-validation-for="PorcentajeAgua" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row col-md-3">
+                            <div class="form-group p-2" style="text-align:center;">
+                                <label asp-for="PagaAguaHelada" class="control-label"></label><br />
+                                <input asp-for="PagaAguaHelada" class="form-check-input" type="checkbox" />
+                                <span asp-validation-for="PagaAguaHelada" class="text-danger"></span>
+                            </div>
+                            <div class="form-group p-2">
+                                <label asp-for="PorcentajeAguaHelada" class="control-label"></label>
+                                <input asp-for="PorcentajeAguaHelada" class="form-control" value="0" readonly />
+                                <span asp-validation-for="PorcentajeAguaHelada" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row col-md-3">
+                            <div class="form-group p-2" style="text-align:center;">
+                                <label asp-for="PagaEnergiaElectrica" class="control-label"></label><br />
+                                <input asp-for="PagaEnergiaElectrica" class="form-check-input" type="checkbox" />
+                                <span asp-validation-for="PagaEnergiaElectrica" class="text-danger"></span>
+                            </div>
+                            <div class="form-group p-2">
+                                <label asp-for="PorcentajeEnergiaElectrica" class="control-label"></label>
+                                <input asp-for="PorcentajeEnergiaElectrica" class="form-control" value="0" readonly />
+                                <span asp-validation-for="PorcentajeEnergiaElectrica" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="form-group p-2">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+
+</div>
+
+<div>
+    <a asp-action="Index">Regresar a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
+    function showDate() {
+        $("form").validate().settings.ignore = "";
+    }
+
+    function changeEstado() {
+        var newId = $("#cmbEstado").val();
+        var url = "/Localidades/GetArrendatariosList";
+
+        $.getJSON(url, { id: newId }, function (data) {
+            var item = "";
+            $("#cmbArrendatarios").empty();
+            $.each(data, function (i, Inquilinos) {
+                item += '<option value="' + Inquilinos.value + '">' + Inquilinos.text + '</option>'
+            });
+            $("#cmbArrendatarios").html(item);
+        });
+
+    }
+
+    function changeArrendatario() {
+        var newId = $("#cmbArrendatarios").val();
+        var url = "/Localidades/GetNombresComercialesList";
+
+        $.getJSON(url, { id: newId }, function (data) {
+            var item = "";
+            $("#cmbNombreComercial").empty();
+            $.each(data, function (i, Inquilinos) {
+                item += '<option value="' + Inquilinos.value + '">' + Inquilinos.text + '</option>'
+            });
+            $("#cmbNombreComercial").html(item);
+        });
+
+    }
+</script>
+

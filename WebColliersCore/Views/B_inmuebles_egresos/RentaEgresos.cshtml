@@ -1,0 +1,457 @@
+﻿@model WebLomelinCore.Models.B_inmuebles_egresos
+@* @model IEnumerable<WebLomelinCore.Models.B_inmuebles_egresos> *@
+
+@{
+    ViewData["Title"] = "Renta Egresos";
+}
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 480px;
+            border: 1px solid rgba(11,59,126,1);
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: left;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                border: 0px solid white;
+                text-align: center;
+                background: rgba(11,59,126,1);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+            margin-right: 6px;
+        }
+
+        #tab tr.noSearch {
+            background: White;
+            font-size: 0.8em;
+        }
+
+            #tab tr.noSearch td {
+                padding-top: 10px;
+                text-align: center;
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .red {
+            color: Red;
+        }
+
+        #tab tr:hover {
+            background-color: aliceblue;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            var url = '@Url.Action("GetInmuebles")';
+            $.getJSON(url, {
+            }, function (data) {
+                var item = "";
+                $("#datalistIdInmueble").empty();
+                $.each(data, function (i, result) {
+                    item += '<option data-value="' + result.value + '" value="' + result.text + '">';
+                });
+                $("#datalistIdInmueble").html(item);
+            });
+        });
+    </script>
+</header>
+
+<h4>Renta Egresos</h4>
+
+
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="IdInmueble" class="control-label"></label>
+        <input placeholder="Inmueble" id="inputDataListInm" type="text" list="datalistIdInmueble" class="form-control" />
+        <datalist id="datalistIdInmueble"></datalist>
+        <select id="inputIdInmueble" class="form-control" asp-items="ViewBag.Inmuebles" style="visibility:hidden; height:0px"></select>
+    </div>
+    @* <div class="form-group col">
+        <label asp-for="IdInmueble" class="control-label"></label>
+        <select id="selectInmueble" asp-for="IdInmueble" asp-items=ViewBag.Inmuebles class="form-control"></select>
+    </div> *@
+    <div class="form-group col-sm-3">
+        <label asp-for="IdContrato" class="control-label"></label>
+        <select id="selectContrato" asp-for="IdContrato" asp-items=ViewBag.Contratos class="form-control"></select>
+    </div>
+    <div class="form-group col align-self-end">
+        <button class="btn btn-primary align-items-start" onclick="return SaveEgreso();">Guardar...<i class="bi bi-floppy"></i></button>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    @* <div class="col-sm-4">
+        <label asp-for="IdEgreso" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="selectEgreso">
+                    <i class="bi bi-info-circle-fill"></i>
+                </label>
+            </div>
+            <select id="selectEgreso" asp-for="IdEgreso" asp-items=ViewBag.Egresos class="form-control"></select>
+        </div>
+    </div> *@
+    <div class="col-sm-3">
+        <label asp-for="Importe" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="inputImporte">
+                    <i class="bi bi-currency-dollar"></i>
+                </label>
+            </div>
+            <input id="inputImporte" type="number" asp-for="Importe" class="form-control" value="0.00" />
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <label asp-for="PorcIVA" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="selectPorcIVA">
+                    <i class="bi bi-info-circle-fill"></i>
+                </label>
+            </div>
+            <select id="selectPorcIVA" asp-for="PorcIVA" asp-items=ViewBag.PorcIVA class="form-control align-self-end"></select>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <label asp-for="IVA" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="inputIVA">
+                    <i class="bi bi-currency-dollar"></i>
+                </label>
+            </div>
+            <input id="inputIVA" disabled type="number" asp-for="IVA" class="form-control" value="0.00" />
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        <label asp-for="PorcRetISR" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="selectPorcRetISR">
+                    <i class="bi bi-info-circle-fill"></i>
+                </label>
+            </div>
+            <select id="selectPorcRetISR" asp-for="PorcRetISR" asp-items=ViewBag.PorcRetISR class="form-control"></select>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <label asp-for="RetISR" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="inputRetISR">
+                    <i class="bi bi-currency-dollar"></i>
+                </label>
+            </div>
+            <input id="inputRetISR" disabled type="number" asp-for="RetISR" class="form-control" value="0.00" />
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <label asp-for="PorcRetIVA" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="selectPorcRetIVA">
+                    <i class="bi bi-info-circle-fill"></i>
+                </label>
+            </div>
+            <select id="selectPorcRetIVA" asp-for="PorcRetIVA" asp-items=ViewBag.PorcRetIVA class="form-control"></select>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <label asp-for="RetIVA" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="inputRetIVA">
+                    <i class="bi bi-currency-dollar"></i>
+                </label>
+            </div>
+            <input id="inputRetIVA" disabled type="number" asp-for="RetIVA" class="form-control" value="0.00" />
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        <label asp-for="IdMoneda" class="control-label"></label>
+        <div class="input-group">
+            <div class="input-group-append">
+                <label class="input-group-text" for="selectMoneda">
+                    <i class="bi bi-info-circle-fill"></i>
+                </label>
+            </div>
+            <select id="selectMoneda" asp-for="IdMoneda" asp-items=ViewBag.Monedas class="form-control"></select>
+        </div>
+    </div>
+</div>
+<br />
+@using (Html.BeginForm("GetEgresos", "B_inmuebles_egresos", null, FormMethod.Post, false, new { id = "formAccion" }))
+{
+    <div id="divLista">
+        @{
+            await Html.RenderPartialAsync("_ListEgresos");
+        }
+    </div>
+}
+
+
+@section Scripts {
+    <script src="~/lib/JQuery_Versiones/jquery_2.2.4/dist/jquery.min.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+    $("#inputDataListInm").on("change paste keyup", function () {
+
+        $("#inputIdInmueble").val('');
+        var inputValue = document.getElementById("inputDataListInm").value;
+        var options = document.querySelectorAll('#datalistIdInmueble option');
+
+        if (options.length > 0) {
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                if (option.getAttribute('value') === inputValue) {
+                    var value = option.getAttribute('data-value');
+                    $("#inputIdInmueble").val(value);
+                    GetEgresos($('#inputIdInmueble').val());
+                    LoadContratos();
+                    break;
+                }
+            }
+        }
+        else
+            $("#inputIdInmueble").focus();
+
+    });
+    // $("#selectInmueble").on("change", function () {
+    //     GetEgresos($('#selectInmueble').val());
+    //     LoadContratos();
+    // });
+
+    $("#inputIdInmueble").on("change", function () {
+        GetEgresos($('#inputIdInmueble').val());
+        LoadContratos();
+    });
+
+    $("#selectContrato").on("change click", function () {
+        GetEgresos($('#inputIdInmueble').val());
+    });
+
+    $("#selectPorcIVA").on("change", function () {
+        ActualizarImporteIVA();
+        LoadRetIVA();
+    });
+
+    $("#selectPorcRetISR").on("change", function () {
+        ActualizarImporteRetISR();
+    });
+
+    $("#selectPorcRetIVA").on("change", function () {
+        ActualizarImporteRetIVA();
+    });
+
+    $("#inputImporte").on("change keyup", function () {
+        ActualizarImporteIVA();
+        ActualizarImporteRetISR();
+        ActualizarImporteRetIVA();
+    });
+
+    function ActualizarImporteIVA(){
+        var porc = $("#selectPorcIVA").val();
+        var importeBase = $("#inputImporte").val();
+        var IVA = importeBase * (porc/100);
+        $("#inputIVA").val(IVA);
+    }
+
+    function ActualizarImporteRetISR(){
+        var porc = $("#selectPorcRetISR").val();
+        var importeBase = $("#inputImporte").val();
+        var RetISR = importeBase * (porc/100);
+        $("#inputRetISR").val(RetISR);
+    }
+
+    function ActualizarImporteRetIVA(){
+        var porc = $("#selectPorcRetIVA").val();
+        var importeBase = $("#inputImporte").val();
+        var RetISR = importeBase * (porc/100);
+        $("#inputRetIVA").val(RetISR);
+    }
+
+    function LoadRetIVA() {
+        var newId = $("#selectPorcIVA").val();
+        var url = '@Url.Action("GetPorcRetIVA")';
+            $.getJSON(url, { porcentaje: newId }, function (data) {
+        var item = "";
+        $("#selectPorcRetIVA").empty();
+        $.each(data, function (i, ret) {
+            item += '<option id="'+ ret.value +'" value="' + ret.value + '">' + ret.text + '</option>'
+        });
+                $("#selectPorcRetIVA").html(item);
+            });
+            $("#inputRetIVA").val("0");
+        return false;
+    }
+
+    function LoadContratos() {
+        var newId = $("#inputIdInmueble").val();
+        var url = '@Url.Action("GetContratos")';
+            $.getJSON(url, { IdInmueble: newId }, function (data) {
+        var item = "";
+        $("#selectContrato").empty();
+        $.each(data, function (i, ret) {
+            item += '<option id="'+ ret.value +'" value="' + ret.value + '">' + ret.text + '</option>'
+        });
+                $("#selectContrato").html(item);
+            });
+        return false;
+    }
+
+    function SaveEgreso() {
+
+        if ($('#selectContrato').val() == null || $('#selectContrato').val() == 0) {
+            swal('¡Dato Obligatorio!', "Favor de seleccionar un contrato válido", "error");
+            return false;
+        }
+        if ($('#inputImporte').val() == "" || $('#inputImporte').val() == "0.00") {
+            swal('¡Dato Obligatorio!', "Favor de ingresar el importe del concepto", "error");
+            return false;
+        }
+
+        var formData = new FormData();
+
+        formData.append("IdInmueble", $('#inputIdInmueble').val());
+        formData.append("IdEgreso", 1);
+        formData.append("Importe", $('#inputImporte').val());
+        formData.append("PorcIVA", $('#selectPorcIVA').val());
+        formData.append("IVA", $('#inputIVA').val());
+        formData.append("PorcRetISR", $('#selectPorcRetISR').val());
+        formData.append("RetISR", $('#inputRetISR').val());
+        formData.append("PorcRetIVA", $('#selectPorcRetIVA').val());
+        formData.append("RetIVA", $("#inputRetIVA").val());
+        formData.append("IdMoneda", $("#selectMoneda").val());
+        formData.append("IdContrato", $("#selectContrato").val());
+
+        $.ajax({
+            url: '@Url.Action("SaveEgreso")',
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    swal('¡Registro Exitoso!', "Egreso registrado con éxito", "success");
+                    GetEgresos($('#inputIdInmueble').val());
+                } else {
+                    swal('¡Atención!', response.responseText, "error");
+                }
+            },
+            error: function () {
+                swal('¡Error!', "Ocurrio un error al procesar el registro", "error");
+            }
+        });
+
+
+    };
+
+    function GetEgresos(id) {
+        $('#divLista').empty();
+        var url = '@Url.Action("GetEgresosRentasByInmueble")';
+
+        $.post(url,
+            {
+                Id: id,
+                IdContrato: $("#selectContrato").val()
+            }, function (result) {
+                $('#divLista').html(result);
+            });
+    };
+
+    function deleteEgreso(id) {
+        swal({
+            title: "¿Esta seguro (a) de eliminar el Egreso seleccionado?",
+            text: "No se podrá deshacer esta acción...",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var url = '@Url.Action("DeleteEgreso")';
+                    $.post(url,
+                        {
+                            id: id
+                        }, function (result) {
+
+                            swal("¡Hecho!",
+                                "Egreso eliminado con éxito",
+                                "success");
+
+                           GetEgresos($('#inputIdInmueble').val());
+                        });
+
+                } else {
+                    swal("Accion cancelada por el usuario");
+                }
+            });
+
+    };
+
+
+</script>

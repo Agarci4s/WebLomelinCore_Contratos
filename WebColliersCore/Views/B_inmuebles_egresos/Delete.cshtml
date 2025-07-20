@@ -1,0 +1,12 @@
+﻿@model WebLomelinCore.Models.B_inmuebles_egresos
+
+<h3>¿Seguro que desea eliminar el Egreso seleccionado?</h3>
+<div>
+    <h4>@ViewBag.Egreso</h4>
+    <hr />   
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar</a>
+    </form>
+</div>

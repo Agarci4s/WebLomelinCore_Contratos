@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Contratos BBVA-Lomelin</title>
+    
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        #grad1 {
+            /*height: 50px;*/
+            background-color: rgba(11,59,126,1);
+            /*background-image: linear-gradient(#0da4e1, #0b5493 );*/
+        }
+
+        .btn-circle {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <header>
+        <div class="modal" id="divModalProcesando" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Aviso</h5>
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>*@
+                    </div>
+                    <div class="modal-body">
+                        <p>Procesando información...</p>
+                    </div>
+                    <div class="modal-footer">
+                        @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button onclick="return PreparaPagosParcial()" type="button" class="btn btn-primary">Crear</button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav id="grad1" style="width:auto" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+            <div class="navbar-collapse collapse col-md-1 align-content-center">
+                <img id="" style=" resize:none" src="~/Images/Logo-mini.png" />
+            </div>
+
+            <div class="navbar-collapse collapse" style="resize:none">
+                <a id="imgLogo" class="navbar-brand" style="color:aliceblue; resize:none; width:180px; height:45px" asp-area="" asp-controller="Home" asp-action="Index">INMOCONTROL</a>
+            </div>
+
+            <div class="container p-2" style="z-index: 999">
+                @*<a class="navbar-brand" style="color:aliceblue; resize:none; height:auto" asp-area="" asp-controller="Home" asp-action="Index">Colliers Core</a>*@
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div style="min-width:60%;" class="row navbar-collapse collapse">
+                    @*style="overflow-x: scroll"*@
+                    @using Microsoft.AspNetCore.Http;
+                    @{
+                        Context.Request.Cookies.TryGetValue("CoreInmocontrol", out string strRequest);
+                    }
+                    @if (!Context.Request.Cookies.TryGetValue("CoreInmocontrolCartera", out string strRequestCartera))
+                    {
+                        if (strRequest != null)
+                        {
+                            Menu menu = new Menu();
+                            menu.AcualizaStatusUsuario(strRequest);
+                        }
+                        Context.Response.Cookies.Delete("CoreInmocontrol");
+                        strRequest = null;
+                    }
+
+                    @if (strRequest != null)
+                    {
+                        Menu menu = new Menu();
+
+                        var dateTime = DateTime.Now.AddMinutes(SystemComplementos.tiempoSesion);
+                        CookieOptions option = new CookieOptions();
+                        option.Expires = dateTime;
+                        option.IsEssential = true;
+                        Context.Response.Cookies.Append("CoreInmocontrol", strRequest, option);
+                        menu.AcualizaStatusUsuario(strRequest);
+
+
+                        List<Transf_Opciones> transf_Opciones = menu.CreaMenu(strRequest);
+
+                        if (transf_Opciones != null)
+                        {
+                            for (int i = 0; i < transf_Opciones.Count; i++)
+                            {
+                                if (transf_Opciones[i].checkTransf_Opciones)
+                                {
+                                    <ul class="nav navbar-nav">
+                                        <li class="dropdown p-1">
+                                            <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @transf_Opciones[i].NameOpcion <span class="caret"></span></a>
+                                            <ul class="dropdown-menu" style=" background-color:whitesmoke">
+                                                @while (i < transf_Opciones.Count)
+                                                {
+                                                    if (transf_Opciones[i].checkTransf_Opciones && !string.IsNullOrEmpty(transf_Opciones[i].NameSub))
+                                                    {
+                                                        <li style="position:relative">
+                                                            <a class="p-1 dropdown-toggle" href="#" style="color:darkblue">@transf_Opciones[i].NameSub</a>
+                                                            <ul class="dropdown-menu" style=" background-color:whitesmoke">
+                                                                @while (i < transf_Opciones.Count)
+                                                                {
+                                                                    if (transf_Opciones[i].checkTransf_Opciones )
+                                                                    {
+                                                                        <li class="p-1 dropdown-ite">
+                                                                            <a style="color:darkblue" asp-area="" asp-controller="@transf_Opciones[i].Controller" asp-action="@transf_Opciones[i].Action"> @transf_Opciones[i].descripcion</a>
+                                                                        </li>
+                                                                    }
+                                                                    i = i + 1;
+                                                                    if (i >= transf_Opciones.Count || transf_Opciones[i - 1].NameSub != transf_Opciones[i].NameSub)
+                                                                    {
+                                                                        i = i - 1;
+                                                                        break;
+                                                                    }
+                                                                    if (i >= transf_Opciones.Count || transf_Opciones[i - 1].NameOpcion != transf_Opciones[i].NameOpcion)
+                                                                    {
+                                                                        i = i - 1;
+                                                                        break;
+                                                                    }
+
+                                                                }
+                                                            </ul>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (transf_Opciones[i].checkTransf_Opciones && transf_Opciones[i].idTransfOpciones != 91 && transf_Opciones[i].idTransfOpciones != 99)//No se muestra el submenú duplicado
+                                                        {
+                                                            <li class="p-1 dropdown-ite">
+                                                                <a style="color:darkblue" id="@transf_Opciones[i].descripcion" asp-area="" asp-controller="@transf_Opciones[i].Controller" asp-action="@transf_Opciones[i].Action"> @transf_Opciones[i].descripcion</a>
+                                                            </li>
+                                                        }
+                                                    }
+
+                                                    i = i + 1;
+                                                    if (i >= transf_Opciones.Count || transf_Opciones[i - 1].NameOpcion != transf_Opciones[i].NameOpcion)
+                                                    {
+                                                        i = i - 1;
+                                                        break;
+                                                    }
+                                                }
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                }
+                            }
+                        }
+                        string rol = menu.RecuperaRol(strRequest);
+                        if (rol == "1" || rol == "2")
+                        {
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrar <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" style=" background-color:whitesmoke">
+                                        <li class="p-1">
+                                            <a style="color:darkblue" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                        </li>
+                                        <li class="p-1">
+                                            <a style="color:darkblue" asp-area="" asp-controller="Permisos" asp-action="Index">Permisos</a>
+                                        </li>
+                                        <li class="p-1">
+                                            <a style="color:darkblue" asp-area="" asp-controller="Puesto" asp-action="Index">Puesto</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        }
+
+                    }
+
+
+                    <ul class="nav navbar-nav flex-grow-1">
+                        @*<li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>*@
+                    </ul>
+
+                    @if (strRequest != null)
+                    {
+                        Menu menu = new Menu();
+                        @* 2025-04-29 *@
+                        <ul class="nav navbar-nav  navbar-right">
+                            <li class="nav-item ">
+                                <a id="layoutACarteraNombre" class=" text-white" asp-area="" asp-controller="Cartera" asp-action="Index">@menu.RecuperaCarteraNombre(strRequestCartera)</a>
+                            </li>
+                        </ul>                       
+                       @*  <ul class="nav navbar-nav  navbar-right">
+                            <li class="nav-item">
+                                <a class="nav-link text-white">@Context.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name).Value </a>
+                            </li>
+                        </ul> *@
+
+                        @* <div class="btn-group dropdown-menu-lg-left dropdown-menu-md-left"> *@
+                            @* <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> *@
+                                @* <ul class="nav navbar-nav  navbar-right"> *@
+                                    @* <li class="nav-item"> *@
+                                @* <a class="nav-link text-white btn btn-danger dropdown-toggle btn-circle" data-toggle="dropdown"> *@
+                                            @* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                            </svg> *@
+                                            @* @Context.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name).Value.Substring(0,1) *@
+                                        @* </a> *@
+                                    @* </li> *@
+                                @* </ul> *@
+                            @* </button> *@
+                           @*  <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a style="color: darkblue" id="layoutACarteraNombre" asp-area="" asp-controller="Cartera" asp-action="Index">Cambiar de Cartera</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a onclick="return CloseSesion()" class="" style="color:darkblue" asp-area="" asp-controller="InicioSesion" asp-action="CloseSesion">
+                                        Cerrar sesión
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
+                                            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
+                                        </svg>
+                                    </a>
+                                </li> *@
+                               @*  <li><a class="dropdown-item" href="#">Acción</a></li>
+                                <li><a class="dropdown-item" href="#">Otra acción</a></li>
+                                <li><a class="dropdown-item" href="#">Algo más aqui</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Enlace separado</a></li> *@
+                            @* </ul> *@
+                        @* </div> *@
+
+                        @* 2025-04-29 *@
+                        <ul class="nav navbar-nav  navbar-right">
+                            <li class="nav-item">
+                                <a class="nav-link text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                    </svg>
+                                    @Context.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Name).Value
+                                </a>
+                            </li>
+                        </ul>
+
+                        @* <ul class="nav navbar-nav  navbar-right">
+                            <li class="nav-item ">
+                                <a onclick="return CloseSesion()" class="nav-link  btn btn-light " style="color:darkblue" asp-area="" asp-controller="InicioSesion" asp-action="CloseSesion">Cerrar sesión</a>                                
+                            </li>
+                        </ul> *@
+
+                        @* 2025-04-29 *@
+                        <ul class="nav navbar-nav  navbar-right">
+                            <li class="nav-item ">
+                                <a onclick="return CloseSesion()" class="nav-link  btn btn-light " style="color:darkblue" asp-area="" asp-controller="InicioSesion" asp-action="CloseSesion">
+                                    Cerrar sesión
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
+                                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+
+                    }
+                    else
+                    {
+                        @* <ul class="nav navbar-nav  navbar-right">
+
+                            <li class="nav-item ">
+                                <a class="nav-link btn btn-light " style="color:darkblue" asp-area="" asp-controller="InicioSesion" asp-action="Index">Iniciar sesión</a>
+
+                            </li>
+                        </ul> *@
+
+                        <ul class="nav navbar-nav  navbar-right">
+
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-light " style="color:darkblue" asp-area="" asp-controller="InicioSesion" asp-action="Index">
+                                    Iniciar sesión
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                                        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                    </svg>
+                                </a>
+
+                            </li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer style="background-color: rgba(11,59,126,1)" class="border-top footer text-muted">
+        <div class="container text-white" style="text-align: center">
+            &copy; 2001 - Lomelín Hermanos Bienes Raíces@*- <a class=text-white asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> - @SystemComplementos.configJson.DB*@
+        </div>
+    </footer>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+<script type="text/javascript">
+    var idleTime = 0;
+    var focusAux = 0;
+
+    $(document).ready(function () {
+        //Increment the idle time counter every minute.
+        var idleInterval = setInterval(timerIncrement, 60000);
+        // 1 minute //Zero the idle timer on mouse movement.
+        $(this).mousemove(function (e) {
+            ActualizaTiempo();
+        });
+        $(this).keypress(function (e) {
+            ActualizaTiempo();
+        });
+
+        $(window).blur(function () {
+            focusAux = 1;
+        });
+
+    });
+
+    function CloseSesion() {
+        ActualizaUsuarioStatus(id);
+    }
+
+    function ActualizaUsuarioStatus(id) {
+        console.log(id);
+        var formData = new FormData();
+        // formData.append("id", id);
+
+        $.ajax({
+            type: "POST",
+            url: "/InicioSesion/ActualizaUsuarioStatus",
+            data: formData, // In the controller it receives IFormFile image
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                // document.cookie = 'CoreInmocontrol=; Path=/; Expires=Thu, 01 Jan 1990 00:00:01 GMT;';
+                // document.cookie = 'CoreInmocontrolCartera=; Path=/; Expires=Thu, 01 Jan 1990 00:00:01 GMT;';
+                console.log("ok");
+
+            },
+            error: function (errorMessage) {
+                alert(errorMessage);
+            }
+        });        
+    }
+
+    function ActualizaTiempo() {
+        if (idleTime > 5) {
+            //actualiza tiempo
+            var url = '@Url.Action("ActualizaSesion","InicioSesion")';
+            $.getJSON(url, {
+            }, function (data) {
+                idleTime = 0;
+            }
+            );
+        }
+    }
+
+    function timerIncrement() {
+        idleTime = idleTime + 1;
+        //if (idleTime > 19)
+        //{
+        //    // 20 minutes window.location.reload();
+        //}
+    }
+
+    $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
+        if (!$(this).next().hasClass('show')) {
+            $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+        }
+        var $subMenu = $(this).next(".dropdown-menu");
+        $subMenu.toggleClass('show');
+
+
+        $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
+            $('.dropdown-submenu .show').removeClass("show");
+        });
+
+
+        return false;
+    });
+
+    function muestraModalProcesando() {
+        $("#divModalProcesando").modal("show");
+    }
+
+    function ocultaModalProcesando() {
+        $("#divModalProcesando").modal("hide");
+    }
+</script>
+

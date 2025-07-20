@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebColliersCore.Models.DtActividadPuesto>
+
+@{
+    ViewData["Title"] = "Lista de puestos";
+}
+
+<h3>Lista de puestos</h3>
+
+<p>
+    <a asp-action="Create">Crear nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.actividad)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.actividad)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new {  id=item.idactividad_puesto  }) |
+                @Html.ActionLink("Detalle", "Details", new {  id=item.idactividad_puesto }) |
+                @Html.ActionLink("Eliminar", "Delete", new {  id=item.idactividad_puesto  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

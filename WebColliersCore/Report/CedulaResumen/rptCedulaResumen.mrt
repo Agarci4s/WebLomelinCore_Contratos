@@ -1,0 +1,2477 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="2">
+      <dtCR Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObjectSource" isKey="true">
+        <Alias>dtCR</Alias>
+        <Columns isList="true" count="1">
+          <value>CR,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>29e78e10af254c45a1dee302b5169e4d</Key>
+        <Name>dtCR</Name>
+        <NameInSource>dtCR</NameInSource>
+      </dtCR>
+      <dtCR1 Ref="3" type="DataTableSource" isKey="true">
+        <Alias>dtCR1</Alias>
+        <Columns isList="true" count="81">
+          <value>CR,System.String</value>
+          <value>Sucursal,System.String</value>
+          <value>Ubicacion,System.String</value>
+          <value>Latitud,System.Decimal</value>
+          <value>Longitud,System.Decimal</value>
+          <value>Regimen,System.String</value>
+          <value>Region,System.String</value>
+          <value>M2Terreno,System.Single</value>
+          <value>M2ConstruccionBase,System.Single</value>
+          <value>SuperficieEstacionamiento,System.Single</value>
+          <value>MamparaSeguridad,System.String</value>
+          <value>NoAnuncios,System.Single</value>
+          <value>Bandera,System.Single</value>
+          <value>Unipolar,System.Single</value>
+          <value>Marquesina,System.Single</value>
+          <value>Paleta,System.Single</value>
+          <value>Totem,System.Single</value>
+          <value>LetrasAdosadas,System.Single</value>
+          <value>Inclusion,System.Single</value>
+          <value>M2ConstruccionVisita,System.Single</value>
+          <value>AireAcondicionado,System.String</value>
+          <value>PlantaEmergenciaEstado,System.String</value>
+          <value>PlantaEmergencia,System.String</value>
+          <value>Impermeabilizacion,System.String</value>
+          <value>ImpermeabilizacionEstado,System.String</value>
+          <value>Medidor,System.String</value>
+          <value>MedidorEstado,System.String</value>
+          <value>Toma,System.String</value>
+          <value>TomaEstado,System.String</value>
+          <value>PracticajaTotales,System.Int32</value>
+          <value>PracticajaEnServicio,System.Int32</value>
+          <value>VentanillasTotales,System.Int32</value>
+          <value>VentanillasEnServicio,System.Int32</value>
+          <value>CajerosTotales,System.Int32</value>
+          <value>CajerosEnServicio,System.Int32</value>
+          <value>EstacionamientoTotales,System.Int32</value>
+          <value>EstacionamientoEjecutivos,System.Int32</value>
+          <value>EstacionamientoOperadoPor,System.String</value>
+          <value>EstacionamientoValet,System.Int32</value>
+          <value>PersonalExterno,System.Int32</value>
+          <value>DemandaEstacionamiento,System.String</value>
+          <value>RentaContrato,System.String</value>
+          <value>PrecioM2Suc,System.String</value>
+          <value>M2TotalesBase,System.String</value>
+          <value>NoComparables,System.Int32</value>
+          <value>ValoresMercado,System.String</value>
+          <value>RangoPrecios,System.String</value>
+          <value>EstadoConservacion,System.String</value>
+          <value>Observaciones,System.String</value>
+          <value>Conclusiones,System.String</value>
+          <value>PathExterior1,System.String</value>
+          <value>PathExterior2,System.String</value>
+          <value>PathInterior1,System.String</value>
+          <value>PathInterior2,System.String</value>
+          <value>FechaVisita,System.String</value>
+          <value>Estatus,System.String</value>
+          <value>EstatusVisita,System.String</value>
+          <value>VariacionInmueble,System.String</value>
+          <value>AreaRentable,System.String</value>
+          <value>ValorComercial,System.String</value>
+          <value>RangoPrecios2,System.String</value>
+          <value>Especial,System.String</value>
+          <value>UE,System.String</value>
+          <value>AireFunciona,System.String</value>
+          <value>TipoMantenimiento,System.String</value>
+          <value>Nivel_Socioeconomico,System.String</value>
+          <value>precioMercadoRangoInfInm,System.String</value>
+          <value>precioMercadoRangoSupInm,System.String</value>
+          <value>precioMercadoRangoProInm,System.String</value>
+          <value>precioMercadoRangoInfEst,System.String</value>
+          <value>precioMercadoRangoSupEst,System.String</value>
+          <value>precioMercadoRangoProEst,System.String</value>
+          <value>Vandalizado,System.String</value>
+          <value>Invadido,System.String</value>
+          <value>ORIGINAL,Desocupad,Desocupado,Desocupado,System.String,_x0030_ddc833ec4ae4e619b26940a87f7f1cf</value>
+          <value>Estacionamiento,System.String</value>
+          <value>Tipificacion,System.String</value>
+          <value>Asentamiento,System.String</value>
+          <value>Tendencia,System.String</value>
+          <value>NSE_1,System.String</value>
+          <value>NSE_2,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>88e16415995c44ee9e2b0b089757a7c2</Key>
+        <Name>dtCR1</Name>
+        <NameInSource>dtCR1</NameInSource>
+      </dtCR1>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <UserFunctions isList="true" count="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>b14cef07437f43ae9a3ae63adf938eb4</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="103">
+        <PageFooterBand2 Ref="5" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,19,27.9,2.6</ClientRectangle>
+          <Components isList="true" count="2">
+            <Image1 Ref="6" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,27.8,2.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Guid>024db415fae34f21a45462554a772394</Guid>
+              <IconColor>68, 114, 196</IconColor>
+              <ImageBytes>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
+NOOeTvf/98noQbXEONgAAAAASUVORK5CYII=</ImageBytes>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Stretch>True</Stretch>
+            </Image1>
+            <Text119 Ref="7" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,0.4,7.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text119</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>{dtCR1.EstatusVisita}</Text>
+              <TextBrush>Red</TextBrush>
+            </Text119>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>b697735b319b4ce0bd7da08c912eddb6</Guid>
+          <Name>PageFooterBand2</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageFooterBand2>
+        <Text4 Ref="8" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,5.8,4.4,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>a2eca9239329423295e8a055dec785f0</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text4</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>UBICACIÓN 
+DEL INMUEBLE:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text4>
+        <Text3 Ref="9" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,4.6,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>c74b6090a13049919f353efca9de1cf7</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text3</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>NOMBRE DE LA SUCURSAL:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text3>
+        <Text2 Ref="10" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,3.4,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text2</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>CR:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text2>
+        <Image3 Ref="11" type="Image" isKey="true">
+          <Brush>Transparent</Brush>
+          <CanGrow>True</CanGrow>
+          <ClientRectangle>0,0,27.8,3.2</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>742004c5cd544ffa99428f7411b215e0</Guid>
+          <IconColor>68, 114, 196</IconColor>
+          <ImageBytes>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</ImageBytes>
+          <Margins>0,0,0,0</Margins>
+          <Name>Image3</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Stretch>True</Stretch>
+        </Image3>
+        <Text1 Ref="12" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,2.6,5.2,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,9,Bold</Font>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>INFORMACIÓN DEL INMUEBLE</Text>
+          <TextBrush>Black</TextBrush>
+        </Text1>
+        <Text5 Ref="13" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,7.2,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>de2e8beffd7b4641a39ab2124112dd26</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text5</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>LATITUD:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text5>
+        <Text6 Ref="14" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,7.8,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>b25e943c5a7a45d681ca08f785663fd0</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text6</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>LONGITUD:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text6>
+        <Text7 Ref="15" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,8.4,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>3b0a4c0deaae48c7add3b063856c01ca</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text7</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>RÉGIMEN INMUEBLE:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text7>
+        <Text8 Ref="16" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,9,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>81f128eaad1e493ca66198382188edcb</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text8</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>REGIÓN:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text8>
+        <Text9 Ref="17" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,9.6,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>1afd0b83804d4e84ab5a183a481e42a2</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text9</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>ESTATUS:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text9>
+        <Text10 Ref="18" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,10.2,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>802246c169b04b8fbe8a424588014583</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text10</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>M2 TERRENO:</Text>
+          <TextBrush>Black</TextBrush>
+        </Text10>
+        <Text11 Ref="19" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,10.8,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>ad68eff0314c4c9cb3b584c87b7f2621</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text11</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>ÁREA RENTABLE:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text11>
+        <Text12 Ref="20" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,11.6,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>9383d23e2bcb4bdbb198a2331203e5ba</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text12</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>M2 CONSTRUCCIÓN:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text12>
+        <Text13 Ref="21" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,12.4,4.4,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>2328399152a8480ea21d0d7b5860d689</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text13</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>SUPERFICIE DE
+ESTACIONAMIENTO (M2):</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text13>
+        <Text14 Ref="22" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,13.6,5.2,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>64d85251371a4599b9fbf083f2b41719</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text14</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>PROYECTO CUIDA Y MEJORA</Text>
+          <TextBrush>Black</TextBrush>
+        </Text14>
+        <Text16 Ref="23" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,14.4,4.4,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>15f1259a3c1240d7a879b9967193db8e</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text16</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>MAMPARA DE
+SEGURIDAD:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text16>
+        <Text17 Ref="24" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,15.2,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>d18bc7b372e4457e903d4b68098ba4f8</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text17</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>No. DE ANUNCIOS:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text17>
+        <Text18 Ref="25" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,1.4,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,8,Bold</Font>
+          <Guid>3231e87c9dc04e208f027a3108934cc3</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text18</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>FOTOGRAFÍAS EXTERIORES</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text18>
+        <Text19 Ref="26" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>21.6,0.8,6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,8</Font>
+          <Guid>45c8223932cd4b179ad04f5ee620b667</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text19</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>FECHA DE VISITA: {dtCR1.FechaVisita}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text19>
+        <Text21 Ref="27" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,6.8,3.6,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>14858a902fd04ba6b66944d797e09f54</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text21</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> PLANTA DE 
+ EMERGENCIA:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text21>
+        <Text22 Ref="28" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,6.8,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>a4b9c7e3d0664a22826cced1dfb425dc</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text22</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>EXISTE:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text22>
+        <Text23 Ref="29" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,7.2,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>a08132a9039945d5acbf9ae537a2dabe</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text23</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>ESTADO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text23>
+        <Text24 Ref="30" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,6.8,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>a2418fed0dff48dcadc362d0bdabcdbe</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text24</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.PlantaEmergencia}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text24>
+        <Text25 Ref="31" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,7.2,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>411488adb076459c81b3efc05ac0f240</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text25</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.PlantaEmergenciaEstado}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text25>
+        <Text26 Ref="32" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,7.8,3.6,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>ebdb489aca0c4c4797d4f5df404ba725</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text26</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> IMPERMEABILIZANTE:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text26>
+        <Text27 Ref="33" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,7.8,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>7bb5605a6a824c9682b46a4ee732bfbe</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text27</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>EXISTE:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text27>
+        <Text28 Ref="34" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,8.2,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>621c82b43e89440fbb7b44e4cdb679db</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text28</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>ESTADO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text28>
+        <Text29 Ref="35" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,7.8,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>1a2fa27876b94d0dadfc089392e5a605</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text29</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Impermeabilizacion}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text29>
+        <Text30 Ref="36" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,8.2,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>2676086ee0c44859ad3792eff966a1fe</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text30</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.ImpermeabilizacionEstado}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text30>
+        <Text31 Ref="37" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,8.8,3.6,1.2</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>c4afbe02794341dbadfaa84e174f4554</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text31</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> MEDIDOR DE
+ ENERGÍA ELÉCTRICA:
+ (Dirección)</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text31>
+        <Text32 Ref="38" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,8.8,6.8,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>01434117c5ef49b9883d064d25d1a6f6</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text32</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Medidor}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text32>
+        <Text33 Ref="39" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,9.4,2.8,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>014e2df46dbd4b258525909c0ba0916e</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text33</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>ESTADO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text33>
+        <Text35 Ref="40" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,9.4,4,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>285228c152b84e89a459df301e812c07</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text35</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.MedidorEstado}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text35>
+        <Text34 Ref="41" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,10.2,3.6,1.2</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>44e78127558c4db1933d0abf99f3deae</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text34</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> TOMA DE AGUA:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text34>
+        <Text36 Ref="42" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,10.2,6.8,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>c3dc6644fec84a66bc8c642636bcacb4</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text36</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Toma}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text36>
+        <Text37 Ref="43" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,10.8,2.8,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>4c1c3299f7ed45869a98eca8b4d069cb</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text37</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>ESTADO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text37>
+        <Text38 Ref="44" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,10.8,4,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>1fccc74334cd48cbb3290c690e267dd9</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text38</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.TomaEstado}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text38>
+        <Text39 Ref="45" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,11.6,3.6,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>111746c8f0034e94be81e2fd3ac85e85</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text39</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> PRACTICAJAS:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text39>
+        <Text40 Ref="46" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,11.6,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>356dcd20dcb14096837c8bd0584e8fc9</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text40</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>TOTALES:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text40>
+        <Text41 Ref="47" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,12,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>4abe6a7c23ed4759b88675a4afdeaac9</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text41</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>EN SERVICIO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text41>
+        <Text42 Ref="48" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,11.6,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>6e702676e35d4efbb68e59402fa12f6f</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text42</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.PracticajaTotales}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text42>
+        <Text43 Ref="49" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,12,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>4c20f85e01c14501a19fc41505ad6c12</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text43</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.PracticajaEnServicio}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text43>
+        <Text44 Ref="50" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,12.6,3.6,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>14566216d7f447428cbfdb98367a62c7</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text44</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> VENTANILLAS:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text44>
+        <Text45 Ref="51" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,12.6,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>3df107fc9a214a66957ff44b5432ed9b</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text45</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>TOTALES:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text45>
+        <Text46 Ref="52" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,13,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>6b1c0384ee1b47d192ae6b017d4d2137</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text46</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>EN SERVICIO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text46>
+        <Text47 Ref="53" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,12.6,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>1cd64974810b4cccbece3536e719d935</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text47</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.VentanillasTotales}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text47>
+        <Text48 Ref="54" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,13,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>287486595d2c436abb94e58dbd517d19</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text48</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.VentanillasEnServicio}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text48>
+        <Text49 Ref="55" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,13.6,3.6,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>44ce069dbe84406d9b28fb7d1ed2f844</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text49</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> CAJEROS 
+ AUTOMÁTICOS:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text49>
+        <Text50 Ref="56" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,13.6,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>051da9741c804159a79315e472c8deca</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text50</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>TOTALES:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text50>
+        <Text51 Ref="57" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,14,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>63b2eb421624411182b5d26a0437c4da</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text51</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>EN SERVICIO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text51>
+        <Text52 Ref="58" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,13.6,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>9a62882681d84ec9a4d157a6e1f53685</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text52</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.CajerosTotales}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text52>
+        <Text53 Ref="59" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,14,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>ace1f4a260b842f38c3e9819148d42e8</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text53</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.CajerosEnServicio}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text53>
+        <Text54 Ref="60" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,14.6,3.6,2</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>eee2ffcf76d641768efd8cb829800ab7</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text54</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> ESTACIONAMIENTO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text54>
+        <Text55 Ref="61" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,14.6,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>8f620c0fb803474aa8c96763ab4955b7</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text55</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>C. TOTALES:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text55>
+        <Text56 Ref="62" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,15,2.8,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>09472014dab74dac8aa9feed57e25941</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text56</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>OCUPADOS POR
+EJECUTIVOS:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text56>
+        <Text57 Ref="63" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,14.6,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>a640217c76474533bce48ab708db1ec7</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text57</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.EstacionamientoTotales}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text57>
+        <Text58 Ref="64" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,15,4,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>4882a46167034a44a55a230e84de329c</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text58</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.EstacionamientoEjecutivos}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text58>
+        <Text59 Ref="65" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,15.8,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>18fa171052144a4b8b026898357e39b6</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text59</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>OPERADO POR:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text59>
+        <Text60 Ref="66" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,15.8,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>0cfcbeb29f224091ab941de3022232fe</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text60</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.EstacionamientoOperadoPor}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text60>
+        <Text61 Ref="67" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,16.2,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>35c9b4e3439047abbb72b93e47e08f79</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text61</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>VALET PARKING:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text61>
+        <Text62 Ref="68" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,16.2,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>a4b07197a09f48e49775f2c23cb4d8ac</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text62</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.EstacionamientoValet}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text62>
+        <Text63 Ref="69" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,16.6,6.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>1428db32861249a78137657c2632c096</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text63</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>PERSONAL EXTERNO (FRANELERO):</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text63>
+        <Text64 Ref="70" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,16.6,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>b0c2a751a92d4702887dcff1e94e46b0</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text64</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.PersonalExterno}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text64>
+        <Text65 Ref="71" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,17,6.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>723f797ce1b641618f56ff8836dba013</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text65</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>DEMANDA DE ESTACIONAMIENTO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text65>
+        <Text66 Ref="72" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,17,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>1597a4eeac9b42dc9f1dc8d95db1352b</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text66</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.DemandaEstacionamiento}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text66>
+        <Text67 Ref="73" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,16,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>d07e0117e28e451aa202c7a2757f3779</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text67</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.Bandera &gt; 0,dtCR1.Bandera,"")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text67>
+        <Text68 Ref="74" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>3.2,16,1.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>4063f2c10889497788ac0864050a262d</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text68</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>Bandera</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text68>
+        <Text69 Ref="75" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>5.4,16,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>302dd27de52e49be9cb018bcc9cf7b2c</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text69</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.Unipolar &gt; 0,dtCR1.Unipolar,"")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text69>
+        <Text70 Ref="76" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>6.4,16,1.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>38652a1033ca4db2b824414d2b9b7b7c</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text70</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>Unipolar</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text70>
+        <Text71 Ref="77" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,16,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>9cade150141443e4a0182307596f4df6</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text71</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.Marquesina &gt; 0,dtCR1.Marquesina,"")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text71>
+        <Text72 Ref="78" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>9.6,16,1.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>3d3047c0e64547ed9004a6ac8d82d461</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text72</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>Marquesina</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text72>
+        <Text73 Ref="79" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,16.6,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>9b9d471639464333a05d8e8400798cf2</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text73</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.Paleta &gt; 0,dtCR1.Paleta,"")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text73>
+        <Text74 Ref="80" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>3.2,16.6,1.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>a957b39946ab47c9acdd973703706c15</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text74</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>Paleta</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text74>
+        <Text75 Ref="81" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>5.4,16.6,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>b405e09cf7aa4edbbce503c361bf353a</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text75</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.Totem &gt; 0,dtCR1.Totem,"")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text75>
+        <Text76 Ref="82" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>6.4,16.6,1.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>cd62082c60b649c09c71d37280cb7990</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text76</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>Totem</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text76>
+        <Text77 Ref="83" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,16.6,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>2499d9c0d8a149f6ae79fa4c8784d661</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text77</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.LetrasAdosadas &gt; 0,dtCR1.LetrasAdosadas,"")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text77>
+        <Text78 Ref="84" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>9.6,16.6,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>b0aba7d0aef644639e3a1909f201a447</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text78</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>Letras adosadas o rotuladas</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text78>
+        <Text79 Ref="85" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,17.6,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>7dcf9459f9a64473b939c5f48acd1425</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text79</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>INCLUSIÓN:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text79>
+        <Text80 Ref="86" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>6.8,17.6,0.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>36d5e6d5df0342f2a026542f0e98463a</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text80</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>SI</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text80>
+        <Text81 Ref="87" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>7.8,17.6,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>7eaae344a5c94797a102dce6b315a431</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text81</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.Inclusion == 1,"X","")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text81>
+        <Text82 Ref="88" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>10.4,17.6,0.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>eb739e16a1e64c0794484f75a97db35a</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text82</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>NO</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text82>
+        <Text83 Ref="89" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>11.4,17.6,0.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>489554b6a0c64ed9ab1aba133cc3e8ac</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text83</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{IIF(dtCR1.Inclusion == 0,"X","")}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text83>
+        <Text15 Ref="90" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,3.4,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text15</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.CR}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text15>
+        <Text99 Ref="91" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,4.6,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>3cdde268d74742bca323b53f2f893d59</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text99</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Sucursal}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text99>
+        <Text100 Ref="92" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <CanGrow>True</CanGrow>
+          <ClientRectangle>8.6,5.2,6.6,1.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>0f1dca3025414c26873b84a0326482bb</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text100</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Ubicacion}</Text>
+          <TextBrush>Black</TextBrush>
+          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+          <Type>DataColumn</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text100>
+        <Text101 Ref="93" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,7.2,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>f4add9cfcb194b268b6030f59a638ccd</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text101</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Latitud}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text101>
+        <Text102 Ref="94" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,7.8,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>69a81d4ab1984cb2a1756607e99d16d2</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text102</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Longitud}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text102>
+        <Text103 Ref="95" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,8.4,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>3facfd8397ab4282920381dd701f3cfb</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text103</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Regimen}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text103>
+        <Text104 Ref="96" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,9,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>c6b8661a983a44048e7b6c8035573a66</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text104</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Region}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text104>
+        <Text105 Ref="97" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,9.6,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>3995c356d4ee49f187767bea700b9538</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text105</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.Estatus}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text105>
+        <Text106 Ref="98" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,10.2,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>db7832574b3247518cff3a1dda148ace</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text106</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.M2Terreno}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text106>
+        <Text107 Ref="99" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,10.8,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>1ddbb5a8166540668a8b5803bf570258</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text107</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.AreaRentable}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text107>
+        <Text108 Ref="100" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,11.6,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>6342b258b8f64265bc4542bcc629ed14</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text108</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.M2ConstruccionVisita}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text108>
+        <Text109 Ref="101" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,12.4,6.6,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>52ef642b9ba0468a84e7a948d91aee81</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text109</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.SuperficieEstacionamiento}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text109>
+        <Text126 Ref="102" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,14.4,6.6,0.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text126</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.MamparaSeguridad}</Text>
+          <TextBrush>Black</TextBrush>
+        </Text126>
+        <Text128 Ref="103" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>2.2,4,4.4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>b8ae3120d1d1422db0b69bbdbfb23343</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text128</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>UE:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text128>
+        <Text129 Ref="104" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>8.6,4,6.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text129</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.UE}</Text>
+          <TextBrush>Black</TextBrush>
+        </Text129>
+        <Text20 Ref="105" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>16.2,5.8,3.6,0.8</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>ed18ef554f2947b284277ae00857805d</Guid>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text20</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text> AIRE
+ ACONDICIONADO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text20>
+        <Text84 Ref="106" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,5.8,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>2a78d42cd99d43609a6650b30cd8e678</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text84</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>EXISTE:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text84>
+        <Text130 Ref="107" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>19.8,6.2,2.8,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7</Font>
+          <Guid>91177d9ba3854f5faa005ad35970b42e</Guid>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text130</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>ESTADO:</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+        </Text130>
+        <Text131 Ref="108" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,5.8,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>00493ba39b4c4d9bab1a32157bc0e820</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text131</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.AireAcondicionado}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text131>
+        <Text132 Ref="109" type="Text" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>22.6,6.2,4,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,7,Bold</Font>
+          <Guid>af2d1aee81ce4dd2af07829948bb3400</Guid>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text132</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{dtCR1.AireFunciona}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+        </Text132>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>0c0f79a059ca4c1cb9cbac634eda3226</Guid>
+      <Margins>0,0,0,0</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21.6</PageHeight>
+      <PageWidth>27.9</PageWidth>
+      <PaperSize>Letter</PaperSize>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>5/2/2024 10:52:40 PM</ReportChanged>
+  <ReportCreated>6/13/2023 11:59:10 PM</ReportCreated>
+  <ReportFile>C:\Users\Villeda Páez\Documents\Visual Studio 2022\Lomelí-BBVA\WebColliersCore\Report\CedulaResumen\rptCedulaResumen.mrt</ReportFile>
+  <ReportGuid>9ed68ef3c0f440238238333c5edec72c</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2024.1.2.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="12">
+    <Blue_x0020_Steel_Report_Title1 Ref="110" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item110 Ref="111" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>ReportTitle</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item110>
+      </Conditions>
+      <Font>Arial,14,Bold</Font>
+      <Name>Blue Steel_Report_Title1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[79:129:189]</TextBrush>
+    </Blue_x0020_Steel_Report_Title1>
+    <Blue_x0020_Steel_Report_Title2 Ref="112" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item112 Ref="113" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>ReportTitle</Placement>
+          <PlacementNestedLevel>2</PlacementNestedLevel>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item112>
+      </Conditions>
+      <Font>Arial,10,Bold</Font>
+      <Name>Blue Steel_Report_Title2</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[79:129:189]</TextBrush>
+    </Blue_x0020_Steel_Report_Title2>
+    <Blue_x0020_Steel_Report_Summary Ref="114" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item114 Ref="115" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>ReportSummary</Placement>
+          <Type>ComponentType, Placement</Type>
+        </Item114>
+      </Conditions>
+      <Font>Arial,10,Bold</Font>
+      <Name>Blue Steel_Report_Summary</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[79:129:189]</TextBrush>
+    </Blue_x0020_Steel_Report_Summary>
+    <Blue_x0020_Steel_Page_Header Ref="116" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item116 Ref="117" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>PageHeader</Placement>
+          <Type>ComponentType, Placement</Type>
+        </Item116>
+      </Conditions>
+      <Font>Arial,10</Font>
+      <Name>Blue Steel_Page_Header</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>Black</TextBrush>
+    </Blue_x0020_Steel_Page_Header>
+    <Blue_x0020_Steel_Page_Footer Ref="118" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item118 Ref="119" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>PageFooter</Placement>
+          <Type>ComponentType, Placement</Type>
+        </Item118>
+      </Conditions>
+      <Font>Arial,10</Font>
+      <Name>Blue Steel_Page_Footer</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>Black</TextBrush>
+    </Blue_x0020_Steel_Page_Footer>
+    <Blue_x0020_Steel_Group_Header1 Ref="120" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>Top, Bottom;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item120 Ref="121" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>GroupHeader</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item120>
+      </Conditions>
+      <Font>Arial,13,Bold</Font>
+      <Name>Blue Steel_Group_Header1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[79:129:189]</TextBrush>
+    </Blue_x0020_Steel_Group_Header1>
+    <Blue_x0020_Steel_Group_Footer1 Ref="122" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>Top, Bottom;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item122 Ref="123" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>GroupFooter</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item122>
+      </Conditions>
+      <Font>Arial,9.75,Bold,Point,False,204</Font>
+      <Name>Blue Steel_Group_Footer1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[79:129:189]</TextBrush>
+    </Blue_x0020_Steel_Group_Footer1>
+    <Blue_x0020_Steel_Header1 Ref="124" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>Top, Bottom;[0:0:39];2;Solid;False;4;Black;True</Border>
+      <Brush>[79:129:189]</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item124 Ref="125" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>Header</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item124>
+      </Conditions>
+      <Font>Arial,9.75,Bold,Point,False,204</Font>
+      <Name>Blue Steel_Header1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>White</TextBrush>
+    </Blue_x0020_Steel_Header1>
+    <Blue_x0020_Steel_Data1 Ref="126" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item126 Ref="127" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image, CheckBox</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>Data</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item126>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Blue Steel_Data1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[0:0:0]</TextBrush>
+    </Blue_x0020_Steel_Data1>
+    <Blue_x0020_Steel_Data1_Odd_x0020_Style Ref="128" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>[255:255:255]</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item128 Ref="129" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>DataOddStyle</Placement>
+          <Type>Placement, PlacementNestedLevel</Type>
+        </Item128>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Blue Steel_Data1_Odd Style</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[0:0:0]</TextBrush>
+    </Blue_x0020_Steel_Data1_Odd_x0020_Style>
+    <Blue_x0020_Steel_Data1_Even_x0020_Style Ref="130" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[0:0:39];1;Solid;False;4;Black</Border>
+      <Brush>[216:216:216]</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item130 Ref="131" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>DataEvenStyle</Placement>
+          <Type>Placement, PlacementNestedLevel</Type>
+        </Item130>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Blue Steel_Data1_Even Style</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[0:0:0]</TextBrush>
+    </Blue_x0020_Steel_Data1_Even_x0020_Style>
+    <Blue_x0020_Steel_Footer1 Ref="132" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>Top, Bottom;[0:0:39];2;Solid;False;4;Black</Border>
+      <Brush>White</Brush>
+      <CollectionName>Blue Steel</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item132 Ref="133" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>Footer</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item132>
+      </Conditions>
+      <Font>Arial,8.25,Bold,Point,False,204</Font>
+      <Name>Blue Steel_Footer1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>Black</TextBrush>
+    </Blue_x0020_Steel_Footer1>
+  </Styles>
+</StiSerializer>

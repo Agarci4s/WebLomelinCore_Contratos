@@ -1,0 +1,156 @@
+﻿@model WebColliersCore.Models.UsuarioLogin
+
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<header>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#imgLogo").hide();
+        });
+    </script>
+    @{
+        try
+        {
+            if (ViewBag.MuestraError)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#modalError").modal('show');
+                    });
+                </script>
+
+            }
+        }
+        catch (Exception) { }
+        try
+        {
+            if (ViewBag.MuestraError2)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#modalError2").modal('show');
+                    });
+                </script>
+            }
+        }
+        catch (Exception) { }
+    }
+</header>
+
+<body style="background-color:midnightblue; background-image:url(Images/InicioSesion.png); background-position:center;  background-size:cover; background-repeat: no-repeat; background-attachment: fixed;">
+
+    <div class="col-md-4 row justify-content-center align-items-center" style="background-color:rgba(255, 255, 255,1); height:87vh; position:absolute; top:75px; left:15px;">
+        <div class="col-md-12 ">
+            <form asp-action="Index">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <img src="~/Images/logo-login.png" class="img-fluid  rounded mx-auto d-block" style=" height:100px" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+
+                <div class="form-group text-center">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <input id="btnInicio" type="submit" value="Iniciar" class="col-md-5 btn btn-primary " />
+                </div>
+            </form>
+            <div>
+                <a asp-action="Index">Limpiar</a>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <div class="modal fade" id="modalError" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Aviso</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <label>¡El usuario o contraseña son incorrectos!</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalError2" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Aviso</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <label>¡El usuario está activo!</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @*         <div class="offset-md-3 col-md-6 row justify-content-center align-items-center" style="background-color:rgba(255, 255, 255,0.5);">
+    *@
+
+
+
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        compruebaAceptaCookies();
+
+        $(this).mousemove(function (e) {
+            compruebaAceptaCookies();
+        });
+    });
+
+    /* ésto comprueba la localStorage si ya tiene la variable guardada */
+    function compruebaAceptaCookies() {
+        if ($("#cookieConsent").text()) {
+            $("#btnInicio").prop("disabled", true);
+        }
+        else {
+            $("#btnInicio").prop("disabled", false);
+        }
+    }
+</script>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

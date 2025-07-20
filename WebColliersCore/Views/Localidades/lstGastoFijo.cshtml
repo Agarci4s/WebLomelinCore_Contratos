@@ -1,0 +1,60 @@
+﻿@model  IEnumerable<WebColliersCore.Models.dtGastosFijos>
+
+<table id="tbGastosFijos" class="table table-hover">
+        <thead>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Concepto)
+                </td>
+                <td>Importe</td>
+                <td>
+                    @Html.DisplayNameFor(model => model.clvUnidad)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.clvProdServ)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.RetencionISR)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.RetencionIVA)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.ImpuestoCedular)
+                </td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Concepto)
+                </td>
+                <td style="text-align: right">
+                    @item.Importe.ToString("C")  @*@Html.DisplayFor(modelItem => item.Importe)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.clvUnidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.clvProdServ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RetencionISR)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RetencionIVA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImpuestoCedular)
+                </td>
+                <td class="align-self-lg-center">
+
+                    <input type="button" onclick="deleteGastos(@item.IdGasto)" value="Eliminar" class="btn-danger" />
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>

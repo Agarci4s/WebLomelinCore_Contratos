@@ -1,0 +1,196 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_contrato>
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 480px;
+            border: 1px solid rgba(11,59,126,1);
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: left;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                border: 0px solid white;
+                text-align: center;
+                background: rgba(11,59,126,1);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+            margin-right: 6px;
+        }
+
+        #tab tr.noSearch {
+            background: White;
+            font-size: 0.8em;
+        }
+
+            #tab tr.noSearch td {
+                padding-top: 10px;
+                text-align: center;
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .red {
+            color: Red;
+        }
+
+        #tab tr:hover {
+            background-color: aliceblue;
+        }
+    </style>
+</header>
+
+<nav class="navbar bg-light">
+    <div class="container-fluid">
+        <a href="@Url.ActionLink("Create", "B_inmueblesContrato", new { id = ViewData["id_b_inmuebles"] })" class=" btn btn-success btn-sm"><i class="fa-solid fa-square-plus"></i> Nuevo Contrato</a>
+        <div class="d-flex">
+            <input id="inputSearch" class="form-control me-4" type="search" placeholder="Buscar..." aria-label="Search" onkeypress="Enter(event);">
+            <button class="btn btn-outline-success" onclick="return doSearch();"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+</nav>
+<br />
+
+<h3>Listado de Contratos CR: @ViewData["CR"]</h3>
+
+<div class="tableFixHead">
+    <table class="table table-responsive-sm table-sm small" id="tab">
+        <thead class="font-size-head">
+            <tr>
+                <th>
+                    Acciones
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.cr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.contrato)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.renta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.id_b_cg_contrato_tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.id_b_cg_contrato_estatu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_inicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_termino)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_obligado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_anticipacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.litigio)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td align="center">
+                        <div class="row">
+                            <div class="mr-1 ml-1">
+                                <a href="@Url.ActionLink("Edit", "B_inmueblesContrato", new { id = item.id_b_inmuebles_contrato })" class="btn btn-warning btn-sm">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="@Url.ActionLink("Details", "B_inmueblesContrato", new { id = item.id_b_inmuebles_contrato })" class="btn btn-info btn-sm">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>                                               
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.contrato)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.renta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.estatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha_inicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha_termino)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha_obligado)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.fecha_anticipacion)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.litigio)
+                    </td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

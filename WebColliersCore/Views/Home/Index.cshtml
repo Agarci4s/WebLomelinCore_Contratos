@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<header>
+    <meta charset="utf-8">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#imgLogo").hide();
+        });
+    </script>
+</header>
+
+
+
+@if (!Context.Request.Cookies.TryGetValue("CoreInmocontrol", out string strRequest))
+{
+    <body style="background-color:midnightblue; background-image:url(Images/Home.png); background-position:center;  background-size:cover; background-repeat: no-repeat; background-attachment: fixed;">
+    </body>
+
+    <div class="container">
+        <div class="row ">
+            <div class="row col-md-6 offset-md-3 align-items-center" style="position:fixed; top:10px; left:0px">
+                @*                 <img src="~/Images/Logo3.png" style="height:100px" background-color:rgba(11,59,126,0.85); />
+            *@                <div class="col-md-12 align-self-end">
+
+                    <p style="font-size:12px; color:white; font-family:Open Sans; font-style:normal;" class="text-center">
+                        <i class="fas fa-info-circle" style="font-size:24px">
+                            INMOCONTROL LOMELÍN
+                        </i>
+                        <br>
+                        <i class="fas fa-info-circle" style="font-size:12px">
+                            "La diferencia entre vivir bien"
+                        </i>
+                    </p>
+
+                   @*  <p style="font-size:32px; color:white; font-family:Open Sans; font-style:normal;" class="text-center">
+                        <i class="fas fa-info-circle">
+                            "La diferencia entre vivir bien"
+                        </i>
+                    </p> *@
+                </div>
+            </div>
+
+            @*  <div class="align-self-end">
+        <br /><br /><br /><br /><br /><br /><br />
+        <p style="font-size:50px; color:white; font-family:Open Sans; font-style:normal;">
+        <b>
+        LOMELÍN
+        </b>
+        </p>
+        <p style="font-size:25px; color:white; font-family:Open Sans; font-style:normal;">
+        <i class="fas fa-info-circle">
+        Lomelín Hermanos Bienes Raíces
+        </i>
+        </p>
+        </div> *@
+
+
+        </div>
+
+
+        <div class="" style=" position:absolute; top:80%; left:80%">
+            <img src="~/Images/Logo.png" style="height:100px" />
+        </div>
+    </div>
+
+
+}
+else
+{
+    <body style="background-color:midnightblue; background-image:url(Images/Home2.0.png); background-position:center;  background-size:cover; background-repeat: no-repeat; background-attachment: fixed;">
+    </body>
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center minh-100">
+            <div class="col-lg-12">
+                <div>
+                    @*                    <img src="~/Images/Logo3.png" style="height:100px" />
+                *@
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,173 @@
+﻿@model IEnumerable<WebColliersCore.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    @try
+    {
+        if (ViewBag.RFCError)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#modalError").modal('show');
+                });
+            </script>
+        }
+    }
+    catch
+    {
+
+    }
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+    </style>
+</header>
+
+<h3>Usuarios</h3>
+<p>
+    <a asp-action="Create">Agregar nuevo</a>
+</p>
+
+<div class="row">
+    <div class=" col-md-4 ">
+        <input id="buscar" class="p-2 form-control" />
+    </div>
+    <div class=" col-md-1">
+        <input onclick="return Buscar()" title="Búsqueda por nombre y usuario" type="button" value="Buscar" class="p-2 btn btn-primary" />
+    </div>
+    <div class=" col-md-1 ">
+        <input onclick="return Limpiar()" type="button" value="Limpiar" class="p-2 btn btn-primary" />
+    </div>
+</div>
+<br />
+<table class="table table-striped" id="tab">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.IdUsuario }) |
+                    @Html.ActionLink("Detalle", "Details", new { id = item.IdUsuario }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdUsuario })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function Buscar() {
+        var buscar = $("#buscar").val().toUpperCase().trim();
+        var table = document.getElementById("tab");
+
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            cells = row.getElementsByTagName('td');
+            if (!cells.length) {
+                continue;
+            }
+            var customerId = cells[0].innerHTML;
+            var customerId3 = cells[3].innerHTML;
+
+            if (customerId.toUpperCase().trim().includes(buscar) || customerId3.toUpperCase().trim().includes(buscar)) {
+                row.style.display = '';
+            }
+            else
+                row.style.display = 'none';
+        }
+    }
+
+    function Limpiar() {
+        var table = document.getElementById("tab");
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            row.style.display = '';
+        }
+    }
+
+    $('th').click(function () {
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+        setIcon($(this), this.asc);
+    })
+
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index),
+                valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).html()
+    }
+
+    function setIcon(element, asc) {
+        $("th").each(function (index) {
+            $(this).removeClass("sorting");
+            $(this).removeClass("asc");
+            $(this).removeClass("desc");
+        });
+        element.addClass("sorting");
+        if (asc) element.addClass("asc");
+        else element.addClass("desc");
+    }
+</script>

@@ -1,0 +1,16 @@
+﻿@model IEnumerable<String>
+
+<div>
+    <table class="table table-sm">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <small>@Html.DisplayFor(modelItem => item)</small>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

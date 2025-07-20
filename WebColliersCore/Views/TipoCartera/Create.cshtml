@@ -1,0 +1,88 @@
+﻿@model WebColliersCore.Models.TpCartera
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    @{
+        try
+        {
+            if (ViewBag.Error)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#modalError").modal('show');
+                    });
+                </script>
+
+            }
+        }
+        catch (Exception) { }
+    }
+</header>
+
+<div class="container">
+
+    <div class="modal fade" id="modalError" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>¡@ViewBag.Mensaje!</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<h4>Agregar nueva cartera</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+            <div class="form-group p-2">
+                <label asp-for="descripcionCartera" class="control-label"></label>
+                <input asp-for="descripcionCartera" class="form-control" />
+                <span asp-validation-for="descripcionCartera" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <label asp-for="letra" class="control-label"></label>
+                <input asp-for="letra" class="form-control" />
+                <span asp-validation-for="letra" class="text-danger"></span>
+            </div>
+            <div class="form-group p-2">
+                <input asp-for="complemento_terceros" class="form-check-inline" type="checkbox" />
+                <label asp-for="complemento_terceros" class="control-label"></label>
+                <span asp-validation-for="complemento_terceros" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
+    function showDate() {
+        $("form").validate().settings.ignore = "";
+    }
+</script>
+

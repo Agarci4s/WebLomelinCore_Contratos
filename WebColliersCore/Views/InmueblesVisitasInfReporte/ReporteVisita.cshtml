@@ -1,0 +1,119 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_visitas_inf_reporte>
+
+<table class="table table-striped" id="tab">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inmuebles_estatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inmuebles_visitas_estatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_visita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.latidud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.longitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.marquesina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.letras_rotuladas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bandera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.paleta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unipolar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.totem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.no_anuncios)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.region)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inmuebles_estatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inmuebles_visitas_estatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_visita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latidud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.longitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.marquesina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.letras_rotuladas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bandera)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.paleta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.unipolar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.totem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.no_anuncios)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,142 @@
+﻿@model WebColliersCore.Models.Usuario
+
+@{
+    ViewData["Title"] = "Usuario detalle";
+}
+
+<h3>Detalles de usuario</h3>
+
+<div>
+    <hr />
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Usuario</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Cartera</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2">Vistas</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class=" tab-pane active">
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                            Datos del usuario
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <dl class="row container">
+                            <dt class="col-md-3">
+                                @Html.DisplayNameFor(model => model.Username):
+                            </dt>
+                            <dd class="col-md-9">
+                                @Html.DisplayFor(model => model.Username)
+                            </dd>
+                            <dt class="col-md-3">
+                                @Html.DisplayNameFor(model => model.Nombre):
+                            </dt>
+                            <dd class="col-md-9">
+                                @Html.DisplayFor(model => model.Nombre)
+                            </dd>
+                            <dt class="col-md-3">
+                                @Html.DisplayNameFor(model => model.Apellido1):
+                            </dt>
+                            <dd class="col-md-9">
+                                @Html.DisplayFor(model => model.Apellido1)
+                            </dd>
+                            <dt class="col-md-3">
+                                @Html.DisplayNameFor(model => model.Apellido2):
+                            </dt>
+                            <dd class="col-md-9">
+                                @Html.DisplayFor(model => model.Apellido2)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="menu1" class="tab-pane fade">
+            <div id="accordion2">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne2">
+                            Seleccionar permiso a carteras e inmuebles
+                        </a>
+                    </div>
+                    <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
+                        <div class="row card-body">
+                            @*<div class="form-group">*@
+                            <dl class="row">
+                                @foreach (var item in Model.listTpCarteras)
+                                {
+                                    <dt class="col-sm-12">
+                                        @Html.DisplayFor(modelItem => item.descripcionCartera)
+                                    </dt>
+                                    @*<dd class="col-sm-4">
+                                        @Html.DisplayFor(modelItem => item.carteraBool)
+                                    </dd>*@
+
+                                }
+                            </dl>
+
+                            @*</div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="menu2" class="tab-pane fade">
+            <div id="accordion3">
+                <div class="card">
+
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne3">
+                            Seleccionar menús
+                        </a>
+                    </div>
+                    <div id="collapseOne3" class="collapse show" data-parent="#accordion3">
+                        <div class="row card-body">
+                            <div class="form-group">
+                                <dl class="row">
+                                    @{ViewBag.opcion = 0; }
+                                    @foreach (var item in Model.listTransf_Opciones)
+                                    {
+                                        @*if (ViewBag.opcion != item.opcion)
+                                            {
+                                                ViewBag.opcion = item.opcion;
+                                                <h6>Apartado @item.opcion.ToString()</h6>
+                                            }*@
+                                        <dt class="col-sm-12">
+                                            @Html.DisplayFor(modelItem => item.descripcion)
+                                        </dt>
+                              @*          <dd class="col-sm-1">
+                                            @Html.DisplayFor(modelItem => item.checkTransf_Opciones)
+                                        </dd>
+                                        <dd class="col-sm-3">
+                                            @Html.DisplayFor(modelItem => item.NivelStr )
+                                        </dd>*@
+                                    }
+
+
+
+                                </dl>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdUsuario }) |
+    <a asp-action="Index">Regresar a la lista</a>
+</div>

@@ -1,0 +1,88 @@
+﻿@using Stimulsoft.Report.Web;
+@using Stimulsoft.Report.Mvc;
+
+@{
+    ViewData["Title"] = "Cedula Resumen Masiva";
+}
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<div class="modal" tabindex="-1" role="dialog" id="myModalAviso">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Generar PDFs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Se van a generar todas las cedulas resumen, favor de no salir de esta página hasta el aviso de conclusión.</p>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-primary">Ok</button>*@
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="myModalAviso2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Generar PDFs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¡PDF's generados con éxito!'.</p>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-primary">Ok</button>*@
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <buton class="btn btn-primary" type="button" onclick="return Masivo();">Generar PDF's Cedulas Resumen Masivo</buton>
+</div>
+<hr />
+
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>
+
+<script type="text/javascript">   
+
+    function Masivo() {
+        mostraAviso();
+        
+        var formData = new FormData();
+
+        $.ajax({
+            type: "POST",
+            url: "/B_inmuebles_visitas_CedulaResumenMasivo/ExportarPDFs",
+            data: formData, // In the controller it receives IFormFile image
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                //$("#divTablaSeguimiento").html(result);
+                $('#myModalAviso2').modal('show');
+            },
+            error: function (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+
+        function mostraAviso(){
+            $('#myModalAviso').modal('show');
+        }
+
+    }
+</script>

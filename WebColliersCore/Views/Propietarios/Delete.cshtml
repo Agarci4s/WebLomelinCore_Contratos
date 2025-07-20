@@ -1,0 +1,198 @@
+﻿@model WebColliersCore.Models.CgPropietarios
+
+<h3>¿Seguro (a) que desea eliminar al Propietario seleccionado?</h3>
+<br/>
+<div>
+    <h5>@Html.DisplayFor(model => model.Nombre)</h5>
+    <hr />
+    <table class="table table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nombres)</th>
+            <td>@Html.DisplayFor(model => model.Nombres)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Paterno)</th>
+            <td>@Html.DisplayFor(model => model.Paterno)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Materno)</th>
+            <td>@Html.DisplayFor(model => model.Materno)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RegimenFiscal)</th>
+            <td>@Html.DisplayFor(model => model.RegimenFiscal)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CURP)</th>
+            <td>@Html.DisplayFor(model => model.CURP)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Fis_Mor)</th>
+            <td>@Html.DisplayFor(model => model.Fis_Mor)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RFC)</th>
+            <td>@Html.DisplayFor(model => model.RFC)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <td>@Html.DisplayFor(model => model.Nombre)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TipoIdentificacionAux)</th>
+            <td>@Html.DisplayFor(model => model.EmiteIdentFisica)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroIdentificacionAux)</th>
+            <td>@Html.DisplayFor(model => model.NumeroIdentificacionAux)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nacionalidad)</th>
+            <td>@Html.DisplayFor(model => model.NacionalidadP)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PropietarioDos)</th>
+            <td>@Html.DisplayFor(model => model.PropietarioDos)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Domicilio)</th>
+            <td>@Html.DisplayFor(model => model.Domicilio)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Exterior)</th>
+            <td>@Html.DisplayFor(model => model.Exterior)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Interior)</th>
+            <td>@Html.DisplayFor(model => model.Interior)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Colonia)</th>
+            <td>@Html.DisplayFor(model => model.Colonia)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Delegacion)</th>
+            <td>@Html.DisplayFor(model => model.Delegacion)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Cp)</th>
+            <td>@Html.DisplayFor(model => model.Cp)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Ciudad)</th>
+            <td>@Html.DisplayFor(model => model.Ciudad)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+            <td>@Html.DisplayFor(model => model.Estado)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Pais)</th>
+            <td>@Html.DisplayFor(model => model.Pais)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Telefono1)</th>
+            <td>@Html.DisplayFor(model => model.Telefono1)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Telefono2)</th>
+            <td>@Html.DisplayFor(model => model.Telefono2)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Celular)</th>
+            <td>@Html.DisplayFor(model => model.Celular)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.EMAIL)</th>
+            <td>@Html.DisplayFor(model => model.EMAIL)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DomFis)</th>
+            <td>@Html.DisplayFor(model => model.DomFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ExteriorFis)</th>
+            <td>@Html.DisplayFor(model => model.ExteriorFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.InteriorFis)</th>
+            <td>@Html.DisplayFor(model => model.InteriorFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ColFis)</th>
+            <td>@Html.DisplayFor(model => model.ColFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DelFis)</th>
+            <td>@Html.DisplayFor(model => model.DelFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CiudadFis)</th>
+            <td>@Html.DisplayFor(model => model.CiudadFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.EstadoFis)</th>
+            <td>@Html.DisplayFor(model => model.EstadoFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TelFis)</th>
+            <td>@Html.DisplayFor(model => model.TelFis)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NombreRep)</th>
+            <td>@Html.DisplayFor(model => model.NombreRep)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PaternoRep)</th>
+            <td>@Html.DisplayFor(model => model.PaternoRep)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.MaternoRep)</th>
+            <td>@Html.DisplayFor(model => model.MaternoRep)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RFCRep)</th>
+            <td>@Html.DisplayFor(model => model.RFCRep)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CURPRep)</th>
+            <td>@Html.DisplayFor(model => model.CURPRep)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TipoIdentificacionRepresentanteAux)</th>
+            <td>@Html.DisplayFor(model => model.EmiteIdentMoral)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroIdentificacionRepresentanteAux)</th>
+            <td>@Html.DisplayFor(model => model.NumeroIdentificacionRepresentanteAux)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaConstitucion)</th>
+            <td>@Html.DisplayFor(model => model.FechaConstitucion)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FechaPoder)</th>
+            <td>@Html.DisplayFor(model => model.FechaPoder)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroInstrumento)</th>
+            <td>@Html.DisplayFor(model => model.NumeroInstrumento)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroNotaria)</th>
+            <td>@Html.DisplayFor(model => model.NumeroNotaria)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.EstadoNotaria)</th>
+            <td>@Html.DisplayFor(model => model.EstadoNotaria)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Fedatario)</th>
+            <td>@Html.DisplayFor(model => model.Fedatario)</td>
+        </tr>
+    </table>
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar a la lista</a>
+    </form>
+</div>

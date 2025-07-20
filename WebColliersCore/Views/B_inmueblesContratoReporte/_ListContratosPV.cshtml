@@ -1,0 +1,94 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_contrato>
+
+
+<div class="tableFixHead">
+    <table class="table table-responsive-sm table-sm small" id="tab">
+        <thead class="font-size-head">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.cr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.contrato)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.renta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.id_b_cg_contrato_tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.id_b_cg_contrato_estatu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_inicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_termino)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_obligado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_anticipacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.litigio)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cr)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.contrato)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.renta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tipo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fecha_inicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fecha_termino)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fecha_obligado)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.fecha_anticipacion)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.litigio)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="11" style="color: red;">Sin información para mostrar</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

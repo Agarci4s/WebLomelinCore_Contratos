@@ -1,0 +1,303 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles>
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 480px;
+            border: 1px solid rgba(11,59,126,1);
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: left;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                border: 0px solid white;
+                text-align: center;
+                background: rgba(11,59,126,1);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+            margin-right: 6px;
+        }
+    </style>
+</header>
+
+<h3>Inmuebles contratos</h3>
+
+@*<p>
+    <a asp-action="Create">Agregar nuevo</a>
+</p>
+*@
+
+<body onload="OnLoad()">
+
+    <div class="row">
+        <div class="form-row col-md-12">
+            <div class=" col-md-3 row">
+                <input checked class="p-2 " type="radio" name="busqueda" value="1" id="rbCr" onclick="handleClick(this);">
+                <label class="p-2 " for="rbCr">@Html.DisplayNameFor(model => model.cr) | @Html.DisplayNameFor(model => model.nombre)</label>
+            </div>
+            <div class="col-md-2 ">
+                <input class="p-2 " type="radio" name="busqueda" value="2" id="rbUE" onclick="handleClick(this);">
+                <label class="p-2 " for="rbUE">@Html.DisplayNameFor(model => model.ue)</label>
+            </div>
+            <div class="col-md-2 ">
+                <input class="p-2 " type="radio" name="busqueda" value="3" id="rbClasificacion" onclick="handleClick(this);">
+                <label class="p-2 " for="rbClasificacion">@Html.DisplayNameFor(model => model.clasificacion)</label>
+            </div>
+        </div>
+        <div class=" col-md-4" id="divBuscar">
+            <input id="buscar" class="p-2 form-control" />
+        </div>
+        <div class=" col-md-4 " id="divClasificacion">
+            <select id="clasificacion" asp-items=ViewBag.lstClasificacion class="form-control"></select>
+        </div>
+
+        @* <div class=" col-md-1">
+            <input onclick="return Buscar()" title="Búsqueda por CR o nombre" type="button" value="Buscar" class="p-2 btn btn-primary" />
+        </div>
+        <div class=" col-md-1 ">
+            <input onclick="return Limpiar()" type="button" value="Limpiar" class="p-2 btn btn-primary" />
+        </div> *@
+        <div class=" col-sm-6">
+            @* <input onclick="return Buscar()" title="Búsqueda por CR o nombre" type="button" value="Buscar" class="p-2 btn btn-primary btn-sm" /> *@
+            <button onclick="return Buscar()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Buscar...">
+                <span class="visually-hidden">Buscar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+            </button>
+            <button onclick="return Limpiar()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Limpiar...">
+                <span class="visually-hidden">Limpiar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16">
+                    <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <br />
+
+    <div class="tableFixHead">
+        <table class="table table-responsive-sm table-sm small" id="tab">
+            <thead class="font-size-head">
+                <tr>
+                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.cr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.direccion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.cp)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.municipio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.clasificacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.regimen)
+                    </th>                                        
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @* @Html.ActionLink("Contratos", "ListContratos", new { id=item.id_b_inmuebles }) *@
+                            <a href="@Url.ActionLink("ListContratos", "B_inmueblesContrato", new { id = item.id_b_inmuebles })" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Contratos">
+                                <i class="fa-sharp fa-solid fa-file-lines"></i>
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cr)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.direccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.municipio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.clasificacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.regimen)
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script type="text/javascript">
+    function OnLoad() {
+        $("#divClasificacion").hide();
+        $("#divBuscar").show();
+    }
+
+    function Buscar() {
+        var buscar = $("#buscar").val().toUpperCase().trim();
+        var clasificacion = $("#clasificacion option:selected").text()
+        var table = document.getElementById("tab");
+
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            cells = row.getElementsByTagName('td');
+            if (!cells.length) {
+                continue;
+            }
+            var customerId = cells[1].innerHTML;
+            var customerId2 = cells[2].innerHTML;
+            var customerId3 = cells[3].innerHTML;
+            var customerId4 = cells[7].innerHTML;
+
+            var radios = document.getElementsByName("busqueda");
+            var selected = Array.from(radios).find(radio => radio.checked);
+
+
+            if (selected.value == 1) {
+                if (customerId.toUpperCase().trim().includes(buscar) || customerId2.toUpperCase().trim().includes(buscar))
+                    row.style.display = '';
+                else
+                    row.style.display = 'none';
+
+            }
+
+            if (selected.value == 2) {
+                if (customerId3.toUpperCase().trim().includes(buscar))
+                    row.style.display = '';
+                else
+                    row.style.display = 'none';
+
+            }
+
+
+            if (selected.value == 3) {
+                if (customerId4.includes(clasificacion))
+                    row.style.display = '';
+                else
+                    row.style.display = 'none';
+
+            }
+
+
+        }
+    }
+
+    function Limpiar() {
+        var table = document.getElementById("tab");
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            row.style.display = '';
+        }
+    }
+
+    $('th').click(function () {
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+        setIcon($(this), this.asc);
+    })
+
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index),
+                valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).html()
+    }
+
+    function setIcon(element, asc) {
+        $("th").each(function (index) {
+            $(this).removeClass("sorting");
+            $(this).removeClass("asc");
+            $(this).removeClass("desc");
+        });
+        element.addClass("sorting");
+        if (asc) element.addClass("asc");
+        else element.addClass("desc");
+    }
+
+    function handleClick(busqueda) {
+        if (busqueda.value == 1) {
+            $("#divClasificacion").hide();
+            $("#divBuscar").show();
+        }
+        if (busqueda.value == 2) {
+            $("#divClasificacion").hide();
+            $("#divBuscar").show();
+        }
+        if (busqueda.value == 3) {
+            $("#divClasificacion").show();
+            $("#divBuscar").hide();
+        }
+    }
+
+</script>

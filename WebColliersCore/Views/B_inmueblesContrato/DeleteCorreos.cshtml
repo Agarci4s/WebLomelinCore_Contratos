@@ -1,0 +1,35 @@
+﻿@model WebColliersCore.Models.B_inmuebles_contrato_correos
+
+@{
+    ViewData["Title"] = "DeleteCorreos";
+}
+
+<h3>¡Se eliminará el correo!</h3>
+<div>
+    <h4>Eliminar Correo</h4>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.correo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.correo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteCorreos">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        @Html.ActionLink("Regresar", "Correos", new { id = ViewData["id_b_inmuebles_contrato"]})
+    </form>
+</div>

@@ -1,0 +1,44 @@
+﻿@model WebColliersCore.Models.TpCartera
+
+@{
+    ViewData["Title"] = "Seleccionar cartera";
+}
+
+<h3>Seleccionar cartera</h3>
+<hr />
+
+<body>
+
+    <form asp-action="Index">
+        <div class="offset-md-3 col-md-6 row justify-content-center align-items-center" style="background-color:rgba(255, 255, 255,0.5);">
+            <div class="col-md-12 ">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group text-center">
+                    <label class="control-label">Cartera seleccionada</label>
+                    <input readonly asp-for="descripcionCartera" class="form-control" />
+                </div>
+                <div class="form-group text-center">
+                    <label asp-for="idCartera" class="control-label">Cartera</label>
+                    <select id="selectCartera" asp-for="idCartera" asp-items="ViewBag.Carteras" class="form-control" ></select>
+                    <span asp-validation-for="idCartera" class="text-danger"></span>
+                </div>
+
+                <br />
+                <div class="form-group text-center">
+                    <input type="submit" value="Seleccionar cartera" class="btn btn-primary" />
+                </div>
+                @*@if (System.Diagnostics.Debugger.IsAttached)
+                {*@
+                    <div class="form-group text-center">
+                        <img class="img-thumbnail" src="~/Images/Cartera.gif" style="height:50%"/>
+                    </div>
+               @* }*@
+            </div>
+        </div>
+    </form>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

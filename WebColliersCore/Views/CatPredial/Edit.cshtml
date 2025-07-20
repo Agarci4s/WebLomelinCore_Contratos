@@ -1,0 +1,474 @@
+﻿@model WebLomelinCore.Models.cat_Predial
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 150px;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: left;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                border: 0px solid white;
+                text-align: center;
+                background: rgba(11,59,126,1);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+            margin-right: 6px;
+        }
+
+        #tabTiposUso tr.noSearch {
+            background: White;
+            font-size: 0.8em;
+        }
+
+            #tabTiposUso tr.noSearch td {
+                padding-top: 10px;
+                text-align: center;
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .red {
+            color: Red;
+        }
+
+        #tabTiposUso tr:hover {
+            background-color: aliceblue;
+        }
+    </style>
+</header>
+
+<h4>Edición Cuenta Predial: <b>@ViewBag.CuentaPredial</b></h4>
+<hr />
+
+<form asp-action="Edit">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Datos Generales</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Tipos de Uso del Inmueble</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="home" class=" tab-pane active">
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                        Datos
+                    </a>
+                </div>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+
+                    <div class="row container-fluid card-body">
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="IdInmueble" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectInmueble">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectInmueble" asp-for="IdInmueble" class="form-control" onchange="return changeInmueble();" asp-items=@ViewBag.Inmuebles></select>
+                            </div>
+                            <span asp-validation-for="IdInmueble" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="IdLocalidad" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectLocalidad">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectLocalidad" asp-for="IdLocalidad" class="form-control" asp-items=@ViewBag.Localidades></select>
+                            </div>
+                            <span asp-validation-for="IdLocalidad" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for=IdPeriodicidad class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="selectPeriodicidad">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <select id="selectPeriodicidad" asp-for="IdPeriodicidad" class="form-control" asp-items=@ViewBag.Periodicidades></select>
+                            </div>
+                            <span asp-validation-for="IdPeriodicidad" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for=CuentaPredial class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="CuentaPredial">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input id="inputCuentaPredial" asp-for="CuentaPredial" class="form-control" placeholder="Cuenta Predial" />
+                            </div>
+                            <span asp-validation-for="CuentaPredial" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for=M2Terreno class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="M2Terreno">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="M2Terreno" class="form-control" placeholder="M2 de Terreno" />
+                            </div>
+                            <span asp-validation-for="M2Terreno" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for=ValorAvaluoCatastral class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="ValorAvaluoCatastral">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="ValorAvaluoCatastral" class="form-control" placeholder="Valor del Avaluo o Catastral" />
+                            </div>
+                            <span asp-validation-for="ValorAvaluoCatastral" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for=ClaveCorredor class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="ClaveCorredor">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="ClaveCorredor" class="form-control" placeholder="Clave de Corredor" />
+                            </div>
+                            <span asp-validation-for="ClaveCorredor" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="menu1" class="tab-pane fade">
+            <div id="accordion2">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne2">
+                            Tipos de Uso
+                        </a>
+                    </div>
+                    <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
+
+                        <div class="row container-fluid card-body">
+
+                            <div class="form-group col-sm-4">
+                                <label asp-for="TipoUso" class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <label class="input-group-text" for="selectTipoUso">
+                                            <i class="bi bi-building"></i>
+                                        </label>
+                                    </div>
+                                    <select id="selectTipoUso" asp-for="TipoUso" class="form-control" onchange="return changeInmueble();" asp-items=@ViewBag.TiposUso></select>
+                                </div>
+                                <span asp-validation-for="TipoUso" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-sm-4">
+                                <label asp-for=Nivel class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="Nivel">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="Niveles" asp-for="Nivel" class="form-control" placeholder="Niveles" />
+                                </div>
+                                <span asp-validation-for="Nivel" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-sm-4">
+                                <label asp-for=Clase class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="Clase">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="Clase" asp-for="Clase" class="form-control" placeholder="Clase" />
+                                </div>
+                                <span asp-validation-for="Clase" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-sm-4">
+                                <label asp-for=M2Construccion class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="M2Construccion">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="M2Construccion" asp-for="M2Construccion" class="form-control" placeholder="M2 de Construccion" />
+                                </div>
+                                <span asp-validation-for="M2Construccion" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-sm-4">
+                                <label asp-for=Antiguedad class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="Antiguedad">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="Antiguedad" asp-for="Antiguedad" class="form-control" placeholder="Antiguedad" />
+                                </div>
+                                <span asp-validation-for="Antiguedad" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group p-1">
+                                <label class="control-label p"></label>
+                                @* <input class="form-control btn btn-primary" type="submit" value="Agregar" onclick="return AgregarTipoUso()"> *@
+                                <button type="submit" onclick="return AgregarTipoUso()" class=" form-control btn btn-success btn-sm">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    Agregar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid">
+
+                            <div class="tableFixHead col-sm-12">
+                                <table id="tabTiposUso" class="table table-responsive-sm table-sm small">
+                                    <thead class="font-size-head">
+                                        <tr>
+                                            <th>Tipo de Uso</th>
+                                            <th>Niveles</th>
+                                            <th>Clase</th>
+                                            <th>M2 de Construcción</th>
+                                            <th>Antiguedad</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            @foreach (var item in Model.TipoUsos)
+                                            {
+                                                <tr id="@Html.Value("id" + item.Id.ToString())">
+                                                    <td>
+                                                        <input type="hidden" name="TipoUsoList" value="@item.TipoUso" /> @item.TipoUso
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="NivelList" value="@item.Nivel" /> @item.Nivel
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="ClaseList" value="@item.Clase" /> @item.Clase
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="M2ContruccionList" value="@item.M2Construccion" /> @item.M2Construccion
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="AntiguedadList" value="@item.Antiguedad" /> @item.Antiguedad
+                                                    </td>
+                                                    <td>
+                                                        @* <a data-value="@item.Id" onclick="deleteTipoUso(@item.Id)" href="#">Eliminar</a> *@
+                                                        <a data-value="@item.Id" onclick="deleteTipoUso(@item.Id)" href="#" class="btn btn-danger btn-sm">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <a href="@Url.ActionLink("Index", "CatPredial")" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-arrow-left-circle-fill"></i>
+                    <span>
+                        Regresar al Listado...
+                    </span>
+                </a>
+                <button type="submit" value="Actualizar" onclick="return Validate()" class="btn btn-success btn-sm">
+                    <i class="fa-solid fa-pen"></i>
+                    Actualizar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        @{
+            if (ViewBag.Update == true)
+            {
+            <script>
+                SweetAlertSuccess();
+            </script>
+            }
+        };
+}
+
+<script type="text/javascript">
+
+    function SweetAlertSuccess(){
+        swal({
+            title: "¡Actualización Exitoso!",
+            text: "Los datos fueron actualizados satisfactoriamente",
+            icon: "success"
+            }).then(function() {
+                window.location.href = "/CatPredial/Index";
+        });
+    }   
+
+    function SweetAlertTipoUso(){
+        swal({
+            title: "¡Atención!",
+            text: "El tipo de uso es requerido, favor de agregar al menos uno.",
+            icon: "error"
+            });
+    }
+
+    function changeInmueble() {
+        var newId = $("#selectInmueble").val();
+        var url = "/CatPredial/getLocalidades";
+
+        $.getJSON(url, { id: newId }, function (data) {
+            var item = "";
+            $("#selectLocalidad").empty();
+            $.each(data, function (i, Localidades) {
+                item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
+            });
+            $("#selectLocalidad").html(item);
+        });
+
+    }
+
+    function AgregarTipoUso(){
+
+        var count = $("#tabTiposUso tbody tr").length;
+
+        var vTipoUso = $("#selectTipoUso option:selected").val();
+        var vNiveles = $("#Niveles").val();
+        var vClase = $("#Clase").val();
+        var vM2Contruccion = $("#M2Construccion").val();
+        var vAntiguedad = $("#Antiguedad").val();        
+
+        $('#tabTiposUso tbody').append('<tr id="id' + count + '">' +
+                            '<td><input type="hidden" name="TipoUsoList" value="' + vTipoUso + '">' + vTipoUso + '</td>' +
+                            '<td><input type="hidden" name="NivelList" value="' + vNiveles + '">' + vNiveles + '</td>' +
+                            '<td><input type="hidden" name="ClaseList" value="' + vClase + '">' + vClase + '</td>' +
+                            '<td><input type="hidden" name="M2ContruccionList" value="' + vM2Contruccion + '">' + vM2Contruccion + '</td>' +
+                            '<td><input type="hidden" name="AntiguedadList" value="' + vAntiguedad + '">' + vAntiguedad + '</td>' +
+                            '<td><a data-value="' + count + '" onclick="deleteTipoUso(' + count + ')" href="#" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a></td >' +
+                            '</tr > ');
+
+                        $("#selectTipoUso").val(0);
+                        $("#Niveles").val('');
+                        $("#Clase").val('');
+                        $("#M2Construccion").val('');
+                        $("#Antiguedad").val('');
+
+        return false;
+    }
+
+    function deleteTipoUso(id) {
+        idRow = "#id" + id;
+        $(idRow).remove();
+    }
+
+    function Validate(){
+        if ($("#M2Construccion").val() == ''){
+            $("#M2Construccion").val('0');
+        }
+
+        if ($("#Antiguedad").val() == ''){
+            $("#Antiguedad").val('0');
+        }
+
+        if ( $("#tabTiposUso tbody tr").length == 0) {
+            SweetAlertTipoUso();
+            return  false;
+        }
+
+        return true;
+    }
+
+</script>
+
+

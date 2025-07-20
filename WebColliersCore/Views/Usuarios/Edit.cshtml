@@ -1,0 +1,123 @@
+﻿@model WebColliersCore.Models.Usuario
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<header>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    @{
+        try
+        {
+            if (ViewBag.MuestraError)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#modalError").modal('show');
+                    });
+                </script>
+            }
+        }
+        catch (Exception) { }
+    }
+</header>
+
+<div class="container">
+    <div class="modal fade" id="modalError" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>¡El usuario ya se encuentra disponible!</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Editar usuario</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellido1" class="control-label"></label>
+                <input asp-for="Apellido1" class="form-control" />
+                <span asp-validation-for="Apellido1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellido2" class="control-label"></label>
+                <input asp-for="Apellido2" class="form-control" />
+                <span asp-validation-for="Apellido2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Puesto" class="control-label"></label>
+                <select asp-for="Puesto" class="form-control" asp-items=" ViewBag.Puesto"></select>
+                <span asp-validation-for="Puesto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rol" class="control-label"></label>
+                <select asp-for="Rol" class="form-control" asp-items=" ViewBag.Rol"></select>
+                <span asp-validation-for="Rol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label"></label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="clave_ejecutivo" class="control-label"></label>
+                <input asp-for="clave_ejecutivo" class="form-control" />
+                <span asp-validation-for="clave_ejecutivo" class="text-danger"></span>
+            </div>
+            @*        <div class="form-group form-check">
+            <label class="form-check-label">
+            <input class="form-check-input" asp-for="CancelarCFDIBool" /> @Html.DisplayNameFor(model => model.CancelarCFDI)
+            </label>
+            </div>*@
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar a los usuarios</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

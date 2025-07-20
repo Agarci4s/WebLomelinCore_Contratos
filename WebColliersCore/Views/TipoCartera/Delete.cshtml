@@ -1,0 +1,26 @@
+﻿@model WebColliersCore.Models.TpCartera
+
+<h3>¿Seguro (a) que desea eliminar la cartera?</h3>
+<div>
+    <h4>@Html.DisplayFor(model => model.descripcionCartera)</h4>
+    <hr />
+    <table class="table table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.descripcionCartera)</th>
+            <td>@Html.DisplayFor(model => model.descripcionCartera)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.letra)</th>
+            <td>@Html.DisplayFor(model => model.letra)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.complemento_terceros)</th>
+            <td>@Html.DisplayFor(model => model.complemento_terceros)</td>
+        </tr>
+    </table>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar a la lista</a>
+    </form>
+</div>

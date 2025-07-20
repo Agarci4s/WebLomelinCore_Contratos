@@ -1,0 +1,813 @@
+﻿@model WebColliersCore.Models.B_inmuebles_contrato
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 150px;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: left;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                border: 0px solid white;
+                text-align: center;
+                background: rgba(11,59,126,1);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+            margin-right: 6px;
+        }
+
+        #tabTiposUso tr.noSearch {
+            background: White;
+            font-size: 0.8em;
+        }
+
+            #tabTiposUso tr.noSearch td {
+                padding-top: 10px;
+                text-align: center;
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .red {
+            color: Red;
+        }
+
+        #tabTiposUso tr:hover {
+            background-color: aliceblue;
+        }
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "...";
+        }
+    </style>
+</header>
+
+<body onload="OnLoad()">
+    <h4>Edición de Contrato</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="form-group col-md-12" style="background-color:lightblue">
+                <partial name="Inmueble" model="Model.b_inmuebles" />
+            </div>
+
+            <form onsubmit="return OnSubmit()" asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div hidden class="form-group col-md-4">
+                    <label asp-for="id_b_inmuebles_contrato" class="control-label"></label>
+                    <input readonly asp-for="id_b_inmuebles_contrato" class="form-control" />
+                    <span asp-validation-for="id_b_inmuebles_contrato" class="text-danger"></span>
+                </div>
+                <div hidden class="form-group col-md-4">
+                    <label asp-for="id_b_inmuebles" class="control-label"></label>
+                    <input readonly asp-for="id_b_inmuebles" class="form-control" />
+                    <span asp-validation-for="id_b_inmuebles" class="text-danger"></span>
+                </div>
+
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#home">Datos Generales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#Plazos">Plazos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#Revision">Revisión</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+
+                    @* Pestaña Datos Generales *@
+                    <div id="home" class=" tab-pane active">
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                                    Datos
+                                </a>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="row container-fluid card-body">
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=contrato class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="contrato">
+                                                    <i class="bi bi-info-circle-fill"></i>
+                                                </label>
+                                            </div>
+                                            <input id="inputcontrato" asp-for="contrato" class="form-control" placeholder="Contrato" />
+                                        </div>
+                                        <span asp-validation-for="contrato" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for="id_b_cg_contrato_estatu" class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <label class="input-group-text" for="selectEstatus">
+                                                    <i class="fa-sharp fa-solid fa-file-lines"></i>
+                                                </label>
+                                            </div>
+                                            <select id="selectEstatus" asp-for="id_b_cg_contrato_estatu" class="form-control" asp-items=@ViewBag.lstEstatus></select>
+                                        </div>
+                                        <span asp-validation-for="id_b_cg_contrato_estatu" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for="id_b_cg_contrato_tipo" class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <label class="input-group-text" for="selectTipoContrato">
+                                                    <i class="fa-sharp fa-solid fa-file-lines"></i>
+                                                </label>
+                                            </div>
+                                            <select id="selectTipoContrato" asp-for="id_b_cg_contrato_tipo" class="form-control" asp-items=@ViewBag.lstTipo></select>
+                                        </div>
+                                        <span asp-validation-for="id_b_cg_contrato_tipo" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=renta class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="input_renta">
+                                                    <i class="fa-solid fa-dollar-sign"></i>
+                                                </label>
+                                            </div>
+                                            <input id="input_renta" asp-for="renta" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                                        </div>
+                                        <span asp-validation-for="renta" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=DepRta class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="input_DepRta">
+                                                    <i class="fa-solid fa-dollar-sign"></i>
+                                                </label>
+                                            </div>
+                                            <input id="input_DepRta" asp-for="DepRta" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                                        </div>
+                                        <span asp-validation-for="DepRta" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=DiaPago class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputDiaPago">
+                                                    <i class="fa-solid fa-calendar-xmark"></i>
+                                                </label>
+                                            </div>
+                                            <input id="inputDiaPago" asp-for="DiaPago" class="form-control" placeholder="0" />
+                                        </div>
+                                        <span asp-validation-for="DiaPago" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=NumeroReferenciado class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputNumeroReferenciado">
+                                                    <i class="bi bi-info-circle-fill"></i>
+                                                </label>
+                                            </div>
+                                            <input id="inputNumeroReferenciado" asp-for="NumeroReferenciado" class="form-control" placeholder="Número de Referencia" />
+                                        </div>
+                                        <span asp-validation-for="NumeroReferenciado" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=NumeroReferenciadoMtto class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputNumeroReferenciadoMtto">
+                                                    <i class="bi bi-info-circle-fill"></i>
+                                                </label>
+                                            </div>
+                                            <input id="inputNumeroReferenciadoMtto" asp-for="NumeroReferenciadoMtto" class="form-control" placeholder="Número de Referencia" />
+                                        </div>
+                                        <span asp-validation-for="NumeroReferenciadoMtto" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=Pagare class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputPagare">
+                                                    <i class="bi bi-info-circle-fill"></i>
+                                                </label>
+                                            </div>
+                                            <input id="inputPagare" asp-for="Pagare" class="form-control" placeholder="Pagare" />
+                                        </div>
+                                        <span asp-validation-for="Pagare" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for=LocalesAgrupados class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputLocalesAgrupados">
+                                                    <i class="bi bi-info-circle-fill"></i>
+                                                </label>
+                                            </div>
+                                            <input id="inputLocalesAgrupados" asp-for="LocalesAgrupados" class="form-control" placeholder="0" />
+                                        </div>
+                                        <span asp-validation-for="LocalesAgrupados" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for="categoria" class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <label class="input-group-text" for="selectCategoria">
+                                                    <i class="fa-sharp fa-solid fa-file-lines"></i>
+                                                </label>
+                                            </div>
+                                            <select id="selectCategoria" asp-for="categoria" class="form-control" asp-items=@ViewBag.lstCategorias></select>
+                                        </div>
+                                        <span asp-validation-for="categoria" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <div class="form-check">
+                                            <br />
+                                            <label class="form-check-label">
+                                                <input id="ckeck_litigio" onchange="return Litigio()" class="form-check-input" asp-for="litigio" /> @Html.DisplayNameFor(model => model.litigio)
+                                            </label>
+                                        </div>
+                                    </div>                                   
+
+                                    <div id="div_check_especial" class="col-md-12">
+                                        <div class="form-group col-md-4">
+                                            <label class="form-check-label">
+                                                <input onchange="return Especial()" id="check_especial" class="form-check-input" asp-for="especial" /> @Html.DisplayNameFor(model => model.especial)
+                                            </label>
+                                        </div>
+                                        <div id="div_correo_especial" class="form-group col-md-12">
+                                            <label asp-for="correo_especial" class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputcorreo_especial">
+                                                        <i class="fa-solid fa-envelope-open-text"></i>
+                                                    </label>
+                                                </div>
+                                                <textarea id="inputcorreo_especial" asp-for="correo_especial" class="form-control"></textarea>
+                                            </div>
+                                            <span asp-validation-for="correo_especial" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-12">
+                                        <label asp-for=ObservacionDepGarantia class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputObservacionDepGarantia">
+                                                    <i class="fa-solid fa-comments"></i>
+                                                </label>
+                                            </div>
+                                            <textarea id="inputObservacionDepGarantia" asp-for="ObservacionDepGarantia" class="form-control"></textarea>
+                                        </div>
+                                        <span asp-validation-for="ObservacionDepGarantia" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-12">
+                                        <label asp-for=observaciones class="control-label"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputObservaciones">
+                                                    <i class="fa-solid fa-comments"></i>
+                                                </label>
+                                            </div>
+                                            <textarea id="inputObservaciones" asp-for="observaciones" class="form-control"></textarea>
+                                        </div>
+                                        <span asp-validation-for="observaciones" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Pestaña Plazos *@
+                    <div id="Plazos" class=" tab-pane fade">
+                        <div id="accordionPlazos">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="card-link" data-toggle="collapse" href="#collapsePlazos">
+                                        Fechas
+                                    </a>
+                                </div>
+
+                                <div id="collapsePlazos" class="collapse show" data-parent="#accordionPlazos">
+                                    <div class="row container-fluid card-body">
+
+                                        <div class="form-group col-sm-3">
+                                            <label asp-for=fecha_inicio class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputFecha_inicio">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputFecha_inicio" asp-for="fecha_inicio" class="form-control" placeholder="Fecha de Inicio" />
+                                            </div>
+                                            <span asp-validation-for="fecha_inicio" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-3">
+                                            <label asp-for=fecha_termino class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputFecha_termino">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputFecha_termino" asp-for="fecha_termino" class="form-control" placeholder="Fecha de Termino" />
+                                            </div>
+                                            <span asp-validation-for="fecha_termino" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-3">
+                                            <label asp-for=fechaOcupacion class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputFechaOcupacion">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputFechaOcupacion" asp-for="fechaOcupacion" class="form-control" placeholder="Fecha de Ocupación" />
+                                            </div>
+                                            <span asp-validation-for="fechaOcupacion" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-3">
+                                            <label asp-for=fecha_obligado class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputFecha_obligadoo">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputFecha_obligado" asp-for="fecha_obligado" class="form-control" placeholder="Fecha Obligado" />
+                                            </div>
+                                            <span asp-validation-for="fecha_obligado" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo2">
+                                        Arrendador Forzoso
+                                    </a>
+                                </div>
+                                <div id="collapseTwo2" class="collapse" data-parent="#accordionPlazos">
+                                    <div class="row card-body">
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoPFAnio class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoPFAnio">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoPFAnio" asp-for="plazoPFAnio" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoPFAnio" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoPFMes class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoPFMes">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoPFMes" asp-for="plazoPFMes" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoPFMes" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoPFdia class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoPFdia">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoPFdia" asp-for="plazoPFdia" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoPFdia" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo3">
+                                        Arrendatario Forzoso
+                                    </a>
+                                </div>
+                                <div id="collapseTwo3" class="collapse" data-parent="#accordionPlazos">
+                                    <div class="row card-body">
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoIFAnio class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoIFAnio">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoIFAnio" asp-for="plazoIFAnio" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoIFAnio" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoIFMes class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoIFMes">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoIFMes" asp-for="plazoIFMes" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoIFMes" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoIFDia class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoIFDia">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoIFDia" asp-for="plazoIFDia" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoIFDia" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo4">
+                                        Arrendador Voluntario
+                                    </a>
+                                </div>
+                                <div id="collapseTwo4" class="collapse" data-parent="#accordionPlazos">
+                                    <div class="row card-body">
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoPVAnio class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoPVAnio">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoPVAnio" asp-for="plazoPVAnio" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoPVAnio" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoPVMes class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoPVMes">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoPVMes" asp-for="plazoPVMes" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoPVMes" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoPVDia class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoPVDia">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoPVDia" asp-for="plazoPVDia" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoPVDia" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo5">
+                                        Arrendatario Voluntario
+                                    </a>
+                                </div>
+                                <div id="collapseTwo5" class="collapse" data-parent="#accordionPlazos">
+                                    <div class="row card-body">
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoIVAnio class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoIVAnio">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoIVAnio" asp-for="plazoIVAnio" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoIVAnio" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoIVMes class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoIVMes">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoIVMes" asp-for="plazoIVMes" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoIVMes" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=plazoIVDia class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputPlazoIVDia">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputPlazoIVDia" asp-for="plazoIVDia" class="form-control" min="0" />
+                                            </div>
+                                            <span asp-validation-for="plazoIVDia" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* Pestaña Revisión *@
+                    <div id="Revision" class=" tab-pane fade">
+                        <div id="accordionRevision">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseRevision">
+                                        Datos
+                                    </a>
+                                </div>
+
+                                <div id="collapseRevision" class="collapse show" data-parent="#accordionRevision">
+                                    <div class="row container-fluid card-body">
+
+                                        <div class="form-group col-sm-3">
+                                            <label asp-for=fecha_revision class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputFecha_revision">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputFecha_revision" asp-for="fecha_revision" class="form-control" placeholder="Fecha de Revisión" />
+                                            </div>
+                                            <span asp-validation-for="fecha_revision" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for="plazo" class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <label class="input-group-text" for="selectPlazo">
+                                                        <i class="fa-sharp fa-solid fa-file-lines"></i>
+                                                    </label>
+                                                </div>
+                                                <select id="selectPlazo" asp-for="plazo" asp-items=ViewBag.lstPlazo class="form-control"></select>
+                                            </div>
+                                            <span asp-validation-for="plazo" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for="base_revision" class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <label class="input-group-text" for="selectBase_revision">
+                                                        <i class="fa-sharp fa-solid fa-file-lines"></i>
+                                                    </label>
+                                                </div>
+                                                <select id="selec_base_revision" onchange="return CambioBaseRevision()" asp-for="base_revision" asp-items=ViewBag.lstBase class="form-control"></select>
+                                            </div>
+                                            <span asp-validation-for="base_revision" class="text-danger"></span>
+                                        </div>
+
+                                        <div id="div_base_revision_otro" class="form-group col-sm-3">
+                                            <label asp-for=base_revision_otro class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputBase_revision_otro">
+                                                        <i class="bi bi-info-circle-fill"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputBase_revision_otro" asp-for="base_revision_otro" class="form-control" placeholder="Otro" />
+                                            </div>
+                                            <span asp-validation-for="base_revision_otro" class="text-danger"></span>
+                                        </div>
+
+                                        <div id="div_incp" class="form-group col-sm-3">
+                                            <label asp-for=incp class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputIncp">
+                                                        <i class="bi bi-info-circle-fill"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputIncp" asp-for="incp" class="form-control" placeholder="0.00" />
+                                            </div>
+                                            <span asp-validation-for="incp" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-sm-4">
+                                            <label asp-for=fecha_anticipacion class="control-label"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text" for="inputFecha_anticipacion">
+                                                        <i class="fa-solid fa-calendar-days"></i>
+                                                    </label>
+                                                </div>
+                                                <input id="inputFecha_anticipacion" asp-for="fecha_anticipacion" class="form-control" placeholder="90" />
+                                            </div>
+                                            <span asp-validation-for="fecha_anticipacion" class="text-danger"></span>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br/>
+                <div class="container">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <a href="@Url.ActionLink("ListContratos", "B_inmueblesContrato", new { id = ViewData["id_b_inmuebles"] })" class="btn btn-secondary btn-sm">
+                                <i class="bi bi-arrow-left-circle-fill"></i>
+                                <span>
+                                    Regresar al Listado...
+                                </span>
+                            </a>
+                            <button type="submit" value="Actualizar" class="btn btn-success btn-sm">
+                                <i class="fa-solid fa-pen"></i>
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+
+           
+
+        </div>
+    </div>    
+</body>
+
+<script type="text/javascript">
+    function OnLoad() {
+        Especial();
+        Litigio();
+        CambioBaseRevision();
+    }
+
+    function OnSubmit() {
+        var aux = $("#input_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_renta").val(aux);
+    }
+
+    function CambioBaseRevision() {
+        var base = $("#selec_base_revision option:selected").val();
+
+        $("#div_base_revision_otro").hide();
+        $("#div_incp").hide();
+
+        if (base == 4)
+            $("#div_base_revision_otro").show();
+        if (base == 3)
+            $("#div_incp").show();
+
+    }
+
+    function Litigio() {
+        var aux = document.getElementById("ckeck_litigio").checked;        
+    }
+
+    function Especial() {
+        var aux = document.getElementById("check_especial").checked;
+
+        if (aux)
+            $("#div_correo_especial").show();
+        else
+            $("#div_correo_especial").hide();
+    }
+
+    //Moneda y numero
+    function formatCurrency(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = '$' + value;
+    }
+    function formatNumber(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = value;
+    }
+
+    function formatRemove(input) {
+        const value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        input.value = value;
+    }
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

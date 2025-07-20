@@ -1,0 +1,238 @@
+﻿@model WebColliersCore.Models.B_inmuebles
+
+<div>
+    <h4>Detalle inmueble</h4>
+    <hr />
+    <div class="row col-md-10">
+        <div class="form-row ">
+            <div class="form-group col-md-4">
+                <label asp-for="cr" class="control-label"></label>
+                <input readonly asp-for="cr" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ue" class="control-label"></label>
+                <input readonly asp-for="ue" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="nombre" class="control-label"></label>
+                <input readonly asp-for="nombre" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="direccion" class="control-label"></label>
+                <input readonly asp-for="direccion" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="cp" class="control-label"></label>
+                <input readonly asp-for="cp" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="estado" class="control-label"></label>
+                <input readonly asp-for="estado" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="municipio" class="control-label"></label>
+                <input readonly asp-for="municipio" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="colonia" class="control-label"></label>
+                <input readonly asp-for="colonia" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="noext" class="control-label"></label>
+                <input readonly asp-for="noext" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="noint" class="control-label"></label>
+                <input readonly asp-for="noint" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="manzana" class="control-label"></label>
+                <input readonly asp-for="manzana" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="lote" class="control-label"></label>
+                <input readonly asp-for="lote" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="referencia_calle" class="control-label"></label>
+                <input readonly asp-for="referencia_calle" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="referencia_calle2" class="control-label"></label>
+                <input readonly asp-for="referencia_calle2" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="latidud" class="control-label"></label>
+                <input readonly asp-for="latidud" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="longitud" class="control-label"></label>
+                <input readonly asp-for="longitud" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="link_maps" class="control-label"></label>
+                <textarea readonly asp-for="link_maps" class="form-control"></textarea>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="id_b_cg_regimen" class="control-label"></label>
+                <select disabled asp-for="id_b_cg_regimen" asp-items=ViewBag.lstRegimen class="form-control"></select>
+            </div>
+            @if (Model.id_b_cg_regimen == 3 || Model.id_b_cg_regimen == 1)
+            {
+                <div class="form-group col-md-4">
+                    <label asp-for="valor_comercial" class="control-label"></label>
+                    <input readonly id="input_valor_comercial" asp-for="valor_comercial" class="form-control" />
+                </div>
+            }
+            <div class="form-group col-md-4">
+                <label asp-for="id_b_cg_inmuebles_estatus" class="control-label"></label>
+                <select disabled asp-for="id_b_cg_inmuebles_estatus" asp-items=ViewBag.lstEstatus class="form-control"></select>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="id_b_cg_clasificacion" class="control-label"></label>
+                <select disabled asp-for="id_b_cg_clasificacion" asp-items=ViewBag.lstClasificacion class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_b_cg_subclasificacion" class="control-label"></label>
+                <select disabled asp-for="id_b_cg_subclasificacion" asp-items=ViewBag.lstSubClasificacion class="form-control"></select>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="id_b_cg_region" class="control-label"></label>
+                <select disabled asp-for="id_b_cg_region" asp-items=ViewBag.lstRegion class="form-control"></select>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="m2_terreno" class="control-label"></label>
+                <input readonly asp-for="m2_terreno" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="area_rentable" class="control-label"></label>
+                <input readonly asp-for="area_rentable" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="m2_construccion" class="control-label"></label>
+                <input readonly asp-for="m2_construccion" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="m2_estacionamiento" class="control-label"></label>
+                <input readonly asp-for="m2_estacionamiento" class="form-control" />
+            </div>
+            @*  <div class="form-group col-md-4">
+            <label asp-for="m2_bodega" class="control-label"></label>
+            <input readonly asp-for="m2_bodega" class="form-control" />
+            </div>*@
+            <div class="form-group col-md-4">
+                <label asp-for="cajones_estacionamiento" class="control-label"></label>
+                <input readonly asp-for="cajones_estacionamiento" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="cajones_estacionamiento_ejecutivo" class="control-label"></label>
+                <input readonly asp-for="cajones_estacionamiento_ejecutivo" class="form-control" />
+            </div>
+            @* <div class="form-group col-md-4">
+            <label asp-for="cajones_pensiones" class="control-label"></label>
+            <input readonly asp-for="cajones_pensiones" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+            <label asp-for="cortesias_boletos" class="control-label"></label>
+            <input readonly asp-for="cortesias_boletos" class="form-control" />
+            </div>*@
+
+            <div class="form-group form-check col-md-4" style="padding-left:25px">
+                <label class="form-check-label">
+                    <input disabled class="form-check-input" asp-for="opera_estacionamiento" /> @Html.DisplayNameFor(model => model.opera_estacionamiento)
+                </label>
+            </div>
+            <div class="form-group form-check col-md-4" style="padding-left:25px">
+                <label class="form-check-label">
+                    <input disabled class="form-check-input" asp-for="valet_parking" /> @Html.DisplayNameFor(model => model.valet_parking)
+                </label>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label asp-for="operador_estacionamiento" class="control-label"></label>
+                <input readonly asp-for="operador_estacionamiento" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="cajeros_automaticos" class="control-label"></label>
+                <input readonly asp-for="cajeros_automaticos" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="practicajas" class="control-label"></label>
+                <input readonly asp-for="practicajas" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ventanillas" class="control-label"></label>
+                <input readonly asp-for="ventanillas" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="contrato_renta" class="control-label"></label>
+                <input readonly asp-for="contrato_renta" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="m2_precio" class="control-label"></label>
+                <input readonly asp-for="m2_precio" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="m2_rango_inf" class="control-label"></label>
+                <input readonly asp-for="m2_rango_inf" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="m2_rango_sup" class="control-label"></label>
+                <input readonly asp-for="m2_rango_sup" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="id_b_cg_valor_mercado" class="control-label"></label>
+                <select disabled asp-for="id_b_cg_valor_mercado" asp-items=ViewBag.lstValorMercado class="form-control"></select>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="contrato" class="control-label"></label>
+                <input readonly asp-for="contrato" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="renta" class="control-label"></label>
+                <input readonly asp-for="renta" class="form-control" />
+            </div>
+
+            <div class="form-group col-md-4">
+                <label asp-for="m2_local" class="control-label"></label>
+                <input readonly asp-for="m2_local" class="form-control" />
+            </div>
+
+            <div class="form-group col-md-4">
+                <label asp-for="fecha_inicio" class="control-label"></label>
+                <input disabled asp-for="fecha_inicio" class="form-control" type="date" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="fecha_termino" class="control-label"></label>
+                <input disabled asp-for="fecha_termino" class="form-control" type="date" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="fecha_obligado" class="control-label"></label>
+                <input disabled asp-for="fecha_obligado" class="form-control" type="date" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ingreso" class="control-label"></label>
+                <input readonly asp-for="ingreso" class="form-control" type="number" />
+            </div>
+
+
+
+            @*<div class="form-group col-md-4">
+            <label asp-for="agua" class="control-label"></label>
+            <input readonly asp-for="agua" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+            <label asp-for="luz" class="control-label"></label>
+            <input readonly asp-for="luz" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+            <label asp-for="predial" class="control-label"></label>
+            <input readonly asp-for="predial" class="form-control" />
+            </div>*@
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_b_inmuebles  }) |
+    <a asp-action="Index">Regresar</a>
+</div>

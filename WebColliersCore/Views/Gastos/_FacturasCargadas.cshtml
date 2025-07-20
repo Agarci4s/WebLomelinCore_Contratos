@@ -1,0 +1,216 @@
+﻿@using System.Globalization;
+@using WebLomelinCore.Models
+@model List<Factura>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        var messageList = Model.Where(m => m.MessageError != "" && m.MessageError != null).ToList();
+        string messageError = "";
+
+        if (messageList.Count > 0)
+        {
+            messageError = messageList[0].MessageError + " :" + messageList[0].FileNameXml;
+        }
+
+        if (!string.IsNullOrEmpty(messageError))
+        {
+            <input type="hidden" id="MessageError" value="@messageError" />
+        }
+        else
+        {
+            <input type="hidden" id="MessageError" value="" />
+        }
+    }
+}
+else
+{
+    <input type="hidden" id="MessageError" value="" />
+}
+
+<div class="tableFixHead" style="height:350px; min-height: 350px;">
+    <table class="table" id="tablaRowsFacturas">
+        <thead class="font-size-head">
+            <tr>
+                @* 0 *@<th>Inmueble</th>
+                @* 1 *@<th>Gasto</th>
+                @* 2 *@<th>Concepto</th>
+                @* 3 *@<th>Proveedor</th>
+                @* 4 *@<th>Fecha Contable</th>
+                @* 5 *@<th>Folio Fiscal</th>
+                @* 6 *@<th>Moneda</th>
+                @* 7 *@<th>Tipo de Cambio</th>
+                @* 8 *@<th>Forma de Pago</th>
+                @* 9 *@<th>Folio</th>
+                @* 10 *@<th>Serie</th> @*13*@
+                @* 11 *@<th>Importe USD</th>
+                @* 12 *@<th>Importe MXN</th>
+                @* 13 *@<th>Descuento</th>
+                @* 14 *@<th>SubTotal</th>
+                @* 15 *@<th>IVA</th>
+                @* 16 *@<th>IEPS</th>
+                @* 17 *@<th>IVA Ret.</th>
+                @* 18 *@<th>ISR Ret.</th>
+                @* 19 *@<th>Total</th>
+                @* 20 *@<th>Path</th>
+                @* 21 *@<th>RFC</th>
+                @* 22 *@<th></th>
+                @* 23 *@<th style="display:none;"></th>
+                @* 24 *@<th style="display:none;"></th>
+                @* 25 *@<th style="display:none;"></th>
+                @* 26 *@<th style="display:none;"></th>
+            </tr>
+        </thead>
+        <tbody id="tbTablaRowsFacturas">
+            @if (Model != null)
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    if (Model[i].MessageError == null || Model[i].MessageError == "")
+                    {
+                        <tr id="tr_@i">
+                            @* 0 *@<td>
+                                <div style="width: 18rem;">
+                                    @Html.DropDownListFor(m => m[i].IdInmueble, (List<SelectListItem>)ViewBag.InmueblesItem, new { @class = "form-control font-size-row ", id = $"inputDataListInm_{i}" })
+                                </div>
+                            </td>
+                            @* 1 *@<td>
+                                <div style="width: 10rem;">
+                                    @Html.DropDownListFor(m => m[i].IdGasto, (List<SelectListItem>)ViewBag.GastosItem, new { @class = "form-control font-size-row ", id = $"inputDataListGastos_{i}" })
+
+                                </div>
+                            </td>
+                            @* 2 *@<td>
+                                <div style="width: 20rem">
+                                    @Html.EditorFor(m => m[i].Concepto, new { htmlAttributes = new { @class = "form-control font-size-row", @style = "width:21.5rem", @readonly = "true" } })
+                                </div>
+                            </td>
+                            @* 3 *@<td>
+                                <div style="width: 18rem">
+                                    @Html.EditorFor(m => m[i].Proveedor, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:19.5rem", @readonly = "true" } })
+                                </div>
+                            </td>
+                            @* 4 *@<td>
+                                <div style="width: 10rem">
+                                    @Html.EditorFor(m => m[i].FechaContable, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:150px", @readonly = "true" } })
+                                </div>
+                            </td>
+                            @* 5 *@<td>
+                                <div style="width: 15rem">
+                                    @Html.EditorFor(m => m[i].FolioFiscal, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:250px", @readonly = "true" } })
+                                </div>
+                            </td>
+                            @* 6 *@<td>@Html.EditorFor(m => m[i].Moneda, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:80px", @readonly = "true" } })</td>
+                            @* 7 *@<td>@Html.EditorFor(m => m[i].TipoCambio, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:50px", @onchange = "ConversionMoneda(this, '" + Model[i].Moneda + "', " + i + ")" } })</td>
+                            @* 8 *@<td>
+                                @* <div style="width: 12rem;">
+                                    @Html.DropDownListFor(m => m[i].FormaPago, (List<SelectListItem>)ViewBag.FormasPagoItem, new { @class = "form-control font-size-row " })
+                                </div> *@
+                                @Html.EditorFor(m => m[i].FormaPago, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:80px", @readonly = "true" } })
+                            </td>
+                             @* 9 *@<td>@Html.EditorFor(m => m[i].Folio, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:100px" } })</td>
+                             @* 10 *@<td>@Html.EditorFor(m => m[i].Serie, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:60px" } })</td>
+                             @* 11 *@<td>@Html.EditorFor(m => m[i].ImporteUSD, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 12 *@<td>@Html.EditorFor(m => m[i].Importe, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 13 *@<td>@Html.EditorFor(m => m[i].Descuento, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 14 *@<td>@Html.EditorFor(m => m[i].Subtotal, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 15 *@<td>@Html.EditorFor(m => m[i].IVA, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 16 *@<td>@Html.EditorFor(m => m[i].IEPS, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 17 *@<td>@Html.EditorFor(m => m[i].IVARet, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 18 *@<td>@Html.EditorFor(m => m[i].ISR, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 19 *@<td>@Html.EditorFor(m => m[i].Total, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                             @* 20 *@<td>
+                                <div style="width: 18rem">
+                                    @Html.EditorFor(m => m[i].Path, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:250px" } })
+                                </div>
+                            </td>
+                            @* 21 *@<td>
+                                <div style="width: 18rem">
+                                    @Html.EditorFor(m => m[i].RFC, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:250px" } })
+                                </div>
+                            </td>
+                            @* 22 *@<td style="display: none;">
+                                @Html.HiddenFor(m => m[i].RowIndex)
+                            </td>
+                             @* 23 *@<td style="display:none;">@i</td>
+                             @* 24 *@<td style="display:none"> @Html.DisplayFor(m => m[i].RowIndex)</td>
+                             @* 25 *@<td style="display:none"> @Html.DisplayFor(m => m[i].DescuentoDolares)</td>
+                             @* 26 *@<td style="display:none"> @Html.DisplayFor(m => m[i].IVADolares)</td>
+                             @* 27 *@<td style="display:none"> @Html.DisplayFor(m => m[i].IEPSDolares)</td>
+                             @* 28 *@<td style="display:none"> @Html.DisplayFor(m => m[i].IVARetDolares)</td>
+                             @* 29 *@<td style="display:none"> @Html.DisplayFor(m => m[i].ISRRetDolares)</td>
+                             @* 30 *@<td style="display:none"> @Html.DisplayFor(m => m[i].TotalDolares)</td>
+                            @* 31 *@<td style="display:none"> @Html.DisplayFor(m => m[i].ReceptorNombre)</td>
+                            @* 32 *@<td style="display:none">@Html.EditorFor(m => m[i].TipoComprobante, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                            @* 33 *@<td style="display:none">@Html.EditorFor(m => m[i].VersionCFDI, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                            @* 34 *@<td style="display:none">@Html.EditorFor(m => m[i].MetodoPago, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                            @* 35 *@<td style="display:none">@Html.EditorFor(m => m[i].ReceptorRFC, new { htmlAttributes = new { @readonly = "true", @class = "form-control font-size-row ", @style = "width:150px" } })</td>
+                        </tr>
+                    }
+                }
+            }
+            else
+            {
+                <tr>
+                    <td rowspan="31">
+                        No hay datos
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/lib/JQuery_Versiones/jquery_3.4.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="~/css/sweetalert.css" />
+<script src="~/js/sweetalert2.min.js"></script>
+
+<script>
+
+    var facturasNoCaragadas = '@ViewBag.FacutasNoCargadas';
+    $(document).ready(function () {
+        if (facturasNoCaragadas != '' && facturasNoCaragadas != null && facturasNoCaragadas != '0') {
+
+            if (facturasNoCaragadas == 1) {
+                swal('', "No se cargo " + facturasNoCaragadas + " factura, ya que el periodo de la fecha contable no pertenece al periodo seleccionado", "warning");
+            } else {
+                swal('', "No se cargaron " + facturasNoCaragadas + " facturas, ya que el periodo de la fecha contable no pertenece al periodo seleccionado", "warning");
+            }
+
+        }
+
+
+        // $("span.3ls").click(function () {
+
+        //     $("#tbTablaRowsFacturas input[type=checkbox]:checked").prop('checked', false);
+        //     $("#tbTablaRowsFacturas input[type=checkbox]").prop('value', false);
+        //     $("#tbTablaRowsFacturas input[type=checkbox]").attr('data-val', false);
+
+        //     $("#inmueble_item_" + $(this).parents("tr").find("td").eq(28).html()).prop('checked', true);
+        //     $("#inmueble_item_" + $(this).parents("tr").find("td").eq(28).html()).prop('value', true);
+        //     $("#inmueble_item_" + $(this).parents("tr").find("td").eq(28).html()).attr('data-val', true);
+
+        //      $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+
+
+        //          //    var isCheck = $(this).find('td').eq(0).find("input").is(':checked');
+
+        //          // if (isCheck) {
+        //          //     $("#tr_" + $(this).find("td").eq(28).html()).addClass("table-success");
+        //          //     // $("#acreedor").val("");
+        //          //     // $("#acreedor").val($(this).find("td").eq(37).html());
+
+
+        //          // } else {
+        //          //     $("#tr_" + $(this).find("td").eq(28).html()).removeClass("table-success");
+        //          // }
+
+        //       });
+        // });
+    });
+</script>

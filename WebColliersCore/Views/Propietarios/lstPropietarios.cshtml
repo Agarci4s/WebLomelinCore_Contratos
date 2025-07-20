@@ -1,0 +1,146 @@
+﻿@model IEnumerable<WebColliersCore.Models.CgPropietarios>
+
+<header>
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {            
+        }
+
+        .asc:after {
+            content:' ↑';
+        }
+
+        .desc:after {
+            content:" ↓";
+        }
+    </style>
+    @try
+    {
+        @if (ViewBag.CarteraError)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#modalError").modal('show');
+                    window.location("Propietarios");
+                });
+            </script>
+
+        }
+    }
+    catch (Exception) { }
+ 
+</header>
+
+<div class="container">
+
+    <div class="modal fade" id="modalError" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>¡@ViewBag.Mensaje!</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<table id="lstPropietarios" class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RFC)
+            </th>
+            <th colspan="3"></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFC)
+                </td>
+                <td>
+                    @if (ViewBag.Editar)
+                    {
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdPropietario })}
+                </td>
+                <td>@Html.ActionLink("Detalle", "Details", new { id = item.IdPropietario })</td>
+                <td>
+                    @if (ViewBag.Eliminar)
+                    {
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPropietario })}
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function Ordenar() {
+        alert("ordenado");
+        $('#lstPropietarios').tablesorter();
+    }
+
+    $('th').click(function () {
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+        setIcon($(this), this.asc);
+    })
+
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index),
+                valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).html()
+    }
+
+    function setIcon(element, asc) {
+        $("th").each(function (index) {
+            $(this).removeClass("sorting");
+            $(this).removeClass("asc");
+            $(this).removeClass("desc");
+        });
+        element.addClass("sorting");
+        if (asc) element.addClass("asc");
+        else element.addClass("desc");
+    }
+</script>

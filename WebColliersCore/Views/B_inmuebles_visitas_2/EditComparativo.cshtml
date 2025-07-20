@@ -1,0 +1,226 @@
+﻿@model WebColliersCore.Models.B_inmuebles_comparativo
+
+<h4>Editar comparativo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form onsubmit="return OnSubmit()" asp-action="EditComparativo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input asp-for="nombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="direccion" class="control-label"></label>
+                <input asp-for="direccion" class="form-control" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cp" class="control-label"></label>
+                <input asp-for="cp" class="form-control" />
+                <span asp-validation-for="cp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="estado" class="control-label"></label>
+                <input asp-for="estado" class="form-control" />
+                <span asp-validation-for="estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="municipio" class="control-label"></label>
+                <input asp-for="municipio" class="form-control" />
+                <span asp-validation-for="municipio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="colonia" class="control-label"></label>
+                <input asp-for="colonia" class="form-control" />
+                <span asp-validation-for="colonia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="noext" class="control-label"></label>
+                <input asp-for="noext" class="form-control" />
+                <span asp-validation-for="noext" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="manzana" class="control-label"></label>
+                <input asp-for="manzana" class="form-control" />
+                <span asp-validation-for="manzana" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="lote" class="control-label"></label>
+                <input asp-for="lote" class="form-control" />
+                <span asp-validation-for="lote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="referencia_calle" class="control-label"></label>
+                <input asp-for="referencia_calle" class="form-control" />
+                <span asp-validation-for="referencia_calle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="referencia_calle2" class="control-label"></label>
+                <input asp-for="referencia_calle2" class="form-control" />
+                <span asp-validation-for="referencia_calle2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="latidud" class="control-label"></label>
+                <input asp-for="latidud" class="form-control" />
+                <span asp-validation-for="latidud" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="longitud" class="control-label"></label>
+                <input asp-for="longitud" class="form-control" />
+                <span asp-validation-for="longitud" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="link_maps" class="control-label"></label>
+                <textarea asp-for="link_maps" class="form-control"> </textarea>
+                <span asp-validation-for="link_maps" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="estacionamiento" /> @Html.DisplayNameFor(model => model.estacionamiento)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="m2_construccion" class="control-label"></label>
+                <input id="input_m2_construccion" asp-for="m2_construccion" class="form-control" onclick="return formatNumber(this)" onkeyup="return formatNumber(this)" />
+                @*                <span asp-validation-for="m2_construccion" class="text-danger"></span>
+                *@
+            </div>
+            <div class="form-group">
+                <label asp-for="m2_precio" class="control-label"></label>
+                <input id="input_m2_precio" asp-for="m2_precio" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+                @*                <span asp-validation-for="m2_precio" class="text-danger"></span>
+                *@
+            </div>
+            <div class="form-group">
+                @if (ViewBag.regimen == 3 || ViewBag.regimen == 1)
+                {
+                    <label asp-for="renta" class="control-label">Valor comercial</label>
+                }
+                else
+                {
+                    <label asp-for="renta" class="control-label"></label>
+                }
+                <input id="input_renta" asp-for="renta" class="form-control" onclick="return formatCurrency(this)" onkeyup="return formatCurrency(this)" />
+
+                @*                <span asp-validation-for="renta" class="text-danger"></span>
+                *@
+            </div>
+
+            <div class="form-group">
+                <label asp-for="foto" class="control-label"></label>
+                <input type="file" onChange="return SaveImage('input_foto', '@Model.id_b_inmuebles','foto', '#div_foto')" id="input_foto" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                <input hidden id="input2_foto" asp-for="foto" class="form-control" />
+                <span asp-validation-for="foto" class="text-danger"></span>
+                <div id="div_foto" class="col-md-12">
+                    @if (Model.foto != null && Model.foto.Length > 4)
+                    {
+                        <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.foto" class="img-fluid" style="height:100px" />
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="id_b_cg_region" class="control-label"></label>
+                <select asp-for="id_b_cg_region" asp-items=ViewBag.lstRegion class="form-control"></select>
+                <span asp-validation-for="id_b_cg_region" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_b_cg_categorias" class="control-label"></label>
+                <select asp-items=ViewBag.lstCategorias asp-for="id_b_cg_categorias" class="form-control"></select>
+                <span asp-validation-for="id_b_cg_categorias" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Regresar", "ListComparativo", new { id = Model.id_b_inmuebles})
+    @*    <a asp-action="Index">Regresar</a>*@
+</div>
+
+<script type="text/javascript">
+    function OnLoad() {
+
+        ActualizaServicio();
+    }
+
+    function OnSubmit() {
+        var aux = $("#input_m2_construccion").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_construccion").val(aux);
+
+        aux = $("#input_m2_precio").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_m2_precio").val(aux);
+
+        aux = $("#input_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        $("#input_renta").val(aux);
+
+    }
+
+
+    function SaveImage(id, idInmueble, nameArchivo, NameDiv) {
+        var input = document.getElementById(id);
+        var files = input.files;
+        var formData = new FormData();
+        var input2 = '#input2_' + nameArchivo;
+        var ext = input.files[0].name.split('.').pop();;//input.files[0].type;
+        const d = new Date();
+        var fecha = " " + d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2) + ("0" + d.getHours()).slice(-2) + ("0" + d.getMinutes()).slice(-2) + ("0" + d.getSeconds()).slice(-2);
+        $(NameDiv).empty();
+
+        for (var i = 0; i != files.length; i++) {
+            formData.append("files", files[i]);
+        }
+        formData.append("idInmueble", idInmueble);
+        formData.append("nameArchivo", nameArchivo + fecha);
+
+        $.ajax({
+            type: "POST",
+            url: "/B_inmuebles_visitas/UploadFiles2",
+            data: formData, // In the controller it receives IFormFile image
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                $(NameDiv).html(result);
+                $(input2).val(nameArchivo + fecha + '.' + ext);
+            },
+            error: function (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+
+    }
+
+    //Moneda y numero
+    function formatCurrency(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = '$' + value;
+    }
+    function formatNumber(input) {
+        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        if (value.length == 0)
+            value = '0';
+        input.value = value;
+    }
+
+    function formatRemove(input) {
+        const value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+        input.value = value;
+    }
+
+</script>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

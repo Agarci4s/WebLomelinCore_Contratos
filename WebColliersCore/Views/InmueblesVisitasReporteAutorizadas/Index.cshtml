@@ -1,0 +1,287 @@
+﻿
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+    </style>
+</header>
+
+
+<body onload="OnLoad()">
+
+
+    <div class="row">
+        <div class="form-row col-md-12">
+            @*            <div class="form-group col-md-2">
+            <input checked class="p-2 " type="radio" name="busqueda" value="1" id="rbVisitadas" onclick="handleClick(this);">
+            <label class="p-2 " for="rbVisitadas">Visitadas</label>
+            </div>*@
+            <div class="form-group col-md-2 ">
+                <input checked class="p-2 " type="radio" name="busqueda" value="2" id="rbAutorizadas" onclick="handleClick(this);">
+                <label class="p-2 " for="rbAutorizadas">Autorizados</label>
+            </div>
+
+            <div id="divRegimen" class="form-group col-md-3">
+                <label class="control-label">Regimen</label>
+                <select id="select_regimen" class="form-control alert-warning">
+                    <option value="0" selected>Selecciona un regimen</option>
+                    <option value="1">Propios y mixtos</option>
+                    <option value="2">Rentados</option>
+                </select>
+            </div>
+            @*            <div class="form-group col-md-2 ">
+            <input class="p-2 " type="radio" name="busqueda" value="3" id="rbPendientes" onclick="handleClick(this);">
+            <label class="p-2 " for="rbPendientes">Pendientes de visita</label>
+            </div>
+            <div class="form-group col-md-2 ">
+            <input class="p-2 " type="radio" name="busqueda" value="4" id="rbFuera" onclick="handleClick(this);">
+            <label class="p-2 " for="rbFuera">Fuera de política</label>
+            </div>
+            <div class="form-group col-md-2 ">
+            <input class="p-2 " type="radio" name="busqueda" value="5" id="rbEspeciales" onclick="handleClick(this);">
+            <label class="p-2 " for="rbEspeciales">Especiales</label>
+            </div>*@
+        </div>
+
+        <div class="form-row col-md-12">
+
+            <div id="divEstatus" class="form-group col-md-3">
+                <label class="control-label">Estatus</label>
+                <select id="select_estatus" asp-items=ViewBag.lstEstatusVisita class="form-control alert-warning"></select>
+            </div>
+
+            <div class="form-group col-md-3 " id="divClasificacion">
+                <label class="control-label">Fecha de inicio</label>
+                <input type="date" id="fecha" class="form-control" value="@DateTime.Now.ToString("yyyy")-01-01" />
+            </div>
+
+            <div class="form-group col-md-3 " id="divClasificacion">
+                <label class="control-label">Fecha de fin</label>
+                <input type="date" id="fecha2" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+
+        <div class="form-row col-md-12">
+            <div class="form-group  col-md-1">
+                <input onclick="return Buscar()" title="Búsqueda" type="button" value="Buscar" class="p-2 btn btn-primary" />
+            </div>
+            <div class="form-group  col-md-1 ">
+                <input onclick="return Limpiar()" type="button" value="Limpiar" class="p-2 btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+    <br />
+
+    <p>
+        <a id="exportar" href="/InmueblesVisitasReporteAutorizadas/ExportarExcel/1?tipo=0&filtro=0&fecha=0" onclick="return ExportarExcel()" @*onsubmit="return ExportarExcel()"*@>Exporta a Excel</a>
+    </p>
+
+    <div id="div_contenido" class="table-responsive">
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    function OnLoad() {
+        $("#divEstatus").hide();
+    }
+
+    function handleClick(input) {
+        var radios = document.getElementsByName("busqueda");
+        var busqueda = Array.from(radios).find(radio => radio.checked);
+
+        if (busqueda.value == 1 || busqueda.value == 4) {
+            $("#divEstatus").show();
+        }
+        else {
+            $("#divEstatus").hide();
+        }
+    }
+
+    function ExportarExcel() {
+        var url = $('#exportar').prop('href').split("?")[0];
+        var radios = document.getElementsByName("busqueda");
+        var tipo = Array.from(radios).find(radio => radio.checked);
+        var filtro = $("#select_estatus option:selected").val();
+        var fecha = $("#fecha").val();
+        var fecha2 = $("#fecha2").val();
+        var regimen = $("#select_regimen option:selected").val();
+
+        var parametro = {
+            tipo: tipo.value
+        };
+        var parametro2 = {
+            filtro: filtro
+        };
+        var parametro3 = {
+            fecha: fecha
+        };
+        var parametro4 = {
+            fecha2: fecha2
+        };
+        var parametro5 = {
+            regimen: regimen
+        };
+
+        $('#exportar').prop('href', url + "?" + $.param(parametro) + "&" + $.param(parametro2) + "&" + $.param(parametro3) + "&" + $.param(parametro4));
+    }
+
+    function Buscar() {
+        $("#div_contenido").empty();
+
+        var radios = document.getElementsByName("busqueda");
+        var tipo = Array.from(radios).find(radio => radio.checked);
+        var filtro = $("#select_estatus option:selected").val();
+        var fecha = $("#fecha").val();
+        var fecha2 = $("#fecha2").val();
+        var regimen = $("#select_regimen option:selected").val();
+
+        var formData = new FormData();
+        formData.append("tipo", tipo.value);
+        formData.append("filtro", filtro);
+        formData.append("fecha", fecha);
+        formData.append("fecha2", fecha2);
+        formData.append("regimen", regimen);
+
+        $.ajax({
+            type: "POST",
+            url: "/InmueblesVisitasReporte/ReporteVisita",
+            data: formData, // In the controller it receives IFormFile image
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                $("#div_contenido").html(result);
+            },
+            error: function (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+
+
+    }
+
+    // function ExportarExcel() {
+    //     var url = $('#exportar').prop('href').split("?")[0];
+    //     var radios = document.getElementsByName("busqueda");
+    //     var tipo = Array.from(radios).find(radio => radio.checked);
+    //     var filtro = $("#select_estatus option:selected").val();
+    //     var fecha = $("#fecha").val();
+    //     var fecha2 = $("#fecha2").val();
+
+    //     var parametro = {
+    //         tipo: tipo.value
+    //     };
+    //     var parametro2 = {
+    //         filtro: filtro
+    //     };
+    //     var parametro3 = {
+    //         fecha: fecha
+    //     };
+    //     var parametro4 = {
+    //         fecha2: fecha2
+    //     };
+
+    //     $('#exportar').prop('href', url + "?" + $.param(parametro) + "&" + $.param(parametro2) + "&" + $.param(parametro3) + "&" + $.param(parametro4));
+    // }
+
+    // function Buscar() {
+    //     $("#div_contenido").empty();
+
+    //     var radios = document.getElementsByName("busqueda");
+    //     var tipo = Array.from(radios).find(radio => radio.checked);
+    //     var filtro = $("#select_estatus option:selected").val();
+    //     var fecha = $("#fecha").val();
+    //     var fecha2 = $("#fecha2").val();
+
+    //     var formData = new FormData();
+
+
+    //     formData.append("tipo", tipo.value);
+    //     formData.append("filtro", filtro);
+    //     formData.append("fecha", fecha);
+    //     formData.append("fecha2", fecha2);
+
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/InmueblesVisitasReporteAutorizadas/ReporteVisita",
+    //         data: formData, // In the controller it receives IFormFile image
+    //         processData: false,
+    //         contentType: false,
+    //         success: function (result) {
+    //             $("#div_contenido").html(result);
+    //         },
+    //         error: function (errorMessage) {
+    //             alert(errorMessage);
+    //         }
+    //     });
+
+
+    // }
+
+
+
+    function Limpiar() {
+        $("#div_contenido").empty();
+    }
+
+
+
+
+
+    $('th').click(function () {
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+        setIcon($(this), this.asc);
+    })
+
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index),
+                valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).html()
+    }
+
+    function setIcon(element, asc) {
+        $("th").each(function (index) {
+            $(this).removeClass("sorting");
+            $(this).removeClass("asc");
+            $(this).removeClass("desc");
+        });
+        element.addClass("sorting");
+        if (asc) element.addClass("asc");
+        else element.addClass("desc");
+    }
+
+</script>

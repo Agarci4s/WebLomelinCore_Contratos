@@ -1,0 +1,111 @@
+﻿@model IEnumerable<WebLomelinCore.Models.B_inmuebles_egresos>
+
+<div class="tableFixHead">
+    <table class="table table-responsive-sm table-sm small" id="tab">
+        <thead class="font-size-head">
+            <tr>
+                <th></th>
+                <th hidden>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th hidden>
+                    @Html.DisplayNameFor(model => model.IdInmueble)
+                </th>
+                <th hidden>
+                    @Html.DisplayNameFor(model => model.IdEgreso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Egreso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Importe)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PorcIVA)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IVA)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PorcRetISR)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RetISR)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PorcRetIVA)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RetIVA)
+                </th>
+                <th hidden>
+                    @Html.DisplayNameFor(model => model.IdMoneda)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Moneda)
+                </th>                
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>                        
+                        <td>                           
+                            <a href="@Url.ActionLink("Delete", "B_inmuebles_egresos", new { id = item.Id, egreso = item.Egreso })" class="btn btn-danger btn-sm">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>                            
+                        </td>                      
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.IdInmueble)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.IdEgreso)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Egreso)
+                        </td>
+                        <td>
+                            @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:c}", @item.Importe.ToString("C"))
+                            @Html.HiddenFor(m => @item.Importe)                            
+                        </td>
+                        <td>                            
+                            @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:P}", @item.PorcIVA.ToString("P2"))
+                            @Html.HiddenFor(m => @item.PorcIVA)
+                        </td>
+                        <td>                            
+                            @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:c}", @item.IVA.ToString("C"))
+                            @Html.HiddenFor(m => @item.IVA)
+                        </td>
+                        <td>                            
+                            @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:P}", @item.PorcRetISR.ToString("P2"))
+                            @Html.HiddenFor(m => @item.PorcRetISR)
+                        </td>
+                        <td>
+                            @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:c}", @item.RetISR.ToString("C"))
+                            @Html.HiddenFor(m => @item.RetISR)
+                        </td>
+                        <td>
+                            @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:P}", @item.PorcRetIVA.ToString("P2"))
+                            @Html.HiddenFor(m => @item.PorcRetIVA)
+                        </td>
+                        <td>
+                            @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:c}", @item.RetIVA.ToString("C"))
+                            @Html.HiddenFor(m => @item.RetIVA)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.IdMoneda)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Moneda)
+                        </td>                        
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

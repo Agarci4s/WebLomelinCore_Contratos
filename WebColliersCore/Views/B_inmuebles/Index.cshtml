@@ -1,0 +1,291 @@
+﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles>
+
+@{
+    ViewData["Title"] = "Inmuebles";
+}
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+    </style>
+</header>
+
+<h3>Listado de Inmuebles</h3>
+
+@{
+    string nivel = "";
+}
+@if (Context.Request.Cookies.TryGetValue("CoreInmocontrol", out string strRequest))
+{
+    Menu menu = new Menu();
+    nivel = menu.RecuperaNivel(strRequest, "b_inmueblesController");
+}
+@if (nivel == "3")
+{
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Registrar Nuevo Inmueble">
+            <span class="visually-hidden">Nuevo</span>            
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+            </svg>
+        </a>
+    </p>
+}
+
+<body onload="OnLoad()">
+
+    <div class="row">
+        <div class="form-row col-md-12">
+            <div class=" col-md-3 row">
+                <input checked class="p-2 " type="radio" name="busqueda" value="1" id="rbCr" onclick="handleClick(this);">
+                <label class="p-2 " for="rbCr">@Html.DisplayNameFor(model => model.cr) | @Html.DisplayNameFor(model => model.nombre)</label>
+            </div>
+            <div class="col-md-2 ">
+                <input class="p-2 " type="radio" name="busqueda" value="2" id="rbUE" onclick="handleClick(this);">
+                <label class="p-2 " for="rbUE">@Html.DisplayNameFor(model => model.ue)</label>
+            </div>
+            <div class="col-md-2 ">
+                <input class="p-2 " type="radio" name="busqueda" value="3" id="rbClasificacion" onclick="handleClick(this);">
+                <label class="p-2 " for="rbClasificacion">@Html.DisplayNameFor(model => model.clasificacion)</label>
+            </div>
+        </div>
+        <div class=" col-md-4" id="divBuscar">
+            <input id="buscar" class="p-2 form-control" />
+        </div>
+        <div class=" col-md-4 " id="divClasificacion">
+            <select id="clasificacion" asp-items=ViewBag.lstClasificacion class="form-control"></select>
+        </div>
+
+        <div class=" col-sm-6">
+            @* <input onclick="return Buscar()" title="Búsqueda por CR o nombre" type="button" value="Buscar" class="p-2 btn btn-primary btn-sm" /> *@
+            <button onclick="return Buscar()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Buscar...">
+                <span class="visually-hidden">Buscar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+            </button>            
+            <button onclick="return Limpiar()" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Limpiar...">
+                <span class="visually-hidden">Limpiar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16">
+                    <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z" />
+                </svg>
+            </button>
+        </div>
+        @* <div class=" col-md-1 ">
+            <input onclick="return Limpiar()" type="button" value="Limpiar" class="p-2 btn btn-primary" />
+        </div> *@
+    </div>
+    <br />
+
+    @* <div class="table-responsive"> *@
+    <table class="table table-striped table-responsive-sm table-sm small" id="tab">
+        <thead style="position: sticky; top:0; background-color: rgba(11,59,126,1); color: white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.cr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.direccion)
+                </th>            
+                <th>
+                    @Html.DisplayNameFor(model => model.clasificacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.regimen)
+                </th>
+                <th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="margin-top: 250px;">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cr)
+                    </td>
+                    <td style="max-width: 160px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">                        
+                        <span title="@Html.DisplayFor(modelItem => item.nombre)">@Html.DisplayFor(modelItem => item.nombre)</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ue)
+                    </td>
+                    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">                        
+                        <span title="@Html.DisplayFor(modelItem => item.direccion)">@Html.DisplayFor(modelItem => item.direccion)</span>
+                    </td>                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.clasificacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.regimen)
+                    </td>
+                    <td>
+                        @if (nivel == "2" || nivel == "3")
+                        {
+                            <a href="@Url.ActionLink("Edit", "B_inmuebles", new { id=item.id_b_inmuebles })" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Editar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                                </svg>
+                            </a>                            
+                        }
+                        <a href="@Url.ActionLink("Details", "B_inmuebles", new { id=item.id_b_inmuebles })" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Detalle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                            </svg>
+                        </a>                        
+                        @if (nivel == "3")
+                        {
+                            <a href="@Url.ActionLink("Delete", "B_inmuebles", new { id=item.id_b_inmuebles })" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                </svg>
+                            </a>                           
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @* </div> *@
+</body>
+
+<script type="text/javascript">
+    function OnLoad() {
+        $("#divClasificacion").hide();
+        $("#divBuscar").show();
+    }
+
+    function Buscar() {
+        var buscar = $("#buscar").val().toUpperCase().trim();
+        var clasificacion = $("#clasificacion option:selected").text()
+        var table = document.getElementById("tab");
+
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            cells = row.getElementsByTagName('td');
+            if (!cells.length) {
+                continue;
+            }
+            var customerId = cells[0].innerHTML;
+            var customerId2 = cells[1].innerHTML;
+            var customerId3 = cells[2].innerHTML;
+            var customerId4 = cells[6].innerHTML;
+
+            var radios = document.getElementsByName("busqueda");
+            var selected = Array.from(radios).find(radio => radio.checked);
+
+
+            if (selected.value == 1) {
+                if (customerId.toUpperCase().trim().includes(buscar) || customerId2.toUpperCase().trim().includes(buscar))
+                    row.style.display = '';
+                else
+                    row.style.display = 'none';
+
+            }
+
+            if (selected.value == 2) {
+                if (customerId3.toUpperCase().trim().includes(buscar))
+                    row.style.display = '';
+                else
+                    row.style.display = 'none';
+
+            }
+
+
+            if (selected.value == 3) {
+                if (customerId4.includes(clasificacion))
+                    row.style.display = '';
+                else
+                    row.style.display = 'none';
+
+            }
+
+
+        }
+    }
+
+    function Limpiar() {
+        var table = document.getElementById("tab");
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            row.style.display = '';
+        }
+    }
+
+    $('th').click(function () {
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+        setIcon($(this), this.asc);
+    })
+
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index),
+                valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).html()
+    }
+
+    function setIcon(element, asc) {
+        $("th").each(function (index) {
+            $(this).removeClass("sorting");
+            $(this).removeClass("asc");
+            $(this).removeClass("desc");
+        });
+        element.addClass("sorting");
+        if (asc) element.addClass("asc");
+        else element.addClass("desc");
+    }
+
+    function handleClick(busqueda) {
+        if (busqueda.value == 1) {
+            $("#divClasificacion").hide();
+            $("#divBuscar").show();
+        }
+        if (busqueda.value == 2) {
+            $("#divClasificacion").hide();
+            $("#divBuscar").show();
+        }
+        if (busqueda.value == 3) {
+            $("#divClasificacion").show();
+            $("#divBuscar").hide();
+        }
+    }
+
+</script>

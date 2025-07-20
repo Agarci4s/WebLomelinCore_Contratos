@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WebColliersCore.Models.TpCartera>
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    @if (ViewBag.Agregar)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                obj = document.getElementById('btnAgregar');
+                obj.style.display = 'block';
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                obj = document.getElementById('btnAgregar');
+                obj.style.display = 'none';
+            });
+        </script>
+    }
+    @if (ViewBag.Editar)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                obj = document.getElementById('btnAgregar');
+                obj.style.display = 'block';
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                obj = document.getElementById('btnAgregar');
+                obj.style.display = 'none';
+            });
+        </script>
+    }
+    @if (ViewBag.Eliminar)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                obj = document.getElementById('btnAgregar');
+                obj.style.display = 'block';
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                obj = document.getElementById('btnAgregar');
+                obj.style.display = 'none';
+            });
+        </script>
+    }
+</header>
+
+<h4>Catálogo de Carteras</h4>
+
+<div id="btnAgregar">
+    <p>
+        <a asp-action="Create">Agregar Cartera</a>
+    </p>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcionCartera)
+            </th>
+            <th colspan="3"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcionCartera)
+            </td>
+            <td>
+                @if (ViewBag.Editar)
+                {
+                    @Html.ActionLink("Editar", "Edit", new { id = item.idCartera })}
+            </td>
+            <td>@Html.ActionLink("Detalle", "Details", new { id = item.idCartera })</td>
+            <td>
+                @if (ViewBag.Eliminar)
+                {
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.idCartera })}
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

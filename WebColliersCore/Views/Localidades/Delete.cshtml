@@ -1,0 +1,22 @@
+﻿@model WebColliersCore.Models.Localidad
+
+<h3>¿Seguro (a) que desea eliminar la localidad seleccionada?</h3>
+<br />
+<div>
+    <h4>Localidad</h4>
+    <hr />
+    <table class="table table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.NumeroLocalidad)</th>
+            <td>@Html.DisplayFor(model => model.NumeroLocalidad)</td>
+            <th>@Html.DisplayNameFor(model => model.IdUsoInmueble)</th>
+            <td>@Html.DisplayFor(model => model.TipoLocalidadAux)</td>
+        </tr>
+    </table>   
+
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar a la lista</a>
+    </form>
+</div>
+

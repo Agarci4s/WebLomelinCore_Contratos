@@ -1,0 +1,1378 @@
+﻿@using WebLomelinCore.Models
+@model MovimientosGastos
+
+@{
+    ViewData["Title"] = "Cargar CFDI's";
+}
+
+<header>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css"> 
+    <style>
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-clear-button {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "Buscar";
+        }
+
+        .modal-custom {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            animation: animatetop 0.4s;
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 320px;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                @*
+
+            white-space: nowrap;
+            table-layout:fixed;
+            width:20px;
+            overflow:hidden;
+            *@
+            text-align: center;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                background-color: rgb(37, 64, 143);
+                color: white;
+                text-align: center;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+        }
+
+        .font-size-row {
+            font-size: 12px !important;
+        }
+
+        .font-size-head {
+            font-size: 12px !important;
+        }
+
+        .RowNegativo {
+            background-color: red;
+            border-color: red;
+        }
+
+        .RowPositivo {
+            background-color: green;
+            border-color: green;
+        }
+
+        .ColorTextRed {
+            color: red;
+        }
+    </style>    
+</header>
+
+
+
+<div class="container">
+    <h3>Importar Gastos XML</h3>
+    <hr />
+    <form id="formFacturas" asp-controller="Gastos" asp-action="ImportarXML" method="post">
+        <div class="form-group-custom row" style="margin-bottom: -9px;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label for="archivoFactura" class="col-sm-3 col-form-label">Archivo (s)</label>
+                            <div class="col-sm-9">
+                                <div class="custom-file" style="margin-left: -44px;">
+                                    <input type="file" multiple webkitdirectory mozdirectory class="custom-file-input" id="archivoFactura" name="archivoFactura" lang="es">
+                                    <label class="custom-file-label" for="archivoFactura">Seleccionar Archivo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="right: -22px;">
+                        <div class="form-group row">
+                            <button type="submit" id="importaXML" class="btn btn-success">Leer XML's</button>
+                            <button hidden id="importaXMLLoading" class="btn btn-success" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Leyendo XML...
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br/>
+    @* <div class="form-group-custom row">
+        <label for="Inmueble" class="col-sm-2 col-form-label">Inmueble</label>
+        <div class="col-sm-10">
+            <select id="Inmueble" asp-items=ViewBag.ListaInmuebles class="form-control"></select>
+        </div>
+    </div>
+    <div class="form-group-custom row">
+        <label for="Periodo" class="col-sm-2 col-form-label">Periodo</label>
+        <div class="col-sm-10">
+            <select id="Periodo" asp-items=ViewBag.ListaPeriodo class="form-control">
+            </select>
+        </div>
+    </div> *@
+    @using (Html.BeginForm("GuardaMovimientos", "Gastos", null, FormMethod.Post, false, new { id = "formCargaDetalle" }))
+    {
+
+        <div class="form-group">
+
+            <div id="tablaFacturas">
+                @{
+                    await Html.RenderPartialAsync("_FacturasCargadas", Model.ListaFacturas);
+                }
+            </div>
+        </div>
+        <br />               
+
+        <div class="form-group-custom text-left">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" id="agregar" class="btn btn-success">Agregar</button>
+                    <input style="display: none;" type="submit" id="agregarHidden" />
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+   @*  @using (Html.BeginForm("GuardaMovimientos", "MovimientosPartidaPresupuestal", null, FormMethod.Post, false, new { id = "formGuardaMovimientos" }))
+    {
+
+        <div class="form-group">
+            <div id="movimientosCargados">
+                @{
+                    await Html.RenderPartialAsync("_MovimientosCargados", Model.ListaMovimientosPresupuestalCargaDetalleFacturas);
+                }
+            </div>
+        </div>
+        <div class="form-group text-left">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" id="importarGastos" class="btn btn-primary" disabled>Importar a gastos</button>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+
+    <div class="form-group">
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                        Logs
+                    </a>
+                </div>
+                <div id="collapseTwo" class="collapse show" data-parent="#accordion" style="height: 200px; overflow-y: scroll">
+                    <div class="row card-body">
+                        <div id="Logs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ *@
+    <div id="modalMensajesSaves" class="modal-custom modal" role="dialog">
+        <!-- Modal content -->
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensaje</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('modalMensajesSaves').style.display = 'none'"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div id='modalContentSaves'></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" onclick="closeModalMensajeSaves('modalMensajesSaves');">Cerrar</button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="urlRedirect" value="" />
+    </div>
+
+
+    <div id="modalMensajes" class="modal-custom modal" role="dialog">
+        <!-- Modal content -->
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensaje</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('modalMensajes').style.display = 'none'"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div id='modalContent'></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" onclick="closeModalMensaje();">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div id="modalProveedor" class="modal-custom modal" role="dialog">
+        <!-- Modal content -->
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id='modalProveedorContenido'></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CerrarModalProveedores();">Cerrar</button>
+                </div>
+                <input type="hidden" id="rfcToSave" />
+            </div>
+        </div>
+    </div>
+
+    @*
+        @if (TempData["MensajeLoad"] != null)
+        {
+
+            <input type="hidden" value="@TempData["MensajeLoad"]" id="mensajeLoad" />
+            <input type="hidden" value="@TempData["MovimientosExitosos"]" id="movExitosos" />
+            <input type="hidden" value="@TempData["MovimientosFallidos"]" id="movFallidos" />
+        }
+        else
+        {
+            <input type="hidden" value="" id="mensajeLoad" />
+            <input type="hidden" value="" id="movExitosos" />
+            <input type="hidden" value="" id="movFallidos" />
+        }
+    *@
+
+</div>
+
+
+
+
+<script src="~/js/ajaxlibrary.min.js"></script>
+<link rel="stylesheet" href="~/css/sweetalert.css" />
+<script src="~/js/sweetalert.min.js"></script>
+@*
+    <script src="~/lib/JQuery_Versiones/jquery_3.4.1/dist/jquery.min.js"></script>
+*@
+<script>
+    var folioEditar = "";
+    var cargaPartida = 0;
+    var archivosXML = [];
+    var esCajaChica=0;
+
+    /**/
+    $(".custom-file-input").on("change", function () {
+
+        var fileName = $(this).val().split("\\").pop();
+        ObtieneRutaCarpeta();
+
+        var fileIdCounter = 0;
+
+        var files =  $("#archivoFactura").get(0).files;
+        for (var i = 0; i < files.length; i++) {
+            fileIdCounter++;
+            var file = files[i];
+            var fileId = 'files1' + fileIdCounter;
+             var FileType = files[i].type;
+              // get file extension..
+            var fileExtension = FileType.substr((FileType.lastIndexOf('/') + 1));
+            var Extension = fileExtension.toUpperCase();
+
+            if (Extension == 'XML') {
+                 archivosXML.push({
+                id: fileId,
+                file: file
+            });
+            }
+
+        };
+
+     });
+    /**/
+
+    function ObtieneRutaCarpeta() {
+
+        var urlObtenerCarpeta = '@Url.Content("~/Gastos/ObtieneRutaCarpeta")';
+
+        let myForm = document.getElementById('formFacturas');
+
+        var formData = new FormData(myForm);
+
+        $.ajax({
+                type: "POST",
+                url: urlObtenerCarpeta,
+                contentType: false,
+                cache: false,
+                processData: false,
+                enctype: "multipart/form-data",
+                data: formData,
+
+            success: function (result) {
+
+                if (result.ruta != "" && result.ruta != null) {
+                    $("#archivoFactura").siblings(".custom-file-label").addClass("selected").html(result.ruta);
+                } else {
+                    $("#archivoFactura").siblings(".custom-file-label").addClass("selected").html("Seleccionar Archivo");
+                }
+
+                }
+        });
+    }
+
+    function OnloadPage() {
+
+        $.get("/Gastos/LoadPage", function (data, status) {
+            console.log("load");
+        });
+
+        //var mensajes = $("#mensajeLoad").val();
+
+        //if (mensajes != "") {
+        //    var movExitosos = $("#movExitosos").val();
+        //    var movFallidos = $("#movFallidos").val();
+
+        //    var htmlExitosos = '<p>Los siguientes folios se guardaron exitosamente: ' + movExitosos + '</(p>';
+        //    var htmlFallidos = '<p class="ColorTextRed">Los siguientes folios no se guardaron: ' + movFallidos + '</(p>';
+        //    $("#modalContent").html(htmlExitosos + htmlFallidos);
+        //    ShowModal('modalMensajes');
+
+        //}
+
+    }
+
+    function closeModalMensajeSaves(idModal) {
+        document.getElementById(idModal).style.display = 'none';
+
+        window.location = $("#urlRedirect").val();
+    }
+
+    $(document).ready(function () {
+
+        // OnloadPage();
+
+        // $("#agregar").click(function (e) {
+        //     e.preventDefault();
+        //     if (ValidaCampos()) {
+
+        //         var proveedoresNoGuardados = 0;
+        //         var cuentasNoGuardadas = 0;
+        //         var validaProveedorActivo = 0;
+        //         var validaProveedorInterno = 0;
+        //         var rfcValida;
+        //         esCajaChica = 0;
+
+        //         var countTableRows = $('#tablaRowsFacturas > tbody  > tr').length;
+        //         var countCheck = 0;
+
+        //         $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+        //             var isCheck = $(this).find('td').eq(0).find("input").is(':checked');
+        //             if (isCheck) {
+        //                 countCheck++;
+
+        //                 rfcValida = $(this).find('td').eq(25).find("input").val();
+
+        //             }
+        //         });
+
+        //         if (countCheck > 0) {
+        //             $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+
+        //                 var efectivo = "Caja chica (Efectivo)";
+        //                 var isCheck = $(this).find('td').eq(0).find("input").is(':checked');
+        //                 var proveedorNombre = $(this).find('td').eq(2).find("input").val();
+        //                 var formaPago = $(this).find('td').eq(10).find("select").val();
+        //                 var rfc = $(this).find('td').eq(25).find("input").val();
+        //                 var idProveedor = $(this).find('td').eq(27).find("input").val();
+
+        //                 if (rfcValida == rfc) {
+
+        //                     var urlStatus = '@Url.Content("~/ProveedoresExternos/ValidaProveedorActivo")';
+
+        //                     $.ajax({
+        //                         url: urlStatus,
+        //                         type: "POST",
+        //                         dataType: "json",
+        //                         data: { rfc: rfcValida },
+        //                         success: function (data) {
+
+        //                             if (data.existe >=1) {
+        //                                 swal('', "El proveedor se encuentra inactivo", "warning");
+        //                                 validaProveedorActivo++;
+        //                             }
+
+
+        //                         },
+        //                         async: false,
+        //                     });
+
+        //                 if (validaProveedorActivo >= 1) {
+        //                     return false;
+        //                 }
+        //                 }
+
+        //                 if (formaPago == efectivo) {
+
+        //                     esCajaChica = 1;
+        //                     var urlProveedorInt = '@Url.Content("~/MovimientosPartidaPresupuestal/ValidaProvedorInternoXML")';
+
+        //                     $.ajax({
+        //                         url: urlProveedorInt,
+        //                         type: "POST",
+        //                         dataType: "json",
+        //                         data: { idInmueble: $("#Inmueble").val() },
+        //                         success: function (data) {
+
+        //                             if (data.proveedorExiste == "" || data.proveedorExiste == null) {
+        //                                 swal('', "Por ser pago de caja chica es necesario asignar un proveedor, favor de solicitar al Property Manager que lo asigne.", "warning");
+        //                                 validaProveedorInterno++;
+        //                             } else {
+        //                                 idProveedor = data.IdProveedor;
+        //                             }
+
+
+        //                         },
+        //                         async: false,
+        //                     });
+
+        //                     if (validaProveedorInterno >= 1) {
+        //                         return false;
+        //                     }
+        //                 }
+
+
+
+        //                 $("#rfcToSave").val(rfc);
+
+        //                 if (isCheck && formaPago != efectivo) {
+        //                     if (idProveedor == 0) {
+        //                         proveedoresNoGuardados++;
+
+        //                         if (confirm('El proveedor insertado no se encuentra registrado en el sistema. ¿Desea registrar el nuevo proveedor?')) {
+
+
+        //                             $.ajax({
+        //                                 type: "GET",
+        //                                 url: "/MovimientosPartidaPresupuestalCajaChica/CreateVP",
+        //                                 data: { RazonSocial: proveedorNombre, Nombre: proveedorNombre, Rfc: rfc }
+        //                                 , success: function (htmlResult) {
+        //                                     $("#modalProveedorContenido").html(htmlResult);
+        //                                 },
+        //                                 error: function (response) {
+        //                                     window.location = response.responseText;
+        //                                 },
+        //                                 complete: function (xhr, status) {
+
+        //                                     if (status === "success") {
+        //                                         ShowModal('modalProveedor');
+        //                                           return false;
+        //                                     }
+        //                                 },
+        //                             });
+        //                           return false;
+
+        //                         }
+        //                         return false;
+        //                     }
+
+        //                     var IdProveedor = idProveedor
+        //                     var numCtas = 0;
+        //                     var url = '@Url.Content("~/MovimientosPartidaPresupuestalCajaChica/validaCtaBancariaProv")';
+
+        //                     $.ajax({
+        //                         url: url,
+        //                         type: "GET",
+        //                         dataType: "json",
+        //                         data: { IdProveedor: IdProveedor },
+        //                         success: function (data) {
+        //                             numCtas = data;
+        //                         },
+        //                         async: false,
+        //                     });
+
+        //                     if (numCtas == 0) {
+        //                         cuentasNoGuardadas++;
+        //                         if (confirm('No existe Cuentas Bancarias relacionadas al Proveedor ¿Desea dar de alta la información?')) {
+        //                             var url = "/MovimientosPartidaPresupuestalCajaChica/UpdateProveedor";
+        //                             $.get(url, {
+        //                                 IdProveedor: IdProveedor
+        //                             }, function (result) {
+        //                                 $('#modalProveedorContenido').html(result);
+        //                                 ShowModal('modalProveedor');
+        //                                 return false;
+        //                             });
+        //                             return false;
+        //                         }
+        //                         return false;
+        //                     }
+
+
+
+        //                 }
+
+
+        //             });
+        //         }
+
+        //         //Se asegura que los proveedores que no son Caja chica (Efectivo) se hayan guardado corretamente.
+
+        //         if (proveedoresNoGuardados == 0 && cuentasNoGuardadas == 0 && validaProveedorActivo ==0 && validaProveedorInterno == 0) {
+
+        //             $('#agregarHidden').trigger('click');
+
+        //         }
+        //     }
+
+        // });
+
+        $("#formGuardaMovimientos").submit(function (e) {
+            e.preventDefault();
+            var table = $('#tablaCargaDetalle').serialize();
+
+            var tablaRowsFacturasArray = new Array();
+
+            $('#tablaCargaDetalle > tbody  > tr').each(function (index, tr) {
+                var itemRow = {
+                    Inmueble: $(this).find('td').eq(1).find("input").val(),
+                    Categoria: $(this).find('td').eq(2).find("input").val(),
+                    SubCategoria: $(this).find('td').eq(3).find("input").val(),
+                    Concepto: $(this).find('td').eq(4).find("input").val(),
+                    Proveedor: $(this).find('td').eq(5).find("input").val(),
+                    FechaContable: $(this).find('td').eq(6).find("input").val(),
+                    FolioFiscal: $(this).find('td').eq(7).find("input").val(),
+                    Partida: $(this).find('td').eq(8).find("input").val(),
+                    ConceptoComplementario: $(this).find('td').eq(9).find("input").val(),
+                    FechaSolicitudPago: $(this).find('td').eq(10).find("input").val(),
+                    ClaveSolicitudPago: $(this).find('td').eq(11).find("input").val(),
+                    Moneda: $(this).find('td').eq(12).find("input").val(),
+                    TipoCambio: $(this).find('td').eq(13).find("input").val(),
+                    FormaPago: $(this).find('td').eq(14).find("input").val(),
+                    FechaReembolso: $(this).find('td').eq(15).find("input").val(),
+                    Folio: $(this).find('td').eq(16).find("input").val(),
+                    Serie: $(this).find('td').eq(17).find("input").val(),
+                    Importe: $(this).find('td').eq(18).find("input").val(),
+                    Descuento: $(this).find('td').eq(19).find("input").val(),
+                    Subtotal: $(this).find('td').eq(20).find("input").val(),
+                    IVA: $(this).find('td').eq(21).find("input").val(),
+                    IEPS: $(this).find('td').eq(22).find("input").val(),
+                    IVARet: $(this).find('td').eq(23).find("input").val(),
+                    ISRRet: $(this).find('td').eq(24).find("input").val(),
+                    Total: $(this).find('td').eq(25).find("input").val(),
+                    Acreedor: $(this).find('td').eq(26).find("input").val(),
+                    Observaciones: $(this).find('td').eq(27).find("input").val(),
+                    Path: $(this).find('td').eq(29).find("input").val(),
+                    RFC: $(this).find('td').eq(30).find("input").val(),
+                    Periodo: $(this).find('td').eq(31).find("input").val(),
+                    IdCategoria: $(this).find('td').eq(32).find("input").val(),
+                    IdInmueble: $(this).find('td').eq(33).find("input").val(),
+                    IdPartidaPresupuestal: $(this).find('td').eq(34).find("input").val(),
+                    IdSubCategoria: $(this).find('td').eq(35).find("input").val(),
+                    IdProveedor: $(this).find('td').eq(36).find("input").val(),
+                    FolioGastoNoDeducible: "",
+                    MontoMensual: "",
+                    MontoAnual: "",
+                    ObservacionesPartida: $(this).find('td').eq(28).find("input").val(),
+                    MensajeError: "",
+                    Class: ""
+
+                };
+
+                tablaRowsFacturasArray.push(itemRow);
+
+            });
+
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: { movimientos: tablaRowsFacturasArray} ,
+                success: function (result) {
+
+                    var htmlExitosos = '<p>Los siguientes folios se guardaron exitosamente: ' + result[0] + '</(p>';
+                    var htmlFallidos = '<p class="ColorTextRed">Los siguientes folios no se guardaron: ' + result[1] + '</(p>';
+                    $("#urlRedirect").val(result[2]);
+
+                    $("#modalContentSaves").html(htmlExitosos + htmlFallidos);
+                    ShowModal('modalMensajesSaves');
+
+                    $("#tbTablaCargaDetalle").empty();
+                    cargaPartida = 1;
+
+                    ConsultarLog();
+                },
+                error: function (response) {
+                    window.location = response.responseText;
+                }
+            });
+
+            console.log(JSON.stringify(table));
+            var sss = "";
+        });
+
+
+
+
+        // $("#formCargaDetalle").submit(function (e) {
+        //     e.preventDefault();
+
+        //     var inmueble = $("#Inmueble").val();
+        //     var inmuebleNombre = $("#Inmueble option:selected").html();
+        //     var acreedor = $("#acreedor").val();
+        //     var categoria = $("#categoria").val();
+        //     var categoriaNombre = $("#categoria option:selected").html();
+        //     var subcategoria = $("#subCategoria").val();
+        //     var subcategoriaNombre = $("#subCategoria option:selected").html();
+        //     var partida = $("#partida").val();
+        //     var partidaNombre = $("#partida option:selected").html();
+        //     var observaciones = $("#observaciones").val();
+        //     var tmpOP = "";
+        //     if ($("#observacionesPartida").val() === undefined)
+        //         tmpOP = "";
+        //     else
+        //         tmpOP = $("#observacionesPartida").val();
+
+        //     var observacionesPartida = tmpOP;
+        //     var periodo = $("#Periodo").val();
+        //     var efectivo = "Caja chica (Efectivo)";
+
+
+        //     //if (ValidaCampos()) {
+        //         $("#movimientosCargados").html('<div class="text-center"><div class="spinner-border m-5" role="status"></div>');
+
+        //         TablaRowsFacturasConvertCurrencyTableToData();
+
+        //         $.ajax({
+        //             type: "POST",
+        //             url: $(this).attr('action'),
+        //             data: $(this).serialize() + "&categoria=" +
+        //                 categoria + "&subcategoria=" + subcategoria +
+        //                 "&inmueble=" + inmueble + "&inmuebleNombre=" + inmuebleNombre +
+        //                 "&categoriaNombre=" + categoriaNombre + "&subcategoriaNombre=" + subcategoriaNombre +
+        //                 "&partida=" + partida + "&partidaNombre=" + partidaNombre + "&acreedor=" + acreedor +
+        //                 "&observaciones=" + observaciones + "&observacionesPartida=" + observacionesPartida + "&periodo=" + periodo + "&cargaPartida=" + cargaPartida + "&folioFiscal=" + folioEditar +"&esCajaChica="+ esCajaChica
+
+        //             , success: function (htmlResult) {
+        //                 $("#archivoFactura").val("");
+        //                 $('#importaXML').attr("disabled", true);
+
+        //                 $("#tablaCargaDetalle > tbody > tr").empty();
+
+        //                 $("#movimientosCargados").html(htmlResult);
+
+        //                 $("#importarGastos").attr("disabled", false);
+
+        //                 $("#observaciones").val('');
+
+        //                 $("#observacionesPartida").val('');
+        //             },
+        //             error: function (response) {
+        //                 window.location = response.responseText;
+        //             },
+        //             complete: function (xhr, status) {
+
+
+        //                 if (status === "success") {
+
+        //                     RemueveFacturasSeleccionadas();
+
+        //                     cargaPartida = 0;
+        //                     var error = $("#MessageErrorCargadas").val();
+
+        //                     if (folioEditar == "" || folioEditar == null ) {
+        //                         if (error != "" && error != "\n") {
+
+        //                             $("#modalContent").html(error);
+        //                             ShowModal('modalMensajes');
+        //                         }
+        //                     }
+
+
+        //                     TablaRowsFacturasConvertDataTableToCurrency();
+        //                 }
+
+        //                 folioEditar = "";
+        //             },
+        //         });
+        //    // }
+
+        // });
+
+        $("#formCargaDetalle").submit(function (e) {
+        if (true) {
+            e.preventDefault();
+            var table = $('#tablaRowsFacturas').serialize();
+
+            var tablaRowsFacturasArray = new Array();
+            var nameInmueble = "";
+            var nameGastos = "";
+            $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+                nameInmueble = "#inputDataListInm_" +  $(this).find("td").eq(23).html() + "";                
+                nameGastos = "#inputDataListGastos_" +  $(this).find("td").eq(23).html() + "";                
+                var itemRow = {
+                    // IdInmueble: $(this).find('td').eq(0).find("input").val(),
+                    IdInmueble: $(nameInmueble).val(),
+                    // IdGasto: $(this).find('td').eq(1).find("input").val(),
+                    IdGasto: $(nameGastos).val(),
+                    Concepto: $(this).find('td').eq(2).find("input").val(),
+                    Proveedor: $(this).find('td').eq(3).find("input").val(),
+                    FechaContable: $(this).find('td').eq(4).find("input").val(),
+                    FolioFiscal: $(this).find('td').eq(5).find("input").val(),
+                    Moneda: $(this).find('td').eq(6).find("input").val(),
+                    TipoCambio: $(this).find('td').eq(7).find("input").val(),
+                    FormaPago: $(this).find('td').eq(8).find("input").val(),
+                    Folio: $(this).find('td').eq(9).find("input").val(),
+                    Serie: $(this).find('td').eq(10).find("input").val(),
+                    ImporteUSD: $(this).find('td').eq(11).find("input").val(),
+                    Importe: $(this).find('td').eq(12).find("input").val(),
+                    Descuento: $(this).find('td').eq(13).find("input").val(),
+                    Subtotal: $(this).find('td').eq(14).find("input").val(),
+                    IVA: $(this).find('td').eq(15).find("input").val(),
+                    IEPS: $(this).find('td').eq(16).find("input").val(),
+                    IVARet: $(this).find('td').eq(17).find("input").val(),
+                    ISR: $(this).find('td').eq(18).find("input").val(),
+                    Total: $(this).find('td').eq(19).find("input").val(),
+                    Path: $(this).find('td').eq(20).find("input").val(),
+                    RFC: $(this).find('td').eq(21).find("input").val(),
+                    RFCEmisor: $(this).find('td').eq(21).find("input").val(),
+                    RowIndex: $(this).find("td").eq(22).html(),
+                    TipoComprobante: $(this).find('td').eq(32).find("input").val(),
+                    VersionCFDI: $(this).find('td').eq(33).find("input").val(),
+                    ReceptorNombre: $(this).find("td").eq(31).html(),
+                    MetodoPago: $(this).find('td').eq(34).find("input").val(),
+                    ReceptorRFC: $(this).find('td').eq(35).find("input").val(),
+                };
+
+                tablaRowsFacturasArray.push(itemRow);
+
+            });
+
+            $("#tablaFacturas").html('<div class="text-center"><div class="spinner-border text-primary m-5" role="status"></div>');
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: { movimientos: tablaRowsFacturasArray} ,
+                success: function (result) {
+
+                    var htmlExitosos = '<p>Los siguientes folios se guardaron exitosamente: ' + result[0] + '</(p>';
+                    var htmlFallidos = '<p class="ColorTextRed">Los siguientes folios no se guardaron: ' + result[1] + '</(p>';
+                     var htmlDuplicados = '<p class="ColorTextRed">Los siguientes folios ya se cargaron previamente: ' + result[3] + '</(p>';
+                    $("#urlRedirect").val(result[2]);
+
+                    $("#modalContentSaves").html(htmlExitosos + htmlDuplicados + htmlFallidos);
+                    ShowModal('modalMensajesSaves');
+
+                    // $("#tablaRowsFacturas").empty();
+                    // cargaPartida = 1;
+
+                    // ConsultarLog();
+                },
+                error: function (response) {
+                    window.location = response.responseText;
+                }
+            });
+
+            console.log(JSON.stringify(table));
+            var sss = "";
+        }else{
+            return false
+        }
+    });
+
+        $("#archivoFactura").change(function () {
+
+             var $fileUpload = $("#archivoFactura");
+            var count = 0;
+
+
+            for (let i = 0; i < $fileUpload.get(0).files.length; i++) {
+                if ($fileUpload.get(0).files[i].name.includes(".xml")) {
+                    count++;
+                }
+
+            }
+
+               if (count > 45){
+                  swal('', "El límite de carga de facturas es de 45 facturas.", "warning");
+                   return
+            }
+
+            if (this.files.length > 0) {
+                $('#importaXML').attr("disabled", false);
+            } else {
+                $('#importaXML').attr("disabled", true);
+            }
+
+            if (count > 0) {
+
+                swal('', "La ruta seleccionada contiene "+count+" archivos .xml", "warning");
+
+            }
+        });
+
+
+
+        $("#formFacturas").submit(function (e) {
+            e.preventDefault();
+
+             var tablaRowsFacturasArray = [];
+
+            $('#tablaRowsFacturas > tbody > tr').each(function (index, tr) {
+
+                if ($(this).css('display') != 'none') {
+
+
+                    var itemRow = {
+
+                    Concepto: $(this).find('td').eq(2).find("input").val(),
+                    Proveedor: $(this).find('td').eq(3).find("input").val(),
+                    FechaContable: $(this).find('td').eq(4).find("input").val(),
+                    FolioFiscal: $(this).find('td').eq(5).find("input").val(),
+                    // ConceptoComplementario: $(this).find('td').eq(5).find("input").val(),
+                    // FechaSolicitudPago: $(this).find('td').eq(6).find("input").val(),
+                    // ClaveSolicitudPago: $(this).find('td').eq(7).find("input").val(),
+                    Moneda: $(this).find('td').eq(6).find("input").val(),
+                    TipoCambio: $(this).find('td').eq(7).find("input").val(),
+                    FormaPago: $(this).find('td').eq(8).find("input").val(),
+                    // FechaReembolso: $(this).find('td').eq(11).find("input").val(),
+                    Folio: $(this).find('td').eq(9).find("input").val(),
+                    Serie: $(this).find('td').eq(10 ).find("input").val(),
+                    ImporteUSD: $(this).find('td').eq(11).find("input").val().replace("$", "").replace(",", ""),
+                    ImporteMXN: $(this).find('td').eq(12).find("input").val().replace("$", "").replace(",", ""),
+                    Descuento: $(this).find('td').eq(13).find("input").val().replace("$", "").replace(",", ""),
+                    Subtotal: $(this).find('td').eq(14).find("input").val().replace("$", "").replace(",", ""),
+                    IVA: $(this).find('td').eq(15).find("input").val().replace("$", "").replace(",", ""),
+                    IEPS: $(this).find('td').eq(16).find("input").val().replace("$", "").replace(",", ""),
+                    IVARet: $(this).find('td').eq(17).find("input").val().replace("$", "").replace(",", ""),
+                    ISRRet: $(this).find('td').eq(18).find("input").val().replace("$", "").replace(",", ""),
+                    Total: $(this).find('td').eq(19).find("input").val().replace("$", "").replace(",", ""),
+                    // FolioGastoNoDeducible: $(this).find('td').eq(23).find("input").val(),
+                    Path: $(this).find('td').eq(20).find("input").val(),
+                    RFC: $(this).find('td').eq(21).find("input").val(),
+                    IdProveedor: $(this).find("td").eq(29).html(),
+                    RowIndex: $(this).find("td").eq(30).html(),
+                    DescuentoDolares: $(this).find("td").eq(31).html(),
+                    IVADolares: $(this).find("td").eq(32).html(),
+                    IEPSDolares: $(this).find("td").eq(33).html(),
+                    IVARetDolares: $(this).find("td").eq(34).html(),
+                    ISRRetDolares: $(this).find("td").eq(35).html(),
+                    TotalDolares: $(this).find("td").eq(36).html(),
+                    ReceptorNombre: $(this).find("td").eq(37).html()
+
+
+                    };
+
+                    tablaRowsFacturasArray.push(itemRow);
+                    }
+
+            });
+
+            //console.log(JSON.stringify(tablaRowsFacturasArray))
+
+            $("#tablaFacturas").html('<div class="text-center"><div class="spinner-border m-5" role="status"></div>');
+
+            var filesUpload = $("#archivoFactura").get(0);
+            var files = $("#archivoFactura").get(0).files;
+
+            $('#archivoFactura').val('');
+
+            var formData = new FormData(this);
+
+            for (i = 0; i < tablaRowsFacturasArray.length; i++) {
+                formData.append('facturas[' + i + '].Concepto', tablaRowsFacturasArray[i].Concepto);
+                formData.append('facturas[' + i + '].Proveedor', tablaRowsFacturasArray[i].Proveedor);
+                formData.append('facturas[' + i + '].FechaContable', tablaRowsFacturasArray[i].FechaContable);
+                formData.append('facturas[' + i + '].FolioFiscal', tablaRowsFacturasArray[i].FolioFiscal);
+                // formData.append('facturas[' + i + '].ConceptoComplementario', tablaRowsFacturasArray[i].ConceptoComplementario);
+                // formData.append('facturas[' + i + '].FechaSolicitud', tablaRowsFacturasArray[i].FechaSolicitudPago);
+                // formData.append('facturas[' + i + '].ClaveSolicitud', tablaRowsFacturasArray[i].ClaveSolicitudPago);
+                formData.append('facturas[' + i + '].Moneda', tablaRowsFacturasArray[i].Moneda);
+                formData.append('facturas[' + i + '].TipoCambio', tablaRowsFacturasArray[i].TipoCambio);
+                formData.append('facturas[' + i + '].FormaPago', tablaRowsFacturasArray[i].FormaPago);
+                // formData.append('facturas[' + i + '].FechaReembolso', tablaRowsFacturasArray[i].FechaReembolso);
+                formData.append('facturas[' + i + '].Folio', tablaRowsFacturasArray[i].Folio);
+                formData.append('facturas[' + i + '].Serie', tablaRowsFacturasArray[i].Serie);
+                formData.append('facturas[' + i + '].ImporteUSD', tablaRowsFacturasArray[i].ImporteUSD);
+                formData.append('facturas[' + i + '].Importe', tablaRowsFacturasArray[i].ImporteMXN);
+                formData.append('facturas[' + i + '].Descuento', tablaRowsFacturasArray[i].Descuento);
+                formData.append('facturas[' + i + '].Subtotal', tablaRowsFacturasArray[i].Subtotal);
+                formData.append('facturas[' + i + '].IVA', tablaRowsFacturasArray[i].IVA);
+                formData.append('facturas[' + i + '].IEPS', tablaRowsFacturasArray[i].IEPS);
+                formData.append('facturas[' + i + '].IVARet', tablaRowsFacturasArray[i].IVARet);
+                formData.append('facturas[' + i + '].ISR', tablaRowsFacturasArray[i].ISRRet);
+                formData.append('facturas[' + i + '].Total', tablaRowsFacturasArray[i].Total);
+                // formData.append('facturas[' + i + '].FolioGastoNoDeducible', tablaRowsFacturasArray[i].FolioGastoNoDeducible);
+                formData.append('facturas[' + i + '].Path', tablaRowsFacturasArray[i].Path);
+                formData.append('facturas[' + i + '].RFC', tablaRowsFacturasArray[i].RFC);
+                formData.append('facturas[' + i + '].IdProveedor', tablaRowsFacturasArray[i].IdProveedor);
+                formData.append('facturas[' + i + '].RowIndex', tablaRowsFacturasArray[i].RowIndex);
+                formData.append('facturas[' + i + '].DescuentoDolares', tablaRowsFacturasArray[i].DescuentoDolares);
+                formData.append('facturas[' + i + '].IVADolares', tablaRowsFacturasArray[i].IVADolares);
+                formData.append('facturas[' + i + '].IEPSDolares', tablaRowsFacturasArray[i].IEPSDolares);
+                formData.append('facturas[' + i + '].IVARetDolares', tablaRowsFacturasArray[i].IVARetDolares);
+                formData.append('facturas[' + i + '].ISRRetDolares', tablaRowsFacturasArray[i].ISRRetDolares);
+                formData.append('facturas[' + i + '].TotalDolares', tablaRowsFacturasArray[i].TotalDolares);
+                formData.append('facturas[' + i + '].ReceptorNombre', tablaRowsFacturasArray[i].ReceptorNombre);
+
+
+            }
+            formData.append('periodo', $("#Periodo").val());
+
+
+             for (var i = 0, len = archivosXML.length; i < len; i++) {
+            formData.append("archivoFactura2", archivosXML[i].file);
+        }
+
+
+
+
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                contentType: false,
+                cache: false,
+                processData: false,
+                enctype: "multipart/form-data",
+                data: formData,
+
+                success: function (result) {
+                    $("#tablaFacturas").html(result);
+                },
+                error: function (response) {
+                    window.location = response.responseText;
+                },
+                complete: function (xhr, status) {
+
+                    if (status === "success") {
+
+                        // $("#acreedor").val("");
+                        var error = $("#MessageError").val();
+
+                        if (error != "") {
+
+                            $("#modalContent").html(error);
+                            ShowModal('modalMensajes');
+                        }
+
+                        //Cuando se importen las facturas se convierte a formato moneda
+                        // TablaRowsFacturasConvertDataTableToCurrency()
+                    }
+                },
+            });
+
+            archivosXML.length = 0;
+
+            return false;
+
+
+        });
+
+
+
+        $("#categoria").change(function () {
+            HabilitaAgregar();
+            ObtieneSubCategorias();
+        });
+
+        $("#subCategoria").change(function () {
+            ObtienePartidas();
+            HabilitaAgregar();
+        });
+
+        $("#Inmueble").change(function () {
+            ObtieneCategorias();
+            ObtieneAcreedor();
+            ConsultarLog();
+        });
+
+        $("#Periodo").change(function () {
+            ObtieneCategorias();
+            HabilitaAgregar();
+            ConsultarLog();
+        });
+
+        $('#partida').change(function () {
+            HabilitaAgregar();
+        });
+    });
+
+    function ConvertPriceToFloatNumber(prices) {
+        try {
+            if (prices == "")
+                prices = 0
+            prices = prices.toString().replace(/[^\d\.\-]/g, "");
+            var valuePrice = parseFloat(prices);
+
+            if (isNaN(valuePrice))
+                return 0;
+            return valuePrice.toFixed(2);
+        } catch (e) {
+            return 0;
+
+        }
+        //return priceFixed.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+
+     //Cuando se importen las facturas se convierte a formato moneda: TablaRowsFacturas
+    function TablaRowsFacturasConvertDataTableToCurrency() {
+        $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+
+
+            var importeUSD = $(this).find('td').eq(11).find("input").val();
+            $(this).find('td').eq(11).find("input").val("$" + ConvertFloatNumberToPrice(importeUSD)); //ImporteUSD
+
+            var importe = $(this).find('td').eq(12).find("input").val();
+            $(this).find('td').eq(12).find("input").val("$" + ConvertFloatNumberToPrice(importe)); //Importe
+
+            var descuento = $(this).find('td').eq(13).find("input").val();
+            $(this).find('td').eq(13).find("input").val("$" + ConvertFloatNumberToPrice(descuento)); //Descuento
+
+            var subtotal = $(this).find('td').eq(14).find("input").val();
+            $(this).find('td').eq(14).find("input").val("$" + ConvertFloatNumberToPrice(subtotal)); //Descuento
+
+            var iva = $(this).find('td').eq(15).find("input").val();
+            $(this).find('td').eq(15).find("input").val("$" + ConvertFloatNumberToPrice(iva)); //IVA
+
+            var ieps = $(this).find('td').eq(16).find("input").val();
+            $(this).find('td').eq(16).find("input").val("$" + ConvertFloatNumberToPrice(ieps)); //IEPS
+
+            var ivaret = $(this).find('td').eq(17).find("input").val();
+            $(this).find('td').eq(17).find("input").val("$" + ConvertFloatNumberToPrice(ivaret)); //IVA Ret.
+
+            var isrret = $(this).find('td').eq(18).find("input").val();
+            $(this).find('td').eq(18).find("input").val("$" + ConvertFloatNumberToPrice(isrret)); //ISR Ret.
+
+            var total = $(this).find('td').eq(19).find("input").val();
+            $(this).find('td').eq(19).find("input").val("$" + ConvertFloatNumberToPrice(total)); //Total
+        });
+    }
+
+
+     //Cuando se envia la tabla al servidor: TablaRowsFacturas
+    function TablaRowsFacturasConvertCurrencyTableToData() {
+        $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+
+            var importeUSD = $(this).find('td').eq(11).find("input").val();
+            $(this).find('td').eq(14).find("input").val(parseFloat(ConvertPriceToFloatNumber(importeUSD))); //importeUSD
+
+            var importe = $(this).find('td').eq(12).find("input").val();
+            $(this).find('td').eq(15).find("input").val(parseFloat(ConvertPriceToFloatNumber(importe))); //Importe
+
+            var descuento = $(this).find('td').eq(13).find("input").val();
+            $(this).find('td').eq(16).find("input").val(parseFloat(ConvertPriceToFloatNumber(descuento))); //Descuento
+
+            var subtotal = $(this).find('td').eq(14).find("input").val();
+            $(this).find('td').eq(17).find("input").val(parseFloat(ConvertPriceToFloatNumber(subtotal))); //Descuento
+
+            var iva = $(this).find('td').eq(15).find("input").val();
+            $(this).find('td').eq(18).find("input").val(parseFloat(ConvertPriceToFloatNumber(iva))); //IVA
+
+            var ieps = $(this).find('td').eq(16).find("input").val();
+            $(this).find('td').eq(19).find("input").val(parseFloat(ConvertPriceToFloatNumber(ieps))); //IEPS
+
+            var ivaret = $(this).find('td').eq(17).find("input").val();
+            $(this).find('td').eq(20).find("input").val(parseFloat(ConvertPriceToFloatNumber(ivaret))); //IVA Ret.
+
+            var isrret = $(this).find('td').eq(18).find("input").val();
+            $(this).find('td').eq(21).find("input").val(parseFloat(ConvertPriceToFloatNumber(isrret))); //ISR Ret.
+
+            var total = $(this).find('td').eq(19).find("input").val();
+            $(this).find('td').eq(22).find("input").val(parseFloat(ConvertPriceToFloatNumber(total))); //Total
+        });
+    }
+
+    function ConversionMoneda(control, moneda, indexTable) {
+
+        // var monedaComp = moneda.toLowerCase();
+
+        // if (monedaComp === "usd") {
+        //     var tipoCambio = control.value;
+
+        //     var controlDouble = ConvertPriceToFloatNumber(tipoCambio);
+        //     control.value = ConvertFloatNumberToPrice(controlDouble);
+
+        //     tipoCambio = control.value;
+
+        //     $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+
+        //         if (index == indexTable) {
+        //             tipoCambio = parseFloat(tipoCambio);
+
+        //             ////Importe USD
+        //             //var subTotal = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(17).find("input").val())); // Subtotal
+        //             //var subTotal2 = ConvertFloatNumberToPrice(subTotal);
+        //             //$(this).find('td').eq(14).find("input").val("$" + subTotal2);
+
+
+        //             //Descuento
+        //             var res0 = parseFloat(ConvertPriceToFloatNumber($(this).find("td").eq(25).html()));
+        //             var oper0 = res0 * tipoCambio;
+
+        //             var newRes0 = ConvertPriceToFloatNumber(oper0);
+        //             newRes0 = ConvertFloatNumberToPrice(newRes0);
+        //             $(this).find('td').eq(13).find("input").val("$" + newRes0);
+
+
+
+        //             //IVA
+        //             var res1 = parseFloat(ConvertPriceToFloatNumber($(this).find("td").eq(26).html()));
+        //             var oper1 = res1 * tipoCambio;
+
+        //             var newRes1 = ConvertPriceToFloatNumber(oper1);
+        //             newRes1 = ConvertFloatNumberToPrice(newRes1);
+        //             $(this).find('td').eq(15).find("input").val("$" + newRes1);
+
+
+        //             //IEPS
+        //             var res2 = parseFloat(ConvertPriceToFloatNumber($(this).find("td").eq(33).html()));
+        //             var oper2 = res2 * tipoCambio;
+
+        //             var newRes2 = ConvertPriceToFloatNumber(oper2);
+        //             newRes2 = ConvertFloatNumberToPrice(newRes2);
+        //             $(this).find('td').eq(16).find("input").val("$" + newRes2);
+
+        //             //IVA Ret
+        //             var res3 = parseFloat(ConvertPriceToFloatNumber($(this).find("td").eq(34).html()));
+        //             var oper3 = res3 * tipoCambio;
+
+        //             var newRes3 = ConvertPriceToFloatNumber(oper3);
+        //             newRes3 = ConvertFloatNumberToPrice(newRes3);
+        //             $(this).find('td').eq(17).find("input").val("$" + newRes3);
+
+
+        //             //ISR Ret
+        //             var res4 = parseFloat(ConvertPriceToFloatNumber($(this).find("td").eq(35).html()));
+        //             var oper4 = res4 * tipoCambio;
+
+        //             var newRes4 = ConvertPriceToFloatNumber(oper4);
+        //             newRes4 = ConvertFloatNumberToPrice(newRes4);
+        //             $(this).find('td').eq(18).find("input").val("$" + newRes4);
+
+        //             //Importe MXN
+        //             var res5 = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(14).find("input").val()));
+        //             var oper5 = res5 * tipoCambio;
+
+        //             var newRes5 = ConvertPriceToFloatNumber(oper5);
+        //             newRes5 = ConvertFloatNumberToPrice(newRes5);
+        //             $(this).find('td').eq(12).find("input").val("$" + newRes5);
+
+        //             //Subtotal
+        //             var res6 = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(17).find("input").val()));
+        //             var oper6 = res6 * tipoCambio;
+
+        //             var newRes6 = ConvertPriceToFloatNumber(oper6);
+        //             newRes6 = ConvertFloatNumberToPrice(newRes6);
+        //             $(this).find('td').eq(14).find("input").val("$" + newRes6);
+
+        //             //Total
+        //             var res7 = parseFloat(ConvertPriceToFloatNumber($(this).find("td").eq(36).html()));
+        //             var oper7 = res7 * tipoCambio;
+
+        //             var newRes7 = ConvertPriceToFloatNumber(oper7);
+        //             newRes7 = ConvertFloatNumberToPrice(newRes7);
+        //             $(this).find('td').eq(19).find("input").val("$" + newRes7);
+
+        //             //Importe
+        //             var importe = 0, descuento = 0;
+        //             importe = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(14).find("input").val()));
+        //             descuento = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(16).find("input").val()));
+
+        //             var newSubTotal = (importe * tipoCambio)-descuento;
+        //             newSubTotal = ConvertPriceToFloatNumber(newSubTotal);
+        //             newSubTotal = ConvertFloatNumberToPrice(newSubTotal);
+
+        //             $(this).find('td').eq(11).find("input").val(newSubTotal);
+
+
+        //             //Total
+        //             var importeIVA = 0, ieps = 0, ivaRet, isr = 0;
+
+
+        //             importeIVA = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(15).find("input").val()));
+        //             ieps = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(16).find("input").val()));
+        //             ivaRet = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(17).find("input").val()));
+        //             isr = parseFloat(ConvertPriceToFloatNumber($(this).find('td').eq(18).find("input").val()));
+
+        //             var tot1 = (importe * tipoCambio) - descuento;
+        //             var tot2 = tot1 + importeIVA;
+        //             var tot3 = tot2 - ivaRet;
+        //             var tot4 = tot3 - isr;
+        //             var tot5 = tot4 + ieps;
+
+        //             var totalFinal = tot5;
+
+        //             totalFinal = ConvertPriceToFloatNumber(totalFinal);
+        //             totalFinal = ConvertFloatNumberToPrice(totalFinal);
+
+        //             $(this).find('td').eq(19).find("input").val("$" + totalFinal);
+
+
+        //         }
+
+
+
+        //     });
+
+        // }
+
+    }
+
+    function ConvertFloatNumberToPrice(number) {
+        if (number == 0)
+            return 0;
+
+        const fixedNumber = Number.parseFloat(number).toFixed(2);
+        return String(fixedNumber).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function closeModalMensaje() {
+        document.getElementById('modalMensajes').style.display = 'none';
+        $("#mensajeLoad").val("");
+        $("#movExitosos").val("");
+        $("#movFallidos").val("");
+    }
+
+    function ValidaCampos() {
+
+        var sinValidar = 0;
+        var checkCount = 0;
+        $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+
+
+            var isCheck = $(this).find('td').eq(0).find("input").is(':checked');
+
+            if (isCheck) {
+                checkCount++;
+
+                var conceptoComplementario = $(this).find('td').eq(5).find("input").val();
+                var fechaSolicitudPgo = $(this).find('td').eq(6).find("input").val();
+                var claveSolicitudPago = $(this).find('td').eq(7).find("input").val();
+                var tipoCambio = $(this).find('td').eq(9).find("input").val();
+                var idProveedor = $(this).find('td').eq(27).find("input").val();
+                //var fechaReembolso = $(this).find('td').eq(11).find("input").val();
+                //var folioGastoNoDeducible = $(this).find('td').eq(22).find("input").val();
+
+                if (conceptoComplementario == "" || fechaSolicitudPgo == "" || claveSolicitudPago == "" ||
+                    tipoCambio == "" || tipoCambio == "0" /*|| idProveedor == 0*/) {
+
+                    if(tipoCambio =="0")
+                        $("#modalContent").html("El tipo de cambio debe ser mayor a 0");
+                    else
+                        $("#modalContent").html("Existen campos sin especificar un valor, por favor especifique un valor para continuar");
+
+                    ShowModal('modalMensajes');
+                    sinValidar++;
+                }
+            }
+        });
+
+        if (checkCount == 0) {
+            $("#modalContent").html("No ha seleccionado ninguna factura, seleccione al menos una para continuar");
+            ShowModal('modalMensajes');
+            return false;
+        }
+
+        if (sinValidar > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function RemueveFacturasSeleccionadas() {
+
+        $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
+
+            var isCheck = $(this).find('td').eq(0).find("input").is(':checked');
+            if (isCheck) {
+                //var tr = $(this).closest('tr');
+                //tr.detach();
+
+                //$(this).parents('tr').remove();
+                //$('#tr_0').remove();
+                document.getElementById("tr_"+$(this).find("td").eq(28).html()).style.display = "none";
+            }
+        });
+
+        $("#tbTablaRowsFacturas input[type=checkbox]:checked").prop('checked', false);
+            $("#tbTablaRowsFacturas input[type=checkbox]").prop('value', false);
+            $("#tbTablaRowsFacturas input[type=checkbox]").attr('data-val', false);
+
+        var tableFacturasRowsCheck = $("#tablaRowsFacturas > tbody > tr");
+        if (tableFacturasRowsCheck.length == 0) {
+            $('#agregar').attr("disabled", true);
+        }
+
+    }
+
+
+
+    function toggleChecked(status) {
+        $(".chkres input").each(function () {
+            $(this).prop("checked", status);
+        });
+
+        ToggleEnabledButtonConsultaDatos();
+    }      
+
+    function ConsultarLog() {
+        $('#Logs').empty();
+        var idInmueble = $("#Inmueble").val();
+        var anio = $("#Periodo").val();
+        var url = '@Url.Action("Logs")';
+        $.get(url, {
+            idInmueble: idInmueble,
+            anio: anio
+        }, function (result) {
+            $('#Logs').html(result);
+        });
+    }
+
+    function ShowModal(idModal) {
+        var modal = document.getElementById(idModal);
+        modal.style.display = "block";
+    }
+</script>

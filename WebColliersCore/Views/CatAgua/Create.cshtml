@@ -1,0 +1,226 @@
+﻿@model WebLomelinCore.Models.cat_Agua
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    @* <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> *@
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    <style type="text/css">
+        table tr th {
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+        content: ' ↑';
+        }
+
+        .desc:after {
+        content: " ↓";
+        }
+    </style>
+</header>
+
+
+<h4>Nueva Cuenta de Agua</h4>
+<hr />
+<form asp-action="Create" asp-controller="CatAgua">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title m-1">Datos</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdInmueble" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectInmueble">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectInmueble" asp-for="IdInmueble" class="form-control" onchange="return changeInmueble();" asp-items=@ViewBag.Inmuebles></select>
+                        </div>
+                        <span asp-validation-for="IdInmueble" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdLocalidad" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectLocalidad">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectLocalidad" asp-for="IdLocalidad" class="form-control" asp-items=@ViewBag.Localidades></select>
+                        </div>
+                        <span asp-validation-for="IdLocalidad" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=IdPeriodicidad class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="selectPeriodicidad">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <select id="selectPeriodicidad" asp-for="IdPeriodicidad" class="form-control" asp-items=@ViewBag.Periodicidades></select>
+                        </div>
+                        <span asp-validation-for="IdPeriodicidad" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=CuentaAgua class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="CuentaAgua">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>                            
+                            <input id="inputCuentaAgua" asp-for="CuentaAgua" class="form-control" placeholder="00-00-000-000-00-000-0" />
+                        </div>
+                        <span asp-validation-for="CuentaAgua" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=Diametro class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="Diametro">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input asp-for="Diametro" class="form-control" placeholder="Diametro" />
+                        </div>
+                        <span asp-validation-for="Diametro" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=NumeroMedidor class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="NumeroMedidor">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input asp-for="NumeroMedidor" class="form-control" placeholder="Número de Medidor" />
+                        </div>
+                        <span asp-validation-for="NumeroMedidor" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="form-group form-check mb-0">
+                            <input type="checkbox" class="form-check-input" asp-for="FuncionaMedidor"/>
+                            <label class="form-check-label" asp-for=FuncionaMedidor></label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for=TipoTarifa class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="TipoTarifa">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <select asp-for="TipoTarifa" class="form-control">
+                                <option value="">Seleccione una opción</option>
+                                <option value="1">Domestica</option>
+                                <option value="2">Comercial</option>
+                                <option value="3">Industrial</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="TipoTarifa" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-sm-4">                
+                <a href="@Url.ActionLink("Index", "CatAgua")" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-arrow-left-circle-fill"></i>
+                    <span>
+                        Regresar al Listado...
+                    </span>
+                </a>                
+                <button type="submit" value="Guardar" class="btn btn-success btn-sm">
+                    <i class="bi bi-floppy2"></i>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/sweetalert.min.js"></script>
+        <link href="~/css/sweetalert.css" rel="stylesheet">    
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        @{
+            if (ViewBag.Insert == true)
+            {
+                <script>
+                    SweetAlertSuccess();
+                </script>
+            }
+            if (ViewBag.Duplicada == true)
+            {                
+                <script>                   
+                    SweetAlertDuplicada();
+                </script>
+            }
+        };
+}
+
+<script type="text/javascript">
+
+    function changeInmueble() {
+        var newId = $("#selectInmueble").val();
+        var url = "/CatAgua/getLocalidades";
+
+        $.getJSON(url, { id: newId }, function (data) {
+            var item = "";
+            $("#selectLocalidad").empty();
+            $.each(data, function (i, Localidades) {
+                item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
+            });
+            $("#selectLocalidad").html(item);
+        });
+
+    }
+
+    function SweetAlertSuccess(){
+        swal({
+            title: "¡Registro Exitoso!",
+            text: "Cuenta de Agua registrada satisfactoriamente",
+            icon: "success"
+            }).then(function() {
+                window.location.href = "/CatAgua/Index";
+                console.log('Se hizo clic en el botón Aceptar.');
+        });
+    }
+
+    function SweetAlertDuplicada(){
+        swal({
+            title: "¡Atención!",
+            text: "La cuenta de agua " + $("#inputCuentaAgua").val() + " fue registrada con anterioridad.",
+            icon: "error"
+            });
+    }
+</script>
