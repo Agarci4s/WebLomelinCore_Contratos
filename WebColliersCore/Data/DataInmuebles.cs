@@ -397,6 +397,8 @@ namespace WebColliersCore.Data
             }
         }
 
+
+
         public List<SelectListItem> GetListaPropietarios()
         {
             try
