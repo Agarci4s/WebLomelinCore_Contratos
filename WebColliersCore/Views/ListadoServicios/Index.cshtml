@@ -1,0 +1,201 @@
+﻿
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <style>
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="button"] {
+            cursor: pointer;
+        }
+
+        input::-webkit-clear-button {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "...";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 480px;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: center;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                /* background-color: white;
+                                border: 0px solid white; */
+                text-align: center;
+                background: rgb(37, 64, 143);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+        }
+
+        .font-size-row {
+            font-size: 12px !important;
+        }
+
+        .font-size-head {
+            font-size: 12px !important;
+        }
+
+        .RowNegativo {
+            background-color: red;
+            border-color: red;
+        }
+
+        .RowPositivo {
+            background-color: green;
+            border-color: green;
+        }
+
+        .ColorTextRed {
+            color: red;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+    </style>
+</header>
+
+<h3>Listado de Servicios</h3>
+
+<div class="row">
+    @* <div class="form-group col-sm-1">
+        <label>Meses</label>
+        <input id="inputMeses" class="form-control" type="number" value="0" />
+    </div> *@
+    <div class="form-group col-md-3 " id="divClasificacion">
+        <label class="control-label">Fecha de inicio</label>
+        <input type="date" id="fecha" class="form-control" value="@DateTime.Now.ToString("yyyy")-01-01" />
+    </div>
+
+    <div class="form-group col-md-3 " id="divClasificacion">
+        <label class="control-label">Fecha de fin</label>
+        <input type="date" id="fecha2" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group col-sm-3">
+        <label>Filtrar por: </label>
+        <select id="selectCampo" asp-items=ViewBag.Campos class="form-control"></select>
+    </div>
+    <div class="form-group col-sm-2 align-self-end">
+        <button class="btn btn-primary mt-4" onclick="return Search();">Buscar...<i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    @* <div class="form-group col-sm-2 align-self-end">
+        <button class="btn btn-primary mt-4" id="btnEnviar">Enviar...<i class="fa-solid fa-paper-plane"></i></button>
+        <button class="btn btn-primary" type="button" disabled id="btnEnviando" style="display: none;">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Enviando...<i class="fa-solid fa-paper-plane"></i>
+        </button>
+    </div> *@
+    @* <div class="form-group col-sm-2 align-self-end offset-md-2">
+        <div class="checkbox">
+            <label><input type="checkbox" id="chkTodos" value="1"> Seleccionar todos</label>
+        </div>
+    </div> *@
+</div>
+
+<hr />
+
+<br />
+@using (Html.BeginForm("GetListContratos", "B_inmueblesContratoReporte", null, FormMethod.Post, false, new { id = "formAccion" }))
+{
+    <div id="divLista">
+        @{
+            await Html.RenderPartialAsync("_ListServicios");
+        }
+    </div>
+}
+
+
+
+@section Scripts {
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+    function Search(){
+        mostrarRegistros();
+    };
+
+    function mostrarRegistros(){
+        var fecha = $("#fecha").val();
+        var fecha2 = $("#fecha2").val();
+
+        $.ajax({
+            type: "POST",
+            url: "getListadoContratosParametrizado",
+            data:{
+                FechaInicio: fecha,
+                FechaFin: fecha2,
+                Campo: $("#selectCampo").val()
+            },
+            success: function(response){
+                $("#divLista").html(response);
+            },
+            error: function(response){
+                alert("Error");
+            }
+        });
+    };
+</script>

@@ -50,11 +50,11 @@ namespace WebColliersCore.DataAccess
             ConfigJson jsonModel = JsonSerializer.Deserialize<ConfigJson>(jsonString);
             var modelJson = JsonSerializer.Serialize(jsonModel);
 
-            server = "184.168.30.21";
+            server = "127.0.0.1";  //"184.168.30.21";
             port = "3306";
             database = "bbva_lomelin";//corecolliers
-            uid = "admin_lomelin";//new_schema
-            password = "V?3$1adwt0rjhmTR";
+            uid = "root";  //"admin_lomelin";//new_schema
+            password = "Admin132$";  //"V?3$1adwt0rjhmTR";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "Port=" + port + ";" +
             "DATABASE=" + database + ";" + " UID=" + uid + ";" + " PASSWORD=" + password + ";" + " CheckParameters=false;";
