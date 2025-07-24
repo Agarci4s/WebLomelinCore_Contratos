@@ -1,12 +1,17 @@
-﻿using Stimulsoft.Report.Chart;
-using static ClosedXML.Excel.XLPredefinedFormat;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel;
 
 namespace WebLomelinCore.Models
 {
     public class pagosagua
     {
+        [HiddenInput]
         public int idPagoAgua { get; set; }
+        [HiddenInput]
         public int idCuentaAgua { get; set; }
+        [DisplayName("Cuenta")]
+        public string CuentaAgua { get; set; }
         public DateTime FechaPago { get; set; }
         public DateTime fechaLectura1 { get; set; }
         public bool Lectura1 { get; set; }
@@ -68,5 +73,4 @@ namespace WebLomelinCore.Models
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
     }
-
 }
