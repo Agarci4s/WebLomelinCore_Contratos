@@ -1,0 +1,203 @@
+﻿@model WebLomelinCore.Models.PagosServicios
+
+<head>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    <style>
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-clear-button {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "Buscar";
+        }
+
+        .modal-custom {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            animation: animatetop 0.4s;
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 320px;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+        @*
+
+            white-space: nowrap;
+            table-layout:fixed;
+            width:20px;
+            overflow:hidden;
+            *@
+            text-align: center;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                background-color: rgb(37, 64, 143);
+                color: white;
+                text-align: center;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+        }
+
+        .font-size-row {
+            font-size: 12px !important;
+        }
+
+        .font-size-head {
+            font-size: 12px !important;
+        }
+
+        .RowNegativo {
+            background-color: red;
+            border-color: red;
+        }
+
+        .RowPositivo {
+            background-color: green;
+            border-color: green;
+        }
+
+        .ColorTextRed {
+            color: red;
+        }
+    </style>
+</head>
+@{
+    try
+    {
+        if (ViewBag.Message)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                $("#modalMessage").modal('show');
+                });
+            </script>
+
+        }
+    }
+    catch (Exception) { }
+}
+<div class="container">
+
+    <div class="modal fade" id="modalMessage" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>Aqui va un texto del modal de aviso</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{
+        ViewData["Title"] = "Cargo de pago de servicios";
+    }
+
+    <h3>Carga de pago de servicios</h3>
+    <hr />
+
+<form>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="TipoServicio" class="control-label">TipoServicio</label>
+            <select id="cmbTipoSerivicio" asp-items=ViewBag.TipoServicios class="form-control"></select>
+         </div>&nbsp;&nbsp;
+        <div class="form-group" style="margin:20px; margin-bottom:20px">
+            <div class="form-check">
+                <input type="checkbox" id="cbTipoCarga" class="form-check-input">
+                <label class="form-check-label" id="TipoCarga" for="cbTipoCarga">carga manual</label>
+            </div>
+        </div>
+    </div>
+</form>
+
+    <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
+        <form id="formArchivos" asp-controller="ComprobanteServicios" asp-action="ImportarXML" method="post">
+            <div class="form-group-custom row" style="margin-bottom: -9px;">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group row">
+                                <label for="archivosXML" class="col-sm-4 col-form-label;" style="left:15px;">Archivo (s)</label>
+                                <div class="col-sm-9">
+                                    <div class="custom-file" style="margin-left: 10px;">
+                                        <input type="file" multiple webkitdirectory mozdirectory class="custom-file-input" id="archivosXML" name="archivosXML" lang="es">
+                                        <label class="custom-file-label" for="archivosXML">Seleccionar Archivo</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="right: -22px;">
+                            <div class="form-group row">
+                                <button type="submit" id="importaXML" class="btn btn-success">Leer XML's</button>
+                                <button hidden id="importaXMLLoading" class="btn btn-success" type="button" disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Leyendo XML...
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+</div>
+
+    <div class="row col-md-12 display:none;" id="CargaAgua" name="CargaAgua" >
+    Se visualiza el form para cargar manualmente los datos del agua
+</div>
+
+    <div class="row col-md-12 display:none;" id="CargaLuz" name="CargaLuz" >
+    Se visualiza el form para cargar manualmente los datos de Luz
+</div>
+
+
+    <div class="row col-md-12 display:none;" id="CargaPredial" name="CargaPredial">
+    Se visualiza el form para cargar manualmente los datos del predial
+</div>
+</div>
+<script src="~/js/ComprobanteServicios.js"/>
