@@ -1,4 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+
 namespace WebLomelinCore.Models
 {
     public class pagosagua
@@ -71,28 +77,23 @@ namespace WebLomelinCore.Models
         public DateTime FechaUpdateRegistro { get; set; }
 
 
-        public List<pagosagua> GetPagosaguas()
+        public List<pagosagua> GetPagosaguas(int? idCuenta)
         {
-            List<pagosagua> pagosServicioAgua = new List<pagosagua>
+            List<pagosagua>  response = new List<pagosagua>
             {
                 new pagosagua { idPagoAgua = 1, idCuentaAgua = 100, CuentaAgua = "CUENTA-001", statusProceso = 1 },
                 new pagosagua { idPagoAgua = 2, idCuentaAgua = 101, CuentaAgua = "CUENTA-002", statusProceso = 2 }
             };
 
-            var response = new List<pagosagua>();
-
-            foreach (var item in pagosServicioAgua)
+            if (idCuenta.HasValue)
             {
-                response.Add(new pagosagua
-                {
-                    idPagoAgua = item.idPagoAgua,
-                    idCuentaAgua = item.idCuentaAgua,
-                    CuentaAgua = item.CuentaAgua,
-                    statusProceso = item.statusProceso
-                });
+                return response
+                    .Where(x => x.idCuentaAgua == idCuenta).ToList();
             }
-            return response;
-
+            else
+            {
+                return response;
+            }
         }
     }
 }

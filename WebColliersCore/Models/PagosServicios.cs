@@ -8,8 +8,10 @@ namespace WebLomelinCore.Models
 {
     public class PagosServicios
     {
-        public pagosagua Pagosagua { get; set; }
-        [HiddenInput]
+        public List<pagosagua> PagosAgua { get; set; }
+        public List<pagosluz> PagosLuz { get; set; }
+        public List<pagospredial> PagosPredial { get; set; }
+
         public int IdTipoServicio { get; set; }
         [DisplayName("Servicio: ")]
         public string TipoServicio { get; set; }
@@ -21,5 +23,8 @@ namespace WebLomelinCore.Models
             new SelectListItem { Value = "2", Text = "Luz"  },
             new SelectListItem { Value = "3", Text = "Predial"  }
         };
+
+       
+
     }
 }
