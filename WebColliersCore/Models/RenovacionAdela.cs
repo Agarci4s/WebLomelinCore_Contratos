@@ -131,18 +131,15 @@ namespace WebLomelinCore.Models
         [DisplayFormat(DataFormatString = "{0:D5}", ApplyFormatInEditMode = true)]
         public int cp { get; set; }
 
-        [Display(Name = "Ciudad / Estado")]
-        //[Required(ErrorMessage = "Agregue un valor valido")]
+        [Display(Name = "Ciudad / Estado")]        
         [DefaultValue("")]
         public string estado { get; set; }
 
-        [Display(Name = "Alcaldía / Municipio")]
-        //[Required(ErrorMessage = "Agregue un valor valido")]
+        [Display(Name = "Alcaldía / Municipio")]        
         [DefaultValue("")]
         public string municipio { get; set; }
 
-        [Display(Name = "Colonia")]
-        //[Required(ErrorMessage = "Agregue un valor valido")]
+        [Display(Name = "Colonia")]        
         [MaxLength(100, ErrorMessage = "Agregue un valor valido")]
         [DefaultValue("")]
         public string colonia { get; set; }
