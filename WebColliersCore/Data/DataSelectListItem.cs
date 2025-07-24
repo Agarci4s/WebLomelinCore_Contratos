@@ -858,13 +858,5 @@ namespace WebColliersCore.Data
             new SelectListItem { Value = "2", Text = "Revisión"  }
         };
 
-        public List<SelectListItem> getCamposStatusServicio { get; } = new List<SelectListItem>
-        {
-            new SelectListItem {Value="1", Text = "Autorizado" },
-            new SelectListItem { Value = "2", Text = "Rechazado"  },
-            new SelectListItem { Value = "2", Text = "Pagado"  },
-            new SelectListItem { Value = "2", Text = "Cargado"  }
-        };
-
     }
 }

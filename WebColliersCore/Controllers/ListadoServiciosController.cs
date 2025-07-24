@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using WebColliersCore;
 using WebColliersCore.Data;
 using WebColliersCore.Models;
-using WebColliersCore;
-using System.Collections.Generic;
+using WebLomelinCore.Data;
 
 
 namespace WebLomelinCore.Controllers
@@ -24,8 +25,11 @@ namespace WebLomelinCore.Controllers
             //envìo de correos
             //DataEmail dataEmail = new DataEmail();
             //dataEmail.EnviaCorreo(idCartera, IdUsuario);
-            DataSelectListItem dataSelectListItem = new DataSelectListItem();
-            ViewBag.Campos = dataSelectListItem.getCamposStatusServicio;
+            DataSelectService dataSelectListItem = new DataSelectService();
+            ViewBag.Status = dataSelectListItem.getCamposStatusServicio;
+
+            DataSelectService dataSelectListItemServicio = new DataSelectService();
+            ViewBag.Servicio = dataSelectListItemServicio.getCamposTipoServicio;
 
             List<B_inmuebles_contrato> item = new List<B_inmuebles_contrato>
             {

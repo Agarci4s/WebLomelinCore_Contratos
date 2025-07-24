@@ -132,7 +132,11 @@
     </div>
     <div class="form-group col-sm-3">
         <label>Filtrar por: </label>
-        <select id="selectCampo" asp-items=ViewBag.Campos class="form-control"></select>
+        <select id="selectCampo" asp-items=ViewBag.Status class="form-control"></select>
+    </div>
+    <div class="form-group col-sm-2">
+        <label>Filtrar servicio: </label>
+        <select id="selectCampo" asp-items=ViewBag.Servicio class="form-control"></select>
     </div>
     <div class="form-group col-sm-2 align-self-end">
         <button class="btn btn-primary mt-4" onclick="return Search();">Buscar...<i class="fa-solid fa-magnifying-glass"></i></button>
