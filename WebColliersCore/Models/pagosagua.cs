@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using static ClosedXML.Excel.XLPredefinedFormat;
-
+﻿
 namespace WebLomelinCore.Models
 {
     public class pagosagua
     {
-        public int idPagoAgua { get; set; }//
-        public int idCuentaAgua { get; set; }//
-        public string CuentaAgua { get; set; }//
+        [HiddenInput]
+        public int idPagoAgua { get; set; }
+        [HiddenInput]
+        public int idCuentaAgua { get; set; }
+        [DisplayName("Cuenta")]
+        public string CuentaAgua { get; set; }
         public DateTime FechaPago { get; set; }
         public DateTime fechaLectura1 { get; set; }
         public bool Lectura1 { get; set; }
@@ -37,7 +38,7 @@ namespace WebLomelinCore.Models
         public string Numero { get; set; }
         public string NumeroAnt { get; set; }
         public int SinLecturas { get; set; }
-        public int statusProceso { get; set; }//
+        public int statusProceso { get; set; }
         public DateTime FechaEnvioEjecutivo { get; set; }
         public DateTime FechaEnvioDireccion { get; set; }
         public DateTime FechaEnvioTesoreria { get; set; }
