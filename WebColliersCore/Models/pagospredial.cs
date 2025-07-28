@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using WebColliersCore.Models;
 using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace WebLomelinCore.Models
@@ -59,29 +61,23 @@ namespace WebLomelinCore.Models
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
 
-        public List<pagospredial> GetPagoPredials()
+        public List<pagospredial> GetPagoPredials(int?idCuenta)
         {
-            List<pagospredial> pagoServicioPredial = new List<pagospredial>
+            List<pagospredial> response  = new List<pagospredial>
             {
                 new pagospredial { idDtPagosPredial = 1, idCgCuentaPredial = 100, periodoPago = "2024-1", importe = 5500, Nivel = 0 },
                 new pagospredial { idDtPagosPredial = 2, idCgCuentaPredial = 101, periodoPago = "2024-2", importe = 7800, Nivel = 2 },
                 new pagospredial { idDtPagosPredial = 3, idCgCuentaPredial = 102, periodoPago = "2024-3", importe = 6800, Nivel = 7 }
             };
-
-            var response = new List<pagospredial>();
-
-            foreach (var item in pagoServicioPredial)
+            if (idCuenta.HasValue)
             {
-                response.Add(new pagospredial
-                {
-                    idDtPagosPredial = item.idDtPagosPredial,
-                    idCgCuentaPredial = item.idCgCuentaPredial,
-                    periodoPago = item.periodoPago,
-                    importe = item.importe,
-                    Nivel = item.Nivel
-                });
+                return response
+                    .Where(x => x.idCgCuentaPredial == idCuenta).ToList();
             }
-            return response;
+            else
+            {
+                return response;
+            }
         }
     }
 }

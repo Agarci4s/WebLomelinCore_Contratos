@@ -24,16 +24,20 @@ namespace WebLomelinCore.Models
                 }
         }
 
-        public PagosServicios getServicios(int idCuenta, int idServicio)
+        public PagosServicios getServicios(int? idCuenta, int idServicio)
         {
             PagosServicios response = new PagosServicios();
             if (idServicio == 1)
             {
-                response.PagosAgua = new pagosagua().GetPagosaguas();
+                response.PagosAgua = new pagosagua().GetPagosaguas(idCuenta);
             }
             if (idServicio == 2)
             {
-                response.PagosLuz = new pagosluz().GetPagosluzs();
+                response.PagosLuz = new pagosluz().GetPagosluzs(idCuenta);
+            }
+            if(idServicio == 3)
+            {
+                response.PagosPredial = new pagospredial().GetPagoPredials(idCuenta);
             }
             return response;
         }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using WebColliersCore.Models;
 using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace WebLomelinCore.Models
@@ -22,31 +24,24 @@ namespace WebLomelinCore.Models
         public string LineaCaptura { get; set; }
         public string LineaCapturaCompleta { get; set; }
 
-        public List<pagosluz> GetPagosluzs()
+        public List<pagosluz> GetPagosluzs(int? idCuenta)
         {
-            List<pagosluz> pagoServicioLuz = new List<pagosluz>
+            List<pagosluz> response = new List<pagosluz>
             {
                 new pagosluz {idDtPagosLuz = 1, idCgCuentaLuz = 200, periodoPago = "2024-01", importe = 3500.00, status = 1},
                 new pagosluz {idDtPagosLuz= 2, idCgCuentaLuz = 2001, periodoPago = "2024-02", importe = 4200.50, status = 2 },
                 new pagosluz {idDtPagosLuz = 3, idCgCuentaLuz = 2002, periodoPago = "2024-03", importe = 2800.16, status = 3 }
             };
 
-
-
-            var response = new List<pagosluz>();
-
-            foreach (var item in pagoServicioLuz)
+            if (idCuenta.HasValue)
             {
-                response.Add(new pagosluz
-                {
-                    idDtPagosLuz = item.idDtPagosLuz,
-                    idCgCuentaLuz = item.idCgCuentaLuz,
-                    periodoPago = item.periodoPago,
-                    importe = item.importe,
-                    status = item.status
-                });
+                return response
+                    .Where(x => x.idCgCuentaLuz == idCuenta).ToList();
             }
-            return response;
+            else
+            {
+                return response;
+            }
         }
     }
 }

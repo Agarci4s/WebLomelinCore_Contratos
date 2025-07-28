@@ -9,11 +9,9 @@ namespace WebLomelinCore.Models
 {
     public class pagosagua
     {
-        [HiddenInput]
+   
         public int idPagoAgua { get; set; }
-        [HiddenInput]
         public int idCuentaAgua { get; set; }
-        [DisplayName("Cuenta")]
         public string CuentaAgua { get; set; }
         public DateTime FechaPago { get; set; }
         public DateTime fechaLectura1 { get; set; }
