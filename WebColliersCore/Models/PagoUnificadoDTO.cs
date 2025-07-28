@@ -24,12 +24,12 @@ namespace WebLomelinCore.Models
                 }
         }
 
-        public PagosServicios getServicios(int idCuenta, int idServicio)
+        public PagosServicios getServicios(int? idCuenta, int idServicio)
         {
             PagosServicios response = new PagosServicios();
             if (idServicio == 1)
             {
-                response.PagosAgua = new pagosagua().GetPagosaguas();
+                response.PagosAgua = new pagosagua().GetPagosaguas(idCuenta);
             }
             if (idServicio == 2)
             {
