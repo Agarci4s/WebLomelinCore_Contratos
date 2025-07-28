@@ -138,12 +138,12 @@ namespace WebLomelinCore.Models
         public DateTime FechaReactiva { get; set; }
         public string MotivoNoAutoriza { get; set; }
         public string NoAutoriza { get; set; }
-        public DateTime FechaVencimiento { get; set; }
+        
         public int FolioGestor { get; set; }
         public int FolioDireccion { get; set; }
         public DateTime FechaTraspaso { get; set; }
         public int FormaPago { get; set; }
-        public string MotivoReactiva { get; set; }
+        
         public string Reactiva { get; set; }
         public string ArchivoComprovante { get; set; }
         public string ArchivoFacPDF { get; set; }
@@ -154,13 +154,12 @@ namespace WebLomelinCore.Models
         public string ObsGestorRecopila { get; set; }
         public string ObsEjecutivoRecopila { get; set; }
         public string TipoAutorizacion { get; set; }
-        public string LineaCaptura { get; set; }
+        
         public string NotaAutorizacion { get; set; }
         public string UsrAutoriza { get; set; }
-        public double ConsumoBimestral { get; set; }
+        
         public int AplicaBeneficio { get; set; }
-        public DateTime FechaAltaRegistro { get; set; }
-        public DateTime FechaUpdateRegistro { get; set; }
+        
 
 
         public List<pagosagua> GetPagosaguas(int? idCuenta)
