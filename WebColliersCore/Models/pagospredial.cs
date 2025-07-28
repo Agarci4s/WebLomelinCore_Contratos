@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using WebColliersCore.Models;
 using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace WebLomelinCore.Models
@@ -7,19 +11,58 @@ namespace WebLomelinCore.Models
     {
         public int idDtPagosPredial { get; set; }//
         public int idCgCuentaPredial { get; set; }//
-        public DateTime fechaPago { get; set; }//
-        public string periodoPago { get; set; }//
+        public string CuentaPredial { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el periodo de pago")]
+        [Display(Name = "Periodo de pago")]
+        public string periodoPago { get; set; }
+
+        [Display(Name = "Recargos")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "El campo Recargos es incorrecto")]
         public double Recargos { get; set; }
+
+        [Display(Name = "Multas")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "El campo Multa es incorrecto")]
         public double Multas { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el importe")]
+        [Display(Name = "Importe")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un importe correcto")]
         public double importe { get; set; }//
+
+        [Required(ErrorMessage = "Ingrese el IVA")]
+        [Display(Name = "IVA")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un iva correcto")]
         public double iva { get; set; }
+
+        [Display(Name = "Actualización")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "El campo Actualización es incorrecto")]
         public double Actualizacion { get; set; }
+
+        [Display(Name = "Concepto de pago")]
         public string conceptoPago { get; set; }
+
+        [Required(ErrorMessage = "Ingrese línea de captura")]
+        [Display(Name = "Línea de captura")]
+        public string LineaCaptura { get; set; }
+
+        // Fecha límite para realizar el pago
+        [Required(ErrorMessage = "Ingrese la fecha límite de pago")]
+        [Display(Name = "Fecha límite de pago")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        public DateTime fechaPagolimite { get; set; }
+
+        [Display(Name = "Línea de captura de pago")]
+        public string LineaCapturaPago { get; set; }
+        
+        public int estatusproceso { get; set; }
+        /*DATOS DEL FORMULARIO*/
+
+        public DateTime fechaPago { get; set; }//
         public string traspasoGastos { get; set; }
         public string autorizacion { get; set; }
         public string Tipo { get; set; }
-        public int status { get; set; }
-        public string LineaCaptura { get; set; }
         public string BoletaPredial { get; set; }
         public string AComprobante { get; set; }
         public string ArchivoFacPDF { get; set; }
@@ -46,7 +89,6 @@ namespace WebLomelinCore.Models
         public int Niveles { get; set; }
         public int Antiguedad { get; set; }
         public string ClaveCorredor { get; set; }
-        public DateTime fechaPagolimite { get; set; }
         public string Observaciones { get; set; }
         public int Nivel { get; set; } // '0: PENDIENTE\r\n2: EN REVISIÓN DE EJECUTIVA\r\n6: NO AUTORIZADO\r\n7: EN ESPERA DE COMPROBANTE',
         public DateTime FechaEnvioEjecutivo { get; set; }
@@ -55,33 +97,26 @@ namespace WebLomelinCore.Models
         public DateTime FechaNoAutoriza { get; set; }
         public string UsrNoAutoriza { get; set; }
         public string MotivoNoAuto { get; set; }
-        public string LineaCapturaPago { get; set; }
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
 
-        public List<pagospredial> GetPagoPredials()
+        public List<pagospredial> GetPagoPredials(int?idCuenta)
         {
-            List<pagospredial> pagoServicioPredial = new List<pagospredial>
+            List<pagospredial> response  = new List<pagospredial>
             {
                 new pagospredial { idDtPagosPredial = 1, idCgCuentaPredial = 100, periodoPago = "2024-1", importe = 5500, Nivel = 0 },
                 new pagospredial { idDtPagosPredial = 2, idCgCuentaPredial = 101, periodoPago = "2024-2", importe = 7800, Nivel = 2 },
                 new pagospredial { idDtPagosPredial = 3, idCgCuentaPredial = 102, periodoPago = "2024-3", importe = 6800, Nivel = 7 }
             };
-
-            var response = new List<pagospredial>();
-
-            foreach (var item in pagoServicioPredial)
+            if (idCuenta.HasValue)
             {
-                response.Add(new pagospredial
-                {
-                    idDtPagosPredial = item.idDtPagosPredial,
-                    idCgCuentaPredial = item.idCgCuentaPredial,
-                    periodoPago = item.periodoPago,
-                    importe = item.importe,
-                    Nivel = item.Nivel
-                });
+                return response
+                    .Where(x => x.idCgCuentaPredial == idCuenta).ToList();
             }
-            return response;
+            else
+            {
+                return response;
+            }
         }
     }
 }

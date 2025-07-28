@@ -33,7 +33,11 @@ namespace WebLomelinCore.Models
             }
             if (idServicio == 2)
             {
-                response.PagosLuz = new pagosluz().GetPagosluzs();
+                response.PagosLuz = new pagosluz().GetPagosluzs(idCuenta);
+            }
+            if(idServicio == 3)
+            {
+                response.PagosPredial = new pagospredial().GetPagoPredials(idCuenta);
             }
             return response;
         }

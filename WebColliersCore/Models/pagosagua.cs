@@ -129,18 +129,21 @@ namespace WebLomelinCore.Models
         public string Ticket { get; set; }
         public string Numero { get; set; }
         public string NumeroAnt { get; set; }
-        public int SinLecturas { get; set; }        
+        public int SinLecturas { get; set; }
+        public int statusProceso { get; set; }
         public DateTime FechaEnvioEjecutivo { get; set; }
         public DateTime FechaEnvioDireccion { get; set; }
         public DateTime FechaEnvioTesoreria { get; set; }
         public DateTime FechaNoAutoriza { get; set; }
         public DateTime FechaReactiva { get; set; }
         public string MotivoNoAutoriza { get; set; }
-        public string NoAutoriza { get; set; }        
+        public string NoAutoriza { get; set; }
+        public DateTime FechaVencimiento { get; set; }
         public int FolioGestor { get; set; }
         public int FolioDireccion { get; set; }
         public DateTime FechaTraspaso { get; set; }
-        public int FormaPago { get; set; }        
+        public int FormaPago { get; set; }
+        public string MotivoReactiva { get; set; }
         public string Reactiva { get; set; }
         public string ArchivoComprovante { get; set; }
         public string ArchivoFacPDF { get; set; }
@@ -151,16 +154,21 @@ namespace WebLomelinCore.Models
         public string ObsGestorRecopila { get; set; }
         public string ObsEjecutivoRecopila { get; set; }
         public string TipoAutorizacion { get; set; }
-        public string NotaAutorizacion { get; set; }        
-        public int AplicaBeneficio { get; set; }        
+        public string LineaCaptura { get; set; }
+        public string NotaAutorizacion { get; set; }
+        public string UsrAutoriza { get; set; }
+        public double ConsumoBimestral { get; set; }
+        public int AplicaBeneficio { get; set; }
+        public DateTime FechaAltaRegistro { get; set; }
+        public DateTime FechaUpdateRegistro { get; set; }
 
 
         public List<pagosagua> GetPagosaguas(int? idCuenta)
         {
             List<pagosagua>  response = new List<pagosagua>
             {
-                new pagosagua { idPagoAgua = 1, idCuentaAgua = 100, CuentaAgua = "CUENTA-001", StatusProceso = 1 },
-                new pagosagua { idPagoAgua = 2, idCuentaAgua = 101, CuentaAgua = "CUENTA-002", StatusProceso = 2 }
+                new pagosagua { idPagoAgua = 1, idCuentaAgua = 100, CuentaAgua = "CUENTA-001", statusProceso = 1 },
+                new pagosagua { idPagoAgua = 2, idCuentaAgua = 101, CuentaAgua = "CUENTA-002", statusProceso = 2 }
             };
 
             if (idCuenta.HasValue)
