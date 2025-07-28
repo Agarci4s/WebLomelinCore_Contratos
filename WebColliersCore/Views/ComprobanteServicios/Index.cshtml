@@ -147,57 +147,376 @@
             <label asp-for="TipoServicio" class="control-label">TipoServicio</label>
             <select id="cmbTipoSerivicio" asp-items=ViewBag.TipoServicios class="form-control"></select>
          </div>&nbsp;&nbsp;
-        <div class="form-group" style="margin:20px; margin-bottom:20px">
+       @*  <div class="form-group" style="margin:20px; margin-bottom:20px">
             <div class="form-check">
                 <input type="checkbox" id="cbTipoCarga" class="form-check-input">
                 <label class="form-check-label" id="TipoCarga" for="cbTipoCarga">carga manual</label>
             </div>
-        </div>
+        </div> *@
     </div>
 </form>
 
-    <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
-        <form id="formArchivos" asp-controller="ComprobanteServicios" asp-action="ImportarXML" method="post">
-            <div class="form-group-custom row" style="margin-bottom: -9px;">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group row">
-                                <label for="archivosXML" class="col-sm-4 col-form-label;" style="left:15px;">Archivo (s)</label>
-                                <div class="col-sm-9">
-                                    <div class="custom-file" style="margin-left: 10px;">
-                                        <input type="file" multiple webkitdirectory mozdirectory class="custom-file-input" id="archivosXML" name="archivosXML" lang="es">
-                                        <label class="custom-file-label" for="archivosXML">Seleccionar Archivo</label>
-                                    </div>
+@*  <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
+    <form id="formArchivos" asp-controller="ComprobanteServicios" asp-action="ImportarXML" method="post">
+        <div class="form-group-custom row" style="margin-bottom: -9px;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row">
+                            <label for="archivosXML" class="col-sm-4 col-form-label;" style="left:15px;">Archivo (s)</label>
+                            <div class="col-sm-9">
+                                <div class="custom-file" style="margin-left: 10px;">
+                                    <input type="file" multiple webkitdirectory mozdirectory class="custom-file-input" id="archivosXML" name="archivosXML" lang="es">
+                                    <label class="custom-file-label" for="archivosXML">Seleccionar Archivo</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2" style="right: -22px;">
-                            <div class="form-group row">
-                                <button type="submit" id="importaXML" class="btn btn-success">Leer XML's</button>
-                                <button hidden id="importaXMLLoading" class="btn btn-success" type="button" disabled>
-                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    Leyendo XML...
-                                </button>
-                            </div>
+                    </div>
+                    <div class="col-md-2" style="right: -22px;">
+                        <div class="form-group row">
+                            <button type="submit" id="importaXML" class="btn btn-success">Leer XML's</button>
+                            <button hidden id="importaXMLLoading" class="btn btn-success" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Leyendo XML...
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
-</div>
+        </div>
+    </form>
+    </div>  *@
 
-    <div class="row col-md-12 display:none;" id="CargaAgua" name="CargaAgua" >
-    Se visualiza el form para cargar manualmente los datos del agua
-</div>
+    <form asp-action="ServicioAgua" asp-controller="ComprobanteServicios" id="CargaAgua" name="CargaAgua">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title m-1">Servicio de agua</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.IdInmueble" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectInmuebleAgua">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectInmuebleAgua" asp-for="PagosAgua.IdInmueble" class="form-control" onchange="return changeInmuebleAgua();" asp-items=@ViewBag.Inmuebles></select>
+                            </div>
+                            <span asp-validation-for="PagosAgua.IdInmueble" class="text-danger"></span>
+                        </div>
 
-    <div class="row col-md-12 display:none;" id="CargaLuz" name="CargaLuz" >
-    Se visualiza el form para cargar manualmente los datos de Luz
-</div>
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.IdLocalidad" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectLocalidadAgua">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectLocalidadAgua" asp-for="PagosAgua.IdLocalidad" class="form-control" onchange="return changeLocalidadAgua();" asp-items=@ViewBag.Localidades></select>
+                            </div>
+                            <span asp-validation-for="PagosAgua.IdLocalidad" class="text-danger"></span>
+                        </div>
 
 
-    <div class="row col-md-12 display:none;" id="CargaPredial" name="CargaPredial">
-    Se visualiza el form para cargar manualmente los datos del predial
-</div>
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.idCuentaAgua" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectCuentaAgua">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectCuentaAgua" asp-for="PagosAgua.idCuentaAgua" class="form-control" onchange="return changeLocalidadAgua();" asp-items=@ViewBag.Localidades></select>
+                            </div>
+                            <span asp-validation-for="PagosAgua.idCuentaAgua" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.FechaLectura1" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.FechaLectura1">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.FechaLectura1" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.FechaLectura1" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.Lectura1" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.Lectura1">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.Lectura1" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.Lectura1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.FechaLectura2" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.FechaLectura2">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.FechaLectura2" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.FechaLectura2" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.Lectura2" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.Lectura2">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.Lectura2" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.Lectura2" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.ImporteHabitacional" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.ImporteHabitacional">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.ImporteHabitacional" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.ImporteHabitacional" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.ImporteComercial" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.ImporteComercial">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.ImporteComercial" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.ImporteComercial" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.IvaComercial" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.IvaComercial">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.IvaComercial" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.IvaComercial" class="text-danger"></span>
+                        </div>
+                      
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.Recargos" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.Recargos">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.Recargos" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.Recargos" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.Actualizacion" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.Actualizacion">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.Actualizacion" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.Actualizacion" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.Multas" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.Multas">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.Multas" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.Multas" class="text-danger"></span>
+                        </div>                    
+                        
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.GastosEjecucion" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.GastosEjecucion">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.GastosEjecucion" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.GastosEjecucion" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label class="control-label">Total</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="TotalPago">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input id="TotalPago" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.ConceptoPago" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.ConceptoPago">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.ConceptoPago" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.ConceptoPago" class="text-danger"></span>
+                        </div>
+                      </div>
+                    <div class="row">
+                        
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.FechaVencimiento" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.FechaVencimiento">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.FechaVencimiento" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.FechaVencimiento" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.LineaCaptura" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.LineaCaptura">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.LineaCaptura" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.LineaCaptura" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosAgua.ConsumoBimestral" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosAgua.ConsumoBimestral">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosAgua.ConsumoBimestral" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosAgua.ConsumoBimestral" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <br />
+                  
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <button type="submit" value="Guardar" class="btn btn-success btn-sm">
+                        <i class="bi bi-floppy2"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form asp-action="ServicioAgua" asp-controller="ComprobanteServicios" id="CargaLuz" name="CargaLuz">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title m-1">Servicio de luz</h6>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <button type="submit" value="Guardar" class="btn btn-success btn-sm">
+                        <i class="bi bi-floppy2"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form asp-action="ServicioPredial" asp-controller="ComprobanteServicios" id="CargaPredial" name="CargaPredial">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title m-1">Servicio predial</h6>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <button type="submit" value="Guardar" class="btn btn-success btn-sm">
+                        <i class="bi bi-floppy2"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 <script src="~/js/ComprobanteServicios.js"/>

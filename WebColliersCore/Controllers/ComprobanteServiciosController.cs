@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebColliersCore;
+using WebColliersCore.Data;
 using WebLomelinCore.Models;
 
 namespace WebLomelinCore.Controllers
@@ -11,26 +13,26 @@ namespace WebLomelinCore.Controllers
         // GET: ComprobanteServiciosController
         public ActionResult Index()
         {
+            #region Validación de permisos
+            var claims = HttpContext.User.Claims;
+            Menu menu = new Menu();
+            int IdUsuario = 0, idCartera = 0, tipoNivel = 2;//0 , 1-detalle,2-editar y detalle, 3 crear-eliminar, editar y detalle   
+            if (!menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims))
+                return Redirect("~/Home");
+            #endregion
+
+            DataLocalidades dataLocalidades = new DataLocalidades();
             ViewBag.TipoServicios = new PagosServicios().getTipoSerivcios;
+
+            ViewBag.Inmuebles = dataLocalidades.InmueblesGet(IdUsuario, idCartera);
+            ViewBag.Localidades = dataLocalidades.LocalidadesGet(-1);
+            
             return View();
         }
-
-        // GET: ComprobanteServiciosController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: ComprobanteServiciosController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ComprobanteServiciosController/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult ServicioAgua(IFormCollection collection)
         {
             try
             {
@@ -42,16 +44,9 @@ namespace WebLomelinCore.Controllers
             }
         }
 
-        // GET: ComprobanteServiciosController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ComprobanteServiciosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult SevicioLuz(IFormCollection collection)
         {
             try
             {
@@ -62,17 +57,10 @@ namespace WebLomelinCore.Controllers
                 return View();
             }
         }
-
-        // GET: ComprobanteServiciosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ComprobanteServiciosController/Delete/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult ServicioPredial(IFormCollection collection)
         {
             try
             {
@@ -88,6 +76,13 @@ namespace WebLomelinCore.Controllers
         public async Task<ActionResult> ImportarXML(List<IFormFile> archivos, List<Factura> facturas, string periodo, List<IFormFile> archivoFactura2)
         {
             return PartialView("_FacturasCargadas", null);
+        }
+
+        [HttpGet]
+        public JsonResult getLocalidades(int IdInmueble)
+        {
+            DataLocalidades dataLocalidades = new DataLocalidades();
+            return Json(dataLocalidades.LocalidadesGet(IdInmueble));
         }
     }
 }

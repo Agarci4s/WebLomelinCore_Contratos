@@ -31,6 +31,7 @@ namespace WebLomelinCore.Models
         [Display(Name = "Fecha de lectura 1")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        //[DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime FechaLectura1 { get; set; }
 
         [Display(Name = "Lectura 1")]
@@ -58,7 +59,7 @@ namespace WebLomelinCore.Models
         public double ImporteComercial { get; set; }
 
         [Display(Name = "Iva comercial")]
-        [Required(ErrorMessage = "Ingrese el iva habitacional")]
+        [Required(ErrorMessage = "Ingrese el iva comercial")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese el iva comercial válidao")]
         public double IvaComercial { get; set; }
 
@@ -86,7 +87,7 @@ namespace WebLomelinCore.Models
         public string ConceptoPago { get; set; } /*conceptopago*/
 
         [Required(ErrorMessage = "Ingrese Fecha Vencimiento")]
-        [Display(Name = "Fecha vencimiento inválida")]
+        [Display(Name = "Fecha vencimiento")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime FechaVencimiento { get; set; }
@@ -121,7 +122,6 @@ namespace WebLomelinCore.Models
         public string autorizacionPago { get; set; }
         public int status { get; set; }
         public string traspaso { get; set; }
-        public string conceptoPago { get; set; }
         public string comentarioNoPagarServicios { get; set; }
         public DateTime fechaNoPagarServicios { get; set; }
         public string traspasoIndividual { get; set; }

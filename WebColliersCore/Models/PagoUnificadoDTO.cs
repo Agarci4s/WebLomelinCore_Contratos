@@ -24,9 +24,9 @@ namespace WebLomelinCore.Models
                 }
         }
 
-        public PagosServicios getServicios(int? idCuenta, int idServicio)
+        public PagoUnificadoDTO getServicios(int? idCuenta, int idServicio)
         {
-            PagosServicios response = new PagosServicios();
+            PagoUnificadoDTO response = new PagoUnificadoDTO();
             if (idServicio == 1)
             {
                 response.PagosAgua = new pagosagua().GetPagosaguas(idCuenta);

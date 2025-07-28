@@ -8,9 +8,9 @@ namespace WebLomelinCore.Models
 {
     public class PagosServicios
     {
-        public List<pagosagua> PagosAgua { get; set; }
-        public List<pagosluz> PagosLuz { get; set; }
-        public List<pagospredial> PagosPredial { get; set; }
+        public pagosagua PagosAgua { get; set; }
+        public pagosluz PagosLuz { get; set; }
+        public pagospredial PagosPredial { get; set; }
 
         public int IdTipoServicio { get; set; }
         [DisplayName("Servicio: ")]
