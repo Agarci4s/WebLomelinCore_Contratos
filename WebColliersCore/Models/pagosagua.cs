@@ -101,7 +101,9 @@ namespace WebLomelinCore.Models
         public double ConsumoBimestral { get; set; }
 
         public int UsuarioAutoriza { get; set; }
-        public int StatusProceso { get; set; }        
+        public string UsuarioAutorizaDescripcion { get; set; }
+        public int StatusProceso { get; set; }
+        public string StatusProcesoDescripcion { get; set; }        
         
         /// <summary>
         /// Escribe un motivo por el cuel reactiva este item al estar en estatus rechazdo

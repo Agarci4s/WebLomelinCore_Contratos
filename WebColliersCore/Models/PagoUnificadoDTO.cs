@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using WebLomelinCore.Data;
 
 namespace WebLomelinCore.Models
 {
@@ -10,36 +13,32 @@ namespace WebLomelinCore.Models
         public List<pagosluz> PagosLuz { get; set; }
         public List<pagospredial> PagosPredial { get; set; }
 
-        public int Id { get; set; }            // ID del pago
-        public int IdCuenta { get; set; }      // ID de la cuenta
-        public double Importe { get; set; }    // Monto pagado
-        public string TipoServicio { get; set; } // "1"=Agua, "2"=Luz, "3"=Predial
-        public int StatusProceso { get; set; }   // 1=Autorizado, 2=Rechazado, etc.
-        
-        public List<SelectListItem> getTipoSerivcios 
-        { 
-            get
-                {
-                   return  new PagosServicios().getTipoSerivcios;
-                }
-        }
+        [Required(ErrorMessage = "Seleccione el servicio a consultar")]
+        [DisplayName("Servicio")]
+        public int IdTipoServicio { get; set; }
 
-        public PagoUnificadoDTO getServicios(int? idCuenta, int idServicio)
+        [Required(ErrorMessage = "Seleccione la región")]
+        [Display(Name = "Región")]
+        public int IdRegion { get; set; }
+
+        [DisplayName("Servicio ")]
+        public string TipoServicio { get; set; }
+                
+        [Display(Name = "Inmueble")]
+        public int IdInmueble { get; set; }
+                
+        [Display(Name = "Localidad")]
+        public int IdLocalidad { get; set; }
+                
+        [Display(Name = "Cuenta")]
+        public int idCuenta { get; set; }
+        
+        [Display(Name = "Estatus")]
+        public int IdStatusProceso { get; set; }   // 1=Autorizado, 2=Rechazado, etc.
+
+        public static PagoUnificadoDTO getPagoServiciosList(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus)
         {
-            PagoUnificadoDTO response = new PagoUnificadoDTO();
-            if (idServicio == 1)
-            {
-                response.PagosAgua = new pagosagua().GetPagosaguas(idCuenta);
-            }
-            if (idServicio == 2)
-            {
-                response.PagosLuz = new pagosluz().GetPagosluzs(idCuenta);
-            }
-            if(idServicio == 3)
-            {
-                response.PagosPredial = new pagospredial().GetPagoPredials(idCuenta);
-            }
-            return response;
-        }
+            return DataSelectService.getPagoServiciosList(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus);
+        }        
     }
 }

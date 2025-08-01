@@ -1,8 +1,12 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using WebLomelinCore.Data;
 
 namespace WebLomelinCore.Models
 {
@@ -11,20 +15,16 @@ namespace WebLomelinCore.Models
         public pagosagua PagosAgua { get; set; }
         public pagosluz PagosLuz { get; set; }
         public pagospredial PagosPredial { get; set; }
-
-        public int IdTipoServicio { get; set; }
-        [DisplayName("Servicio: ")]
-        public string TipoServicio { get; set; }
-
-        public List<SelectListItem> getTipoSerivcios { get; } = new List<SelectListItem>
+        public int TipoServicio { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<SelectListItem> getTipoSerivcios             
         {
-            new SelectListItem {Value="0", Text = "Seleccione..", Selected=true },
-            new SelectListItem {Value="1", Text = "Agua" },
-            new SelectListItem { Value = "2", Text = "Luz"  },
-            new SelectListItem { Value = "3", Text = "Predial"  }
-        };
-
-       
+            get {
+                return new DataSelectService().getTipoServicio.OrderBy(x => x.Value).ToList();
+            }
+        }
 
     }
 }

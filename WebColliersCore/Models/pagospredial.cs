@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebColliersCore.Models;
-using static ClosedXML.Excel.XLPredefinedFormat;
+using System;
 
 namespace WebLomelinCore.Models
 {
@@ -55,8 +55,11 @@ namespace WebLomelinCore.Models
 
         [Display(Name = "Línea de captura de pago")]
         public string LineaCapturaPago { get; set; }
-        
-        public int estatusproceso { get; set; }
+
+        public int UsuarioAutoriza { get; set; }
+        public string UsuarioAutorizaDescripcion { get; set; }
+        public int StatusProceso { get; set; }
+        public string StatusProcesoDescripcion { get; set; }
         /*DATOS DEL FORMULARIO*/
 
         public DateTime fechaPago { get; set; }//

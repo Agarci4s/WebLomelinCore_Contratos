@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebColliersCore.Models;
-using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace WebLomelinCore.Models
 {
@@ -38,7 +38,11 @@ namespace WebLomelinCore.Models
         [Required(ErrorMessage = "Ingrese línea de captura")]
         [Display(Name = "Línea de captura")]
         public string LineaCaptura { get; set; }
-        public int status { get; set; }
+        
+        public int UsuarioAutoriza { get; set; }
+        public string UsuarioAutorizaDescripcion { get; set; }
+        public int StatusProceso { get; set; }
+        public string StatusProcesoDescripcion { get; set; }
 
         /*DATOS DEL FORMULARIO*/
 
@@ -50,24 +54,25 @@ namespace WebLomelinCore.Models
         public string traspasoIndividual { get; set; }
         public string Numero { get; set; }
         public string LineaCapturaCompleta { get; set; }
-        public List<pagosluz> GetPagosluzs(int? idCuenta)
-        {
-            List<pagosluz> response = new List<pagosluz>
-            {
-                new pagosluz {idDtPagosLuz = 1, idCgCuentaLuz = 200, periodoPago = "2024-01", importe = 3500.00, status = 1},
-                new pagosluz {idDtPagosLuz= 2, idCgCuentaLuz = 2001, periodoPago = "2024-02", importe = 4200.50, status = 2 },
-                new pagosluz {idDtPagosLuz = 3, idCgCuentaLuz = 2002, periodoPago = "2024-03", importe = 2800.16, status = 3 }
-            };
+        
+        //public List<pagosluz> GetPagosluzs(int? idCuenta)
+        //{
+        //    List<pagosluz> response = new List<pagosluz>
+        //    {
+        //        new pagosluz {idDtPagosLuz = 1, idCgCuentaLuz = 200, periodoPago = "2024-01", importe = 3500.00, status = 1},
+        //        new pagosluz {idDtPagosLuz= 2, idCgCuentaLuz = 2001, periodoPago = "2024-02", importe = 4200.50, status = 2 },
+        //        new pagosluz {idDtPagosLuz = 3, idCgCuentaLuz = 2002, periodoPago = "2024-03", importe = 2800.16, status = 3 }
+        //    };
 
-            if (idCuenta.HasValue)
-            {
-                return response
-                    .Where(x => x.idCgCuentaLuz == idCuenta).ToList();
-            }
-            else
-            {
-                return response;
-            }
-        }
+        //    if (idCuenta.HasValue)
+        //    {
+        //        return response
+        //            .Where(x => x.idCgCuentaLuz == idCuenta).ToList();
+        //    }
+        //    else
+        //    {
+        //        return response;
+        //    }
+        //}
     }
 }

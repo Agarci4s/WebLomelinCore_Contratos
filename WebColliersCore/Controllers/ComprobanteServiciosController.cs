@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebColliersCore;
 using WebColliersCore.Data;
+using WebLomelinCore.Data;
 using WebLomelinCore.Models;
 
 namespace WebLomelinCore.Controllers
@@ -20,10 +21,10 @@ namespace WebLomelinCore.Controllers
             if (!menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims))
                 return Redirect("~/Home");
             #endregion
-
+            
+            ViewBag.TipoServicios = new DataSelectService().getTipoServicio;
+            
             DataLocalidades dataLocalidades = new DataLocalidades();
-            ViewBag.TipoServicios = new PagosServicios().getTipoSerivcios;
-
             ViewBag.Inmuebles = dataLocalidades.InmueblesGet(IdUsuario, idCartera);
             ViewBag.Localidades = dataLocalidades.LocalidadesGet(-1);
             

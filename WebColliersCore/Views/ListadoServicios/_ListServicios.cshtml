@@ -1,59 +1,202 @@
-﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles_contrato>
+﻿@using WebLomelinCore.Models
+@model IEnumerable<WebLomelinCore.Models.PagoUnificadoDTO>
 
 
-<div class="tableFixHead">
-    <table class="table table-responsive-sm table-sm small" id="tab">
-        <thead class="font-size-head">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.cr)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ue)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fecha_inicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fecha_termino)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.id_b_cg_contrato_estatu)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            
-            @if (ViewBag.TestList != null)
-            {
-                @foreach (B_inmuebles_contrato item in ViewBag.TestList)
+@if (ViewBag.TipoServicioSolcitud == 1)
+{
+    /*mostrar por agua*/
+    <div class="tableFixHead">
+        <table class="table table-responsive-sm table-sm small" id="tab">
+            <thead class="font-size-head">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().CuentaAgua)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().Lectura1)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().Lectura2)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Importe Total")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().UsuarioAutorizaDescripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().StatusProcesoDescripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Editar")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    @foreach (pagosagua item in Model.FirstOrDefault().PagosAgua)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CuentaAgua)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lectura1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lectura2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => (item.ImporteHabitacional + item.ImporteComercial + item.IvaComercial + item.Recargos + item.Actualizacion + item.Multas + item.GastosEjecucion))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UsuarioAutorizaDescripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatusProcesoDescripcion)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "EditarCuentaAgua", new { id = item.idPagoAgua })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.cr)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ue)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.fecha_inicio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.fecha_termino)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.estatus)
-                        </td>
+                        <td colspan="11" style="color: red;">Sin información para mostrar</td>
                     </tr>
                 }
-            }
-            else
-            {
+            </tbody>
+        </table>
+    </div>
+}
+else @if (ViewBag.TipoServicioSolcitud == 2)
+{
+    /*mostrar por luz*/
+    <div class="tableFixHead">
+        <table class="table table-responsive-sm table-sm small" id="tab">
+            <thead class="font-size-head">
                 <tr>
-                    <td colspan="11" style="color: red;">Sin información para mostrar</td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosLuz.FirstOrDefault().CuentaLuz)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosLuz.FirstOrDefault().fechaPago)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Importe Total")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().UsuarioAutorizaDescripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().StatusProcesoDescripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Autorizar/Rechazar")
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    @foreach (pagosluz item in Model.FirstOrDefault().PagosLuz)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CuentaLuz)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.fechaPago)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => (item.importe + item.iva))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UsuarioAutorizaDescripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatusProcesoDescripcion)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "EditarCuentaLuz", new { id = item.idDtPagosLuz })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="11" style="color: red;">Sin información para mostrar</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+@if (ViewBag.TipoServicioSolcitud == 3)
+{
+    /*mostrar por predial*/
+    <div class="tableFixHead">
+        <table class="table table-responsive-sm table-sm small" id="tab">
+            <thead class="font-size-head">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosPredial.FirstOrDefault().CuentaPredial)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosPredial.FirstOrDefault().periodoPago)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Importe Total")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().UsuarioAutorizaDescripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PagosAgua.FirstOrDefault().StatusProcesoDescripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Editar")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    @foreach (pagospredial item in Model.FirstOrDefault().PagosPredial)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CuentaPredial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.periodoPago)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => (item.Recargos + item.Multas + item.importe + item.iva + item.Actualizacion))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UsuarioAutorizaDescripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatusProcesoDescripcion)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "EditarCuentaPredial", new { id = item.idDtPagosPredial })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="11" style="color: red;">Sin información para mostrar</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

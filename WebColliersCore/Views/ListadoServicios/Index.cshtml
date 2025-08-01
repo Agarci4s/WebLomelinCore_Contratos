@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles>
+﻿@model WebLomelinCore.Models.PagoUnificadoDTO
 
 <header>
     <script src="~/js/core.js"></script>
@@ -117,23 +117,143 @@
 
 <h3>Listado de Servicios</h3>
 
+<form asp-action="Busqueda" asp-controller="ListadoServicios" id="frmBusqueda" name="frmBusqueda">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title m-1">Filtro de busqueda</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdTipoServicio" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectIdTipoSerivicio">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectIdTipoSerivicio" asp-for="IdTipoServicio" class="form-control" asp-items=@ViewBag.TipoServicios></select>
+                        </div>
+                        <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <div class="form-group col-sm-4">
+                            <label asp-for="IdRegion" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectRegion">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectRegion" asp-for="IdRegion" class="form-control" onchange="return changeRegion();" asp-items=@ViewBag.Regiones></select>
+                            </div>
+                            <span asp-validation-for="IdRegion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdInmueble" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectInmueble">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectInmueble" asp-for="IdInmueble" class="form-control" onchange="return changeInmueble();" asp-items=@ViewBag.Inmuebles></select>
+                        </div>
+                        <span asp-validation-for="IdInmueble" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdLocalidad" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectLocalidad">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectLocalidad" onchange="return changeLocalidad();" asp-for="IdLocalidad" class="form-control" asp-items=@ViewBag.Localidades></select>
+                        </div>
+                        <span asp-validation-for="IdLocalidad" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="idCuenta" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectCuenta">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectCuenta" asp-for="idCuenta" class="form-control" asp-items=@ViewBag.Cuentas></select>
+                        </div>
+                        <span asp-validation-for="idCuenta" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdStatusProceso" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectIdEstatus">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectIdEstatus" asp-for="IdStatusProceso" class="form-control" asp-items=@ViewBag.Estatus></select>
+                        </div>
+                        <span asp-validation-for="IdStatusProceso" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <button type="submit" value="Buscar" class="btn btn-success btn-sm">
+                            <i class="bi bi-floppy2"></i>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   @*  <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="TipoServicio" class="control-label">TipoServicio</label>
+            <select id="cmbTipoSerivicio" asp-items=ViewBag.TipoServicios class="form-control"></select>
+        </div>&nbsp;&nbsp;
+          <div class="form-group" style="margin:20px; margin-bottom:20px">
+            <div class="form-check">
+                <input type="checkbox" id="cbTipoCarga" class="form-check-input">
+                <label class="form-check-label" id="TipoCarga" for="cbTipoCarga">carga manual</label>
+            </div>
+        </div> 
+    </div> *@
+</form>
+
 <div class="row">
     @* <div class="form-group col-sm-1">
         <label>Meses</label>
         <input id="inputMeses" class="form-control" type="number" value="0" />
     </div> *@
 
-    <div class=" form-group col-md-3">
+    @* <div class=" form-group col-md-3">
         <input checked class="p-2 " type="radio" name="busqueda" value="1" id="rbCr" onclick="handleClick(this);">
         <label class="p-2 " for="rbCr">@Html.DisplayNameFor(model => model.cr) | @Html.DisplayNameFor(model => model.nombre)</label>
-    </div>
+    </div> *@
     <!-- 
     <div class="form-group col-md-3 " id="divClasificacion">
         <label class="control-label">Fecha de inicio</label>
         <input type="date" id="fecha" class="form-control" value="@DateTime.Now.ToString("yyyy")-01-01" />
     </div>
     -->
-    <div class="form-group col-sm-2">
+   @*  <div class="form-group col-sm-2">
         <label>Filtrar por: </label>
         <select id="selectCampo" asp-items=ViewBag.Status class="form-control"></select>
     </div>
@@ -146,7 +266,7 @@
     </div>
     <div class=" col-md-4" id="divBuscar">
         <input id="buscar" class="p-2 form-control" />
-    </div>
+    </div> *@
     @* <div class="form-group col-sm-2 align-self-end">
         <button class="btn btn-primary mt-4" id="btnEnviar">Enviar...<i class="fa-solid fa-paper-plane"></i></button>
         <button class="btn btn-primary" type="button" disabled id="btnEnviando" style="display: none;">
@@ -183,29 +303,4 @@
     }
 }
 
-<script>
-    function Search(){
-        mostrarRegistros();
-    };
-
-    function mostrarRegistros(){
-        var fecha = $("#fecha").val();
-        var fecha2 = $("#fecha2").val();
-
-        $.ajax({
-            type: "POST",
-            url: "getListadoContratosParametrizado",
-            data:{
-                FechaInicio: fecha,
-                FechaFin: fecha2,
-                Campo: $("#selectCampo").val()
-            },
-            success: function(response){
-                $("#divLista").html(response);
-            },
-            error: function(response){
-                alert("Error");
-            }
-        });
-    };
-</script>
+<script src="~/js/ListadoServicios.js" />
