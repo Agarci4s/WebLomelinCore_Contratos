@@ -23,13 +23,13 @@ namespace WebLomelinCore.Models
         public int IdLocalidad { get; set; }
 
         [Required(ErrorMessage = "Seleccione la cuenta agua correspondiente")]
-        [Display(Name = "Localidad")]
+        [Display(Name = "Cuenta Agua")]
         public int idCuentaAgua { get; set; }
         public string CuentaAgua { get; set; }
 
         [Required(ErrorMessage ="Ingrese la fecha de lectura 1")]
         [Display(Name = "Fecha de lectura 1")]
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date, ErrorMessage ="Ingrese una fecha valida")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         //[DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime FechaLectura1 { get; set; }
@@ -44,8 +44,8 @@ namespace WebLomelinCore.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime FechaLectura2 { get; set; }
         
-        [Display(Name = "Lectura 1")]
-        [Required(ErrorMessage = "Ingrese Lectura 1")]
+        [Display(Name = "Lectura 2")]
+        [Required(ErrorMessage = "Ingrese Lectura 2")]
         public float Lectura2 { get; set; }
 
         [Display(Name = "Importe habitacional")]
@@ -110,8 +110,9 @@ namespace WebLomelinCore.Models
         /// </summary>
         public string MotivoReactiva { get; set; }
 
-        
-        
+        public int id_usuario { get; set; }
+        public int status { get; set; }
+
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
         /* DATOS FORMULARIO */
@@ -122,14 +123,14 @@ namespace WebLomelinCore.Models
         public long localidadesComerciales { get; set; }
         public long localidadesHabitacionales { get; set; }
         public string autorizacionPago { get; set; }
-        public int status { get; set; }
+      
         public string traspaso { get; set; }
         public string comentarioNoPagarServicios { get; set; }
         public DateTime fechaNoPagarServicios { get; set; }
         public string traspasoIndividual { get; set; }
         public string comentarioLectura { get; set; }
         public string Ticket { get; set; }
-        public string Numero { get; set; }
+        
         public string NumeroAnt { get; set; }
         public int SinLecturas { get; set; }
         public int statusProceso { get; set; }

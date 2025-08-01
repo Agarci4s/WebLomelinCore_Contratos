@@ -1,15 +1,33 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebColliersCore.Models;
 using System;
 
+
 namespace WebLomelinCore.Models
 {
     public class pagospredial
     {
+       /*DATOS DEL FORMULARIO*/
+        public int idPagoPredial { get; set; }
+
         public int idDtPagosPredial { get; set; }//
+
+        [Required(ErrorMessage = "Seleccione el inmueble")]
+        [Display(Name = "Inmueble")]
+        public int IdInmueble { get; set; }
+
+        [Required(ErrorMessage = "Seleccione la localidad")]
+        [Display(Name = "Localidad")]
+        public int IdLocalidad { get; set; }
+
+        [Required(ErrorMessage = "Seleccione la cuenta luz correspondiente")]
+        [Display(Name = "Cuenta predial")]
+        public int idCuentaPredial { get; set; }
+
         public int idCgCuentaPredial { get; set; }//
         public string CuentaPredial { get; set; }
 
@@ -60,6 +78,10 @@ namespace WebLomelinCore.Models
         public string UsuarioAutorizaDescripcion { get; set; }
         public int StatusProceso { get; set; }
         public string StatusProcesoDescripcion { get; set; }
+        
+        public DateTime FechaAltaRegistro { get; set; }
+        public DateTime FechaUpdateRegistro { get; set; }
+
         /*DATOS DEL FORMULARIO*/
 
         public DateTime fechaPago { get; set; }//
@@ -75,7 +97,7 @@ namespace WebLomelinCore.Models
         public string traspasoIndividual { get; set; }
         public string tipoPago { get; set; }
         public string Ticket { get; set; }
-        public string Numero { get; set; }
+        
         public string NumeroAnt { get; set; }
         public double m2Terreno { get; set; }
         public double ValorUTerreno { get; set; }
@@ -100,8 +122,7 @@ namespace WebLomelinCore.Models
         public DateTime FechaNoAutoriza { get; set; }
         public string UsrNoAutoriza { get; set; }
         public string MotivoNoAuto { get; set; }
-        public DateTime FechaAltaRegistro { get; set; }
-        public DateTime FechaUpdateRegistro { get; set; }
+        
 
         public List<pagospredial> GetPagoPredials(int?idCuenta)
         {
