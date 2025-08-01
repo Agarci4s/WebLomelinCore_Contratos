@@ -1,15 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebColliersCore.Models;
-using static ClosedXML.Excel.XLPredefinedFormat;
+
 
 namespace WebLomelinCore.Models
 {
     public class pagosluz
     {
+        /*DATOS DEL FORMULARIO*/
+        public int idPagoLuz { get; set; }
         public int idDtPagosLuz { get; set; }//
-        public int idCgCuentaLuz { get; set; }//
+
+        [Required(ErrorMessage = "Seleccione el inmueble")]
+        [Display(Name = "Inmueble")]
+        public int IdInmueble { get; set; }
+
+        [Required(ErrorMessage = "Seleccione la localidad")]
+        [Display(Name = "Localidad")]
+        public int IdLocalidad { get; set; }
+
+        [Required(ErrorMessage = "Seleccione la cuenta luz correspondiente")]
+        [Display(Name = "Cuenta Luz")]
+        public int idCuentaLuz { get; set; }
+
+        public int idCgCuentaLuz { get; set; }
         public string CuentaLuz { get; set; }
 
         [Required(ErrorMessage = "Ingrese la fecha de pago")]
@@ -39,6 +56,11 @@ namespace WebLomelinCore.Models
         [Display(Name = "Línea de captura")]
         public string LineaCaptura { get; set; }
         public int status { get; set; }
+        public int id_usuario { get; set; }
+        public int UsuarioAutoriza { get; set; }
+        public int statusproceso { get; set;}
+        public DateTime FechaAltaRegistro { get; set; }
+        public DateTime FechaUpdateRegistro { get; set; }
 
         /*DATOS DEL FORMULARIO*/
 
@@ -48,8 +70,10 @@ namespace WebLomelinCore.Models
         public string TipoPago { get; set; }
         public string comentarioNoPagarServicios { get; set; }
         public string traspasoIndividual { get; set; }
-        public string Numero { get; set; }
+        
         public string LineaCapturaCompleta { get; set; }
+
+
         public List<pagosluz> GetPagosluzs(int? idCuenta)
         {
             List<pagosluz> response = new List<pagosluz>

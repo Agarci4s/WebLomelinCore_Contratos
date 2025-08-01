@@ -23,11 +23,12 @@ $('#cmbTipoSerivicio').on('change', function () {
     }
 });
 
-function changeInmuebleAgua() {
+function changeInmuebleAgua()
+{
     var newId = $("#selectInmuebleAgua").val();
     var url = "/ComprobanteServicios/getLocalidades";
 
-    $.getJSON(url, { id: newId }, function (data) {
+    $.getJSON(url, { IdInmueble: newId }, function (data) {
         var item = "";
         $("#selectLocalidadAgua").empty();
         $.each(data, function (i, Localidades) {
@@ -38,12 +39,12 @@ function changeInmuebleAgua() {
 
 }
 
-
-function changeLocalidadAgua() {
+function changeLocalidadAgua()
+{
     var newId = $("#selectCuentaAgua").val();
     var url = "/ComprobanteServicios/getCuentasAgua";
 
-    $.getJSON(url, { id: newId }, function (data) {
+    $.getJSON(url, { IdLocalidad: newId }, function (data) {
         var item = "";
         $("#selectCuentaAgua").empty();
         $.each(data, function (i, cuentasAgua) {
@@ -51,5 +52,88 @@ function changeLocalidadAgua() {
         });
         $("#selectCuentaAgua").html(item);
     });
+}
 
+function changeLocalidadLuz()
+{
+    var newId = $("#selectCuentaLuz").val();
+    var url = "/ComprobanteServicios/getCuentasLuz";
+
+    $.getJSON(url, { IdLocalidad: newId }, function (data) {
+        var item = "";
+        $("#selectCuentaLuz").empty();
+        $.each(data, function (i, cuentasLuz) {
+            item += '<option value="' + cuentasLuz.value + '">' + cuentasLuz.text + '</option>'
+        });
+        $("#selectCuentaLuz").html(item);
+    });
+}
+
+function calculateTotalImport(typeService)
+{
+    if (typeService == 1) {
+        
+        var importeHabitacional = $("#PagosAgua_ImporteHabitacional").val();
+        var ImporteComercial = $("#PagosAgua_ImporteComercial").val();
+        var gastosEjecucion = $("#PagosAgua_GastosEjecucion").val();
+        var multas = ("#PagosAgua_Multas").val();
+        var recargos = $("#PagosAgua_Recargos").val();
+        var ivaComercial = $("#PagosAgua_IvaComercial").val();
+
+        var total = gastosEjecucion + multas + recargos + ivaComercial + importeComercial + importeHabitacional;
+        $("#TotalPago").val(total.toFixed(2)); // 2 decimales
+
+        //function onfocus in input text with jqeury
+        //disable un input with jquery
+    }
+
+    function changeInmuebleLuz()
+    {
+        var newId = $("#selectInmuebleLuz").val();
+        var url = "/ComprobanteServicios/getLocalidades";
+
+        $.getJSON(url, { IdInmueble: newId }, function (data) {
+            var item = "";
+            $("#selectLocalidadLuz").empty();
+            $.each(data, function (i, Localidades) {
+                item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
+            });
+            $("#selectLocalidadLuz").html(item);
+        });
+
+    }
+
+    
+
+    function changeInmueblePredial()
+    {
+        var newId = $("#selectInmuebleLuz").val();
+        var url = "/ComprobanteServicios/getLocalidades";
+
+        $.getJSON(url, { IdInmueble: newId }, function (data) {
+            var item = "";
+            $("#selectLocalidadPredial").empty();
+            $.each(data, function (i, Localidades) {
+                item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
+            });
+            $("#selectLocalidadPredial").html(item);
+        });
+
+    }
+
+    function changeLocalidadPredial()
+    {
+        var newId = $("#selectCuentaPredial").val();
+        var url = "/ComprobanteServicios/getCuentasPredial";
+
+        $.getJSON(url, { IdLocalidad: newId }, function (data) {
+            var item = "";
+            $("#selectCuentaPredial").empty();
+            $.each(data, function (i, cuentasPredial) {
+                item += '<option value="' + cuentasPredial.value + '">' + cuentasPredial.text + '</option>'
+            });
+            $("#selectCuentaPredial").html(item);
+        });
+    }
+    
 }

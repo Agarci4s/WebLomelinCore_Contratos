@@ -112,6 +112,14 @@
             </script>
 
         }
+        else
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                $("#modalMessage").modal('show');
+                });
+            </script>
+        }
     }
     catch (Exception) { }
 }
@@ -125,7 +133,24 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <label>Aqui va un texto del modal de aviso</label>
+                    <label>Se inserto correctamente el registro</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalMessageError" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>Ocurrion un problema, intente nuevamente</label>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -188,6 +213,7 @@
     </div>  *@
 
     <form asp-action="ServicioAgua" asp-controller="ComprobanteServicios" id="CargaAgua" name="CargaAgua">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
@@ -203,7 +229,11 @@
                                         <i class="bi bi-building"></i>
                                     </label>
                                 </div>
-                                <select id="selectInmuebleAgua" asp-for="PagosAgua.IdInmueble" class="form-control" onchange="return changeInmuebleAgua();" asp-items=@ViewBag.Inmuebles></select>
+                                <select id="selectInmuebleAgua" 
+                                    asp-for="PagosAgua.IdInmueble" 
+                                    class="form-control" 
+                                    onchange="return changeInmuebleAgua();" 
+                                    asp-items=@ViewBag.Inmuebles></select>
                             </div>
                             <span asp-validation-for="PagosAgua.IdInmueble" class="text-danger"></span>
                         </div>
@@ -216,7 +246,11 @@
                                         <i class="bi bi-building"></i>
                                     </label>
                                 </div>
-                                <select id="selectLocalidadAgua" asp-for="PagosAgua.IdLocalidad" class="form-control" onchange="return changeLocalidadAgua();" asp-items=@ViewBag.Localidades></select>
+                                <select id="selectLocalidadAgua" 
+                                    asp-for="PagosAgua.IdLocalidad" 
+                                    class="form-control" 
+                                    onchange="return changeLocalidadAgua();" 
+                                    asp-items=@ViewBag.Localidades></select>
                             </div>
                             <span asp-validation-for="PagosAgua.IdLocalidad" class="text-danger"></span>
                         </div>
@@ -230,7 +264,11 @@
                                         <i class="bi bi-building"></i>
                                     </label>
                                 </div>
-                                <select id="selectCuentaAgua" asp-for="PagosAgua.idCuentaAgua" class="form-control" onchange="return changeLocalidadAgua();" asp-items=@ViewBag.Localidades></select>
+                                <select id="selectCuentaAgua" 
+                                    asp-for="PagosAgua.idCuentaAgua" 
+                                    class="form-control" 
+                                    onchange="return changeLocalidadAgua();" 
+                                    asp-items=@ViewBag.Localidades></select>
                             </div>
                             <span asp-validation-for="PagosAgua.idCuentaAgua" class="text-danger"></span>
                         </div>
@@ -399,7 +437,7 @@
                                         <i class="bi bi-info-circle-fill"></i>
                                     </label>
                                 </div>
-                                <input id="TotalPago" class="form-control" />
+                                <input id="TotalPago" onfocus="calculateTotalImport(1);" class="form-control" readonly />
                             </div>
                         </div>
 
@@ -475,14 +513,159 @@
         </div>
     </form>
 
-    <form asp-action="ServicioAgua" asp-controller="ComprobanteServicios" id="CargaLuz" name="CargaLuz">
-        <div class="container-fluid">
+    <form asp-action="SevicioLuz" asp-controller="ComprobanteServicios" id="CargaLuz" name="CargaLuz">
+        <div class="container-fluid"> 
             <div class="card">
                 <div class="card-header">
                     <h6 class="card-title m-1">Servicio de luz</h6>
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <!-- INMUEBLE -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.IdInmueble" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectInmuebleLuz">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectInmuebleLuz"
+                                        asp-for="PagosLuz.IdInmueble"
+                                        class="form-control"
+                                        onchange="return changeInmuebleLuz();"
+                                        asp-items="@ViewBag.Inmuebles"></select>
+                            </div>
+                            <span asp-validation-for="PagosLuz.IdInmueble" class="text-danger"></span>
+                        </div>
+
+                        <!-- LOCALIDAD -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.IdLocalidad" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectLocalidadLuz">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                    </label>
+                                </div>
+                                <select id="selectLocalidadLuz"
+                                        asp-for="PagosLuz.IdLocalidad"
+                                        class="form-control"
+                                        onchange="return changeLocalidadLuz();"
+                                        asp-items="@ViewBag.Localidades"></select>
+                            </div>
+                            <span asp-validation-for="PagosLuz.IdLocalidad" class="text-danger"></span>
+                        </div>
+
+                        <!-- CUENTA LUZ -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.idCuentaLuz" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectCuentaLuz">
+                                        <i class="bi bi-lightning-charge-fill"></i>
+                                    </label>
+                                </div>
+                                <select id="selectCuentaLuz"
+                                        asp-for="PagosLuz.idCuentaLuz"
+                                        class="form-control"
+                                        onchange="return changeCuentaLuz();"
+                                        asp-items="@ViewBag.Localidades"></select>
+                            </div>
+                            <span asp-validation-for="PagosLuz.idCuentaLuz" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- FECHA DE PAGO -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.fechaPago" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosLuz.fechaPago">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosLuz.fechaPago" class="form-control" type="date" />
+                            </div>
+                            <span asp-validation-for="PagosLuz.fechaPago" class="text-danger"></span>
+                        </div>
+
+                        <!-- PERIODO DE PAGO -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.periodoPago" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosLuz.periodoPago">
+                                        <i class="bi bi-calendar-range"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosLuz.periodoPago" class="form-control" placeholder="Ej. 2024-07" />
+                            </div>
+                            <span asp-validation-for="PagosLuz.periodoPago" class="text-danger"></span>
+                        </div>
+
+                        <!-- IMPORTE -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.importe" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosLuz.importe">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosLuz.importe" class="form-control" type="number" step="0.01" />
+                            </div>
+                            <span asp-validation-for="PagosLuz.importe" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <!-- IVA -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.iva" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosLuz.iva">
+                                        <i class="bi bi-percent"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosLuz.iva" class="form-control" type="number" step="0.01" />
+                            </div>
+                            <span asp-validation-for="PagosLuz.iva" class="text-danger"></span>
+                        </div>
+
+                        <!-- CONCEPTO PAGO -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.conceptoPago" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosLuz.conceptoPago">
+                                        <i class="bi bi-info-circle"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosLuz.conceptoPago" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosLuz.conceptoPago" class="text-danger"></span>
+                        </div>
+
+                        <!-- LÍNEA DE CAPTURA -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosLuz.LineaCaptura" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosLuz.LineaCaptura">
+                                        <i class="bi bi-upc-scan"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosLuz.LineaCaptura" class="form-control" placeholder="Ej. 12345678901234567890" maxlength="20" />
+                            </div>
+                            <span asp-validation-for="PagosLuz.LineaCaptura" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="container">
@@ -504,6 +687,208 @@
                     <h6 class="card-title m-1">Servicio predial</h6>
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <!-- Inmueble -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.IdInmueble" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectInmueblePredial">
+                                        <i class="bi bi-building"></i>
+                                    </label>
+                                </div>
+                                <select id="selectInmueblePredial" 
+                                    asp-for="PagosPredial.IdInmueble" 
+                                    class="form-control" 
+                                    onchange="return changeInmueblePredial();" 
+                                    asp-items="@ViewBag.Inmuebles"></select>
+                            </div>
+                            <span asp-validation-for="PagosPredial.IdInmueble" class="text-danger"></span>
+                        </div>
+
+                        <!-- Localidad -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.IdLocalidad" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectLocalidadPredial">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                    </label>
+                                </div>
+                                <select id="selectLocalidadPredial" 
+                                    asp-for="PagosPredial.IdLocalidad" 
+                                    class="form-control" 
+                                    onchange="return changeLocalidadPredial();" 
+                                    asp-items="@ViewBag.Localidades"></select>
+                            </div>
+                            <span asp-validation-for="PagosPredial.IdLocalidad" class="text-danger"></span>
+                        </div>
+
+                        <!-- Cuenta Predial -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.idCuentaPredial" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="selectCuentaPredial">
+                                        <i class="bi bi-list-check"></i>
+                                    </label>
+                                </div>
+                                <select id="selectCuentaPredial" 
+                                    asp-for="PagosPredial.idCuentaPredial" 
+                                    class="form-control" 
+                                    onchange="return changeCuentaPredial();"
+                                        asp-items="@ViewBag.Localidades"></select>
+                            </div>
+                            <span asp-validation-for="PagosPredial.idCuentaPredial" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Periodo Pago -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.periodoPago" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.periodoPago">
+                                        <i class="bi bi-calendar-range"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.periodoPago" class="form-control" placeholder="Ej. 2024-07" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.periodoPago" class="text-danger"></span>
+                        </div>
+
+                        <!-- Importe -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.importe" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.importe">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.importe" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.importe" class="text-danger"></span>
+                        </div>
+
+                        <!-- IVA -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.iva" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.iva">
+                                        <i class="bi bi-percent"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.iva" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.iva" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Recargos -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.Recargos" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.Recargos">
+                                        <i class="bi bi-cash-coin"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.Recargos" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.Recargos" class="text-danger"></span>
+                        </div>
+
+                        <!-- Multas -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.Multas" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.Multas">
+                                        <i class="bi bi-exclamation-diamond-fill"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.Multas" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.Multas" class="text-danger"></span>
+                        </div>
+
+                        <!-- Actualización -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.Actualizacion" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.Actualizacion">
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.Actualizacion" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.Actualizacion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Concepto de pago -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.conceptoPago" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.conceptoPago">
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.conceptoPago" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.conceptoPago" class="text-danger"></span>
+                        </div>
+
+                        <!-- Línea de captura -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.LineaCaptura" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial.LineaCaptura">
+                                        <i class="bi bi-upc-scan"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.LineaCaptura" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.LineaCaptura" class="text-danger"></span>
+                        </div>
+
+                        <!-- Fecha límite de pago -->
+                        <div class="form-group col-sm-4">
+                            <label asp-for="PagosPredial.fechaPagolimite" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="PagosPredial_fechaPagolimite">
+                                        <i class="bi bi-calendar-event"></i>
+                                    </label>
+                                </div>
+                                <input asp-for="PagosPredial.fechaPagolimite" class="form-control" />
+                            </div>
+                            <span asp-validation-for="PagosPredial.fechaPagolimite" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row"> 
+                        <div class="form-group col-sm-4">
+                            <label class="control-label">Total</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="TotalPago">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </label>
+                                </div>
+                                <input id="TotalPago" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
