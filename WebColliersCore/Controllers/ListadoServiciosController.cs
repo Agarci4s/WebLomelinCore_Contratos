@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,35 +16,120 @@ namespace WebLomelinCore.Controllers
 {
     public class ListadoServiciosController : Controller
     {
-        // GET: ListadoServiciosController
-        public ActionResult Index()
+        private bool InicializaVista(int? IdServicio, int? IdRegion, int? IdInmueble, int? IdLocalidad, int? IdCuenta)
         {
             #region Validación de permisos
             var claims = HttpContext.User.Claims;
             Menu menu = new Menu();
             int IdUsuario = 0, idCartera = 0, tipoNivel = 0;//0 , 1-detalle,2-editar y detalle, 3 crear-eliminar, editar y detalle   
-            if (!menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims))
-                return Redirect("~/Home");
+            bool response = menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims);
             #endregion
-           
-            ViewBag.Estatus = new DataSelectService().getStatusServicio.OrderBy(x => x.Value); ;
-            ViewBag.TipoServicios = new DataSelectService().getTipoServicio.OrderBy(x => x.Value);
-            ViewBag.Regiones = new DataSelectService().getRegionesList.OrderBy(x => x.Value);
-            ViewBag.Inmuebles = new DataInmuebles().GetInmuebleByRegion(-1, idCartera, IdUsuario);// dataLocalidades.InmueblesGet(IdUsuario, idCartera);
-            ViewBag.Localidades = new DataLocalidades().LocalidadesGet(-1).OrderBy(x => x.Value); ;
-            ViewBag.Cuentas = new DataSelectService().getCuentas(null, null, null);
-            ViewBag.TipoServicioSolcitud = 0;
-            return View();
+
+            ViewBag.Estatus = new DataSelectService().getStatusServicio.OrderBy(x => x.Value);
+            ViewBag.TipoServicios = setItem(new DataSelectService().getTipoServicio, IdServicio);
+            ViewBag.Regiones = setItem(new  DataSelectService().getRegionesList, IdRegion);
+            
+            IdRegion = IdRegion.HasValue ? IdRegion.Value : -1;
+            ViewBag.Inmuebles = setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdRegion);
+            
+            IdInmueble = IdInmueble.HasValue ? IdInmueble : -1;
+            ViewBag.Localidades = setItem(new DataLocalidades().LocalidadesGet(IdInmueble.Value), IdInmueble);
+
+            IdLocalidad=IdLocalidad.HasValue?IdLocalidad: -1;
+            ViewBag.Cuentas = setItem(new DataSelectService().getCuentas(IdInmueble, IdLocalidad, IdServicio), IdCuenta);
+
+            IdServicio = IdServicio.HasValue ? IdServicio.Value : 0;
+
+            ViewBag.TipoServicioSolcitud = IdServicio;
+
+            return response;
+        }
+
+        private List<SelectListItem> setItem(List<SelectListItem> listItems, int? id)
+        {
+            if (id.HasValue)
+            {
+                foreach (SelectListItem item in listItems)
+                {
+                    if (item.Value == id.ToString())
+                    {
+                        item.Selected = true;
+                    }
+                }
+            }
+            return listItems.OrderBy(x => x.Value).ToList();
+        }
+
+        // GET: ListadoServiciosController
+        public ActionResult Index()
+        {
+            if (!InicializaVista(null,null,null,null,null))
+            {
+                return Redirect("~/Home");
+            }
+            PagoUnificadoDTO model = new PagoUnificadoDTO
+            {
+                PagosAgua = new List<pagosagua>()
+            };
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult Busqueda(PagoUnificadoDTO model)
         {
             PagoUnificadoDTO response = PagoUnificadoDTO.getPagoServiciosList(model.IdInmueble ,model.IdLocalidad,model.idCuenta,model.IdTipoServicio,model.IdStatusProceso);
-            ViewBag.TipoServicioSolciitud = 1;
-            return PartialView("_ListServicios", response);
+            InicializaVista(model.IdTipoServicio,model.IdRegion, model.IdInmueble, model.IdLocalidad, model.idCuenta);
+            if (model.IdTipoServicio == 1)/*agua*/
+            {
+                ViewBag.TipoServicioSolcitud = 1;
+                return PartialView("ListadoPagosAgua", response.PagosAgua);
+            }
+            if (model.IdTipoServicio == 2)/*Luz*/
+            {
+                return PartialView("ListadoPagosLuz", response.PagosLuz);
+            }
+            if (model.IdTipoServicio == 3)/*Predial*/
+            {
+                return PartialView("ListadoPagosPredial", response.PagosPredial);
+            }
+
+            ViewBag.TipoServicioSolcitud = model.IdTipoServicio;
+            return Json(response.PagosAgua);
         }
 
+        public JsonResult AccionesAgua(List<pagosagua> model)
+        {
+            //InicializaVista(model.IdTipoServicio, model.IdRegion, model.IdInmueble, model.IdLocalidad, model.idCuenta);
+
+            foreach (var item in model)
+            {
+                var xx = item.EsSeleccionado;
+            }
+
+            ViewBag.TipoServicioSolcitud = 1;
+
+            return Json(model);
+
+            //if (model.IdTipoServicio == 2)/*Luz*/
+            //{
+            //    foreach (var item in model.PagosLuz)
+            //    {
+            //        var xx = item.EsSeleccionado;
+            //    }
+            //    return View("ListadoPagosLuz", model);
+            //}
+            //if (model.IdTipoServicio == 3)/*Predial*/
+            //{
+            //    foreach (var item in model.PagosPredial)
+            //    {
+            //        var xx = item.EsSeleccionado;
+            //    }
+            //    return View("ListadoPagosPredial", model);
+            //}
+
+            
+            //return RedirectToAction("Index");
+        }
 
         [HttpGet]
         public ActionResult EditarCuentaAgua  (int Id)

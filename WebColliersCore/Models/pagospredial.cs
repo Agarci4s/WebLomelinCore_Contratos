@@ -75,12 +75,21 @@ namespace WebLomelinCore.Models
         public string LineaCapturaPago { get; set; }
 
         public int UsuarioAutoriza { get; set; }
+        [Display(Name = "Usuario")]
         public string UsuarioAutorizaDescripcion { get; set; }
         public int StatusProceso { get; set; }
+        [Display(Name = "Estatus")]
         public string StatusProcesoDescripcion { get; set; }
         
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
+
+
+        [Display(Name = "Importe Total")]
+        public double ImporteTotal { get; set; }
+
+        [Display(Name = "Seleccionar")]
+        public bool EsSeleccionado { get; set; }
 
         /*DATOS DEL FORMULARIO*/
 

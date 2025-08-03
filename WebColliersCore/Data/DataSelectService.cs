@@ -175,6 +175,8 @@ namespace WebLomelinCore.Data
                                                                                             StatusProcesoDescripcion="Registrado"
                   }
                 };
+
+                response.PagosAgua.ForEach(x => x.ImporteTotal = (x.ImporteHabitacional + x.ImporteComercial + x.IvaComercial + x.Recargos + x.Actualizacion + x.Multas + x.GastosEjecucion));
             }
             else if (IdTipoServicio == 2)/*luz*/
             {
@@ -193,6 +195,7 @@ namespace WebLomelinCore.Data
                                                                            StatusProcesoDescripcion="Registrado"
                                                                             }
                    };
+                response.PagosLuz.ForEach(x => x.ImporteTotal = (x.importe + x.iva));
             }
             else if (IdTipoServicio == 3)/*predial*/
             {
@@ -216,6 +219,8 @@ namespace WebLomelinCore.Data
 
                     },
                 };
+
+                response.PagosPredial.ForEach(x => x.ImporteTotal = (x.Recargos + x.Multas + x.importe + x.iva + x.Actualizacion));
             }
             return response;
         }

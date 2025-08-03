@@ -1,5 +1,5 @@
 ﻿@using WebLomelinCore.Models
-@model IEnumerable<WebLomelinCore.Models.PagoUnificadoDTO>
+@model WebLomelinCore.Models.PagoUnificadoDTO
 
 
 @if (ViewBag.TipoServicioSolcitud == 1)
@@ -33,9 +33,9 @@
                 </tr>
             </thead>
             <tbody>
-                @if (!Model.Any())
+                @if (!Model.PagosAgua.Any())
                 {
-                    @foreach (pagosagua item in Model.FirstOrDefault().PagosAgua)
+                    @foreach (pagosagua item in Model.PagosAgua)
                     {
                         <tr>
                             <td>
@@ -100,9 +100,9 @@ else @if (ViewBag.TipoServicioSolcitud == 2)
                 </tr>
             </thead>
             <tbody>
-                @if (!Model.Any())
+                @if (!Model.PagosLuz.Any())
                 {
-                    @foreach (pagosluz item in Model.FirstOrDefault().PagosLuz)
+                    @foreach (pagosluz item in Model.PagosLuz)
                     {
                         <tr>
                             <td>
@@ -164,9 +164,9 @@ else @if (ViewBag.TipoServicioSolcitud == 2)
                 </tr>
             </thead>
             <tbody>
-                @if (!Model.Any())
+                @if (!Model.PagosPredial.Any())
                 {
-                    @foreach (pagospredial item in Model.FirstOrDefault().PagosPredial)
+                    @foreach (pagospredial item in Model.PagosPredial)
                     {
                         <tr>
                             <td>

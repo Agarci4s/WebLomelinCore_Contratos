@@ -1,5 +1,47 @@
-﻿function changeRegion() {
-    var newId = $("#IdRegion").val();
+﻿$("#div_Agua").hide();
+$("#div_Luz").hide();
+$("#div_Predial").hide();
+
+$(document).ready(function () {
+    $('#frmBusqueda').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+        var tipoServicio = parseInt($('#selectIdTipoSerivicio').val(), 10);
+
+        $("#div_Agua").empty();
+        $("#div_Luz").empty();
+        $("#div_Predial").empty();
+
+        $("#div_Agua").hide();
+        $("#div_Luz").hide();
+        $("#div_Predial").hide();
+
+        $.ajax({
+            url: $(this).attr('action'), // Get action URL from the form
+            type: 'POST',
+            data: $(this).serialize(), // Serialize form data
+            success: function (response) {
+                if (tipoServicio == 1) {
+                    $('#div_Agua').html(response);
+                    $("#div_Agua").show();
+                }
+                else if (tipoServicio == 2) {
+                    $('#div_Luz').html(response);
+                    $("#div_Luz").show();
+                }
+                else if (tipoServicio == 3) {                    
+                    $('#div_Predial').html(response);
+                    $("#div_Predial").show();
+                }
+            },
+            error: function (error) {
+                console.error("Error submitting form:", error);
+            }
+        });
+    });
+});
+
+function changeRegion() {
+    var newId = $("#selectRegion").val();
     var url = "/ListadoServicios/getInmuebles";
 
     $.getJSON(url, { IdRegion: newId }, function (data) {
@@ -13,21 +55,21 @@
 }
 
 function changeInmueble() {
-    var newId = $("#IdInmueble").val();
+    var newId = $("#selectInmueble").val();
     var url = "/ListadoServicios/getLocalidades";
 
     $.getJSON(url, { IdInmueble: newId }, function (data) {
         var item = "";
-        $("#selectLocalidadAgua").empty();
+        $("#selectLocalidad").empty();
         $.each(data, function (i, Localidades) {
             item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
         });
-        $("#selectLocalidadAgua").html(item);
+        $("#selectLocalidad").html(item);
     });
 }
 
 function changeLocalidad() {
-    var IdInmueble = $("#IdInmueble").val();
+    var IdInmueble = $("#selectInmueble").val();
     var IdLocalidad = $("#selectLocalidad").val();
     var IdServicio = $("#selectIdTipoSerivicio").val();
     var url = "/ListadoServicios/getCuentas";
@@ -41,3 +83,4 @@ function changeLocalidad() {
         $("#selectCuenta").html(item);
     });
 }
+

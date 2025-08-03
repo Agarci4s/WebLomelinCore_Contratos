@@ -25,6 +25,7 @@ namespace WebLomelinCore.Models
         [Required(ErrorMessage = "Seleccione la cuenta agua correspondiente")]
         [Display(Name = "Cuenta Agua")]
         public int idCuentaAgua { get; set; }
+        [Display(Name = "Cuenta Agua")]
         public string CuentaAgua { get; set; }
 
         [Required(ErrorMessage ="Ingrese la fecha de lectura 1")]
@@ -101,10 +102,19 @@ namespace WebLomelinCore.Models
         public double ConsumoBimestral { get; set; }
 
         public int UsuarioAutoriza { get; set; }
+        [Display(Name = "Usuario")]
         public string UsuarioAutorizaDescripcion { get; set; }
-        public int StatusProceso { get; set; }
-        public string StatusProcesoDescripcion { get; set; }        
         
+        public int StatusProceso { get; set; }
+        [Display(Name = "Estatus")]
+        public string StatusProcesoDescripcion { get; set; }
+
+        [Display(Name = "Importe Total")]
+        public double ImporteTotal { get; set; }
+
+        [Display(Name = "Seleccionar")]
+        public bool EsSeleccionado { get; set; }
+
         /// <summary>
         /// Escribe un motivo por el cuel reactiva este item al estar en estatus rechazdo
         /// </summary>
