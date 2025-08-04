@@ -16,10 +16,26 @@ namespace WebLomelinCore.Models
         public pagosluz PagosLuz { get; set; }
         public pagospredial PagosPredial { get; set; }
         public int TipoServicio { get; set; }
+
+        public static List<SelectListItem> setItem(List<SelectListItem> listItems, int? id)
+        {
+            if (id.HasValue)
+            {
+                foreach (SelectListItem item in listItems)
+                {
+                    if (item.Value == id.ToString())
+                    {
+                        item.Selected = true;
+                    }
+                }
+            }
+            return listItems.OrderBy(x => x.Value).ToList();
+        }
+
         /// <summary>
         /// 
         /// </summary>
-        public List<SelectListItem> getTipoSerivcios
+        public static List<SelectListItem> getTipoSerivcios
         {
             get
             {

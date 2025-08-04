@@ -16,6 +16,105 @@ namespace WebLomelinCore.Data
         private Conexion conexion = new Conexion();
         private List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();
 
+        public List<SelectListItem> getBimestre
+        {
+            get {
+                return new List<SelectListItem>
+                {
+                      new SelectListItem
+                  {
+                      Value="0",
+                      Text="Seleccione una opción"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="Enero - Febrero"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="Marzo - Abril"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="Mayo - Junio"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="Julio - Agosto"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="Septiembre - Octubre"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="Noviembre - Diciembre"
+                  },
+                };
+            }
+        }
+
+        public List<SelectListItem> getPeriodosDiponibles
+        {
+            get {
+                return new List<SelectListItem>
+                {
+                     new SelectListItem
+                  {
+                      Value="0",
+                      Text="Seleccione una opción"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="2025"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="2026"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="2027"
+                  },
+                };
+            }
+        }
+
+        public List<SelectListItem> getPeriodicidad
+        {
+            get
+            {
+                return new List<SelectListItem>
+                {
+                  new SelectListItem
+                  {
+                      Value="0",
+                      Text="Seleccione una opción"
+                  },
+                  new SelectListItem
+                  {
+                      Value="1",
+                      Text="Bimestral"
+                  },
+                  new SelectListItem
+                  {
+                      Value="2",
+                      Text="Anual"
+                  }
+
+                };
+            }
+        }
+
         /// <summary>
         /// Obtiene las regiones
         /// </summary>

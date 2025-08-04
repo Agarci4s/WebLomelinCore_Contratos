@@ -1,0 +1,191 @@
+﻿@model WebLomelinCore.Models.PeriodosServicios
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <style>
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="button"] {
+            cursor: pointer;
+        }
+
+        input::-webkit-clear-button {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "...";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 480px;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: center;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                /* background-color: white;
+                border: 0px solid white; */
+                text-align: center;
+                background: rgb(37, 64, 143);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+        }
+
+        .font-size-row {
+            font-size: 12px !important;
+        }
+
+        .font-size-head {
+            font-size: 12px !important;
+        }
+
+        .RowNegativo {
+            background-color: red;
+            border-color: red;
+        }
+
+        .RowPositivo {
+            background-color: green;
+            border-color: green;
+        }
+
+        .ColorTextRed {
+            color: red;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+    </style>
+</header>
+
+<form asp-action="Index" asp-controller="GenerarPeriodosServicios" id="frmBusqueda" name="frmBusqueda">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title m-1">Generar periodo de pago</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdServicio" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="IdServicio">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="IdServicio" asp-for="IdServicio" class="form-control" asp-items=@ViewBag.Servicios></select>
+                        </div>
+                        <span asp-validation-for="IdServicio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdPeriodicidad" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="IdPeriodicidad">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="IdPeriodicidad" asp-for="IdPeriodicidad" class="form-control" asp-items=@ViewBag.Periodicidad></select>
+                        </div>
+                        <span asp-validation-for="IdPeriodicidad" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdPeriodoDisponible" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="IdPeriodoDisponible">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="IdPeriodoDisponible" asp-for="IdPeriodoDisponible" class="form-control" asp-items=@ViewBag.Periodos></select>
+                        </div>
+                        <span asp-validation-for="IdPeriodoDisponible" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdBimestre" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="IdBimestre">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="IdBimestre" asp-for="IdBimestre" class="form-control" asp-items=@ViewBag.Bimestres></select>
+                        </div>
+                        <span asp-validation-for="IdBimestre" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="container">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <button type="submit" value="Guardar" class="btn btn-success btn-sm">
+                                <i class="bi bi-floppy2"></i>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

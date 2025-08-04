@@ -26,17 +26,17 @@ namespace WebLomelinCore.Controllers
             #endregion
 
             ViewBag.Estatus = new DataSelectService().getStatusServicio.OrderBy(x => x.Value);
-            ViewBag.TipoServicios = setItem(new DataSelectService().getTipoServicio, IdServicio);
-            ViewBag.Regiones = setItem(new  DataSelectService().getRegionesList, IdRegion);
+            ViewBag.TipoServicios = PagosServicios.setItem(new DataSelectService().getTipoServicio, IdServicio);
+            ViewBag.Regiones = PagosServicios.setItem(new  DataSelectService().getRegionesList, IdRegion);
             
             IdRegion = IdRegion.HasValue ? IdRegion.Value : -1;
-            ViewBag.Inmuebles = setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdRegion);
+            ViewBag.Inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdRegion);
             
             IdInmueble = IdInmueble.HasValue ? IdInmueble : -1;
-            ViewBag.Localidades = setItem(new DataLocalidades().LocalidadesGet(IdInmueble.Value), IdInmueble);
+            ViewBag.Localidades = PagosServicios.setItem(new DataLocalidades().LocalidadesGet(IdInmueble.Value), IdInmueble);
 
             IdLocalidad=IdLocalidad.HasValue?IdLocalidad: -1;
-            ViewBag.Cuentas = setItem(new DataSelectService().getCuentas(IdInmueble, IdLocalidad, IdServicio), IdCuenta);
+            ViewBag.Cuentas = PagosServicios.setItem(new DataSelectService().getCuentas(IdInmueble, IdLocalidad, IdServicio), IdCuenta);
 
             IdServicio = IdServicio.HasValue ? IdServicio.Value : 0;
 
@@ -45,20 +45,7 @@ namespace WebLomelinCore.Controllers
             return response;
         }
 
-        private List<SelectListItem> setItem(List<SelectListItem> listItems, int? id)
-        {
-            if (id.HasValue)
-            {
-                foreach (SelectListItem item in listItems)
-                {
-                    if (item.Value == id.ToString())
-                    {
-                        item.Selected = true;
-                    }
-                }
-            }
-            return listItems.OrderBy(x => x.Value).ToList();
-        }
+        
 
         // GET: ListadoServiciosController
         public ActionResult Index()
