@@ -83,6 +83,7 @@ namespace WebLomelinCore.Models
         
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
+        public int id_usuario { get; set; }
 
 
         [Display(Name = "Importe Total")]

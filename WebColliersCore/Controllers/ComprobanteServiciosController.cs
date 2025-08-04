@@ -99,6 +99,7 @@ namespace WebLomelinCore.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ServicioPredial(PagosServicios model)
+        
         {
             try
             {
@@ -114,15 +115,15 @@ namespace WebLomelinCore.Controllers
                 pagoPredial.UsuarioAutoriza = IdUsuario;
                 pagoPredial.FechaAltaRegistro = System.DateTime.Now;
                 pagoPredial.StatusProceso = 1;
-                ViewBag.isOk = PagosServicios.InsertaPagosPredial(pagoPredial);
-                return View();
+                ViewBag.isOk = PagosServicios.InsertaPagosPredial(pagoPredial) ? true : false;
+                return RedirectToAction("Index");
 
             }
             catch
             {
                 ViewBag.isOk = false;
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

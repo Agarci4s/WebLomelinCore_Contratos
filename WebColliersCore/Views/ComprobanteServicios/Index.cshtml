@@ -169,8 +169,8 @@
 <form>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label asp-for="TipoServicio" class="control-label">TipoServicio</label>
-            <select id="cmbTipoSerivicio" asp-items=ViewBag.TipoServicios class="form-control"></select>
+                <label asp-for="TipoServicio" class="control-label">Tipo de Servicio</label>
+                <select id="cmbTipoServicio" asp-items=ViewBag.TipoServicios class="form-control"></select>
          </div>&nbsp;&nbsp;
        @*  <div class="form-group" style="margin:20px; margin-bottom:20px">
             <div class="form-check">
@@ -181,6 +181,7 @@
     </div>
 </form>
 
+@*  <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
 @*  <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
     <form id="formArchivos" asp-controller="ComprobanteServicios" asp-action="ImportarXML" method="post">
         <div class="form-group-custom row" style="margin-bottom: -9px;">
@@ -283,7 +284,11 @@
                                         <i class="fa-solid fa-calendar-days"></i>
                                     </label>
                                 </div>
-                                <input asp-for="PagosAgua.FechaLectura1" class="form-control" />
+                                <input asp-for="PagosAgua.FechaLectura1" 
+                                type="date"
+                                class="form-control"
+                                id="FechaLectura1"
+                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                             </div>
                             <span asp-validation-for="PagosAgua.FechaLectura1" class="text-danger"></span>
                         </div>
@@ -310,7 +315,10 @@
                                         <i class="fa-solid fa-calendar-days"></i>
                                     </label>
                                 </div>
-                                <input asp-for="PagosAgua.FechaLectura2" class="form-control" />
+                                <input asp-for="PagosAgua.FechaLectura2" 
+                                type="date"
+                                class="form-control"
+                                id="FechaLectura2s"/>
                             </div>
                             <span asp-validation-for="PagosAgua.FechaLectura2" class="text-danger"></span>
                         </div>
@@ -437,7 +445,7 @@
                                         <i class="bi bi-info-circle-fill"></i>
                                     </label>
                                 </div>
-                                <input id="TotalPago" onfocus="calculateTotalImport(1);" class="form-control" readonly />
+                                <input id="TotalPago" class="form-control" readonly />
                             </div>
                         </div>
 
@@ -497,7 +505,7 @@
                     </div>
 
                     <br />
-                  
+
                 </div>
             </div>
         </div>
@@ -880,11 +888,11 @@
                             <label class="control-label">Total</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="TotalPago">
+                                    <label class="input-group-text" for="TotalPagoPredial">
                                         <i class="bi bi-info-circle-fill"></i>
                                     </label>
                                 </div>
-                                <input id="TotalPago" class="form-control" />
+                                <input id="TotalPagoPredial" class="form-control" readonly />
                             </div>
                         </div>
                     </div>
@@ -904,4 +912,5 @@
         </div>
     </form>
 </div>
-<script src="~/js/ComprobanteServicios.js"/>
+
+<script src="/js/ComprobanteServicios.js"></script>
