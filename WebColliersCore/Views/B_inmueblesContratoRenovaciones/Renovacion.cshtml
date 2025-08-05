@@ -1,0 +1,1084 @@
+﻿@model WebLomelinCore.Models.NegociacionesRenovacion
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    <style type="text/css">
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 150px;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: left;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                border: 0px solid white;
+                text-align: center;
+                background: rgba(11,59,126,1);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+            margin-right: 6px;
+        }
+
+        #tabTiposUso tr.noSearch {
+            background: White;
+            font-size: 0.8em;
+        }
+
+            #tabTiposUso tr.noSearch td {
+                padding-top: 10px;
+                text-align: center;
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .red {
+            color: Red;
+        }
+
+        #tabTiposUso tr:hover {
+            background-color: aliceblue;
+        }
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "...";
+        }
+
+        .divContainer {
+            overflow-y: auto;
+            height: 450px;
+        }
+    </style>
+</header>
+
+<h4>Renovación</h4>
+<hr />
+
+<div class="row">
+    <div class="form-group col-sm-6">
+        <label asp-for="IdInmueble" class="control-label"></label>
+        <input placeholder="Inmueble" id="inputDataListInm" type="text" list="datalistIdInmueble" class="form-control" />
+        <datalist id="datalistIdInmueble"></datalist>
+        <select id="inputIdInmueble" class="form-control" asp-items="ViewBag.Inmuebles" style="visibility:hidden; height:0px"></select>
+    </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="IdContrato" class="control-label"></label>
+        <select id="selectContrato" asp-for="IdContrato" asp-items=ViewBag.Contratos class="form-control"></select>
+    </div>
+    <div class="form-group col-sm-2 align-self-end">
+        <button class="btn btn-primary mt-4" onclick="return Search();">Buscar...<i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+</div>
+<hr />
+<div class="form-group col-md-12" style="background-color:lightblue">
+    @* <partial name="PlantillaInmueble" model="Model.b_inmuebles" /> *@
+    <h6>Información del Inmueble</h6>
+    <hr />
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <label asp-for="cr" class="control-label"></label>
+            <input readonly asp-for="cr" class="form-control" />
+        </div>
+        <div class="form-group col-md-1">
+            <label asp-for="ue" class="control-label"></label>
+            <input readonly asp-for="ue" class="form-control" />
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="nombre" class="control-label"></label>
+            <input readonly asp-for="nombre" class="form-control" />
+        </div>
+    </div>
+    <h6>Ubicación del inmueble</h6>
+    <hr />
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="direccion" class="control-label"></label>
+            <input readonly asp-for="direccion" class="form-control" />
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="noext" class="control-label"></label>
+            <input readonly asp-for="noext" class="form-control" />
+        </div>
+        <div class="form-group col-md-1">
+            <label asp-for="lote" class="control-label"></label>
+            <input readonly asp-for="lote" class="form-control" />
+        </div>
+        <div class="form-group col-md-1">
+            <label asp-for="manzana" class="control-label"></label>
+            <input readonly asp-for="manzana" class="form-control" />
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="colonia" class="control-label"></label>
+            <input readonly asp-for="colonia" class="form-control" />
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="municipio" class="control-label"></label>
+            <input readonly asp-for="municipio" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-1">
+            <label asp-for="cp" class="control-label"></label>
+            <input readonly asp-for="cp" class="form-control" />
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="estado" class="control-label"></label>
+            <input readonly asp-for="estado" class="form-control" />
+        </div>
+    </div>
+</div>
+
+<div class="row divContainer">
+    <div class="col-md-12">
+
+        <div class="row container-fluid col-12 mx-auto ms-5 mr-5">
+
+            <div class="form-group col-sm-3">
+                <label asp-for=inpc class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputRentaPactada">
+                            <i class="bi bi-info-circle-fill"></i>
+                        </label>
+                    </div>
+                    <input id="inputRentaPactada" asp-for="inpc" class="form-control" placeholder="0.00" />
+                </div>
+                <span asp-validation-for="inpc" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-3">
+                <label asp-for=PorcentajeNegociar class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputPrecioM2RentaActual">
+                            <i class="bi bi-info-circle-fill"></i>
+                        </label>
+                    </div>
+                    <input id="inputPrecioM2RentaActual" asp-for="PorcentajeNegociar" class="form-control" placeholder="0.00" />
+                </div>
+                <span asp-validation-for="PorcentajeNegociar" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <br />
+
+        <div class="tableFixHead col-sm-12">
+            <table id="tabDistribucion" class="table table-responsive-sm table-sm small">
+                <thead class="font-size-head">
+                    <tr>
+                        <th></th>
+                        <th>Superficie</th>
+                        <th>$ / M2</th>
+                        <th>Precio por Superficie</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @* @if (Model.b_Inmuebles_Contrato_Distribucions != null)
+                    {
+                        @foreach (var item in Model.b_Inmuebles_Contrato_Distribucions)
+                        {
+                            <tr id="@Html.Value("id" + item.Id.ToString())">
+                                <td>
+                                    <input type="hidden" name="UsoList" value="@item.Uso" /> @item.Uso
+                                </td>
+                                <td>
+                                    <input type="hidden" name="SuperficieList" value="@item.Superficie" /> @item.Superficie
+                                </td>
+                                <td>
+                                    <input type="hidden" name="PrecioM2List" value="@item.PrecioM2" /> @item.PrecioM2
+                                </td>
+                                <td>
+                                    <input type="hidden" name="PrecioSuperficieList" value="@item.PrecioSuperficie" /> @item.PrecioSuperficie
+                                </td>
+                                <td>
+                                    <a data-value="@item.Id" onclick="deleteDistribucion(@item.Id)" href="#" class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    } *@
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseRentaMercado">
+                    Renta de Mercado
+                </a>
+            </div>
+
+            <div id="collapseRentaMercado" class="collapse show" data-parent="#accordionRevision">
+                <div class="row container-fluid card-body">
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=Rentaminima class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputRentaminima">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputRentaminima" asp-for="Rentaminima" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="Rentaminima" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=Rentamaxima class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputRentamaxima">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputRentamaxima" asp-for="Rentamaxima" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="Rentamaxima" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=VigenteAl class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputFecha_VigenteAl">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputFecha_VigenteAl" asp-for="VigenteAl" class="form-control" />
+                        </div>
+                        <span asp-validation-for="VigenteAl" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapsePropuesta">
+                    Propuesta
+                </a>
+            </div>
+
+            <div id="collapsePropuesta" class="collapse show" data-parent="#accordionRevision">
+                <div class="row container-fluid col-12 card-body mx-auto ms-5 mr-5">
+
+                    @*  <div class="row card-group gx-3"> *@
+
+                    @* Actual *@
+                    <div class="card bg-light ms-5 mr-5" style="max-width: 25rem;">
+                        <div class="card-header">Actual</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for=RentaActual class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputRentaActual">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="inputRentaActual" asp-for="RentaActual" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="RentaActual" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for=PrecioM2RentaActual class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="inputPrecioM2RentaActual" asp-for="PrecioM2RentaActual" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="PrecioM2RentaActual" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Propuesta *@
+                    <div class="card bg-light ms-5 mr-5 " style="max-width: 25rem;">
+                        <div class="card-header">Propuesta</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for=RentaPropuesta class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputRentaPropuesta">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="inputRentaPropuesta" asp-for="RentaPropuesta" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="RentaPropuesta" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for=PrecioM2RentaPropuesta class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputPrecioM2RentaPropuesta">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="inputPrecioM2RentaPropuesta" asp-for="PrecioM2RentaPropuesta" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="PrecioM2RentaPropuesta" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Tope *@
+                    <div class="card bg-light ms-5 mr-5 " style="max-width: 25rem;">
+                        <div class="card-header">Tope</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for=TopeRenta class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputTopeRenta">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="inputTopeRenta" asp-for="TopeRenta" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="TopeRenta" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for=PrecioM2TopeRenta class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputPrecioM2TopeRenta">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </label>
+                                    </div>
+                                    <input id="inputPrecioM2TopeRenta" asp-for="PrecioM2TopeRenta" class="form-control" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="PrecioM2TopeRenta" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @* </div> *@
+
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseRentaPactada">
+                    Nueva Renta Pactada
+                </a>
+            </div>
+
+            <div id="collapseRentaPactada" class="collapse show" data-parent="#accordionRevision">
+                <div class="row container-fluid col-12 card-body mx-auto ms-5 mr-5">
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=RentaPactada class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputRentaPactada">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputRentaPactada" asp-for="RentaPactada" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="RentaPactada" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=PrecioM2RentaActual class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="PrecioM2RentaActual" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="PrecioM2RentaActual" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <label asp-for=Observaciones class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="Observaciones" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="Observaciones" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseRentaPactada">
+                    Representante
+                </a>
+            </div>
+
+            <div id="collapseRentaPactada" class="collapse show" data-parent="#accordionRevision">
+                <div class="row container-fluid col-12 card-body mx-auto ms-5 mr-5">
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=EscrituraPublicaActaConst class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputRentaPactada">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputRentaPactada" asp-for="EscrituraPublicaActaConst" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="EscrituraPublicaActaConst" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=NumeroNotarioActaConst class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="NumeroNotarioActaConst" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="NumeroNotarioActaConst" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=DomicilioEmpresa class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="DomicilioEmpresa" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="DomicilioEmpresa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=FechaPoderNotarial class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="FechaPoderNotarial" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="FechaPoderNotarial" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=FechaEscrituraActaConst class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="FechaEscrituraActaConst" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="FechaEscrituraActaConst" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=NumeroFolioMercantilActaConst class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="NumeroFolioMercantilActaConst" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="NumeroFolioMercantilActaConst" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=RFCEmpresa class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="RFCEmpresa" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="RFCEmpresa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=NumeroNotarioPoderNotaria class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="NumeroNotarioPoderNotaria" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="NumeroNotarioPoderNotaria" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=NombreNotarioActaConst class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="NombreNotarioActaConst" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="NombreNotarioActaConst" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=FechaFolioActaConst class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="FechaFolioActaConst" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="FechaFolioActaConst" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=NombreRepresentanteLegal class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="NombreRepresentanteLegal" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="NombreRepresentanteLegal" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=NombreNotarioPoderNotarial class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPrecioM2RentaActual">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPrecioM2RentaActual" asp-for="NombreNotarioPoderNotarial" class="form-control" placeholder="" />
+                        </div>
+                        <span asp-validation-for="NombreNotarioPoderNotarial" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseAdela">
+                    Plazos
+                </a>
+            </div>
+
+            <div id="collapseAdela" class="collapse show" data-parent="#accordionAdela">
+                <div class="row container-fluid card-body">
+
+                    <div class="col-12">
+                    <h6>Arrendador Forzoso</h6>
+                    <hr/>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoPFAnio class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoPFAnio">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoPFAnio" asp-for="plazoPFAnio" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoPFAnio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoPFMes class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoPFMes">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoPFMes" asp-for="plazoPFMes" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoPFMes" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoPFdia class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoPFdia">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoPFdia" asp-for="plazoPFdia" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoPFdia" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=DAPF class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputDAPF">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputDAPF" asp-for="DAPF" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="DAPF" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                    <h6>Arrendador Voluntario</h6>
+                    <hr />
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoPVAnio class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoPVAnio">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoPVAnio" asp-for="plazoPVAnio" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoPVAnio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoPVMes class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoPVMes">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoPVMes" asp-for="plazoPVMes" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoPVMes" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoPVDia class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoPVDia">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoPVDia" asp-for="plazoPVDia" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoPVDia" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=DAPV class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputDAPV">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputDAPV" asp-for="DAPV" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="DAPV" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <h6>Arrendatario Forzoso</h6>
+                        <hr />
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoIFAnio class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoIFAnio">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoIFAnio" asp-for="plazoIFAnio" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoIFAnio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoIFMes class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoIFMes">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoIFMes" asp-for="plazoIFMes" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoIFMes" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoIFDia class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoIFDia">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoIFDia" asp-for="plazoIFDia" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoIFDia" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=DAIF class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputDAIF">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputDAIF" asp-for="DAIF" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="DAIF" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <h6>Arrendatario Voluntario</h6>
+                        <hr />
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoIVAnio class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoIVAnio">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoIVAnio" asp-for="plazoIVAnio" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoIVAnio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoIVMes class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoIVMes">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoIVMes" asp-for="plazoIVMes" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoIVMes" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=plazoIVDia class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPlazoIVDia">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputPlazoIVDia" asp-for="plazoIVDia" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="plazoIVDia" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=DAIV class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputDAIV">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input id="inputDAIV" asp-for="DAIV" class="form-control" min="0" />
+                        </div>
+                        <span asp-validation-for="DAIV" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <br/>
+
+        @* <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseAdela">
+                    Plazos
+                </a>
+            </div>
+
+            <div id="collapseAdela" class="collapse show" data-parent="#accordionAdela">
+                <div class="row container-fluid card-body">
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=fecha_revision class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputFecha_revision">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input disabled id="inputFecha_revision" asp-for="fecha_revision" class="form-control" placeholder="Fecha de Revisión" />
+                        </div>
+                        <span asp-validation-for="fecha_revision" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="Adela" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectAdela">
+                                    <i class="fa-sharp fa-solid fa-file-lines"></i>
+                                </label>
+                            </div>
+                            <select id="selectAdela" asp-for="Adela" asp-items=ViewBag.lstAdela class="form-control"></select>
+                        </div>
+                        <span asp-validation-for="Adela" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=fecha_termino class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputfecha_termino">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input disabled id="inputfecha_termino" asp-for="fecha_termino" class="form-control" placeholder="Fecha de Vencimiento" />
+                        </div>
+                        <span asp-validation-for="fecha_termino" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=NumProrrateo class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputNumProrrateo">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputNumProrrateo" asp-for="NumProrrateo" class="form-control" placeholder="0" />
+                        </div>
+                        <span asp-validation-for="NumProrrateo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=RentaActual class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputRentaActualAdela">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input disabled id="inputRentaActualAdela" asp-for="RentaActual" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="RentaActual" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=PorcRtaCepro class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPorcRtaCepro">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPorcRtaCepro" asp-for="PorcRtaCepro" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="PorcRtaCepro" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="PierdeDif" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectPierdeDif">
+                                    <i class="fa-sharp fa-solid fa-file-lines"></i>
+                                </label>
+                            </div>
+                            <select id="selectPierdeDif" asp-for="PierdeDif" asp-items=ViewBag.lstPierdeDif class="form-control"></select>
+                        </div>
+                        <span asp-validation-for="PierdeDif" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=fecha_inicio class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputfecha_inicio">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                            </div>
+                            <input disabled id="inputfecha_inicio" asp-for="fecha_inicio" class="form-control" placeholder="Fecha de Inicio" />
+                        </div>
+                        <span asp-validation-for="fecha_inicio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for=MesesAnticipados class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputMesesAnticipados">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputMesesAnticipados" asp-for="MesesAnticipados" class="form-control" placeholder="0" />
+                        </div>
+                        <span asp-validation-for="MesesAnticipados" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=PorcDescuento class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputPorcDescuento">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input id="inputPorcDescuento" asp-for="PorcDescuento" class="form-control" placeholder="0" />
+                        </div>
+                        <span asp-validation-for="PorcDescuento" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=ImporteAnticipado class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputImporteAnticipado">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input disabled id="inputImporteAnticipado" asp-for="ImporteAnticipado" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="ImporteAnticipado" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=ImporteDescontado class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputImporteDescontado">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input disabled id="inputImporteDescontado" asp-for="ImporteDescontado" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="ImporteDescontado" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label asp-for=ImporteTotal class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputImporteTotal">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </label>
+                            </div>
+                            <input disabled id="inputImporteTotal" asp-for="ImporteTotal" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="ImporteTotal" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div> *@
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
