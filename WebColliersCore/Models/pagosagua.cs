@@ -29,6 +29,10 @@ namespace WebLomelinCore.Models
         [Display(Name = "Cuenta Agua")]
         public string CuentaAgua { get; set; }
 
+        [Required(ErrorMessage = "Ingrese el periodo de pago")]
+        [Display(Name = "Periodo de pago")]
+        public string periodoPago { get; set; }
+
         [Required(ErrorMessage ="Ingrese la fecha de lectura 1")]
         [Display(Name = "Fecha de lectura 1")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date, ErrorMessage ="Ingrese una fecha valida")]
@@ -88,8 +92,8 @@ namespace WebLomelinCore.Models
         [Display(Name = "Concepto de pago")]
         public string ConceptoPago { get; set; } /*conceptopago*/
 
-        [Required(ErrorMessage = "Ingrese Fecha Vencimiento")]
-        [Display(Name = "Fecha vencimiento")]
+        [Required(ErrorMessage = "Ingrese Fecha Limite de Pago")]
+        [Display(Name = "Fecha limite de pago")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime FechaVencimiento { get; set; }
@@ -146,14 +150,12 @@ namespace WebLomelinCore.Models
         public long localidadesComerciales { get; set; }
         public long localidadesHabitacionales { get; set; }
         public string autorizacionPago { get; set; }
-      
         public string traspaso { get; set; }
         public string comentarioNoPagarServicios { get; set; }
         public DateTime fechaNoPagarServicios { get; set; }
         public string traspasoIndividual { get; set; }
         public string comentarioLectura { get; set; }
         public string Ticket { get; set; }
-        
         public string NumeroAnt { get; set; }
         public int SinLecturas { get; set; }
 
@@ -164,12 +166,10 @@ namespace WebLomelinCore.Models
         public DateTime FechaReactiva { get; set; }
         public string MotivoNoAutoriza { get; set; }
         public string NoAutoriza { get; set; }
-        
         public int FolioGestor { get; set; }
         public int FolioDireccion { get; set; }
         public DateTime FechaTraspaso { get; set; }
         public int FormaPago { get; set; }
-        
         public string Reactiva { get; set; }
         public string ArchivoComprovante { get; set; }
         public string ArchivoFacPDF { get; set; }
@@ -180,10 +180,8 @@ namespace WebLomelinCore.Models
         public string ObsGestorRecopila { get; set; }
         public string ObsEjecutivoRecopila { get; set; }
         public string TipoAutorizacion { get; set; }
-        
         public string NotaAutorizacion { get; set; }
         public string UsrAutoriza { get; set; }
-        
         public int AplicaBeneficio { get; set; }
         
 
@@ -206,5 +204,6 @@ namespace WebLomelinCore.Models
                 return response;
             }
         }
+
     }
 }
