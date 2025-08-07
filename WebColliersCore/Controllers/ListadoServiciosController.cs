@@ -84,46 +84,63 @@ namespace WebLomelinCore.Controllers
             return Json(response.PagosAgua);
         }
 
-        public JsonResult AccionesAgua(List<pagosagua> model)
+        [HttpPost]
+        public JsonResult AccionesAgua([FromBody]  List<pagosagua> model)
         {
             //InicializaVista(model.IdTipoServicio, model.IdRegion, model.IdInmueble, model.IdLocalidad, model.idCuenta);
+            ViewBag.Estatus = new DataSelectService().getStatusServicio.OrderBy(x => x.Value);
 
             foreach (var item in model)
             {
-                var xx = item.EsSeleccionado;
-            }
+                var seleccionado = item.EsSeleccionado;
+                var estatus = item.StatusProceso;
+                var id = item.idPagoAgua;
 
-            ViewBag.TipoServicioSolcitud = 1;
+                /*
+                 * generar proceso para enviar los cambios de estatus a bd
+                 */
+            }            
 
             return Json(model);
-
-            //if (model.IdTipoServicio == 2)/*Luz*/
-            //{
-            //    foreach (var item in model.PagosLuz)
-            //    {
-            //        var xx = item.EsSeleccionado;
-            //    }
-            //    return View("ListadoPagosLuz", model);
-            //}
-            //if (model.IdTipoServicio == 3)/*Predial*/
-            //{
-            //    foreach (var item in model.PagosPredial)
-            //    {
-            //        var xx = item.EsSeleccionado;
-            //    }
-            //    return View("ListadoPagosPredial", model);
-            //}
-
-            
-            //return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public ActionResult EditarCuentaAgua  (int Id)
+        [HttpPost]
+        public JsonResult AccionesLuz([FromBody] List<pagosluz> model)
         {
-            pagosagua response = new pagosagua();
-            return View(response);
+            ViewBag.Estatus = new DataSelectService().getStatusServicio.OrderBy(x => x.Value);
+
+            foreach (var item in model)
+            {
+                var seleccionado = item.EsSeleccionado;
+                var estatus = item.StatusProceso;
+                var id = item.idPagoLuz;
+
+                /*
+                 * generar proceso para enviar los cambios de estatus a bd
+                 */
+            }
+            return Json(model);
         }
+
+        [HttpPost]
+        public JsonResult AccionesPredial([FromBody]  List<pagospredial> model)
+        {
+            ViewBag.Estatus = new DataSelectService().getStatusServicio.OrderBy(x => x.Value);
+
+            foreach (var item in model)
+            {
+                var seleccionado = item.EsSeleccionado;
+                var estatus = item.StatusProceso;
+                var id = item.idPagoPredial;
+
+                /*
+                 * generar proceso para enviar los cambios de estatus a bd
+                 */
+            }
+            return Json(model);
+        }
+
+
         [HttpGet]
         public ActionResult EditarCuentaLuz(int Id)
         {

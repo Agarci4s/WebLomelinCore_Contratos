@@ -74,6 +74,9 @@ namespace WebLomelinCore.Models
         [Display(Name = "Seleccionar")]
         public bool EsSeleccionado {  get; set; }
 
+        public B_inmuebles InmuebleData {  get; set; }
+        public pagosluz ConsumoAnterior { get; set; }
+
         /*DATOS DEL FORMULARIO*/
 
 

@@ -227,14 +227,52 @@
 <hr />
 
 
+@using (Html.BeginForm("AccionesAgua", "ListadoServicios", null, FormMethod.Post, false, new { id = "formAccionAgua" }))
+{
 <div id="div_Agua" name="div_Agua" class="table-responsive">
+        @{
+            try
+            {
+                await Html.RenderPartialAsync("ListadoPagosAgua");
+            }
+            catch (Exception)
+            {                
+            }
+        }
 </div>
+}
 
+@using (Html.BeginForm("AccionesLuz", "ListadoServicios", null, FormMethod.Post, false, new { id = "formAccionLuz" }))
+{
 <div id="div_Luz" name="div_Luz" class="table-responsive">
+        @{
+            try
+            {
+                await Html.RenderPartialAsync("ListadoPagosLuz");
+            }
+            catch (Exception)
+            {                
+            }
+            
+        }
 </div>
+}
 
+@using (Html.BeginForm("AccionesPredial", "ListadoServicios", null, FormMethod.Post, false, new { id = "formAccionPredial" }))
+{
 <div id="div_Predial" name="div_Predial" class="table-responsive">
+        @{
+            try
+            {
+                await Html.RenderPartialAsync("ListadoPagosPredial");
+            }
+            catch (Exception)
+            {
+            }
+            
+        }
 </div>
+}
     
 
 

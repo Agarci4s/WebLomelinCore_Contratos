@@ -255,27 +255,57 @@ namespace WebLomelinCore.Data
                   {
                       idPagoAgua=1,
                       CuentaAgua="1010101",
+                      ConsumoBimestral= 100,
+
                       FechaLectura1=DateTime.Now,
-                      Lectura1=10,
+                      Lectura1 = 200,
+
                       FechaLectura2 = DateTime.Now,
-                      Lectura2=20,
-                               ImporteHabitacional=10,
-                               ImporteComercial=10,
-                               IvaComercial=10,
-                               Recargos=10,
-                               Actualizacion=10,
-                               Multas=10,
-                                          GastosEjecucion=10,
-                                                              ConceptoPago="Agua",
-                                                              FechaVencimiento=DateTime.Now,
-                                                                                            UsuarioAutoriza=1,
-                                                                                            UsuarioAutorizaDescripcion="Msilver",
-                                                                                            StatusProceso=1,
-                                                                                            StatusProcesoDescripcion="Registrado"
+                      Lectura2 = 100,
+
+                      ImporteHabitacional=10,
+                      ImporteComercial=10,
+                      IvaComercial=10,
+                      Recargos=10,
+                      Actualizacion=10,
+                      Multas=10,
+                      GastosEjecucion=10,
+
+                      ConceptoPago="Agua",
+                      FechaVencimiento=DateTime.Now,
+
+                      UsuarioAutoriza = 1,
+                      UsuarioAutorizaDescripcion="Msilver",
+                      StatusProceso = 1,
+                      StatusProcesoDescripcion = "Registrado",
+
+                      InmuebleData=new B_inmuebles
+                      {
+                          ue=1010101,
+                          cr="10101010",
+                          nombre="Sucursal"
+                      },
+
+                      ConsumoAnterior=new pagosagua
+                      {
+                          idPagoAgua=1,
+                          CuentaAgua="",
+                          ConsumoBimestral= 50,
+
+                          FechaLectura1=DateTime.Now,
+                          Lectura1 = 50,
+
+                          FechaLectura2 = DateTime.Now,
+                          Lectura2 = 100,
+                      },
                   }
                 };
 
-                response.PagosAgua.ForEach(x => x.ImporteTotal = (x.ImporteHabitacional + x.ImporteComercial + x.IvaComercial + x.Recargos + x.Actualizacion + x.Multas + x.GastosEjecucion));
+                response.PagosAgua.ForEach(x =>
+                {
+                    x.ImporteTotal = (x.ImporteHabitacional + x.ImporteComercial + x.IvaComercial + x.Recargos + x.Actualizacion + x.Multas + x.GastosEjecucion);
+                    x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.ImporteHabitacional + x.ConsumoAnterior.ImporteComercial + x.ConsumoAnterior.IvaComercial + x.ConsumoAnterior.Recargos + x.ConsumoAnterior.Actualizacion + x.ConsumoAnterior.Multas + x.ConsumoAnterior.GastosEjecucion);
+                });
             }
             else if (IdTipoServicio == 2)/*luz*/
             {
@@ -284,17 +314,42 @@ namespace WebLomelinCore.Data
                        new pagosluz
                        {
                                idDtPagosLuz=1,
+                                idPagoLuz=1,
                                CuentaLuz="1010101",
                                fechaPago=DateTime.Now,
-                                             periodoPago="Julio-Agosto",
-                                                                 importe=100,
-                                                                  iva=650,
-                                                                           conceptoPago="Luz" ,
-                                                                           UsuarioAutorizaDescripcion="Msilver",
-                                                                           StatusProcesoDescripcion="Registrado"
-                                                                            }
-                   };
-                response.PagosLuz.ForEach(x => x.ImporteTotal = (x.importe + x.iva));
+                               periodoPago="Julio-Agosto",
+                               
+                               importe=2000,
+                               iva=120,
+                               conceptoPago="Luz" ,
+                               UsuarioAutorizaDescripcion="Msilver",
+                               StatusProcesoDescripcion="Registrado",
+
+                               InmuebleData=new B_inmuebles
+                                {
+                                    ue=1010101,
+                                    cr="10101010",
+                                    nombre="Sucursal"
+                                },
+
+                               ConsumoAnterior=new pagosluz
+                               {
+                                    idDtPagosLuz=1,
+                                    CuentaLuz="1010101",
+                                    fechaPago=DateTime.Now,
+                                    periodoPago="Julio-Agosto",   
+                                    importe=1000,
+                                    iva=65,
+                                    conceptoPago="Luz" ,
+                                    UsuarioAutorizaDescripcion="Msilver",
+                                    StatusProcesoDescripcion="Registrado",
+                               }
+                       }
+                };
+                response.PagosLuz.ForEach(x => {
+                    x.ImporteTotal = (x.importe + x.iva);
+                    x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.importe + x.ConsumoAnterior.iva);
+                });
             }
             else if (IdTipoServicio == 3)/*predial*/
             {
@@ -302,24 +357,44 @@ namespace WebLomelinCore.Data
                 {
                     new pagospredial
                     {
-                             idDtPagosPredial=1,
-                                CuentaPredial="110011",
-                                periodoPago="Julio-Agosto",
-                                  Recargos=10,
-                                  Multas=10,
-                                     importe=10,
-                                              iva = 10,
-                                                  Actualizacion = 10,
-                                                                     conceptoPago="predial",
-                                                                                              fechaPagolimite=DateTime.Now,
-                                                                                              UsuarioAutorizaDescripcion="Msilver",
-                                                                           StatusProcesoDescripcion="Registrado"
-
-
+                        idPagoPredial=1,
+                        idDtPagosPredial=1,
+                        CuentaPredial="110011",
+                        periodoPago="Julio-Agosto",
+                        Recargos=10,
+                        Multas=10,
+                        importe=10,
+                        iva = 10,
+                        Actualizacion = 10,
+                        conceptoPago="predial",
+                        fechaPagolimite=DateTime.Now,
+                        UsuarioAutorizaDescripcion="Msilver",
+                        StatusProcesoDescripcion="Registrado",
+                          
+                        InmuebleData=new B_inmuebles
+                        {
+                            ue=1010101,
+                            cr="10101010",
+                            nombre="Sucursal"
+                        },
+                        ConsumoAnterior=new pagospredial
+                        {
+                            idDtPagosPredial=1,
+                            CuentaPredial="110011",
+                            periodoPago="Julio-Agosto",
+                            Recargos = 10,
+                            Multas = 10,
+                            importe = 10,
+                            iva = 10,
+                            Actualizacion = 10,
+                        }
                     },
                 };
 
-                response.PagosPredial.ForEach(x => x.ImporteTotal = (x.Recargos + x.Multas + x.importe + x.iva + x.Actualizacion));
+                response.PagosPredial.ForEach(x => {
+                    x.ImporteTotal = (x.Recargos + x.Multas + x.importe + x.iva + x.Actualizacion);
+                    x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.Recargos + x.ConsumoAnterior.Multas + x.ConsumoAnterior.importe + x.iva + x.ConsumoAnterior.Actualizacion);
+                });
             }
             return response;
         }

@@ -92,6 +92,10 @@ namespace WebLomelinCore.Models
         [Display(Name = "Seleccionar")]
         public bool EsSeleccionado { get; set; }
 
+        public B_inmuebles InmuebleData { get; set; }
+        public pagospredial ConsumoAnterior { get; set; }
+
+
         /*DATOS DEL FORMULARIO*/
 
         public DateTime fechaPago { get; set; }//

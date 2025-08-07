@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using WebColliersCore.Models;
 
 namespace WebLomelinCore.Models
 {
@@ -116,6 +117,17 @@ namespace WebLomelinCore.Models
         public bool EsSeleccionado { get; set; }
 
         /// <summary>
+        /// Datos del inmueble
+        /// </summary>
+        public B_inmuebles InmuebleData { get; set; }
+
+        /// <summary>
+        /// Datos del penultimo consumo 
+        /// </summary>
+        public pagosagua ConsumoAnterior { get; set; }
+
+
+        /// <summary>
         /// Escribe un motivo por el cuel reactiva este item al estar en estatus rechazdo
         /// </summary>
         public string MotivoReactiva { get; set; }
@@ -125,6 +137,7 @@ namespace WebLomelinCore.Models
 
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
+
         /* DATOS FORMULARIO */
 
         public DateTime FechaPago { get; set; }        
@@ -143,7 +156,7 @@ namespace WebLomelinCore.Models
         
         public string NumeroAnt { get; set; }
         public int SinLecturas { get; set; }
-        public int statusProceso { get; set; }
+
         public DateTime FechaEnvioEjecutivo { get; set; }
         public DateTime FechaEnvioDireccion { get; set; }
         public DateTime FechaEnvioTesoreria { get; set; }
@@ -179,8 +192,8 @@ namespace WebLomelinCore.Models
         {
             List<pagosagua>  response = new List<pagosagua>
             {
-                new pagosagua { idPagoAgua = 1, idCuentaAgua = 100, CuentaAgua = "CUENTA-001", statusProceso = 1 },
-                new pagosagua { idPagoAgua = 2, idCuentaAgua = 101, CuentaAgua = "CUENTA-002", statusProceso = 2 }
+                new pagosagua { idPagoAgua = 1, idCuentaAgua = 100, CuentaAgua = "CUENTA-001", StatusProceso = 1 },
+                new pagosagua { idPagoAgua = 2, idCuentaAgua = 101, CuentaAgua = "CUENTA-002", StatusProceso = 2 }
             };
 
             if (idCuenta.HasValue)
