@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.VariantTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -74,7 +75,28 @@ namespace WebLomelinCore.Models
         [Display(Name = "Seleccionar")]
         public bool EsSeleccionado {  get; set; }
 
+        [Required(ErrorMessage = "Ingrese Fecha Limite de Pago")]
+        [Display(Name = "Fecha limite de pago")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        public DateTime FechaLimitePago { get; set; }
+
+        [Required(ErrorMessage = "Ingrese Fecha de Corte")]
+        [Display(Name = "Fecha de corte")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        public DateTime FechaCorte { get; set; }
+
+        [Display(Name = "Lectura Anterior")]
+        [Required(ErrorMessage = "Ingrese Lectura Anterior")]
+        public double LecturaAnterior { get; set; }
+
+        [Display(Name = "Lectura Actual")]
+        [Required(ErrorMessage = "Ingrese Lectura Actual")]
+        public double LecturaActual { get; set; }
+
         /*DATOS DEL FORMULARIO*/
+
 
 
         public string autorizacionPago { get; set; }//

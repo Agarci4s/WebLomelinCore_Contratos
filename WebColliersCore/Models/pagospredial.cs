@@ -1,10 +1,11 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
+﻿using DocumentFormat.OpenXml.VariantTypes;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebColliersCore.Models;
-using System;
 
 
 namespace WebLomelinCore.Models
@@ -79,18 +80,42 @@ namespace WebLomelinCore.Models
         public string UsuarioAutorizaDescripcion { get; set; }
         public int StatusProceso { get; set; }
         [Display(Name = "Estatus")]
+
         public string StatusProcesoDescripcion { get; set; }
-        
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
         public int id_usuario { get; set; }
-
 
         [Display(Name = "Importe Total")]
         public double ImporteTotal { get; set; }
 
         [Display(Name = "Seleccionar")]
         public bool EsSeleccionado { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la Diferencia")]
+        [Display(Name = "Diferencia")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un valor correcto")]
+        public double Diferencia { get; set; }
+
+        [Required(ErrorMessage = "Ingrese Honorarios")]
+        [Display(Name = "Honorarios")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un valor correcto")]
+        public double Honorarios { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la Notificacion")]
+        [Display(Name = "Notificacion")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un valor correcto")]
+        public double Notificacion { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el Gasto de Ejecucion")]
+        [Display(Name = "Gasto de Ejecucion")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un valor correcto")]
+        public double GastoEjecucion { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el Descuento")]
+        [Display(Name = "Descuento")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un valor correcto")]
+        public double Descuento { get; set; }
 
         /*DATOS DEL FORMULARIO*/
 
