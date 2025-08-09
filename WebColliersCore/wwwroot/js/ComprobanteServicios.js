@@ -3,6 +3,8 @@
     $("#CargaAgua").hide();
     $("#CargaLuz").hide();
     $("#CargaPredial").hide();
+    $("#CargaArchivos").hide();
+    $("#CargaManual").hide();
 
     // Evento cambio del combo
     $('#cmbTipoServicio').on('change', function () {
@@ -13,6 +15,7 @@
             $("#CargaLuz").hide();
             $("#CargaPredial").hide();
         } else if (typeService === 2) {
+            $("#CargaManual").show(); 
             $("#CargaLuz").show();
             $("#CargaAgua").hide();
             $("#CargaPredial").hide();
@@ -26,6 +29,17 @@
             $("#CargaPredial").hide();
         }
     });
+
+    $('#cbTipoCarga').change(function () {
+        if ($(this).is(':checked')) {
+            $("#CargaLuz").hide();
+            $("#CargaArchivos").show();
+        } else {
+            $("#CargaLuz").show();
+            $("#CargaArchivos").hide();
+        }
+    });
+
 });
 
 function changeInmuebleAgua()
@@ -154,6 +168,64 @@ function calculateTotalPredial(typeService) {
 }
 
 $(document).ready(function () {
+    $('#formXml').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        var form = $(this);
+
+        const formElement = document.getElementById('formXml');
+        const formData = new FormData(formElement);
+
+        $.ajax({
+            url: $(this).attr('action'), // Get action URL from the form
+            type: 'POST',
+            data: formData, //$(this).serialize(), // Serialize form data
+            processData: false,
+            contentType: false,
+            //dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    $("#CargaLuz").show();
+                    $("#CargaArchivos").hide();
+                    $("#CargaManual").hide();
+
+                    
+                    $("#PagosLuz_LecturaActual").val(response.lecturaActual);
+                    $("#PagosLuz_LecturaAnterior").val(response.lecturaAnterior);
+                    $("#PagosLuz_periodoPago").val(response.periodoPago);
+                    $("#PagosLuz_conceptoPago").val(response.conceptoPago);
+                    $("#PagosLuz_LineaCaptura").val(response.lineaCaptura);
+                    $("#PagosLuz_importe").val(response.importe);
+                    $("#PagosLuz_iva").val(response.iva);
+
+                    
+                    // var formattedDate = moment(response.fechaPago).format("YYYY-MM-DD");
+                    
+
+                    $("#PagosLuz_fechaPago").val(getDateFormat(response.fechaPago));
+                    $("#PagosLuz_FechaLimitePago").val(getDateFormat(response.fechaLimitePago));
+                    $("#PagosLuz_FechaCorte").val(getDateFormat(response.fechaCorte));
+                }
+                else {
+                    alert("Ocurrio un error al cargar el archivo. Intente nuevamente");
+                }
+            },
+            error: function (error) {
+                alert("Ocurrio un error, intente nuevamente");
+            }
+        });
+    });
+});
+
+function getDateFormat(date) {
+    var anio1 = date.substring(0, 4);
+    var month1 = date.substring(5, 7);
+    var day1 = date.substring(8, 10);
+    var newDate = `${anio1}-${month1}-${day1}`;
+    return newDate;
+}
+
+$(document).ready(function () {
     $("#PagosAgua_ImporteHabitacional, #PagosAgua_ImporteComercial, #PagosAgua_GastosEjecucion, #PagosAgua_Multas, #PagosAgua_Recargos, #PagosAgua_IvaComercial,  #PagosAgua_Actualizacion")
             
         .on('input', function () {
@@ -245,3 +317,5 @@ function calcularConsumoLuz() {
 
 
     
+
+
