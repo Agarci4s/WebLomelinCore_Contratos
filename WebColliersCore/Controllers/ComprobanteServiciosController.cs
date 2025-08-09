@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using WebColliersCore;
 using WebColliersCore.Data;
 using WebLomelinCore.Data;
@@ -127,9 +129,108 @@ namespace WebLomelinCore.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ImportarXML(List<IFormFile> archivos, List<Factura> facturas, string periodo, List<IFormFile> archivoFactura2)
+        public async Task<JsonResult> ImportarXML(IFormFile file)
         {
-            return PartialView("_FacturasCargadas", null);
+            if (file == null || file.Length == 0)
+            {
+                ModelState.AddModelError("", "Archivo inválido.");
+                return Json(null);
+            }
+
+            pagosluz response = await ProcesarXml(file);
+            return Json(response);
+        }
+
+        private async Task<pagosluz> ProcesarXml(IFormFile file)
+        {
+            XDocument xmlDoc;
+            using (var stream = file.OpenReadStream())
+            {
+                xmlDoc = XDocument.Load(stream);
+            }
+
+            XNamespace cfdi = "http://www.sat.gob.mx/cfd/4";
+            XNamespace cfe = "http://www.itcomplements.com/cfd/cfe/v1";
+
+            var comprobante = xmlDoc.Element(cfdi + "Comprobante");
+            var emisor = comprobante?.Element(cfdi + "Emisor");
+            var receptor = comprobante?.Element(cfdi + "Receptor");
+
+            var cfeNodo = comprobante?
+                .Element(cfdi + "Addenda")?
+                .Element(cfe + "CFE")?
+                .Element(cfe + "ComisionFederalElectricidad");
+
+            var clsNodo = comprobante?
+                .Element(cfdi + "Addenda")?
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "clsRegArchFact");
+
+            var importes = clsNodo.Elements().FirstOrDefault(e => e.Name.LocalName == "Importes");
+
+            pagosluz modelLuz = new pagosluz();
+
+
+            modelLuz.fechaPago = ExtractDate(clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "FECORTE")?.Value);
+            modelLuz.FechaLimitePago = ExtractDate(clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "FECLIMITE")?.Value);
+            modelLuz.FechaCorte = ExtractDate(clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "FECORTE")?.Value);
+            modelLuz.LecturaActual = ExtractDouble(clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "LECACT1")?.Value);
+            modelLuz.LecturaAnterior = ExtractDouble(clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "LECANT1")?.Value);
+            
+            modelLuz.periodoPago = clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "FECDESDE")?.Value + " " + clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "FECHASTA")?.Value;
+            modelLuz.conceptoPago = "Energía";
+            modelLuz.LineaCaptura = clsNodo?.Elements().FirstOrDefault(e => e.Name.LocalName == "LineaDeReferencia")?.Value;
+            modelLuz.importe = ExtractDouble(importes?.Elements().FirstOrDefault(e => e.Name.LocalName == "Importe1")?.Value);
+            modelLuz.iva = ExtractDouble(importes?.Elements().FirstOrDefault(e => e.Name.LocalName == "Importe2")?.Value);
+            modelLuz.ImporteTotal = ExtractDouble(importes?.Elements().FirstOrDefault(e => e.Name.LocalName == "Importe3")?.Value);
+           
+            return modelLuz;
+        }
+
+        private double ExtractDouble(string data)
+        {
+            double response = 0;
+            double.TryParse(data, out response);
+            return response;
+
+        }
+        private DateTime ExtractDate(string data)
+        {
+            int day = 0;
+            int year= 0;
+            int mont = 0;
+            
+
+            int.TryParse(data.Substring(0, 2), out day);            
+            mont = getMonth(data.Substring(3, 3));           
+            int.TryParse(data.Substring(7, 4), out year);
+                                  
+            DateTime response = new DateTime(year,mont,day);
+            //DateTime.TryParse(data , out response);
+            return response;
+        }
+
+        private int getMonth(string mes)
+        {
+            Dictionary<string, int> map = new Dictionary<string, int>();
+            map.Add("ENE", 1);
+            map.Add("FEB", 2);
+            map.Add("MAR", 3);
+            map.Add("ABR", 4);
+            map.Add("MAY", 5);
+            map.Add("JUN", 6);
+            map.Add("JUL", 7);
+            map.Add("AGO", 8);
+            map.Add("SEP", 9);
+            map.Add("OCT", 10);
+            map.Add("NOV", 11);
+            map.Add("DIC", 12);
+
+            int response = 0;
+            if (map.ContainsKey(mes.ToUpper()))
+            {
+                response = map[mes.ToUpper()];
+            }
+            return response;
         }
 
         [HttpGet]
@@ -186,3 +287,4 @@ namespace WebLomelinCore.Controllers
 
     }
 }
+

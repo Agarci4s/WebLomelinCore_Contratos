@@ -2,6 +2,7 @@
 
 <head>
     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
     <style>
 
@@ -172,46 +173,26 @@
                 <label asp-for="TipoServicio" class="control-label">Tipo de Servicio</label>
                 <select id="cmbTipoServicio" asp-items=ViewBag.TipoServicios class="form-control"></select>
          </div>&nbsp;&nbsp;
-       @*  <div class="form-group" style="margin:20px; margin-bottom:20px">
+        <div class="form-group" style="margin:20px; margin-bottom:20px" id="CargaManual" name="CargaManual">
             <div class="form-check">
                 <input type="checkbox" id="cbTipoCarga" class="form-check-input">
-                <label class="form-check-label" id="TipoCarga" for="cbTipoCarga">carga manual</label>
+                <label class="form-check-label" id="TipoCarga" for="cbTipoCarga">Cargar XML</label>
             </div>
-        </div> *@
+        </div>
     </div>
 </form>
 
-@*  <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
-@*  <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
-    <form id="formArchivos" asp-controller="ComprobanteServicios" asp-action="ImportarXML" method="post">
-        <div class="form-group-custom row" style="margin-bottom: -9px;">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="form-group row">
-                            <label for="archivosXML" class="col-sm-4 col-form-label;" style="left:15px;">Archivo (s)</label>
-                            <div class="col-sm-9">
-                                <div class="custom-file" style="margin-left: 10px;">
-                                    <input type="file" multiple webkitdirectory mozdirectory class="custom-file-input" id="archivosXML" name="archivosXML" lang="es">
-                                    <label class="custom-file-label" for="archivosXML">Seleccionar Archivo</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2" style="right: -22px;">
-                        <div class="form-group row">
-                            <button type="submit" id="importaXML" class="btn btn-success">Leer XML's</button>
-                            <button hidden id="importaXMLLoading" class="btn btn-success" type="button" disabled>
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                Leyendo XML...
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    </div>  *@
+ <div class="row col-md-15" id="CargaArchivos" name="CargaArchivos">
+        @{
+            try
+            {
+                await Html.RenderPartialAsync("_FilesXml");
+            }
+            catch (Exception)
+            {
+            }
+        }
+    </div> 
 
     <form asp-action="ServicioAgua" asp-controller="ComprobanteServicios" id="CargaAgua" name="CargaAgua">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
