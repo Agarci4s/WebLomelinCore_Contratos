@@ -64,7 +64,12 @@ namespace WebLomelinCore.Controllers
         [HttpPost]
         public ActionResult Busqueda(PagoUnificadoDTO model)
         {
-            PagoUnificadoDTO response = PagoUnificadoDTO.getPagoServiciosList(model.IdInmueble ,model.IdLocalidad,model.idCuenta,model.IdTipoServicio,model.IdStatusProceso);
+            PagoUnificadoDTO response = PagoUnificadoDTO.getPagoServiciosList(
+                model.IdInmueble,
+                model.IdLocalidad,
+                model.idCuenta,
+                model.IdTipoServicio,
+                model.IdStatusProceso);
             InicializaVista(model.IdTipoServicio,model.IdRegion, model.IdInmueble, model.IdLocalidad, model.idCuenta);
             if (model.IdTipoServicio == 1)/*agua*/
             {

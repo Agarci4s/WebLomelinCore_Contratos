@@ -137,13 +137,16 @@ namespace WebLomelinCore.Models
         public string MotivoReactiva { get; set; }
 
         public int id_usuario { get; set; }
-        public int status { get; set; }
+        public string status { get; set; }
 
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
 
         /* DATOS FORMULARIO */
 
+        public int ue { get; set; }
+        public string cr { get; set; }
+        public string nombre { get; set; }
         public DateTime FechaPago { get; set; }        
         public string funsionaMedidor { get; set; }        
         public string boletaDeclaracion { get; set; }

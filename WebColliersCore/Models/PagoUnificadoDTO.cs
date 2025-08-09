@@ -35,10 +35,23 @@ namespace WebLomelinCore.Models
         
         [Display(Name = "Estatus")]
         public int IdStatusProceso { get; set; }   // 1=Autorizado, 2=Rechazado, etc.
+        public int IdPagoServicio { get; set; }
+        public int IdCuentaServicio { get; set; }
 
-        public static PagoUnificadoDTO getPagoServiciosList(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus)
+        public static PagoUnificadoDTO getPagoServiciosList(
+            int? IdInmueble, 
+            int? IdLocalidad, 
+            int? IdCuenta, 
+            int? IdTipoServicio, 
+            int? Estatus)
         {
-            return DataSelectService.getPagoServiciosList(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus);
+            var service = new DataSelectService(); // Crear instancia
+            return service.getPagoServiciosList(
+                IdInmueble, 
+                IdLocalidad, 
+                IdCuenta, 
+                IdTipoServicio, 
+                Estatus); // Llamada correcta
         }        
     }
 }

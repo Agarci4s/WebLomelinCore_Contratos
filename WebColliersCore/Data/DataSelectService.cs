@@ -244,108 +244,213 @@ namespace WebLomelinCore.Data
             return response;
         }
 
-        public static PagoUnificadoDTO getPagoServiciosList(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus)
+        public PagoUnificadoDTO getPagoServiciosList(
+            int? IdInmueble, 
+            int? IdLocalidad, 
+            int? IdCuenta, 
+            int? IdTipoServicio, 
+            int? Estatus
+            /*int? IdPagoServicio,
+            int? IdCuentaServicio */)
+            //agregar idpagoservicio, idcuentaservicio = int?
         {
             PagoUnificadoDTO response = new PagoUnificadoDTO();
             if (IdTipoServicio == 1)/*agua*/
             {
-                response.PagosAgua = new List<pagosagua>
+                /*
+                 * parametros
+                 */
+                var listSqlParameters = new List<MySqlParameter>
                 {
+                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
+                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
+                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
+                    /*new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)*/
+                };
+
+                DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_agua_Get", listSqlParameters);
+                
+                List<pagosagua> agualist = (from item in dataTable.Rows.Cast<DataRow>()
+                                                 select new pagosagua
+                                                 {
+                                                     idPagoAgua = item.Field<int>("idDtPagosAgua"),
+                                                     idCuentaAgua = item.Field<int>("IdCuentaAgua"),
+                                                     ConsumoBimestral = item.Field<double>("ConsumoBimestral"),
+                                                     FechaLectura1 = item.Field<DateTime>("fechaLectura1"),
+                                                     Lectura1 = item.Field<float>("Lectura1"),
+                                                     FechaLectura2= item.Field<DateTime>("fechaLectura2"),
+                                                     Lectura2 = item.Field<float>("Lectura2"),
+                                                     ImporteHabitacional = item.Field<double>("importeHabitacional"),
+                                                     ImporteComercial = item.Field<double>("importeComercial"),
+                                                     IvaComercial = item.Field<double>("ivaComercial"),
+                                                     Recargos = item.Field<double>("Recargos"),
+                                                     Actualizacion = item.Field<double>("Actualizacion"),
+                                                     Multas = item.Field<double>("Multas"),
+                                                     GastosEjecucion = item.Field<double>("GastosEjecucion"),
+                                                     FechaVencimiento=item.Field<DateTime>("FechaVencimiento"),
+                                                     StatusProceso = item.Field<int>("statusProceso"),
+                                                     status = item.Field<string>("STATUS"),
+                                                     ue = item.Field<int>("ue"),
+                                                     cr = item.Field<string>("cr"),
+                                                     nombre = item.Field<string>("nombre")
+                                                 }).ToList();
+                response.PagosAgua = new List<pagosagua>();
+
+                response.PagosAgua = agualist.Any() ? agualist : new List<pagosagua>();
+
+                /*response.PagosAgua.Add(
+
                   new pagosagua
                   {
-                      idPagoAgua=1,
-                      CuentaAgua="1010101",
-                      ConsumoBimestral= 100,
+                      idPagoAgua = 1,
+                      CuentaAgua = "1010101",
+                      ConsumoBimestral = 100,
 
-                      FechaLectura1=DateTime.Now,
+                      FechaLectura1 = DateTime.Now,
                       Lectura1 = 200,
 
                       FechaLectura2 = DateTime.Now,
                       Lectura2 = 100,
 
-                      ImporteHabitacional=10,
-                      ImporteComercial=10,
-                      IvaComercial=10,
-                      Recargos=10,
-                      Actualizacion=10,
-                      Multas=10,
-                      GastosEjecucion=10,
+                      ImporteHabitacional = 10,
+                      ImporteComercial = 10,
+                      IvaComercial = 10,
+                      Recargos = 10,
+                      Actualizacion = 10,
+                      Multas = 10,
+                      GastosEjecucion = 10,
 
-                      ConceptoPago="Agua",
-                      FechaVencimiento=DateTime.Now,
+                      ConceptoPago = "Agua",
+                      FechaVencimiento = DateTime.Now,
 
                       UsuarioAutoriza = 1,
-                      UsuarioAutorizaDescripcion="Msilver",
+                      UsuarioAutorizaDescripcion = "Msilver",
                       StatusProceso = 1,
                       StatusProcesoDescripcion = "Registrado",
 
-                      InmuebleData=new B_inmuebles
+                      InmuebleData = new B_inmuebles
                       {
-                          ue=1010101,
-                          cr="10101010",
-                          nombre="Sucursal"
+                          ue = 1010101,
+                          cr = "10101010",
+                          nombre = "Sucursal"
                       },
 
-                      ConsumoAnterior=new pagosagua
+                      ConsumoAnterior = new pagosagua
                       {
-                          idPagoAgua=1,
-                          CuentaAgua="",
-                          ConsumoBimestral= 50,
+                          idPagoAgua = 1,
+                          CuentaAgua = "",
+                          ConsumoBimestral = 50,
 
-                          FechaLectura1=DateTime.Now,
+                          FechaLectura1 = DateTime.Now,
                           Lectura1 = 50,
 
                           FechaLectura2 = DateTime.Now,
                           Lectura2 = 100,
                       },
                   }
-                };
+                );*/
+                // hacer un metodo que convierta lo que traiga el dataTable 
 
                 response.PagosAgua.ForEach(x =>
                 {
+                    //x.idCuentaAgua
+                    DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_agua_Get", listSqlParameters);
+
+                    List<pagosagua> agualist = (from item in dataTable.Rows.Cast<DataRow>()
+                                                select new pagosagua
+                                                {
+                                                    idPagoAgua = item.Field<int>("idDtPagosAgua"),
+                                                    idCuentaAgua = item.Field<int>("IdCuentaAgua"),
+                                                    ConsumoBimestral = item.Field<double>("ConsumoBimestral"),
+                                                    FechaLectura1 = item.Field<DateTime>("fechaLectura1"),
+                                                    Lectura1 = item.Field<float>("Lectura1"),
+                                                    FechaLectura2 = item.Field<DateTime>("fechaLectura2"),
+                                                    Lectura2 = item.Field<float>("Lectura2"),
+                                                    ImporteHabitacional = item.Field<double>("importeHabitacional"),
+                                                    ImporteComercial = item.Field<double>("importeComercial"),
+                                                    IvaComercial = item.Field<double>("ivaComercial"),
+                                                    Recargos = item.Field<double>("Recargos"),
+                                                    Actualizacion = item.Field<double>("Actualizacion"),
+                                                    Multas = item.Field<double>("Multas"),
+                                                    GastosEjecucion = item.Field<double>("GastosEjecucion"),
+                                                    FechaVencimiento = item.Field<DateTime>("FechaVencimiento"),
+                                                    StatusProceso = item.Field<int>("statusProceso"),
+                                                    status = item.Field<string>("STATUS"),
+                                                    ue = item.Field<int>("ue"),
+                                                    cr = item.Field<string>("cr"),
+                                                    nombre = item.Field<string>("nombre"),
+                                                    FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro")
+                                                }).OrderByDescending(x=>x.FechaAltaRegistro).ToList();
+
+
                     x.ImporteTotal = (x.ImporteHabitacional + x.ImporteComercial + x.IvaComercial + x.Recargos + x.Actualizacion + x.Multas + x.GastosEjecucion);
+                    x.ConsumoAnterior = agualist.ElementAt(1);
                     x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.ImporteHabitacional + x.ConsumoAnterior.ImporteComercial + x.ConsumoAnterior.IvaComercial + x.ConsumoAnterior.Recargos + x.ConsumoAnterior.Actualizacion + x.ConsumoAnterior.Multas + x.ConsumoAnterior.GastosEjecucion);
                 });
             }
             else if (IdTipoServicio == 2)/*luz*/
             {
-                response.PagosLuz = new List<pagosluz>
-                   {
-                       new pagosluz
-                       {
-                               idDtPagosLuz=1,
-                                idPagoLuz=1,
-                               CuentaLuz="1010101",
-                               fechaPago=DateTime.Now,
-                               periodoPago="Julio-Agosto",
-                               
-                               importe=2000,
-                               iva=120,
-                               conceptoPago="Luz" ,
-                               UsuarioAutorizaDescripcion="Msilver",
-                               StatusProcesoDescripcion="Registrado",
 
-                               InmuebleData=new B_inmuebles
-                                {
-                                    ue=1010101,
-                                    cr="10101010",
-                                    nombre="Sucursal"
-                                },
-
-                               ConsumoAnterior=new pagosluz
-                               {
-                                    idDtPagosLuz=1,
-                                    CuentaLuz="1010101",
-                                    fechaPago=DateTime.Now,
-                                    periodoPago="Julio-Agosto",   
-                                    importe=1000,
-                                    iva=65,
-                                    conceptoPago="Luz" ,
-                                    UsuarioAutorizaDescripcion="Msilver",
-                                    StatusProcesoDescripcion="Registrado",
-                               }
-                       }
+                var listSqlParameters = new List<MySqlParameter>
+                {
+                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
+                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
+                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
+                    /*new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)*/
                 };
+                DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_luz_Get", listSqlParameters);
+
+                List<pagosluz> agualist = (from item in dataTable.Rows.Cast<DataRow>()
+                                            select new pagosluz
+                                            { 
+
+                                            }).ToList();
+
+
+
+                /* response.PagosLuz = new List<pagosluz>
+                    {
+                        new pagosluz
+                        {
+                                idDtPagosLuz=1,
+                                 idPagoLuz=1,
+                                CuentaLuz="1010101",
+                                fechaPago=DateTime.Now,
+                                periodoPago="Julio-Agosto",
+
+                                importe=2000,
+                                iva=120,
+                                conceptoPago="Luz" ,
+                                UsuarioAutorizaDescripcion="Msilver",
+                                StatusProcesoDescripcion="Registrado",
+
+                                InmuebleData=new B_inmuebles
+                                 {
+                                     ue=1010101,
+                                     cr="10101010",
+                                     nombre="Sucursal"
+                                 },
+
+                                ConsumoAnterior=new pagosluz
+                                {
+                                     idDtPagosLuz=1,
+                                     CuentaLuz="1010101",
+                                     fechaPago=DateTime.Now,
+                                     periodoPago="Julio-Agosto",   
+                                     importe=1000,
+                                     iva=65,
+                                     conceptoPago="Luz" ,
+                                     UsuarioAutorizaDescripcion="Msilver",
+                                     StatusProcesoDescripcion="Registrado",
+                                }
+                        }
+                 };*/
                 response.PagosLuz.ForEach(x => {
                     x.ImporteTotal = (x.importe + x.iva);
                     x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.importe + x.ConsumoAnterior.iva);
