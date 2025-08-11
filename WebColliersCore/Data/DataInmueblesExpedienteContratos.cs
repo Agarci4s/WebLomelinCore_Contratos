@@ -262,7 +262,7 @@ namespace WebLomelinCore.Data
                     b_cg_tipo_expediente_contratos.id_b_cg_tipo_expediente_contratos = int.Parse(item["id_b_cg_tipo_expediente_contratos"].ToString());
                     b_cg_tipo_expediente_contratos.categoria = item["categoria"].ToString();
                     b_cg_tipo_expediente_contratos.sub_categoria = item["sub_categoria"].ToString();
-                    b_cg_tipo_expediente_contratos.status = Convert.ToBoolean(Convert.ToInt16(item["cortesias"].ToString()));
+                    //b_cg_tipo_expediente_contratos.status = Convert.ToBoolean(Convert.ToInt16(item["cortesias"].ToString()));
 
                     b_cg_tipo_expediente_contratosList.Add(b_cg_tipo_expediente_contratos);
                 }

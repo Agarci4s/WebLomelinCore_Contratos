@@ -20,11 +20,10 @@ namespace WebColliersCore.Models
 
         public string sub_categoria { get; set; }
 
-        public bool status { get; set; }
-
+        //public bool status { get; set; }
 
         //crear un arreglo del detalle
-
+        public List<B_inmuebles_expediente_detalle_contratos> b_Inmuebles_Expediente_Detalle_ContratosList { get; set; }
     }
 
 }

@@ -148,7 +148,7 @@ namespace WebLomelinCore.Controllers
                 return Redirect("~/");
             #endregion
 
-                     EstablecerPermisos(IdUsuario, System.Reflection.MethodBase.GetCurrentMethod(), idCartera);
+            EstablecerPermisos(IdUsuario, System.Reflection.MethodBase.GetCurrentMethod(), idCartera);
             DataInmuebles dataInmuebles = new DataInmuebles();
 
             List<B_inmuebles> b_inmuebles = dataInmuebles.Get(idCartera, IdUsuario);
@@ -747,6 +747,10 @@ namespace WebLomelinCore.Controllers
             ViewBag.lst_tendencia = dataCG.lst_tendencia();
             ViewBag.lst_areas_convivencia = dataCG.lst_areas_convivencia();
             ViewBag.lst_b_cg_operador_estacionamiento = dataCG.lst_b_cg_operador_estacionamiento();
+
+
+            ViewBag.lst_b_cg_periodicidad_contratos = dataCG.lst_b_cg_periodicidad_contratos();
+
             //ViewBag.lst_segmento = dataCG.lst_segmento();
 
 
@@ -757,7 +761,19 @@ namespace WebLomelinCore.Controllers
 
             b_inmuebles_expediente.b_inmuebles = dataInmuebles.Get(idCartera, IdUsuario, id);
             b_inmuebles_expediente.b_cg_tipo_expediente_contratos = dataInmueblesExpedienteContratos.Get();
-           
+
+            foreach (var item in b_inmuebles_expediente.b_cg_tipo_expediente_contratos)
+            {
+                List<B_inmuebles_expediente_detalle_contratos> b_Inmuebles_Expediente_Detalle_ContratosListAux = new List<B_inmuebles_expediente_detalle_contratos>();
+                b_Inmuebles_Expediente_Detalle_ContratosListAux.Add(new B_inmuebles_expediente_detalle_contratos
+                {
+                    id_b_inmuebles = b_inmuebles_expediente.b_inmuebles.id_b_inmuebles,
+                    id_b_cg_tipo_expediente_contratos = item.id_b_cg_tipo_expediente_contratos, 
+                    id_b_cg_periodicidad_contratos = 0
+                });
+                item.b_Inmuebles_Expediente_Detalle_ContratosList = b_Inmuebles_Expediente_Detalle_ContratosListAux;
+
+            }
 
             return View(b_inmuebles_expediente);
 

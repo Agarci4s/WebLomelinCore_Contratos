@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebColliersCore.Models.B_inmuebles>
 
 @{
-    ViewData["Title"] = "Visita de inmuebles";
+    ViewData["Title"] = "Expediente único";
 }
 
 <header>
@@ -67,8 +67,8 @@
     </div>
     <br />
 
-    <div class="table-responsive">
-        <table class="table table-striped" id="tab">
+    <div class="table-responsive" style="max-height:1000px">
+        <table class="table table-striped table-responsive" id="tab">
             <thead>
                 <tr>
                     <th>
@@ -128,10 +128,10 @@
                             @Html.DisplayFor(modelItem => item.regimen)
                         </td>
                         <td>
-                            @Html.ActionLink("Agregar", "Create", new { id=item.id_b_inmuebles }) |
-                            @Html.ActionLink("Ver reporte", "lstCedulaResumen", new { id=item.id_b_inmuebles}) |
-                            @Html.ActionLink("Historial", "ListVisita", new { id=item.id_b_inmuebles}) |
-                            @Html.ActionLink("Comparativos", "ListComparativo", new { id=item.id_b_inmuebles })
+                            @Html.ActionLink("Agregar expediente", "Create", new { id=item.id_b_inmuebles }) @* |
+                            @Html.ActionLink("Ver expediente", "lstCedulaResumen", new { id=item.id_b_inmuebles})  *@
+                    @*         @Html.ActionLink("Historial", "ListVisita", new { id=item.id_b_inmuebles}) |
+                            @Html.ActionLink("Comparativos", "ListComparativo", new { id=item.id_b_inmuebles }) *@
                         </td>
                     </tr>
                 }
@@ -253,199 +253,3 @@
     }
 
 </script>
-
-
-
-
-@*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-<header>
-    <script src="~/js/core.js"></script>
-    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-
-    @try
-    {
-        if (ViewBag.RFCError)
-        {
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#modalError").modal('show');
-                });
-            </script>
-        }
-    }
-    catch
-    {
-
-    }
-    <style type="text/css">
-        table tr th {
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        .sorting {
-        }
-
-        .asc:after {
-            content: ' ↑';
-        }
-
-        .desc:after {
-            content: " ↓";
-        }
-    </style>
-</header>
-
-<h3>Visitas inmuebles</h3>
-
-
-<div class="row">
-    <div class=" col-md-4 ">
-        <input id="buscar" class="p-2 form-control" />
-    </div>
-    <div class=" col-md-1">
-        <input onclick="return Buscar()" title="Búsqueda por CR o nombre" type="button" value="Buscar" class="p-2 btn btn-primary" />
-    </div>
-    <div class=" col-md-1 ">
-        <input onclick="return Limpiar()" type="button" value="Limpiar" class="p-2 btn btn-primary" />
-    </div>
-</div>
-<br />
-
-<div class="table-responsive">
-    <table class="table table-striped" id="tab">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.cr)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.direccion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.cp)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.municipio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.clasificacion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.regimen)
-                </th>
-                <th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.cr)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.direccion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.cp)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.municipio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.clasificacion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.regimen)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Agregar", "Create", new { id=item.id_b_inmuebles }) |
-                        @Html.ActionLink("Ver", "lstCedulaResumen", new { id=item.id_b_inmuebles}) |
-                        @Html.ActionLink("Historial", "ListVisita", new { id=item.id_b_inmuebles}) |
-                        @Html.ActionLink("Comparativos", "ListComparativo", new { id=item.id_b_inmuebles })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-
-</div>
-
-<script type="text/javascript">
-    function Buscar() {
-        var buscar = $("#buscar").val().toUpperCase().trim();
-        var table = document.getElementById("tab");
-
-        for (var i = 0, row; row = table.rows[i]; i++) {
-            cells = row.getElementsByTagName('td');
-            if (!cells.length) {
-                continue;
-            }
-            var customerId = cells[0].innerHTML;
-            var customerId3 = cells[1].innerHTML;
-
-            if (customerId.toUpperCase().trim().includes(buscar) || customerId3.toUpperCase().trim().includes(buscar)) {
-                row.style.display = '';
-            }
-            else
-                row.style.display = 'none';
-        }
-    }
-
-    function Limpiar() {
-        var table = document.getElementById("tab");
-        for (var i = 0, row; row = table.rows[i]; i++) {
-            row.style.display = '';
-        }
-    }
-
-    $('th').click(function () {
-        var table = $(this).parents('table').eq(0)
-        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-        this.asc = !this.asc
-        if (!this.asc) {
-            rows = rows.reverse()
-        }
-        for (var i = 0; i < rows.length; i++) {
-            table.append(rows[i])
-        }
-        setIcon($(this), this.asc);
-    })
-
-    function comparer(index) {
-        return function (a, b) {
-            var valA = getCellValue(a, index),
-                valB = getCellValue(b, index)
-            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
-        }
-    }
-
-    function getCellValue(row, index) {
-        return $(row).children('td').eq(index).html()
-    }
-
-    function setIcon(element, asc) {
-        $("th").each(function (index) {
-            $(this).removeClass("sorting");
-            $(this).removeClass("asc");
-            $(this).removeClass("desc");
-        });
-        element.addClass("sorting");
-        if (asc) element.addClass("asc");
-        else element.addClass("desc");
-    }
-</script>*@

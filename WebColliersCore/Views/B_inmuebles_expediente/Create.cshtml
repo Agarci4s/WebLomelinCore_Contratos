@@ -7,7 +7,7 @@
 
 <body onload="OnLoad()">
 
-    <h4>Registro de visita</h4>
+    <h4>Expediente único</h4>
     <hr />
     <div class="form-group col-md-10" style="background-color:lightblue">
         <partial name="Inmueble" model="Model.b_inmuebles" />
@@ -20,26 +20,63 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <hr />
-            
-            <h5>Proyecto cuida y mejora</h5>
+            @{
+                string categoria = "";
+                int countAux = -1;
+            }
+            @foreach (var item in Model.b_cg_tipo_expediente_contratos)
+            {
+                countAux++;
+                if (categoria != @item.categoria)
+                {
+                    categoria = item.categoria;
+                    <h5>@item.categoria</h5>
+                }
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <b><label asp-for="b_cg_tipo_expediente_contratos[countAux].sub_categoria" class="control-label">@item.sub_categoria</label></b>
+                        <input type="file" onChange="return SaveImage('input_exterior1', '@Model.b_inmuebles.id_b_inmuebles','@item.sub_categoria','#div_exterior1')" id="input_exterior1" accept="image/png, .jpeg, .jpg, image/gif, .pdf" class="form-control" />
+                        <input hidden id="input2_exterior1" asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="form-control" />
+                        <span asp-validation-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="text-danger"></span>
 
-              <div class="form-group col-md-4">
-                <label asp-for="b_cg_tipo_expediente_contratos[0].sub_categoria" class="control-label"></label>
-                <input type="file" onChange="return SaveImage('input_circundante_poniente', '@Model.b_cg_tipo_expediente_contratos[0].sub_categoria','circundante_poniente','#div_circundante_poniente')" id="input_circundante_poniente" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
-                <input hidden id="input2_circundante_poniente" asp-for="b_cg_tipo_expediente_contratos[0].sub_categoria" class="form-control" />
-                <span asp-validation-for="b_cg_tipo_expediente_contratos[0].sub_categoria" class="text-danger"></span>
-                    @* <div class="form-group form-check col-md-12" style="padding-left:25px">
-                    <label class="form-check-label">
-                    <input onchange="return SaveImage()" class="form-check-input" asp-for="ckcircundante_poniente" /> @Html.DisplayNameFor(model => model.ckcircundante_poniente)
-                    </label>
-                    </div>*@
-                    <div id="div_circundante_poniente" class="col-md-12">
-                    @if (Model.b_cg_tipo_expediente_contratos[0].sub_categoria != null && Model.b_cg_tipo_expediente_contratos[0].sub_categoria.Length > 4)
-                        {
-                        <img src="/Images/precarga/@Model.b_cg_tipo_expediente_contratos[0].sub_categoria/@Model.b_cg_tipo_expediente_contratos[0].sub_categoria" class="img-fluid" style="height:100px" />
-                        }
+                        <div id="div_exterior1" class="col-md-12">
+                            @if (item.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta != null && @item.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta.Length > 4)
+                            {
+                                <img src="/Images/precarga/@Model.b_inmuebles.id_b_inmuebles.ToString("000")/@item.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="img-fluid" style="height:100px" />
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" class="control-label">Periodo</label>
+                        <select asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" asp-items=ViewBag.lst_b_cg_periodicidad_contratos class="form-control"></select>
+                        <span asp-validation-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="control-label"></label>
+                        <input asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="form-control" type="date" />
+                        <span asp-validation-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="text-danger"></span>
                     </div>
                 </div>
+            }
+
+
+            @*    <div class="form-group col-md-4">
+                <label asp-for="sucursal" class="control-label"></label>
+                <input type="file" onChange="return SaveImage('input_sucursal', '@Model.id_b_inmuebles','sucursal', '#div_sucursal')" id="input_sucursal" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
+                <input hidden id="input2_sucursal" asp-for="sucursal" class="form-control" />
+                <span asp-validation-for="sucursal" class="text-danger"></span>
+             
+
+                <div id="div_sucursal" class="col-md-12">
+                    @if (Model.sucursal != null && Model.sucursal.Length > 4)
+                    {
+                        <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.sucursal" class="img-fluid" style="height:100px" />
+                    }
+                </div>
+            </div> *@
+
+
         </form>
 
 
