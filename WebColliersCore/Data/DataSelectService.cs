@@ -293,9 +293,12 @@ namespace WebLomelinCore.Data
                                                      FechaVencimiento=item.Field<DateTime>("FechaVencimiento"),
                                                      StatusProceso = item.Field<int>("statusProceso"),
                                                      status = item.Field<string>("STATUS"),
-                                                     ue = item.Field<int>("ue"),
-                                                     cr = item.Field<string>("cr"),
-                                                     nombre = item.Field<string>("nombre")
+                                                     InmuebleData=new B_inmuebles
+                                                     {
+                                                         ue = item.Field<int>("ue"),
+                                                         cr = item.Field<string>("cr"),
+                                                         nombre = item.Field<string>("nombre")
+                                                     }
                                                  }).ToList();
                 response.PagosAgua = new List<pagosagua>();
 
