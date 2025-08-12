@@ -1,0 +1,289 @@
+﻿@model WebLomelinCore.Models.PagoUnificadoDTO
+
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <style>
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+        -moz-appearance: textfield;
+        }
+
+        input[type="button"] {
+        cursor: pointer;
+        }
+
+        input::-webkit-clear-button {
+        display: none;
+        -webkit-appearance: none;
+        }
+
+
+        .custom-file-input ~ .custom-file-label::after {
+        content: "...";
+        }
+
+        .tableFixHead {
+        overflow-y: auto;
+        height: 480px;
+        }
+
+        .tableFixHead table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        .tableFixHead th,
+        .tableFixHead td {
+        padding: 8px 16px;
+        }
+
+        .tableFixHead td {
+        text-align: center;
+        }
+
+        .tableFixHead th {
+        position: sticky;
+        top: 0;
+        /* background-color: white;
+        border: 0px solid white; */
+        text-align: center;
+        background: rgb(37, 64, 143);
+        color: white;
+        }
+
+        .form-group-custom {
+        margin-bottom: 6px;
+        }
+
+        .font-size-row {
+        font-size: 12px !important;
+        }
+
+        .font-size-head {
+        font-size: 12px !important;
+        }
+
+        .RowNegativo {
+        background-color: red;
+        border-color: red;
+        }
+
+        .RowPositivo {
+        background-color: green;
+        border-color: green;
+        }
+
+        .ColorTextRed {
+        color: red;
+        }
+
+        .pointer {
+        cursor: pointer;
+        }
+
+
+        table tr th {
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+        content: ' ↑';
+        }
+
+        .desc:after {
+        content: " ↓";
+        }
+
+    </style>
+</header>
+
+<h3>Listado de Servicios</h3>
+
+<form asp-action="Busqueda" asp-controller="ListadoServicios" id="frmBusqueda" name="frmBusqueda">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title m-1">Filtro de busqueda</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdTipoServicio" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectIdTipoSerivicio">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectIdTipoSerivicio" asp-for="IdTipoServicio" class="form-control" asp-items=@ViewBag.TipoServicios></select>
+                        </div>
+                        <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdRegion" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectRegion">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectRegion" asp-for="IdRegion" class="form-control" onchange="return changeRegion();" asp-items=@ViewBag.Regiones></select>
+                        </div>
+                        <span asp-validation-for="IdRegion" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdInmueble" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectInmueble">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectInmueble" asp-for="IdInmueble" class="form-control" onchange="return changeInmueble();" asp-items=@ViewBag.Inmuebles></select>
+                        </div>
+                        <span asp-validation-for="IdInmueble" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdLocalidad" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectLocalidad">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectLocalidad" onchange="return changeLocalidad();" asp-for="IdLocalidad" class="form-control" asp-items=@ViewBag.Localidades></select>
+                        </div>
+                        <span asp-validation-for="IdLocalidad" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="idCuenta" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectCuenta">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectCuenta" asp-for="idCuenta" class="form-control" asp-items=@ViewBag.Cuentas></select>
+                        </div>
+                        <span asp-validation-for="idCuenta" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label asp-for="IdStatusProceso" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="selectIdEstatus">
+                                    <i class="bi bi-building"></i>
+                                </label>
+                            </div>
+                            <select id="selectIdEstatus" asp-for="IdStatusProceso" class="form-control" asp-items=@ViewBag.Estatus></select>
+                        </div>
+                        <span asp-validation-for="IdStatusProceso" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <button type="submit" value="Buscar" class="btn btn-success btn-sm">
+                            <i class="bi bi-floppy2"></i>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<hr />
+
+
+@using (Html.BeginForm("AccionesAgua", "ListadoServicios", null, FormMethod.Post, false, new { id = "formAccionAgua" }))
+{
+<div id="div_Agua" name="div_Agua" class="table-responsive">
+        @{
+            try
+            {
+                await Html.RenderPartialAsync("ListadoPagosAgua");
+            }
+            catch (Exception)
+            {                
+            }
+        }
+</div>
+}
+
+@using (Html.BeginForm("AccionesLuz", "ListadoServicios", null, FormMethod.Post, false, new { id = "formAccionLuz" }))
+{
+<div id="div_Luz" name="div_Luz" class="table-responsive">
+        @{
+            try
+            {
+                await Html.RenderPartialAsync("ListadoPagosLuz");
+            }
+            catch (Exception)
+            {                
+            }
+            
+        }
+</div>
+}
+
+@using (Html.BeginForm("AccionesPredial", "ListadoServicios", null, FormMethod.Post, false, new { id = "formAccionPredial" }))
+{
+<div id="div_Predial" name="div_Predial" class="table-responsive">
+        @{
+            try
+            {
+                await Html.RenderPartialAsync("ListadoPagosPredial");
+            }
+            catch (Exception)
+            {
+            }
+            
+        }
+</div>
+}
+    
+
+
+
+
+@section Scripts {
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script src="~/js/ListadoServicios.js" />

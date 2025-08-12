@@ -20,7 +20,8 @@ namespace WebColliersCore.DataAccess
         private string uid;
         private string password;
         private string port;
-        private MySqlDataReader dataReader;       
+        private MySqlDataReader dataReader; 
+        
 
         //Server
         //private void Initialize()
@@ -50,11 +51,11 @@ namespace WebColliersCore.DataAccess
             ConfigJson jsonModel = JsonSerializer.Deserialize<ConfigJson>(jsonString);
             var modelJson = JsonSerializer.Serialize(jsonModel);
 
-            server = "184.168.30.21";
-            port = "3306";
-            database = "bbva_lomelin";//corecolliers
-            uid = "admin_lomelin";//new_schema
-            password = "V?3$1adwt0rjhmTR";
+            server = "184.168.30.21";   //"184.168.30.21";
+            port = "3306"; 
+            database = "bbva_lomelin_pruebas"; //corecolliers
+            uid = "admin_lomelin_prueba";   //"admin_lomelin";//new_schema
+            password = "iOJZ#y6pxh6~z2bc";   //"V?3$1adwt0rjhmTR";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "Port=" + port + ";" +
             "DATABASE=" + database + ";" + " UID=" + uid + ";" + " PASSWORD=" + password + ";" + " CheckParameters=false;";

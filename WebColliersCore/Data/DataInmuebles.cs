@@ -16,6 +16,34 @@ namespace WebColliersCore.Data
     {
         private Conexion conexion = new Conexion();
 
+        public List<SelectListItem> GetInmuebleByRegion(int IdRegion,int IdCartera, int IdUsuario)
+        {
+            List<SelectListItem> response =new List<SelectListItem>();
+            List <MySqlParameter> listSqlParameters =
+            [
+                new MySqlParameter("IdRegion", IdRegion),
+                new MySqlParameter("IdCartera", IdCartera),
+                new MySqlParameter("IdUsuario", IdUsuario),
+            ];
+            DataTable dataTable = conexion.RunStoredProcedure("getInmuebleByRegion", listSqlParameters);
+
+            if (dataTable != null & dataTable.Rows.Count>0) 
+            {
+                response = (from item in dataTable.Rows.Cast<DataRow>()
+                                                 select new SelectListItem
+                                                 {
+                                                     Value = item.Field<int>("IdInmueble").ToString(),
+                                                     Text = item.Field<string>("Nombre"),
+                                                 }).ToList();
+                response.Add(new SelectListItem
+                {
+                    Text = "Seleccione una región",
+                    Value = "0"
+                });
+            }
+            return response;
+        }
+
         //borrar
         public List<B_inmuebles> GetAll(int IdCartera, int IdUsuario)
         {
@@ -396,6 +424,8 @@ namespace WebColliersCore.Data
                 throw;
             }
         }
+
+
 
         public List<SelectListItem> GetListaPropietarios()
         {

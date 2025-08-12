@@ -115,7 +115,7 @@ namespace WebColliersCore.Data
                 {
                     transf_Opciones.Nivel = Convert.ToInt32(item["Nivel"].ToString());
                     DataSelectListItem dataSelectListItem = new DataSelectListItem();
-                    transf_Opciones.NivelStr = dataSelectListItem.Niveles.FirstOrDefault(x => x.Value == transf_Opciones.Nivel.ToString()).Text;
+                    transf_Opciones.NivelStr = dataSelectListItem.Niveles?.FirstOrDefault(x => x.Value == transf_Opciones.Nivel.ToString())?.Text;
 
                 }
                 catch

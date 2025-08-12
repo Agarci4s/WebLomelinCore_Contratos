@@ -78,6 +78,8 @@ namespace WebColliersCore.Data
                     lstInmuebles.Add(new SelectListItem { Text = item["Localidad"].ToString(), Value = item["Id"].ToString() });
                 }
 
+                lstInmuebles.Add(new SelectListItem { Text = "Localidad 1", Value = "1" });//demo
+
                 return lstInmuebles;
             }
             catch (Exception ex)

@@ -1,0 +1,118 @@
+﻿@model IEnumerable<WebLomelinCore.Models.pagospredial>
+@using WebLomelinCore.Models
+
+<header>
+   
+</header>
+
+<h3>Listado de Servicios</h3>
+        
+<div class="tableFixHead">
+    <table class="table table-responsive-sm table-sm small" name="tableData" id="tableData">
+        <thead class="font-size-head">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().InmuebleData.cr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().InmuebleData.ue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().InmuebleData.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().CuentaPredial)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().periodoPago)
+                </th>
+                <th>
+                    @Html.DisplayName("Importe Anterior")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ImporteTotal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().StatusProcesoDescripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().EsSeleccionado)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (pagospredial item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.Raw(item.InmuebleData.cr)
+                        </td>
+                        <td>
+                            @Html.Raw(item.InmuebleData.ue)
+                        </td>
+                        <td>
+                            @Html.Raw(item.InmuebleData.nombre)
+                        </td>
+                        <td>
+                            @Html.Raw(item.CuentaPredial)
+                        </td>
+                        <td>
+                            @Html.Raw(item.periodoPago)
+                        </td>
+                        <td>
+                            @Html.Raw(item.ConsumoAnterior.ImporteTotal)
+                        </td>
+                        <td>
+                            @Html.Raw(item.ImporteTotal)
+                        </td>                       
+                        <td>
+                            @Html.Raw(item.StatusProcesoDescripcion)
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => item.EsSeleccionado, new { @class = "form-check-input" })
+                            @Html.HiddenFor(model => item.idPagoPredial, new { @class = "form-id" })
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="11" style="color: red;">Sin información para mostrar</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label class="control-label">Estatus</label>
+                <div class="input-group">
+                    <div class="input-group-append">
+                        <label class="input-group-text" for="selectNewIdEstatus">
+                            <i class="bi bi-building"></i>
+                        </label>
+                    </div>
+                    <select id="selectNewIdEstatusPredial" class="form-control" asp-items=@ViewBag.Estatus></select>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <button type="submit" id="btnAceptar" value="Aceptar" class="btn btn-success btn-sm">
+                    <i class="bi bi-floppy2"></i>
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+}
+
+<script src="~/js/ListadoServicios.js" />
