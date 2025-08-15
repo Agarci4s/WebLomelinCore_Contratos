@@ -69,7 +69,8 @@ namespace WebLomelinCore.Controllers
                 model.IdLocalidad,
                 model.idCuenta,
                 model.IdTipoServicio,
-                model.IdStatusProceso);
+                model.IdStatusProceso, model.IdCuentaServicio);
+
             InicializaVista(model.IdTipoServicio,model.IdRegion, model.IdInmueble, model.IdLocalidad, model.idCuenta);
             if (model.IdTipoServicio == 1)/*agua*/
             {
@@ -186,6 +187,18 @@ namespace WebLomelinCore.Controllers
             return Json(new DataSelectService().getCuentas(IdInmueble, IdLocalidad, IdServicio));
         }
 
-        
+        [HttpGet]
+        public JsonResult getPeriodicidad(int? IdServicio)
+        {
+            return Json(PeriodosServicios.getPeriodicidad(IdServicio));
+        }
+
+        [HttpGet]
+        public JsonResult getBimestres(int? IdPeriodicidad)
+        {
+            return Json(PeriodosServicios.getBimestres(IdPeriodicidad));
+        }
+
+
     }
 }

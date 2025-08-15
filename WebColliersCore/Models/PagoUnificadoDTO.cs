@@ -43,7 +43,8 @@ namespace WebLomelinCore.Models
             int? IdLocalidad, 
             int? IdCuenta, 
             int? IdTipoServicio, 
-            int? Estatus)
+            int? Estatus,
+            int? IdCuentaServicio)
         {
             var service = new DataSelectService(); // Crear instancia
             return service.getPagoServiciosList(
@@ -51,7 +52,26 @@ namespace WebLomelinCore.Models
                 IdLocalidad, 
                 IdCuenta, 
                 IdTipoServicio, 
-                Estatus); // Llamada correcta
+                Estatus,
+                IdCuentaServicio);
+            
         }        
     }
 }
+
+
+ //* hilos trheads
+ //* paralelismo
+ //* dictionary
+ //* funtios
+ //* delegados
+ //* tareas asyncronicas y diferencia con hilos y paralelismo
+ //* SOLID
+ //* herencia
+ //* interfaces
+ //* entity framework
+ //* entity framewor core
+ //* versiones de frameworks
+ //* contrsuctor
+ //* DataAntotations
+ //* 

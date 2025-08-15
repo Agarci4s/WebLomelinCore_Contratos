@@ -51,6 +51,53 @@ $(document).ready(function () {
     });
 });
 
+function changeServicio() {
+    var idServicio = $("#IdServicio").val();
+    var url = "/ListadoServicios/getPeriodicidad";
+
+    $.getJSON(url, { IdServicio: idServicio }, function (data) {
+        var item = "";
+        $("#IdPeriodicidad").empty();
+        $.each(data, function (i, periodicidad) {
+            item += '<option value="' + periodicidad.value + '">' + periodicidad.text + '</option>';
+        });
+        $("#IdPeriodicidad").html(item);
+    });
+}
+
+// Al cambiar Periodicidad, cambia el título del combo de Bimestres
+$("#IdPeriodicidad").on("change", function () {
+    var selectedText = $("#IdPeriodicidad option:selected").text().toLowerCase();
+    var label = "Segmento temporal"; // fallback
+
+    if (selectedText.includes("mensual")) {
+        label = "Mensual";
+    } else if (selectedText.includes("bimestral")) {
+        label = "Bimestral";
+    } else if (selectedText.includes("semestral")) {
+        label = "Semestral";
+    } else if (selectedText.includes("anual")) {
+        label = "Anual";
+    }
+
+    $("#labelBimestre").text(label);
+});
+
+function changePeriodicidad() {
+    var idPeriodicidad = $("#IdPeriodicidad").val();
+    var url = "/ListadoServicios/getBimestres";
+
+    $.getJSON(url, { IdPeriodicidad: idPeriodicidad }, function (data) {
+        var item = "";
+
+        $.each(data, function (i, periodicidad) {
+            item += '<option value="' + periodicidad.value + '">' + periodicidad.text + '</option>';
+        });
+
+        $("#IdBimestre").html(item);
+    });
+}
+
 function changeRegion() {
     var newId = $("#selectRegion").val();
     var url = "/ListadoServicios/getInmuebles";
@@ -222,3 +269,4 @@ $(document).ready(function () {
         });
     });
 });
+

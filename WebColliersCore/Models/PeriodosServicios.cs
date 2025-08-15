@@ -23,17 +23,17 @@ namespace WebLomelinCore.Models
         public int IdPeriodoDisponible { get; set; }
         public string PeriodoDisponible { get; set; }
 
-        [Required(ErrorMessage = "Seleccione Bimestre")]
-        [Display(Name = "Bimestre")]
+        [Required(ErrorMessage = "Seleccione el segmento temporal")]
+        [Display(Name = "Segmento temporal")]
         public int IdBimestre { get; set; }
         public string Bimestre { get; set; }
 
-        public static List<SelectListItem> getBimestres
+        public static List<SelectListItem> getBimestres(int? IdPeriodicidad)
         {
-            get
-            {
-                return new DataSelectService().getBimestre.OrderBy(x => x.Value).ToList();
-            }
+                return new DataSelectService()
+                            .getBimestre(IdPeriodicidad)
+                            .OrderBy(x => int.TryParse(x.Value, out var val)? val :0)
+                            .ToList();
         }
 
         public static List<SelectListItem> getPeriodosSiponibles
@@ -45,12 +45,9 @@ namespace WebLomelinCore.Models
         }
 
 
-        public static List<SelectListItem> getPeriodicidad
+        public static List<SelectListItem> getPeriodicidad(int? IdServicio)
         {
-            get
-            {
-                return new DataSelectService().getPeriodicidad.OrderBy(x => x.Value).ToList();
-            }
+                return new DataSelectService().getPeriodicidad(IdServicio).OrderBy(x => x.Value).ToList();
         }
     }
 }

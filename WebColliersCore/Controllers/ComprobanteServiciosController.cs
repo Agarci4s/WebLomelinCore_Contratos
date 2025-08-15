@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -85,14 +86,16 @@ namespace WebLomelinCore.Controllers
                 // {
                 pagosluz pagoLuz = model.PagosLuz;
                 pagoLuz.UsuarioAutoriza = IdUsuario;
+                Debug.WriteLine(pagoLuz.UsuarioAutoriza);
                 pagoLuz.FechaAltaRegistro = System.DateTime.Now;
                 pagoLuz.StatusProceso = 1;
                 ViewBag.Message = PagosServicios.InsertaPagosLuz(pagoLuz) ? true : false;
                 return RedirectToAction("Index");
                 // }
             }
-            catch
+            catch(Exception ex)
             {
+                ex.ToString();
                 ViewBag.isOk = false;
             }
             return RedirectToAction("Index");

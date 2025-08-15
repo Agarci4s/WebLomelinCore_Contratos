@@ -1,14 +1,15 @@
-﻿using MySql.Data.MySqlClient;
+﻿using DocumentFormat.OpenXml.Office.Word;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebColliersCore.Models;
-using System.Text.Json;
-using DocumentFormat.OpenXml.Office.Word;
 
 namespace WebColliersCore.DataAccess
 {
@@ -323,6 +324,32 @@ namespace WebColliersCore.DataAccess
             catch (Exception ex)
             {
                 Console.WriteLine("Error" + ex.ToString());
+            }
+        }
+
+
+        public int ExecuteNonQuerySP(string procedimiento, List<MySqlParameter> datos)
+        {
+            try
+            {
+                OpenConnection();
+                using (connection)
+                {
+                    using (MySqlCommand command = new MySqlCommand(procedimiento, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in datos)
+                        {
+                            command.Parameters.Add(item);
+                        }
+
+                       return  command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                throw e;
             }
         }
     }

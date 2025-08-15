@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -48,9 +49,9 @@ namespace WebLomelinCore.Models
         {
             return new DataSelectService().InsertaPagosAgua(pagosagua);
         }
-        public static bool ActualizaPagosAgua(pagosagua pagosagua)
+        public static bool ActualizaPagosAgua(pagosagua pagosagua, int IdEstatusAnterior)
         {
-            return new DataSelectService().ActualizaPagosAgua(pagosagua);
+            return new DataSelectService().ActualizaPagosAgua(pagosagua, IdEstatusAnterior);
         }
 
         //Insert & update PagosLuz
@@ -58,9 +59,9 @@ namespace WebLomelinCore.Models
         {
             return new DataSelectService().InsertaPagosLuz(pagosluz);
         }
-        public static bool ActualizaPagosLuz(pagosluz pagosluz)
+        public static bool ActualizaPagosLuz(pagosluz pagosluz, int IdEstatusAnterior)
         {
-            return new DataSelectService().ActualizaPagosLuz(pagosluz);
+            return new DataSelectService().ActualizaPagosLuz(pagosluz, IdEstatusAnterior);
         }
             
         
@@ -70,9 +71,9 @@ namespace WebLomelinCore.Models
         {
             return new DataSelectService().InsertaPagosPredial(pagospredial);
         }
-        public static bool ActualizaPagosPredial(pagospredial pagospredial)
+        public static bool ActualizaPagosPredial(pagospredial pagospredial, int IdEstatusAnterior)
         {
-            return new DataSelectService().ActualizaPagosPredial(pagospredial);
+            return new DataSelectService().ActualizaPagosPredial(pagospredial, IdEstatusAnterior);
         }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MySql.Data.MySqlClient;
+using Stimulsoft.Base.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using WebColliersCore.DataAccess;
 using WebColliersCore.Models;
@@ -16,48 +19,62 @@ namespace WebLomelinCore.Data
         private Conexion conexion = new Conexion();
         private List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();
 
-        public List<SelectListItem> getBimestre
+        public List<SelectListItem> getBimestre(int? IdPeriodicidad)
         {
-            get {
-                return new List<SelectListItem>
-                {
-                      new SelectListItem
-                  {
-                      Value="0",
-                      Text="Seleccione una opción"
-                  },
-                  new SelectListItem
-                  {
-                      Value="1",
-                      Text="Enero - Febrero"
-                  },
-                  new SelectListItem
-                  {
-                      Value="1",
-                      Text="Marzo - Abril"
-                  },
-                  new SelectListItem
-                  {
-                      Value="1",
-                      Text="Mayo - Junio"
-                  },
-                  new SelectListItem
-                  {
-                      Value="1",
-                      Text="Julio - Agosto"
-                  },
-                  new SelectListItem
-                  {
-                      Value="1",
-                      Text="Septiembre - Octubre"
-                  },
-                  new SelectListItem
-                  {
-                      Value="1",
-                      Text="Noviembre - Diciembre"
-                  },
-                };
+            var lista = new List<SelectListItem>();
+
+            if (!IdPeriodicidad.HasValue)
+            {
+                lista.Add(new SelectListItem { Value = "0", Text = "Seleccione una opción" });
+                return lista;
             }
+
+            switch (IdPeriodicidad.Value)
+            {
+
+                case 1: // Anual
+                    lista.Add(new SelectListItem { Value = "2023", Text = "2023" });
+                    lista.Add(new SelectListItem { Value = "2024", Text = "2024" });
+                    lista.Add(new SelectListItem { Value = "2025", Text = "2025" });
+                    break;
+
+                case 2: // Bimestral
+                    lista.Add(new SelectListItem { Value = "1", Text = "Enero - Febrero" });
+                    lista.Add(new SelectListItem { Value = "2", Text = "Marzo - Abril" });
+                    lista.Add(new SelectListItem { Value = "3", Text = "Mayo - Junio" });
+                    lista.Add(new SelectListItem { Value = "4", Text = "Julio - Agosto" });
+                    lista.Add(new SelectListItem { Value = "5", Text = "Septiembre - Octubre" });
+                    lista.Add(new SelectListItem { Value = "6", Text = "Noviembre - Diciembre" });
+                    break;
+
+                case 3: //Mensual
+                    lista.Add(new SelectListItem { Value = "1", Text = "Enero" });
+                    lista.Add(new SelectListItem { Value = "2", Text = "Febrero" });
+                    lista.Add(new SelectListItem { Value = "3", Text = "Marzo" });
+                    lista.Add(new SelectListItem { Value = "4", Text = "Abril" });
+                    lista.Add(new SelectListItem { Value = "5", Text = "Mayo" });
+                    lista.Add(new SelectListItem { Value = "6", Text = "Junio" });
+                    lista.Add(new SelectListItem { Value = "7", Text = "Julio" });
+                    lista.Add(new SelectListItem { Value = "8", Text = "Agosto" });
+                    lista.Add(new SelectListItem { Value = "9", Text = "Septiembre" });
+                    lista.Add(new SelectListItem { Value = "10", Text = "Octubre" });
+                    lista.Add(new SelectListItem { Value = "11", Text = "Noviembre" });
+                    lista.Add(new SelectListItem { Value = "12", Text = "Diciembre" });
+                    break;
+
+                case 5: // Semestral 
+                    lista.Add(new SelectListItem { Value = "1", Text = "Enero - Junio" });
+                    lista.Add(new SelectListItem { Value = "2", Text = "Julio - Diciembre" });
+                    break;
+
+                default:
+                    lista.Add(new SelectListItem { Value = "0", Text = "Seleccione una opción" });
+                    break;
+            }
+
+            lista.Insert(0, new SelectListItem { Value = "0", Text = "Seleccione una opción" });
+            return lista;
+            
         }
 
         public List<SelectListItem> getPeriodosDiponibles
@@ -89,30 +106,31 @@ namespace WebLomelinCore.Data
             }
         }
 
-        public List<SelectListItem> getPeriodicidad
+        public List<SelectListItem> getPeriodicidad(int? IdServicio)
         {
-            get
-            {
-                return new List<SelectListItem>
-                {
-                  new SelectListItem
-                  {
-                      Value="0",
-                      Text="Seleccione una opción"
-                  },
-                  new SelectListItem
-                  {
-                      Value="1",
-                      Text="Bimestral"
-                  },
-                  new SelectListItem
-                  {
-                      Value="2",
-                      Text="Anual"
-                  }
 
+            List<MySqlParameter> listSqlParameters = new List<MySqlParameter>
+                {
+                  new MySqlParameter("@Id_TipoServicio", IdServicio)
                 };
-            }
+
+            DataTable dataTable = conexion.RunStoredProcedure("sp_GetPeriodicidadServicio", listSqlParameters);
+
+            List<SelectListItem> response = (from item in dataTable.Rows.Cast<DataRow>()
+                                             select new SelectListItem
+                                             {
+                                                 Value = item.Field<int>("IdPeriodicidad").ToString(),
+                                                 Text = item.Field<string>("Periodicidad"),
+                                             }).ToList();
+
+            response.Insert(0, new SelectListItem
+            {
+                Text = "Seleccione una opción",
+                Value = "0"
+            });
+
+            return response;
+
         }
 
         /// <summary>
@@ -243,24 +261,65 @@ namespace WebLomelinCore.Data
             });
             return response;
         }
-
-        public PagoUnificadoDTO getPagoServiciosList(
-            int? IdInmueble, 
-            int? IdLocalidad, 
-            int? IdCuenta, 
-            int? IdTipoServicio, 
-            int? Estatus
-            /*int? IdPagoServicio,
-            int? IdCuentaServicio */)
-            //agregar idpagoservicio, idcuentaservicio = int?
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IdInmueble">Busca por IdInmueble</param>
+        /// <param name="IdLocalidad">IdLocalidad</param>
+        /// <param name="IdCuenta">validar con qu campo se mapea este parametro</param>
+        /// <param name="IdTipoServicio">Tipo de servicio (agua,luz, predial) </param>
+        /// <param name="Estatus">pro el estatus</param>
+        /// <param name="IdPagoServicio">Id de la tabla pagos{agua,luz,predial}</param>
+        /// <param name="IdCuentaServicio">id de la tabla dtpagos_{luz,aghua,predial}</param>
+        /// <returns></returns>
+        private List<pagosagua>  GetPagosAgua(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
         {
-            PagoUnificadoDTO response = new PagoUnificadoDTO();
-            if (IdTipoServicio == 1)/*agua*/
-            {
-                /*
-                 * parametros
-                 */
-                var listSqlParameters = new List<MySqlParameter>
+            var listSqlParameters = new List<MySqlParameter>
+                {
+                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
+                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
+                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
+                    new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)
+                };
+            DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_agua_Get", listSqlParameters);
+
+            List<pagosagua> agualist = (from item in dataTable.Rows.Cast<DataRow>()
+                                        select new pagosagua
+                                        {
+                                            idPagoAgua = item.Field<int>("idDtPagosAgua"),
+                                            idCuentaAgua = item.Field<int>("IdCuentaAgua"),
+                                            ConsumoBimestral = item.Field<double>("ConsumoBimestral"),
+                                            FechaLectura1 = item.Field<DateTime>("fechaLectura1"),
+                                            Lectura1 = item.Field<float>("Lectura1"),
+                                            FechaLectura2 = item.Field<DateTime>("fechaLectura2"),
+                                            Lectura2 = item.Field<float>("Lectura2"),
+                                            ImporteHabitacional = item.Field<double>("importeHabitacional"),
+                                            ImporteComercial = item.Field<double>("importeComercial"),
+                                            IvaComercial = item.Field<double>("ivaComercial"),
+                                            Recargos = item.Field<double>("Recargos"),
+                                            Actualizacion = item.Field<double>("Actualizacion"),
+                                            Multas = item.Field<double>("Multas"),
+                                            GastosEjecucion = item.Field<double>("GastosEjecucion"),
+                                            FechaVencimiento = item.Field<DateTime>("FechaVencimiento"),
+                                            StatusProceso = item.Field<int>("statusProceso"),
+                                            status = item.Field<string>("STATUS"),
+                                            InmuebleData = new B_inmuebles
+                                            {
+                                                ue = item.Field<int>("ue"),
+                                                cr = item.Field<string>("cr"),
+                                                nombre = item.Field<string>("nombre")
+                                            },
+                                            FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro")
+                                        }).ToList();
+            return agualist;
+
+        }
+        private List<pagosluz> GetPagosLuz(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
+        {
+            var listSqlParameters = new List<MySqlParameter>
                 {
                     new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
                     new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
@@ -270,42 +329,95 @@ namespace WebLomelinCore.Data
                     /*new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
                     new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)*/
                 };
+            DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_luz_Get", listSqlParameters);
 
-                DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_agua_Get", listSqlParameters);
+            List<pagosluz> luzList = (from item in dataTable.Rows.Cast<DataRow>()
+                                      select new pagosluz
+                                      {
+                                          idPagoLuz = item.Field<int>("idDtPagosLuz"),
+                                          idCuentaLuz = item.Field<int>("idCgCuentaLuz"),
+                                          fechaPago = item.Field<DateTime>("fechaPago"),
+                                          periodoPago = item.Field<string>("periodoPago"),
+                                          importe = item.Field<double>("importe"),
+                                          iva = item.Field<double>("iva"),
+                                          StatusProceso = item.Field<int>("statusProceso"),
+                                          StatusProcesoDescripcion = item.Field<string>("STATUS"),
+                                          InmuebleData = new B_inmuebles
+                                          {
+                                              ue = item.Field<int>("ue"),
+                                              cr = item.Field<string>("cr"),
+                                              nombre = item.Field<string>("nombre")
+                                          },
+                                          FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro"),
+                                          FechaUpdateRegistro = item.Field<DateTime>("FechaUpdateRegistro"),
+                                          FechaLimitePago = item.Field<DateTime>("FechaLimitePago")
+                                      }).OrderByDescending(x => x.FechaAltaRegistro).ToList();
+
+            return luzList;
+        }
+        private List<pagospredial>GetPagosPredial(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
+        {
+            var listSqlParameters = new List<MySqlParameter>
+                {
+                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
+                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
+                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
+                    /*new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)*/
+                 };
+
+            DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_predial_Get", listSqlParameters);
+
+            List<pagospredial> predialList = (from item in dataTable.Rows.Cast<DataRow>()
+                                              select new pagospredial
+                                              {
+                                                  idPagoPredial = item.Field<int>("idDtPagosPredial"),
+                                                  idCuentaPredial = item.Field<int>("idCgCuentaPredial"),
+                                                  periodoPago = item.Field<string>("periodoPago"),
+                                                  importe = item.Field<double>("importe"),
+                                                  Recargos = item.Field<double>("Recargos"),
+                                                  Multas = item.Field<double>("Multas"),
+                                                  Actualizacion = item.Field<double>("Actualizacion"),
+                                                  Diferencia = item.Field<double>("Diferencia"),
+                                                  Honorarios = item.Field<double>("Honorarios"),
+                                                  Notificacion = item.Field<double>("Notificacion"),
+                                                  GastoEjecucion = item.Field<double>("GastoEjecucion"),
+                                                  Descuento = item.Field<double>("Descuento"),
+                                                  fechaPagolimite = item.Field<DateTime>("fechaPagolimite"),
+                                                  StatusProceso = item.Field<int>("estatusproceso"),
+                                                  StatusProcesoDescripcion = item.Field<string>("STATUS"),
+                                                  InmuebleData = new B_inmuebles
+                                                  {
+                                                      ue = item.Field<int>("ue"),
+                                                      cr = item.Field<string>("cr"),
+                                                      nombre = item.Field<string>("nombre")
+                                                  },
+                                                  FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro"),
+                                                  FechaUpdateRegistro = item.Field<DateTime>("FechaUpdateRegistro")
+                                              }).ToList();
+            return predialList;
+
+        }
+
+        public PagoUnificadoDTO getPagoServiciosList(
+            int? IdInmueble, 
+            int? IdLocalidad, 
+            int? IdCuenta, 
+            int? IdTipoServicio, 
+            int? Estatus,
+            /*int? IdPagoServicio,*/
+            int? IdCuentaServicio )
+            //agregar idpagoservicio, idcuentaservicio = int?
+        {
+            PagoUnificadoDTO response = new PagoUnificadoDTO();
+            if (IdTipoServicio == 1)/*agua*/
+            {
+                response.PagosAgua = GetPagosAgua(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus, null, IdCuentaServicio);
                 
-                List<pagosagua> agualist = (from item in dataTable.Rows.Cast<DataRow>()
-                                                 select new pagosagua
-                                                 {
-                                                     idPagoAgua = item.Field<int>("idDtPagosAgua"),
-                                                     idCuentaAgua = item.Field<int>("IdCuentaAgua"),
-                                                     ConsumoBimestral = item.Field<double>("ConsumoBimestral"),
-                                                     FechaLectura1 = item.Field<DateTime>("fechaLectura1"),
-                                                     Lectura1 = item.Field<float>("Lectura1"),
-                                                     FechaLectura2= item.Field<DateTime>("fechaLectura2"),
-                                                     Lectura2 = item.Field<float>("Lectura2"),
-                                                     ImporteHabitacional = item.Field<double>("importeHabitacional"),
-                                                     ImporteComercial = item.Field<double>("importeComercial"),
-                                                     IvaComercial = item.Field<double>("ivaComercial"),
-                                                     Recargos = item.Field<double>("Recargos"),
-                                                     Actualizacion = item.Field<double>("Actualizacion"),
-                                                     Multas = item.Field<double>("Multas"),
-                                                     GastosEjecucion = item.Field<double>("GastosEjecucion"),
-                                                     FechaVencimiento=item.Field<DateTime>("FechaVencimiento"),
-                                                     StatusProceso = item.Field<int>("statusProceso"),
-                                                     status = item.Field<string>("STATUS"),
-                                                     InmuebleData=new B_inmuebles
-                                                     {
-                                                         ue = item.Field<int>("ue"),
-                                                         cr = item.Field<string>("cr"),
-                                                         nombre = item.Field<string>("nombre")
-                                                     }
-                                                 }).ToList();
-                response.PagosAgua = new List<pagosagua>();
-
-                response.PagosAgua = agualist.Any() ? agualist : new List<pagosagua>();
-
-                /*response.PagosAgua.Add(
-
+                /*quitar este registro cuando ya se tenga información correcta en bd*/
+                response.PagosAgua.Add(
                   new pagosagua
                   {
                       idPagoAgua = 1,
@@ -354,70 +466,33 @@ namespace WebLomelinCore.Data
                           Lectura2 = 100,
                       },
                   }
-                );*/
-                // hacer un metodo que convierta lo que traiga el dataTable 
-
-                response.PagosAgua.ForEach(x =>
+                );
+                
+                response.PagosAgua?.ForEach(x =>
                 {
-                    //x.idCuentaAgua
-                    DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_agua_Get", listSqlParameters);
+                    List<pagosagua> agualist = GetPagosAgua(null, null, null, null, null, null, x.idCuentaAgua);
 
-                    List<pagosagua> agualist = (from item in dataTable.Rows.Cast<DataRow>()
-                                                select new pagosagua
-                                                {
-                                                    idPagoAgua = item.Field<int>("idDtPagosAgua"),
-                                                    idCuentaAgua = item.Field<int>("IdCuentaAgua"),
-                                                    ConsumoBimestral = item.Field<double>("ConsumoBimestral"),
-                                                    FechaLectura1 = item.Field<DateTime>("fechaLectura1"),
-                                                    Lectura1 = item.Field<float>("Lectura1"),
-                                                    FechaLectura2 = item.Field<DateTime>("fechaLectura2"),
-                                                    Lectura2 = item.Field<float>("Lectura2"),
-                                                    ImporteHabitacional = item.Field<double>("importeHabitacional"),
-                                                    ImporteComercial = item.Field<double>("importeComercial"),
-                                                    IvaComercial = item.Field<double>("ivaComercial"),
-                                                    Recargos = item.Field<double>("Recargos"),
-                                                    Actualizacion = item.Field<double>("Actualizacion"),
-                                                    Multas = item.Field<double>("Multas"),
-                                                    GastosEjecucion = item.Field<double>("GastosEjecucion"),
-                                                    FechaVencimiento = item.Field<DateTime>("FechaVencimiento"),
-                                                    StatusProceso = item.Field<int>("statusProceso"),
-                                                    status = item.Field<string>("STATUS"),
-                                                    ue = item.Field<int>("ue"),
-                                                    cr = item.Field<string>("cr"),
-                                                    nombre = item.Field<string>("nombre"),
-                                                    FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro")
-                                                }).OrderByDescending(x=>x.FechaAltaRegistro).ToList();
-
-
-                    x.ImporteTotal = (x.ImporteHabitacional + x.ImporteComercial + x.IvaComercial + x.Recargos + x.Actualizacion + x.Multas + x.GastosEjecucion);
-                    x.ConsumoAnterior = agualist.ElementAt(1);
-                    x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.ImporteHabitacional + x.ConsumoAnterior.ImporteComercial + x.ConsumoAnterior.IvaComercial + x.ConsumoAnterior.Recargos + x.ConsumoAnterior.Actualizacion + x.ConsumoAnterior.Multas + x.ConsumoAnterior.GastosEjecucion);
+                    if (agualist.Any())
+                    {
+                        x.ImporteTotal = (x.ImporteHabitacional + x.ImporteComercial + x.IvaComercial + x.Recargos + x.Actualizacion + x.Multas + x.GastosEjecucion);
+                        x.ConsumoAnterior = agualist.ElementAt(1);
+                        x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.ImporteHabitacional + x.ConsumoAnterior.ImporteComercial + x.ConsumoAnterior.IvaComercial + x.ConsumoAnterior.Recargos + x.ConsumoAnterior.Actualizacion + x.ConsumoAnterior.Multas + x.ConsumoAnterior.GastosEjecucion);
+                    }
+                    else
+                    {
+                        x.ConsumoAnterior = new pagosagua()
+                        {
+                            ImporteTotal = 0
+                        };
+                    }
                 });
             }
             else if (IdTipoServicio == 2)/*luz*/
             {
 
-                var listSqlParameters = new List<MySqlParameter>
-                {
-                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
-                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
-                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
-                    /*new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)*/
-                };
-                DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_luz_Get", listSqlParameters);
+                response.PagosLuz = GetPagosLuz(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus, null, IdCuentaServicio);
 
-                List<pagosluz> agualist = (from item in dataTable.Rows.Cast<DataRow>()
-                                            select new pagosluz
-                                            { 
-
-                                            }).ToList();
-
-
-
-                /* response.PagosLuz = new List<pagosluz>
+                response.PagosLuz = new List<pagosluz>
                     {
                         new pagosluz
                         {
@@ -453,14 +528,34 @@ namespace WebLomelinCore.Data
                                      StatusProcesoDescripcion="Registrado",
                                 }
                         }
-                 };*/
-                response.PagosLuz.ForEach(x => {
-                    x.ImporteTotal = (x.importe + x.iva);
-                    x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.importe + x.ConsumoAnterior.iva);
+                 };
+
+                response.PagosLuz.ForEach(x =>
+                {
+                    List<pagosluz> luzList = GetPagosLuz(null, null, null, null, null, null, x.idCuentaLuz);
+
+                    if (luzList.Any())
+                    {
+                        x.ImporteTotal = (x.importe + x.iva);
+                        x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.importe + x.ConsumoAnterior.iva);
+                    }
+                    else
+                    {
+                        x.ConsumoAnterior = new pagosluz()
+                        {
+                            ImporteTotal = 0
+                        };
+                    }
+                    
+
                 });
+
             }
             else if (IdTipoServicio == 3)/*predial*/
             {
+
+                response.PagosPredial = GetPagosPredial(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus, null, IdCuentaServicio);
+
                 response.PagosPredial = new List<pagospredial>
                 {
                     new pagospredial
@@ -500,9 +595,47 @@ namespace WebLomelinCore.Data
                 };
 
                 response.PagosPredial.ForEach(x => {
-                    x.ImporteTotal = (x.Recargos + x.Multas + x.importe + x.iva + x.Actualizacion);
-                    x.ConsumoAnterior.ImporteTotal = (x.ConsumoAnterior.Recargos + x.ConsumoAnterior.Multas + x.ConsumoAnterior.importe + x.iva + x.ConsumoAnterior.Actualizacion);
+
+
+                    List<pagospredial> predialList = GetPagosPredial(null, null, null, null, null, null, x.idCuentaPredial);
+
+
+                    if (predialList.Any())
+                    {
+                        x.ImporteTotal = (
+                        x.importe
+                        + x.Recargos
+                        + x.Multas
+                        + x.Actualizacion
+                        + x.Diferencia
+                        + x.Honorarios
+                        + x.Notificacion
+                        + x.GastoEjecucion
+                        - x.Descuento);
+
+                        x.ConsumoAnterior.ImporteTotal = (
+                       +x.ConsumoAnterior.importe
+                       + x.ConsumoAnterior.Recargos
+                       + x.ConsumoAnterior.Multas
+                       + x.ConsumoAnterior.Actualizacion
+                       + x.ConsumoAnterior.Diferencia
+                       + x.ConsumoAnterior.Honorarios
+                       + x.ConsumoAnterior.Notificacion
+                       + x.ConsumoAnterior.GastoEjecucion
+                       - x.ConsumoAnterior.Descuento);
+                    }
+                    else
+                    {
+                        x.ConsumoAnterior = new pagospredial()
+                        {
+                            ImporteTotal = 0
+                        };
+                    }
+
+
+
                 });
+
             }
             return response;
         }
@@ -535,8 +668,8 @@ namespace WebLomelinCore.Data
             listSqlParameters.Add(new MySqlParameter("IdUsuario", pagosagua.UsuarioAutoriza));
             listSqlParameters.Add(new MySqlParameter("Estatus", pagosagua.StatusProceso));
             listSqlParameters.Add(new MySqlParameter("PeriodoPago", pagosagua.periodoPago));
-            conexion.RunStoredProcedure("InsertaPagosAgua", listSqlParameters);
-            return true;
+            return conexion.ExecuteNonQuerySP("InsertaPagosAgua", listSqlParameters) == 1 ? true: false;
+            
         }
 
         /// <summary>
@@ -553,16 +686,16 @@ namespace WebLomelinCore.Data
             listSqlParameters.Add(new MySqlParameter("ImporteLuz", pagosluz.importe));
             listSqlParameters.Add(new MySqlParameter("IvaLuz", pagosluz.iva));
             listSqlParameters.Add(new MySqlParameter("ConceptoPago", pagosluz.conceptoPago));
-            listSqlParameters.Add(new MySqlParameter("LineaCaptura", pagosluz.LineaCaptura));
             listSqlParameters.Add(new MySqlParameter("IdUsuario", pagosluz.UsuarioAutoriza));
+            listSqlParameters.Add(new MySqlParameter("LineaCaptura", pagosluz.LineaCaptura));
             listSqlParameters.Add(new MySqlParameter("Estatus", pagosluz.StatusProceso));
             listSqlParameters.Add(new MySqlParameter("FechaAltaRegistro", pagosluz.FechaAltaRegistro));
             listSqlParameters.Add(new MySqlParameter("fechaLimitePago", pagosluz.FechaLimitePago));
             listSqlParameters.Add(new MySqlParameter("fechaCorte", pagosluz.FechaCorte));
             listSqlParameters.Add(new MySqlParameter("lecturaActual", pagosluz.LecturaActual));
             listSqlParameters.Add(new MySqlParameter("lecturaAnterior", pagosluz.LecturaAnterior));
-            conexion.RunStoredProcedure("InsertaPagosLuz", listSqlParameters);
-            return true;
+            return conexion.ExecuteNonQuerySP("InsertaPagosLuz", listSqlParameters) == 1? true: false;
+            
         }
 
         /// <summary>
@@ -590,11 +723,11 @@ namespace WebLomelinCore.Data
             listSqlParameters.Add(new MySqlParameter("Notificacion", pagospredial.Notificacion));
             listSqlParameters.Add(new MySqlParameter("GastoEjecucion", pagospredial.GastoEjecucion));
             listSqlParameters.Add(new MySqlParameter("Descuento", pagospredial.Descuento));
-            conexion.RunStoredProcedure("InsertaPagosPredial", listSqlParameters);
-            return true;
+            return conexion.ExecuteNonQuerySP("InsertaPagosPredial", listSqlParameters) == 1 ? true : false;
+            
         }
 
-        public bool ActualizaPagosAgua(pagosagua pagosagua)
+        public bool ActualizaPagosAgua(pagosagua pagosagua, int IdStatusAnterior)
         {
             try
             {
@@ -604,25 +737,11 @@ namespace WebLomelinCore.Data
                 listSqlParameters.Add(new MySqlParameter("IdPagoAgua", pagosagua.idPagoAgua));
                
                 //Campos que se actualizan
-                listSqlParameters.Add(new MySqlParameter("IdCuentaAgua", pagosagua.idCuentaAgua));
-                listSqlParameters.Add(new MySqlParameter("FechaLectura1", pagosagua.FechaLectura1));
-                listSqlParameters.Add(new MySqlParameter("Lectura1", pagosagua.Lectura1));
-                listSqlParameters.Add(new MySqlParameter("FechaLectura2", pagosagua.FechaLectura2));
-                listSqlParameters.Add(new MySqlParameter("Lectura2", pagosagua.Lectura2));
-                listSqlParameters.Add(new MySqlParameter("ImporteHabitacional", pagosagua.ImporteHabitacional));
-                listSqlParameters.Add(new MySqlParameter("ImporteComercial", pagosagua.ImporteComercial));
-                listSqlParameters.Add(new MySqlParameter("IvaComercial", pagosagua.IvaComercial));
-                listSqlParameters.Add(new MySqlParameter("Recargos", pagosagua.Recargos));
-                listSqlParameters.Add(new MySqlParameter("Actualizacion", pagosagua.Actualizacion));
-                listSqlParameters.Add(new MySqlParameter("Multas", pagosagua.Multas));
-                listSqlParameters.Add(new MySqlParameter("GastosEjecucion", pagosagua.GastosEjecucion));
-                listSqlParameters.Add(new MySqlParameter("ConceptoPago", pagosagua.ConceptoPago));
-                listSqlParameters.Add(new MySqlParameter("FechaVencimiento", pagosagua.FechaVencimiento));
-                listSqlParameters.Add(new MySqlParameter("LineaCaptura", pagosagua.LineaCaptura));
-                listSqlParameters.Add(new MySqlParameter("ConsumoBimestral", pagosagua.ConsumoBimestral));
-
-                conexion.RunStoredProcedure("ActualizaPagosAgua", listSqlParameters);
-                return true;
+                listSqlParameters.Add(new MySqlParameter("IdStatusAnterior", IdStatusAnterior));
+                listSqlParameters.Add(new MySqlParameter("IdStatusNuevo", pagosagua.StatusProceso));
+                listSqlParameters.Add(new MySqlParameter("Fecha",DateTime.Now));
+                listSqlParameters.Add(new MySqlParameter("IdUsuario", pagosagua.UsuarioAutoriza));
+                return conexion.ExecuteNonQuerySP("ActualizaPagosAgua", listSqlParameters) == 1 ? true : false;
             }
             catch (Exception ex)
             {
@@ -631,7 +750,7 @@ namespace WebLomelinCore.Data
             }   
         }
 
-        public bool ActualizaPagosLuz(pagosluz pagosluz)
+        public bool ActualizaPagosLuz(pagosluz pagosluz, int IdStatusAnterior)
         {
             try
             {
@@ -640,17 +759,12 @@ namespace WebLomelinCore.Data
                 //identificador para saber que registro se va actualizar
                 listSqlParameters.Add(new MySqlParameter("IdPagoLuz", pagosluz.idPagoLuz));
                 //campos a actualizar
-                listSqlParameters.Add(new MySqlParameter("IdCuentaLuz", pagosluz.idCuentaLuz));
-                listSqlParameters.Add(new MySqlParameter("FechaPago", pagosluz.fechaPago));
-                listSqlParameters.Add(new MySqlParameter("PeriodoPago", pagosluz.periodoPago));
-                listSqlParameters.Add(new MySqlParameter("ImporteLuz", pagosluz.importe));
-                listSqlParameters.Add(new MySqlParameter("IvaLuz", pagosluz.iva));
-                listSqlParameters.Add(new MySqlParameter("ConceptoPago", pagosluz.conceptoPago));
-                listSqlParameters.Add(new MySqlParameter("FechaPago", pagosluz.fechaPago));
-                listSqlParameters.Add(new MySqlParameter("LineaCaptura", pagosluz.LineaCaptura));
-
-                conexion.RunStoredProcedure("ActualizaPagosLuz", listSqlParameters);
-                return true;
+                listSqlParameters.Add(new MySqlParameter("IdStatusAnterior", IdStatusAnterior));
+                listSqlParameters.Add(new MySqlParameter("IdStatusNuevo", pagosluz.StatusProceso));
+                listSqlParameters.Add(new MySqlParameter("Fecha",DateTime.Now));
+                listSqlParameters.Add(new MySqlParameter("IdUsuario",pagosluz.UsuarioAutoriza));
+                return conexion.ExecuteNonQuerySP("ActualizaPagosLuz", listSqlParameters) == 1 ? true : false;
+                 
             }
             catch (Exception ex)
             {
@@ -659,7 +773,7 @@ namespace WebLomelinCore.Data
             }
         }
 
-        public bool ActualizaPagosPredial(pagospredial pagospredial)
+        public bool ActualizaPagosPredial(pagospredial pagospredial, int IdStatusAnterior)
         {
             try
             {
@@ -669,19 +783,12 @@ namespace WebLomelinCore.Data
                 listSqlParameters.Add(new MySqlParameter("IdPagoPredial", pagospredial.idDtPagosPredial));
 
                 //Campos a actualizar
-                listSqlParameters.Add(new MySqlParameter("IdCuentaPredial", pagospredial.idCgCuentaPredial));
-                listSqlParameters.Add(new MySqlParameter("PeriodoPago", pagospredial.periodoPago));
-                listSqlParameters.Add(new MySqlParameter("ImportePredial", pagospredial.importe));
-                listSqlParameters.Add(new MySqlParameter("IvaPredial", pagospredial.iva));
-                listSqlParameters.Add(new MySqlParameter("Recargos", pagospredial.Recargos));
-                listSqlParameters.Add(new MySqlParameter("Multas", pagospredial.Multas));
-                listSqlParameters.Add(new MySqlParameter("Actualizacion", pagospredial.Actualizacion));
-                listSqlParameters.Add(new MySqlParameter("ConceptoPago", pagospredial.conceptoPago));
-                listSqlParameters.Add(new MySqlParameter("LineaCaptura", pagospredial.LineaCaptura));
-                listSqlParameters.Add(new MySqlParameter("FechaPagoLimite", pagospredial.fechaPagolimite));
-
-                conexion.RunStoredProcedure("ActualizaPagosPredial", listSqlParameters);
-                return true;
+                listSqlParameters.Add(new MySqlParameter("IdStatusAnterior", IdStatusAnterior));
+                listSqlParameters.Add(new MySqlParameter("IdStatusNuevo", pagospredial.StatusProceso));
+                listSqlParameters.Add(new MySqlParameter("Fecha", DateTime.Now));
+                listSqlParameters.Add(new MySqlParameter("IdUsuario", pagospredial.UsuarioAutoriza));
+                return conexion.ExecuteNonQuerySP("ActualizaPagosPredial", listSqlParameters) == 1 ? true : false;
+                
             }
             catch(Exception ex)
             {

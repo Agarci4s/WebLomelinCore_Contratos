@@ -144,9 +144,7 @@ namespace WebLomelinCore.Models
 
         /* DATOS FORMULARIO */
 
-        public int ue { get; set; }
-        public string cr { get; set; }
-        public string nombre { get; set; }
+  
         public DateTime FechaPago { get; set; }        
         public string funsionaMedidor { get; set; }        
         public string boletaDeclaracion { get; set; }

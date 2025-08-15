@@ -20,9 +20,9 @@ namespace WebLomelinCore.Controllers
             #endregion
 
             ViewBag.Servicios = PagosServicios.setItem(PagosServicios.getTipoSerivcios, IdServicio);
-            ViewBag.Periodicidad = PagosServicios.setItem(PeriodosServicios.getPeriodicidad, IdPeriodicidad);
+            ViewBag.Periodicidad = PagosServicios.setItem(PeriodosServicios.getPeriodicidad(IdServicio), IdPeriodicidad);
             ViewBag.Periodos = PagosServicios.setItem(PeriodosServicios.getPeriodosSiponibles, IdPerido);
-            ViewBag.Bimestres = PagosServicios.setItem(PeriodosServicios.getBimestres, IdBimestre);
+            ViewBag.Bimestres = PagosServicios.setItem(PeriodosServicios.getBimestres(IdPeriodicidad), IdBimestre);
 
             return response;
         }
