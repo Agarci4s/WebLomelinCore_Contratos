@@ -22,59 +22,115 @@
             <hr />
             @{
                 string categoria = "";
-                int countAux = -1;
+                bool banderaAux = true;
             }
-            @foreach (var item in Model.b_cg_tipo_expediente_contratos)
-            {
-                countAux++;
-                if (categoria != @item.categoria)
-                {
-                    categoria = item.categoria;
-                    <h5>@item.categoria</h5>
-                }
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <b><label asp-for="b_cg_tipo_expediente_contratos[countAux].sub_categoria" class="control-label">@item.sub_categoria</label></b>
-                        <input type="file" onChange="return SaveImage('input_exterior1', '@Model.b_inmuebles.id_b_inmuebles','@item.sub_categoria','#div_exterior1')" id="input_exterior1" accept="image/png, .jpeg, .jpg, image/gif, .pdf" class="form-control" />
-                        <input hidden id="input2_exterior1" asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="form-control" />
-                        <span asp-validation-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="text-danger"></span>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
 
-                        <div id="div_exterior1" class="col-md-12">
-                            @if (item.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta != null && @item.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta.Length > 4)
-                            {
-                                <img src="/Images/precarga/@Model.b_inmuebles.id_b_inmuebles.ToString("000")/@item.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="img-fluid" style="height:100px" />
-                            }
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" class="control-label">Periodo</label>
-                        <select asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" asp-items=ViewBag.lst_b_cg_periodicidad_contratos class="form-control"></select>
-                        <span asp-validation-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="control-label"></label>
-                        <input asp-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="form-control" type="date" />
-                        <span asp-validation-for="b_cg_tipo_expediente_contratos[countAux].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="text-danger"></span>
-                    </div>
-                </div>
-            }
-
-
-            @*    <div class="form-group col-md-4">
-                <label asp-for="sucursal" class="control-label"></label>
-                <input type="file" onChange="return SaveImage('input_sucursal', '@Model.id_b_inmuebles','sucursal', '#div_sucursal')" id="input_sucursal" accept="image/png, .jpeg, .jpg, image/gif" class="form-control" />
-                <input hidden id="input2_sucursal" asp-for="sucursal" class="form-control" />
-                <span asp-validation-for="sucursal" class="text-danger"></span>
-             
-
-                <div id="div_sucursal" class="col-md-12">
-                    @if (Model.sucursal != null && Model.sucursal.Length > 4)
+                    @foreach (var item in Model.b_cg_tipo_expediente_contratos)
                     {
-                        <img src="/Images/precarga/@Model.id_b_inmuebles.ToString("000")/@Model.sucursal" class="img-fluid" style="height:100px" />
+                        if (categoria != @item.categoria)
+                        {
+                            categoria = item.categoria;
+                            <button class="nav-link@(banderaAux ? " active" : "")" id="tab-@(item.id_b_cg_tipo_expediente_contratos.ToString("000"))" data-toggle="tab" data-target="#panel-@(item.id_b_cg_tipo_expediente_contratos.ToString("000"))" type="button" role="tab" aria-controls="panel-@(item.id_b_cg_tipo_expediente_contratos.ToString("000"))" aria-selected="true">@(item.categoria)</button>
+                            banderaAux = false;
+
+
+
+
+                        }
                     }
                 </div>
-            </div> *@
+            </nav>
+
+
+            @{
+                banderaAux = true;
+            }
+
+
+            <div class="tab-content" id="myTabContent">
+                @for (int i = 0; i < Model.b_cg_tipo_expediente_contratos.Count; i++)
+                {
+                    categoria = Model.b_cg_tipo_expediente_contratos[i].categoria;
+
+                    <div class="tab-pane fade@(banderaAux ? " show active" : "")" id="panel-@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))" role="tabpanel" aria-labelledby="tab-@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))">
+                        @{
+                            banderaAux = false;
+                        }
+                        @while (i < Model.b_cg_tipo_expediente_contratos.Count && categoria == Model.b_cg_tipo_expediente_contratos[i].categoria)
+                        {
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <b>
+                                        <label asp-for="b_cg_tipo_expediente_contratos[i].sub_categoria" class="control-label">@(Model.b_cg_tipo_expediente_contratos[i].sub_categoria)</label>
+                                    </b>
+                                    <input type="file" onChange="return SaveImage('input-@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))', '@(Model.b_inmuebles.id_b_inmuebles)','@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))','#div_@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))')" id="input-@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))" accept="image/png, .jpeg, .jpg, image/gif, .pdf" class="form-control" />
+                                    <input hidden id="input2_@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))" asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="form-control" />
+                                    <span asp-validation-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="text-danger"></span>
+
+                                    <div id="div_@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))" class="col-md-12">
+                                        @if (Model.b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta != null && Model.b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta.Length > 4)
+                                        {
+                                            <img src="/Images/precarga/@Model.b_inmuebles.id_b_inmuebles.ToString("000")/@Model.b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta" class="img-fluid" style="height:100px" />
+                                        }
+                                    </div>
+                                </div>
+
+                                @if (Model.b_cg_tipo_expediente_contratos[i].periodo)
+                                {
+                                        <div class="form-group col-md-2">
+                                            <label asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].anio" class="control-label"></label>
+                                            <input disabled id="input1_@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))" asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].anio" class="form-control" value="@DateTime.Today.Year" />
+                                            <span asp-validation-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].anio" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" class="control-label"></label>
+                                            <select disabled onChange="return CambiaSelect('@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))')" id="select1_@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))" asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" asp-items=ViewBag.lst_b_cg_periodicidad_contratos class="form-control"></select>
+                                            <span asp-validation-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label asp-for=b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].periodo class="control-label"></label>
+                                            <select disabled id="select2_@(Model.b_cg_tipo_expediente_contratos[i].id_b_cg_tipo_expediente_contratos.ToString("000"))" class="form-control" asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].periodo"><option value="0">--Selecciona una opción--</option></select>
+                                            <span asp-validation-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].periodo" class="text-danger"></span>
+                                        </div>
+                                }
+
+
+                                @* <div class="form-group col-md-2">
+                                    <label asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="control-label"></label>
+                                    <input asp-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="form-control" type="date" />
+                                    <span asp-validation-for="b_cg_tipo_expediente_contratos[i].b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio" class="text-danger"></span>
+                                </div> *@
+                            </div>
+                            i++;
+                        }
+                    </div>
+                    i--;
+                }
+
+            </div>
+
+
+
+            <h5>Guardar</h5>
+            <hr />
+            <div class="row">
+
+
+                <div class="form-group col-md-3">
+                    @*                    <input type="submit" value="Guardar" class="btn btn-primary" id="@Model.id_b_inmuebles" />
+                    *@
+                    <input onclick="" type="submit" value="Guardar" class="btn btn-primary" id="inputGuardar" />
+
+                </div>
+            </div>
+
+
+
+
 
 
         </form>
@@ -98,87 +154,67 @@
 <script type="text/javascript">
 
     function OnLoad() {
-        ActualizaServicio();
-        MostrarDireccion();
-        SumaAnuncios();
-        AireAcondicionado();
-        CambioConservacion();
-        CambioAreasConvivencia();
-        $('#inputGuardar').removeAttr('disabled');
-        OnChangeEspecial();
+        // ActualizaServicio();
+        // MostrarDireccion();
+        // SumaAnuncios();
+        // AireAcondicionado();
+        // CambioConservacion();
+        // CambioAreasConvivencia();
+        // $('#inputGuardar').removeAttr('disabled');
+        // OnChangeEspecial();
 
     }
 
-    function CambioAreasConvivencia() {
-        try {
-            var aux = $("#select_areas_convivencia option:selected").val();
-            if (aux == 'Si')
-                $("#div_areas_convivencia_desc").show();
-            else
-            {
-                $("#div_areas_convivencia_desc").hide();
-                $("#input_areas_convivencia_desc").val("");
-            }
-        } catch (error) {
-            console.error(error);
+    function CambiaSelect(idAux) {
+        var id2 = String(idAux).padStart(3, '0');
+        var selectedValue = $('#select1_'+id2).val();
+        $('#select2_'+id2).empty(); // Limpiar opciones anteriores
+        var periodo = 0;
+        // Lógica para determinar las nuevas opciones (aquí se simula con un switch)
+        switch (selectedValue) {
+            case '1':
+                periodo=1;
+                break;
+            case '2':
+                periodo=6;
+                break;
+            case '3':
+                periodo=12;
+                break;
+            case '5':
+                periodo=2;
+                break;
+            default:
+                periodo=0;
+                 $('#select2_'+id2).append('<option value="-1">--Selecciona una opción--</option>')
+                break;
+        }
+        for (var i = 1; i <= periodo; i++) {
+             $('#select2_'+id2).append('<option value="'+i+'">periodo '+i+'</option>')
         }
     }
+
+    // function CambioAreasConvivencia() {
+    //     try {
+    //         var aux = $("#select_areas_convivencia option:selected").val();
+    //         if (aux == 'Si')
+    //             $("#div_areas_convivencia_desc").show();
+    //         else
+    //         {
+    //             $("#div_areas_convivencia_desc").hide();
+    //             $("#input_areas_convivencia_desc").val("");
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
 
     function OnSubmit() {
         $('#inputGuardar').prop('disabled', true);
-
-        var aux = $("#input_m2_sucursal_precio").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_m2_sucursal_precio").val(aux);
-
-        aux = $("#input_contrato_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_contrato_renta").val(aux);
-
-        aux = $("#input_m2_totales").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_m2_totales").val(aux);
-
-        aux = $("#input_m2_terreno").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_m2_terreno").val(aux);
-
-        aux = $("#input_area_rentable").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_area_rentable").val(aux);
-
-        aux = $("#input_m2_construccion").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_m2_construccion").val(aux);
-
-        aux = $("#input_superficie_estacionamiento").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_superficie_estacionamiento").val(aux);
-
-
-        aux = $("#input_m2_rango_inf3").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_m2_rango_inf3").val(aux);
-
-        aux = $("#input_m2_rango_sup3").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        $("#input_m2_rango_sup3").val(aux);
-
-
         try {
-            aux = $("#input_m2_rango_inf2").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-            $("#input_m2_rango_inf2").val(aux);
 
-            aux = $("#input_m2_rango_sup2").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-            $("#input_m2_rango_sup2").val(aux);
 
-            aux = $("#input_valor_comercial").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-            $("#input_valor_comercial").val(aux);
-
-        } catch (error) {
-            console.error(error);
-            // Expected output: ReferenceError: nonExistentFunction is not defined
-            // (Note: the exact output may be browser-dependent)
-        }
-
-        try {
-            aux = $("#input_m2_rango_inf").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-            $("#input_m2_rango_inf").val(aux);
-
-            aux = $("#input_m2_rango_sup").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-            $("#input_m2_rango_sup").val(aux);
         } catch (error) {
             console.error(error);
             // Expected output: ReferenceError: nonExistentFunction is not defined
@@ -190,90 +226,102 @@
         $('#inputGuardar').removeAttr('disabled');
 
     }
-    function OnChangeEspecialOtro() {
-        var aux2 = document.getElementById("chk_especial_12").checked;
-        if (aux2)
-            $("#div_especial_otro").show();
-        else
-            $("#div_especial_otro").hide();
-    }
 
-    function OnChangeEspecial() {
-        var aux = document.getElementById("input_especial").checked;
+    // function OnChangeEspecialOtro() {
+    //     var aux2 = document.getElementById("chk_especial_12").checked;
+    //     if (aux2)
+    //         $("#div_especial_otro").show();
+    //     else
+    //         $("#div_especial_otro").hide();
+    // }
 
-
-        if (aux) {
-            $("#div_especial").show();
-
-            OnChangeEspecialOtro();
-        }
-        else
-            $("#div_especial").hide();
-    }
+    // function OnChangeEspecial() {
+    //     var aux = document.getElementById("input_especial").checked;
 
 
-    function AireAcondicionado() {
-        var aux = document.getElementById("input_aire_acondicionado").checked;
+    //     if (aux) {
+    //         $("#div_especial").show();
 
-        if (aux)
-            $("#div_aire_acondicionado2").show();
-        else
-            $("#div_aire_acondicionado2").hide();
-    }
+    //         OnChangeEspecialOtro();
+    //     }
+    //     else
+    //         $("#div_especial").hide();
+    //}
 
-    function CambioConservacion() {
-        var aux = $("#select_id_b_cg_conservacion option:selected").val();
-        if (aux >= 2)
-            $("#div_mantenimiento").show();
-        else
-            $("#div_mantenimiento").hide();
-    }
 
-    function calculaM2() {
-        var total = 0;
-        var a1 = parseInt($("#input_contrato_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2'));
-        var a2 = parseInt($("#input_m2_totales").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2'));
-        if (a2 != 0)
-            total = a1 / a2;
-        $("#input_m2_sucursal_precio").val(total.toFixed(2));
-    }
+    // function AireAcondicionado() {
+    //     var aux = document.getElementById("input_aire_acondicionado").checked;
 
-    function ActualizaServicio() {
-        var total = 0;
-        var a1 = parseInt($("#input_practicajas").val());
-        var a2 = parseInt($("#input_practicajas_servicio").val());
-        total = a1 - a2;
-        $("#input_practicajas_diferencia").val(total);
+    //     if (aux)
+    //         $("#div_aire_acondicionado2").show();
+    //     else
+    //         $("#div_aire_acondicionado2").hide();
+    // }
 
-        var b1 = parseInt($("#input_ventanillas").val());
-        var b2 = parseInt($("#input_ventanillas_servicio").val());
-        total = b1 - b2;
-        $("#input_ventanillas_diferencia").val(total);
+    // function CambioConservacion() {
+    //     var aux = $("#select_id_b_cg_conservacion option:selected").val();
+    //     if (aux >= 2)
+    //         $("#div_mantenimiento").show();
+    //     else
+    //         $("#div_mantenimiento").hide();
+    // }
 
-        var c1 = parseInt($("#input_cajeros_automaticos").val());
-        var c2 = parseInt($("#input_cajeros_automaticos_servicio").val());
-        total = c1 - c2;
-        $("#input_cajeros_automaticos_diferencia").val(total);
+    // function calculaM2() {
+    //     var total = 0;
+    //     var a1 = parseInt($("#input_contrato_renta").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2'));
+    //     var a2 = parseInt($("#input_m2_totales").val().replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2'));
+    //     if (a2 != 0)
+    //         total = a1 / a2;
+    //     $("#input_m2_sucursal_precio").val(total.toFixed(2));
+    // }
 
-        var d1 = parseInt($("#input_cajones_estacionamiento").val());
-        var d2 = parseInt($("#input_cajones_estacionamiento_servicio").val());
-        total = d1 - d2;
-        $("#input_cajones_estacionamiento_diferencia").val(total);
+    // function ActualizaServicio() {
+    //     var total = 0;
+    //     var a1 = parseInt($("#input_practicajas").val());
+    //     var a2 = parseInt($("#input_practicajas_servicio").val());
+    //     total = a1 - a2;
+    //     $("#input_practicajas_diferencia").val(total);
 
-        var c1 = parseInt($("#input_cajones_estacionamiento_ejecutivo").val());
-        var c2 = parseInt($("#input_cajones_estacionamiento_ejecutivo_servicio").val());
-        total = c1 - c2;
-        $("#input_cajones_estacionamiento_ejecutivo_diferencia").val(total);
-    }
+    //     var b1 = parseInt($("#input_ventanillas").val());
+    //     var b2 = parseInt($("#input_ventanillas_servicio").val());
+    //     total = b1 - b2;
+    //     $("#input_ventanillas_diferencia").val(total);
+
+    //     var c1 = parseInt($("#input_cajeros_automaticos").val());
+    //     var c2 = parseInt($("#input_cajeros_automaticos_servicio").val());
+    //     total = c1 - c2;
+    //     $("#input_cajeros_automaticos_diferencia").val(total);
+
+    //     var d1 = parseInt($("#input_cajones_estacionamiento").val());
+    //     var d2 = parseInt($("#input_cajones_estacionamiento_servicio").val());
+    //     total = d1 - d2;
+    //     $("#input_cajones_estacionamiento_diferencia").val(total);
+
+    //     var c1 = parseInt($("#input_cajones_estacionamiento_ejecutivo").val());
+    //     var c2 = parseInt($("#input_cajones_estacionamiento_ejecutivo_servicio").val());
+    //     total = c1 - c2;
+    //     $("#input_cajones_estacionamiento_ejecutivo_diferencia").val(total);
+    // }
 
 
     function SaveImage(id, idInmueble, nameArchivo, NameDiv) {
+        try {
+            $('#select2_'+nameArchivo).empty(); // Limpiar opciones anteriores
+            $('#select2_'+nameArchivo).append('<option value="-1">--Selecciona una opción--</option>')
+            document.getElementById('input1_'+nameArchivo).disabled  = false;
+            document.getElementById('select1_'+nameArchivo).disabled  = false;
+            document.getElementById('select2_'+nameArchivo).disabled  = false;
+
+        } catch (error) {
+            console.error("An error occurred:", error.message);
+        }
         var input = document.getElementById(id);
         var files = input.files;
         var formData = new FormData();
         var input2 = '#input2_' + nameArchivo;
         var ext = input.files[0].name.split('.').pop();;//input.files[0].type;
         $(NameDiv).empty();
+
         const d = new Date();
         var fecha = " " + d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2) + ("0" + d.getHours()).slice(-2) + ("0" + d.getMinutes()).slice(-2) + ("0" + d.getSeconds()).slice(-2);
 
@@ -285,7 +333,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/B_inmuebles_visitas/UploadFiles",
+            url: "/B_inmuebles_expediente/UploadFiles",
             data: formData, // In the controller it receives IFormFile image
             processData: false,
             contentType: false,
@@ -294,63 +342,63 @@
                 $(input2).val(nameArchivo + fecha + '.' + ext);
             },
             error: function (errorMessage) {
-                alert(errorMessage);
+                alert('Error al cargar la imagen');
             }
         });
 
     }
 
-    function SumaAnuncios() {
+    // function SumaAnuncios() {
 
-        var total = 0;
-        var a1 = parseInt($("#input_marquesina").val());
-        var a2 = parseInt($("#input_letras_rotuladas").val());
-        var a3 = parseInt($("#input_bandera").val());
-        var a4 = parseInt($("#input_paleta").val());
-        var a5 = parseInt($("#input_unipolar").val());
-        var a6 = parseInt($("#input_totem").val());
-        total = a1 + a2 + a3 + a4 + a5 + a6;
-        $("#input_no_anuncios").val(total);
-    }
+    //     var total = 0;
+    //     var a1 = parseInt($("#input_marquesina").val());
+    //     var a2 = parseInt($("#input_letras_rotuladas").val());
+    //     var a3 = parseInt($("#input_bandera").val());
+    //     var a4 = parseInt($("#input_paleta").val());
+    //     var a5 = parseInt($("#input_unipolar").val());
+    //     var a6 = parseInt($("#input_totem").val());
+    //     total = a1 + a2 + a3 + a4 + a5 + a6;
+    //     $("#input_no_anuncios").val(total);
+    // }
 
-    function MostrarDireccion() {
-        var medidor = $("#select_medidor option:selected").text();
-        var agua = $("#select_agua_toma option:selected").text();
+    // function MostrarDireccion() {
+    //     var medidor = $("#select_medidor option:selected").text();
+    //     var agua = $("#select_agua_toma option:selected").text();
 
-        if (medidor == 'No' || medidor == 'N/A') {
-            document.getElementById('input_medidor_direccion').readOnly = true;
-            document.getElementById('input_medidor_direccion').value = '';
-        }
-        else {
-            document.getElementById('input_medidor_direccion').readOnly = false;
-        }
+    //     if (medidor == 'No' || medidor == 'N/A') {
+    //         document.getElementById('input_medidor_direccion').readOnly = true;
+    //         document.getElementById('input_medidor_direccion').value = '';
+    //     }
+    //     else {
+    //         document.getElementById('input_medidor_direccion').readOnly = false;
+    //     }
 
-        if (agua == 'No' || agua == 'N/A') {
-            document.getElementById('input_agua_toma_direccion').readOnly = true;
-            document.getElementById('input_agua_toma_direccion').value = '';
-        }
-        else
-            document.getElementById('input_agua_toma_direccion').readOnly = false;
-    }
+    //     if (agua == 'No' || agua == 'N/A') {
+    //         document.getElementById('input_agua_toma_direccion').readOnly = true;
+    //         document.getElementById('input_agua_toma_direccion').value = '';
+    //     }
+    //     else
+    //         document.getElementById('input_agua_toma_direccion').readOnly = false;
+    // }
 
-    //Moneda y numero
-    function formatCurrency(input) {
-        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
-        if (value.length == 0)
-            value = '0';
-        input.value = '$' + value;
-    }
-    function formatNumber(input) {
-        var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
-        if (value.length == 0)
-            value = '0';
-        input.value = value;
-    }
+    // //Moneda y numero
+    // function formatCurrency(input) {
+    //     var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+    //     if (value.length == 0)
+    //         value = '0';
+    //     input.value = '$' + value;
+    // }
+    // function formatNumber(input) {
+    //     var value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/^0+/, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+    //     if (value.length == 0)
+    //         value = '0';
+    //     input.value = value;
+    // }
 
-    function formatRemove(input) {
-        const value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
-        input.value = value;
-    }
+    // function formatRemove(input) {
+    //     const value = input.value.replace(/\D/g, "").replace(/([0-9])([0-9]{2})$/, '$1.$2');
+    //     input.value = value;
+    // }
 
 
 

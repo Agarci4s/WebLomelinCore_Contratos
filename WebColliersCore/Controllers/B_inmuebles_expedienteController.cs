@@ -738,18 +738,18 @@ namespace WebLomelinCore.Controllers
             ViewBag.lst_aire_acondicionado2 = dataCG.lst_aire_acondicionado2();
             ViewBag.rol = rol;
 
-            ViewBag.lst_vandalizado = dataCG.lst_si_no_selecciona();
-            ViewBag.lst_invadido = dataCG.lst_si_no_selecciona();
-            ViewBag.lst_desocupado = dataCG.lst_si_no_selecciona();
-            ViewBag.lst_estacionamiento2 = dataCG.lst_estacionamiento2();
-            ViewBag.lst_tipificacion = dataCG.lst_tipificacion();
-            ViewBag.lst_asentamiento = dataCG.lst_asentamiento();
-            ViewBag.lst_tendencia = dataCG.lst_tendencia();
-            ViewBag.lst_areas_convivencia = dataCG.lst_areas_convivencia();
-            ViewBag.lst_b_cg_operador_estacionamiento = dataCG.lst_b_cg_operador_estacionamiento();
+            //ViewBag.lst_vandalizado = dataCG.lst_si_no_selecciona();
+            //ViewBag.lst_invadido = dataCG.lst_si_no_selecciona();
+            //ViewBag.lst_desocupado = dataCG.lst_si_no_selecciona();
+            //ViewBag.lst_estacionamiento2 = dataCG.lst_estacionamiento2();
+            //ViewBag.lst_tipificacion = dataCG.lst_tipificacion();
+            //ViewBag.lst_asentamiento = dataCG.lst_asentamiento();
+            //ViewBag.lst_tendencia = dataCG.lst_tendencia();
+            //ViewBag.lst_areas_convivencia = dataCG.lst_areas_convivencia();
+            //ViewBag.lst_b_cg_operador_estacionamiento = dataCG.lst_b_cg_operador_estacionamiento();
 
 
-            ViewBag.lst_b_cg_periodicidad_contratos = dataCG.lst_b_cg_periodicidad_contratos();
+            ViewBag.lst_b_cg_periodicidad_contratos = dataCG.b_cg_periodicidad_servicios_Get();
 
             //ViewBag.lst_segmento = dataCG.lst_segmento();
 
@@ -768,7 +768,7 @@ namespace WebLomelinCore.Controllers
                 b_Inmuebles_Expediente_Detalle_ContratosListAux.Add(new B_inmuebles_expediente_detalle_contratos
                 {
                     id_b_inmuebles = b_inmuebles_expediente.b_inmuebles.id_b_inmuebles,
-                    id_b_cg_tipo_expediente_contratos = item.id_b_cg_tipo_expediente_contratos, 
+                    id_b_cg_tipo_expediente_contratos = item.id_b_cg_tipo_expediente_contratos,
                     id_b_cg_periodicidad_contratos = 0
                 });
                 item.b_Inmuebles_Expediente_Detalle_ContratosList = b_Inmuebles_Expediente_Detalle_ContratosListAux;
@@ -782,7 +782,7 @@ namespace WebLomelinCore.Controllers
         // POST: B_inmuebles_visitas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(B_inmuebles_visitas b_Inmuebles_visitas, int id, IFormCollection collection)
+        public ActionResult Create(B_inmuebles_expediente b_inmuebles_expediente, int id, IFormCollection collection)
         {
             #region Validación de permisos
             var claims = HttpContext.User.Claims;
@@ -792,86 +792,87 @@ namespace WebLomelinCore.Controllers
                 return Redirect("~/Home");
             #endregion
 
-            EstablecerPermisos(IdUsuario, System.Reflection.MethodBase.GetCurrentMethod(), idCartera);
+            //EstablecerPermisos(IdUsuario, System.Reflection.MethodBase.GetCurrentMethod(), idCartera);
 
-            b_Inmuebles_visitas.id_b_inmuebles = id;
-            DataUsuarios dataUsuarios = new DataUsuarios();
-            var rol = int.Parse(dataUsuarios.recuperaUsuario(IdUsuario).Puesto);
-            if (b_Inmuebles_visitas.estatus_visita == 2 && rol != 1 && rol != 52)
-                return Redirect("~/Home");
+            //b_inmuebles_expediente.b_inmuebles.id_b_inmuebles = id;
+            //DataUsuarios dataUsuarios = new DataUsuarios();
+            //var rol = int.Parse(dataUsuarios.recuperaUsuario(IdUsuario).Puesto);
+            //if (b_Inmuebles_visitas.estatus_visita == 2 && rol != 1 && rol != 52)
+            //    return Redirect("~/Home");
 
-            if (b_Inmuebles_visitas.estatus_visita == 2)
+
+            filePath = Path.Combine("wwwroot", "Images");
+            filePath = Path.Combine(filePath, "precarga");
+            filePath = Path.Combine(filePath, id.ToString("000"));
+            if (Directory.Exists(filePath))
             {
-                filePath = Path.Combine("wwwroot", "Images");
-                filePath = Path.Combine(filePath, "precarga");
-                filePath = Path.Combine(filePath, id.ToString("000"));
-                if (Directory.Exists(filePath))
+                string filePathAux = Path.Combine("Images", id.ToString("000"));
+                //filePathAux = Path.Combine(filePathAux, b_Inmuebles_visitas.fecha_visita.ToString("yyMMdd"));
+                if (!Directory.Exists(filePathAux))
                 {
-                    string filePathAux = Path.Combine("Images", id.ToString("000"));
-                    filePathAux = Path.Combine(filePathAux, b_Inmuebles_visitas.fecha_visita.ToString("yyMMdd"));
-                    if (!Directory.Exists(filePathAux))
-                    {
-                        Directory.CreateDirectory(filePathAux);
-                    }
+                    Directory.CreateDirectory(filePathAux);
+                }
 
-                    foreach (var file in Directory.GetFiles(filePath))//directorio de donde se moveran las fotos
+                foreach (B_cg_tipo_expediente_contratos b_cg_tipo_expediente_contratos in b_inmuebles_expediente.b_cg_tipo_expediente_contratos)//directorio de donde se moveran las fotos
+                {
+                    var file = b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta;
+                    if (file!=null && file.Length>3)
                     {
                         var nombre = Path.GetFileNameWithoutExtension(file);
                         var nombreAll = Path.GetFileName(file);
 
-                        if (GetFotos().Contains(nombre.Split(" ")[0]))
                         {
-                            if (GetFotos(b_Inmuebles_visitas).Contains(nombreAll))
-                                System.IO.File.Move(file, Path.Combine(filePathAux, Path.GetFileName(file)), true);
-                            else
-                                System.IO.File.Delete(file);
+                            System.IO.File.Move(Path.Combine(filePath,file), Path.Combine(filePathAux, Path.GetFileName(file)), true);
+
                         }
                     }
-
-                }
-            }
-            DataInmueblesVisita dataInmueblesVisita = new DataInmueblesVisita();
-            var aux = dataInmueblesVisita.Get(IdUsuario, id, 1).FirstOrDefault();
-
-            if (aux == null)
-            {
-                b_Inmuebles_visitas.id_b_inmuebles_visita = dataInmueblesVisita.Insert(b_Inmuebles_visitas);
-
-                //Id de especiales
-                var especial = collection["VisitasMotivoEspecial"];
-
-                DataInmueblesVisitaMotivoEspecial dataInmueblesVisitaMotivoEspecial = new DataInmueblesVisitaMotivoEspecial();
-                foreach (var item in especial)
-                {
-                    int idEspecial = int.Parse(item.ToString());
-                    dataInmueblesVisitaMotivoEspecial.Insert(idEspecial, b_Inmuebles_visitas.id_b_inmuebles_visita);
                 }
 
             }
-            else
-            {
-                b_Inmuebles_visitas.id_b_inmuebles_visita = aux.id_b_inmuebles_visita;
-                dataInmueblesVisita.Edit(b_Inmuebles_visitas);
 
-                //Id de especiales
-                var especial = collection["VisitasMotivoEspecial"];
 
-                //busca cuales ya están agregados y cuales se eliminarán
-                DataInmueblesVisitaMotivoEspecial dataInmueblesVisitaMotivoEspecial = new DataInmueblesVisitaMotivoEspecial();
-                var b_inmuebles_visitas_motivo_especialAux = dataInmueblesVisitaMotivoEspecial.Get(b_Inmuebles_visitas.id_b_inmuebles_visita);
-                foreach (var item in b_inmuebles_visitas_motivo_especialAux)
-                {
-                    if (especial.Contains(item.id_b_cg_motivo_especial.ToString()) && item.status == false)
-                    {
-                        dataInmueblesVisitaMotivoEspecial.Insert(item.id_b_cg_motivo_especial, b_Inmuebles_visitas.id_b_inmuebles_visita);
-                    }
-                    if (!especial.Contains(item.id_b_cg_motivo_especial.ToString()) && item.status == true)
-                    {
-                        dataInmueblesVisitaMotivoEspecial.Delete(item.id_b_cg_motivo_especial, b_Inmuebles_visitas.id_b_inmuebles_visita);
-                    }
+            //DataInmueblesVisita dataInmueblesVisita = new DataInmueblesVisita();
+            //var aux = dataInmueblesVisita.Get(IdUsuario, id, 1).FirstOrDefault();
 
-                }
-            }
+            //if (aux == null)
+            //{
+            //    b_Inmuebles_visitas.id_b_inmuebles_visita = dataInmueblesVisita.Insert(b_Inmuebles_visitas);
+
+            //    //Id de especiales
+            //    var especial = collection["VisitasMotivoEspecial"];
+
+            //    DataInmueblesVisitaMotivoEspecial dataInmueblesVisitaMotivoEspecial = new DataInmueblesVisitaMotivoEspecial();
+            //    foreach (var item in especial)
+            //    {
+            //        int idEspecial = int.Parse(item.ToString());
+            //        dataInmueblesVisitaMotivoEspecial.Insert(idEspecial, b_Inmuebles_visitas.id_b_inmuebles_visita);
+            //    }
+
+            //}
+            //else
+            //{
+            //    b_Inmuebles_visitas.id_b_inmuebles_visita = aux.id_b_inmuebles_visita;
+            //    dataInmueblesVisita.Edit(b_Inmuebles_visitas);
+
+            //    //Id de especiales
+            //    var especial = collection["VisitasMotivoEspecial"];
+
+            //    //busca cuales ya están agregados y cuales se eliminarán
+            //    DataInmueblesVisitaMotivoEspecial dataInmueblesVisitaMotivoEspecial = new DataInmueblesVisitaMotivoEspecial();
+            //    var b_inmuebles_visitas_motivo_especialAux = dataInmueblesVisitaMotivoEspecial.Get(b_Inmuebles_visitas.id_b_inmuebles_visita);
+            //    foreach (var item in b_inmuebles_visitas_motivo_especialAux)
+            //    {
+            //        if (especial.Contains(item.id_b_cg_motivo_especial.ToString()) && item.status == false)
+            //        {
+            //            dataInmueblesVisitaMotivoEspecial.Insert(item.id_b_cg_motivo_especial, b_Inmuebles_visitas.id_b_inmuebles_visita);
+            //        }
+            //        if (!especial.Contains(item.id_b_cg_motivo_especial.ToString()) && item.status == true)
+            //        {
+            //            dataInmueblesVisitaMotivoEspecial.Delete(item.id_b_cg_motivo_especial, b_Inmuebles_visitas.id_b_inmuebles_visita);
+            //        }
+
+            //    }
+            //}
 
 
 

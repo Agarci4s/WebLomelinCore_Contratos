@@ -20,6 +20,7 @@ namespace WebColliersCore.Models
 
         public string sub_categoria { get; set; }
 
+        public bool periodo { get; set; }
         //public bool status { get; set; }
 
         //crear un arreglo del detalle
