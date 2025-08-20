@@ -1,28 +1,30 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Humanizer.Localisation;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using MySqlX.XDevAPI.Common;
+using NPOI.SS.Formula.Functions;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Components;
+using Stimulsoft.Report.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Intrinsics.X86;
+using System.Threading.Tasks;
+using WebColliersCore;
 using WebColliersCore.Data;
 using WebColliersCore.Models;
-using WebColliersCore;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Logging;
 using WebLomelinCore.Data;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using NPOI.SS.Formula.Functions;
-using System.Linq;
-using Humanizer.Localisation;
-using System.Data;
-using Stimulsoft.Report;
-using Stimulsoft.Report.Mvc;
-using Stimulsoft.Report.Components;
-using System.Drawing;
-using MySqlX.XDevAPI.Common;
-using System.Runtime.Intrinsics.X86;
 
 namespace WebLomelinCore.Controllers
 {
@@ -46,65 +48,65 @@ namespace WebLomelinCore.Controllers
             }
         }
 
-        public IActionResult GetReport()
-        {
-            string filePath1 = Environment.CurrentDirectory;
-            DataInmueblesVisita dataInmueblesVisita = new DataInmueblesVisita();
-            int id = (int)TempData["id_b_inmuebles"];
+        //public IActionResult GetReport()
+        //{
+        //    string filePath1 = Environment.CurrentDirectory;
+        //    DataInmueblesVisita dataInmueblesVisita = new DataInmueblesVisita();
+        //    int id = (int)TempData["id_b_inmuebles"];
 
-            DataTable dataTableCR = dataInmueblesVisita.GetResumenCedular(id);
-
-
-            StiReport report = new StiReport();
-            string filePath = "";
-            filePath = Directory.GetCurrentDirectory() + "\\Report\\CedulaResumen\\rptCedulaResumen.mrt";
-
-            report.Load(filePath);
-
-            if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathExterior1"].ToString()))
-            {
-                StiImage stiImage = report.GetComponents()["Exterior1"] as StiImage;
-                stiImage.Stretch = true;
-                stiImage.AspectRatio = false;
-                Image myImage = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathExterior1"].ToString());
-                stiImage.Image = myImage;
-            }
-
-            if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathExterior2"].ToString()))
-            {
-                StiImage stiImage2 = report.GetComponents()["Exterior2"] as StiImage;
-                stiImage2.Stretch = true;
-                stiImage2.AspectRatio = false;
-                Image myImage2 = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathExterior2"].ToString());
-                stiImage2.Image = myImage2;
-            }
-
-            if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathInterior1"].ToString()))
-            {
-                StiImage stiImage3 = report.GetComponents()["Interior1"] as StiImage;
-                stiImage3.Stretch = true;
-                stiImage3.AspectRatio = false;
-                Image myImage3 = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathInterior1"].ToString());
-                stiImage3.Image = myImage3;
-            }
-
-            if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathInterior2"].ToString()))
-            {
-                StiImage stiImage4 = report.GetComponents()["Interior2"] as StiImage;
-                stiImage4.Stretch = true;
-                stiImage4.AspectRatio = false;
-                Image myImage4 = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathInterior2"].ToString());
-                stiImage4.Image = myImage4;
-            }
+        //    DataTable dataTableCR = dataInmueblesVisita.GetResumenCedular(id);
 
 
-            report.Dictionary.Databases.Clear();
-            report.RegData("dtCedulaResumen", dataTableCR);
-            report.RegData("dtCR", dataTableCR);
-            report.RegData("dtCR1", dataTableCR);
+        //    StiReport report = new StiReport();
+        //    string filePath = "";
+        //    filePath = Directory.GetCurrentDirectory() + "\\Report\\CedulaResumen\\rptCedulaResumen.mrt";
 
-            return StiNetCoreViewer.InteractionResult(this, report);
-        }
+        //    report.Load(filePath);
+
+        //    if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathExterior1"].ToString()))
+        //    {
+        //        StiImage stiImage = report.GetComponents()["Exterior1"] as StiImage;
+        //        stiImage.Stretch = true;
+        //        stiImage.AspectRatio = false;
+        //        Image myImage = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathExterior1"].ToString());
+        //        stiImage.Image = myImage;
+        //    }
+
+        //    if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathExterior2"].ToString()))
+        //    {
+        //        StiImage stiImage2 = report.GetComponents()["Exterior2"] as StiImage;
+        //        stiImage2.Stretch = true;
+        //        stiImage2.AspectRatio = false;
+        //        Image myImage2 = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathExterior2"].ToString());
+        //        stiImage2.Image = myImage2;
+        //    }
+
+        //    if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathInterior1"].ToString()))
+        //    {
+        //        StiImage stiImage3 = report.GetComponents()["Interior1"] as StiImage;
+        //        stiImage3.Stretch = true;
+        //        stiImage3.AspectRatio = false;
+        //        Image myImage3 = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathInterior1"].ToString());
+        //        stiImage3.Image = myImage3;
+        //    }
+
+        //    if (System.IO.File.Exists(filePath1 + dataTableCR.Rows[0]["PathInterior2"].ToString()))
+        //    {
+        //        StiImage stiImage4 = report.GetComponents()["Interior2"] as StiImage;
+        //        stiImage4.Stretch = true;
+        //        stiImage4.AspectRatio = false;
+        //        Image myImage4 = Image.FromFile(filePath1 + dataTableCR.Rows[0]["PathInterior2"].ToString());
+        //        stiImage4.Image = myImage4;
+        //    }
+
+
+        //    report.Dictionary.Databases.Clear();
+        //    report.RegData("dtCedulaResumen", dataTableCR);
+        //    report.RegData("dtCR", dataTableCR);
+        //    report.RegData("dtCR1", dataTableCR);
+
+        //    return StiNetCoreViewer.InteractionResult(this, report);
+        //}
 
         public IActionResult ViewerEvent()
 
@@ -816,13 +818,63 @@ namespace WebLomelinCore.Controllers
                 foreach (B_cg_tipo_expediente_contratos b_cg_tipo_expediente_contratos in b_inmuebles_expediente.b_cg_tipo_expediente_contratos)//directorio de donde se moveran las fotos
                 {
                     var file = b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].ruta;
-                    if (file!=null && file.Length>3)
+                    if (file != null && file.Length > 3)
                     {
                         var nombre = Path.GetFileNameWithoutExtension(file);
                         var nombreAll = Path.GetFileName(file);
 
                         {
-                            System.IO.File.Move(Path.Combine(filePath,file), Path.Combine(filePathAux, Path.GetFileName(file)), true);
+                            try
+                            {
+                                System.IO.File.Move(Path.Combine(filePath, file), Path.Combine(filePathAux, Path.GetFileName(file)), true);
+
+                                b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_inmuebles = id;
+                                if (b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].anio > 0)
+                                {
+                                    b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio = new DateTime(b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].anio, 1, 1);
+
+                                }
+
+                                //Aaigna el periodo escogido
+                                int meses;
+                                switch (b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_periodicidad_contratos)
+                                {
+                                    case 1:
+                                        meses = 12;//anual
+                                        break;
+                                    case 2:
+                                        meses = 6;//bimestral
+                                        break;
+                                    case 3:
+                                        meses = 1;//mensual
+                                        break;
+                                    case 5:
+                                        meses = 2;//semestral
+                                        break;
+                                    default:
+                                        meses = 0;
+                                        break;
+                                }
+
+                                b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio = b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio.AddMonths(meses * (b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].periodo - 1));
+                                b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_fin = b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_inicio;
+                                if (meses > 0)
+                                    b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_fin = b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].fecha_periodo_fin.AddMonths(meses).AddDays(-1);
+                                b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_cg_tipo_expediente_contratos = b_cg_tipo_expediente_contratos.id_b_cg_tipo_expediente_contratos;
+
+
+                                DataInmueblesExpedienteContratos dataInmueblesExpedienteContratos = new DataInmueblesExpedienteContratos();
+
+
+                                b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0].id_b_inmuebles_expediente_detalle_contratos =  dataInmueblesExpedienteContratos.Insert(b_cg_tipo_expediente_contratos.b_Inmuebles_Expediente_Detalle_ContratosList[0]);
+
+
+                            }
+                            catch (Exception)
+                            {
+
+                                throw;
+                            }
 
                         }
                     }
