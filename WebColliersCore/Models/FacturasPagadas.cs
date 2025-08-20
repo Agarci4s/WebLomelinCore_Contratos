@@ -8,6 +8,13 @@ namespace WebLomelinCore.Models
 {
     public class FacturasPagadas
     {
+
+        public FacturasPagadas() 
+        {
+            Inmueble = new B_inmuebles();
+            Factura = new Factura();
+        }
+
         [Required(ErrorMessage = "Seleccione el inmueble")]
         [DisplayName("Inmueble")]
         public int IdInmueble { get; set; }

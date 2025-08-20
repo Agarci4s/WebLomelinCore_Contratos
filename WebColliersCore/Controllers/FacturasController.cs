@@ -13,7 +13,7 @@ namespace WebLomelinCore.Controllers
 {
     public class FacturasController : Controller
     {
-        private bool InicializaVista(int? IdRegion, int? IdInmueble, int? IdLocalidad)
+        private bool InicializaVista(int? IdRegion, int? IdInmueble)
         {
             #region Validación de permisos
             var claims = HttpContext.User.Claims;
@@ -28,8 +28,8 @@ namespace WebLomelinCore.Controllers
             IdRegion = IdRegion.HasValue ? IdRegion.Value : -1;
             ViewBag.Inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdInmueble);
 
-            IdInmueble = IdInmueble.HasValue ? IdInmueble : -1;
-            ViewBag.Localidades = PagosServicios.setItem(new DataLocalidades().LocalidadesGet(IdInmueble.Value), IdLocalidad);
+            //IdInmueble = IdInmueble.HasValue ? IdInmueble : -1;
+            //ViewBag.Localidades = PagosServicios.setItem(new DataLocalidades().LocalidadesGet(IdInmueble.Value), IdLocalidad);
 
             return response;
         }
@@ -38,7 +38,7 @@ namespace WebLomelinCore.Controllers
         // GET: FacturasController
         public ActionResult Index()
         {
-            if (!InicializaVista(null, null, null))
+            if (!InicializaVista(null, null))
             {
                 return Redirect("~/Home");
             }
@@ -58,7 +58,12 @@ namespace WebLomelinCore.Controllers
         {
             try
             {
-                IEnumerable<FacturasPagadas> model = new List<FacturasPagadas>();
+                //IEnumerable<FacturasPagadas> model = new List<FacturasPagadas>();
+                DataGastos data = new DataGastos();
+                var model = data.GetFacturasPagadas(
+                       collection.IdRegion,
+                       collection.IdInmueble
+                );
                 return PartialView("_Listado", model);
             }
             catch(Exception ex)

@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using WebColliersCore.DataAccess;
+using WebColliersCore.Models;
 using WebLomelinCore.Models;
 
 namespace WebLomelinCore.Data
@@ -98,7 +101,7 @@ namespace WebLomelinCore.Data
                     new("PathXML_In", movimientos.PathLocalXML ?? ""),
                     new("PathPDF_In", movimientos.PathLocalPDF ?? "")
                 };
-                
+
 
                 DataTable dataTable = RunStoredProcedure("fact_xml_Insert", listSqlParameters);
 
@@ -107,8 +110,47 @@ namespace WebLomelinCore.Data
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return 0;                
-            }            
+                return 0;
+            }
+        }
+
+
+        public List<FacturasPagadas> GetFacturasPagadas(int? IdRegion, int? IdInmueble)
+        {
+            List<MySqlParameter> mySqlParameters = new()
+            {
+                new MySqlParameter("p_IdRegion", IdRegion),
+                new MySqlParameter("p_IdInmueble", IdInmueble)
+            };
+
+            DataTable data = RunStoredProcedure("sp_GetFacturasCargadas", mySqlParameters);
+
+            List<FacturasPagadas> response = new();
+
+            foreach (DataRow row in data.Rows)
+            {
+                FacturasPagadas factura = new()
+                {
+                      Inmueble = new B_inmuebles
+                      {
+                          ue = Convert.ToInt32(row["ue"]),
+                          cr = row["cr"].ToString(),
+                          nombre = row["nombre"].ToString()
+                      },
+                      Factura = new Factura
+                      {
+                          Concepto = row["Concepto"].ToString()
+                      },
+
+                    MesPago = row["MesPago"].ToString(),
+                    FechaLimitePago = Convert.ToDateTime(row["FechaLimitePago"]),
+                    FechaPagoRealizado = Convert.ToDateTime(row["fechaPago"])
+                };
+
+                response.Add(factura);
+            }
+
+            return response;
         }
     }
 }
