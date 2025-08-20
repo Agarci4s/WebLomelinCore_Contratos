@@ -1,0 +1,93 @@
+﻿@using WebLomelinCore.Models
+@model IEnumerable<WebLomelinCore.Models.FacturasPagadas>
+<header>
+
+
+</header>
+
+<div class="tableFixHead">
+    <table class="table table-responsive-sm table-sm small" name = "tableData" id="tableData">
+        <thead class="font-size-head">
+            <tr>
+                <th>
+                    @Html.DisplayName("cr")
+                </th>
+                <th>
+                    @Html.DisplayName("ue")
+                </th>
+                <th>
+                    @Html.DisplayName("Nombre de la sucursal")
+                </th>
+                <th>
+                    @Html.DisplayName("Mes de pago")
+                </th>
+                <th>
+                    @Html.DisplayName("Concepto de pago")
+                </th>
+                <th>
+                    @Html.DisplayName("Importe")
+                </th>
+                <th>
+                    @Html.DisplayName("Fecha limite de pago")
+                </th>
+                <th>
+                    @Html.DisplayName("Fecha de pago realizado")
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.Raw(item.Inmueble.cr)
+                        </td>
+                        <td>
+                            @Html.Raw(item.Inmueble.ue)
+                        </td>
+                        <td>
+                            @Html.Raw(item.Inmueble.nombre)
+                        </td>
+                        <td>
+                            @Html.Raw(item.MesPago)
+                        </td>
+                        <td>
+                            @Html.Raw(item.Factura.Concepto)
+                        </td>
+                        <td>
+                            @Html.Raw(item.Factura.Importe)
+                        </td>
+                        <td>
+                            @Html.Raw(item.FechaLimitePago)
+                        </td>
+                        <td>
+                            @Html.Raw(item.FechaPagoRealizado)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="10" style="color: red;">Sin información para mostrar</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script src="~/js/FacturasPagadas.js" />
+
+

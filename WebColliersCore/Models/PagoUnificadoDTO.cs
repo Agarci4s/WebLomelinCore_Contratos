@@ -59,19 +59,3 @@ namespace WebLomelinCore.Models
     }
 }
 
-
- //* hilos trheads
- //* paralelismo
- //* dictionary
- //* funtios
- //* delegados
- //* tareas asyncronicas y diferencia con hilos y paralelismo
- //* SOLID
- //* herencia
- //* interfaces
- //* entity framework
- //* entity framewor core
- //* versiones de frameworks
- //* contrsuctor
- //* DataAntotations
- //* 
