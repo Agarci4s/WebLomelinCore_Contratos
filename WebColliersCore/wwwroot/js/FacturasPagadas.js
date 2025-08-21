@@ -12,19 +12,6 @@
     });
 }
 
-function changeInmueble() {
-    var newId = $("#selectInmueble").val();
-    var url = "/Facturas/getLocalidades";
-
-    $.getJSON(url, { IdInmueble: newId }, function (data) {
-        var item = "";
-        $("#selectLocalidad").empty();
-        $.each(data, function (i, Localidades) {
-            item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
-        });
-        $("#selectLocalidad").html(item);
-    });
-}
 
 $(document).ready(function () {
     $("#frmBusqueda").submit(function (e) {
@@ -43,4 +30,3 @@ $(document).ready(function () {
         });
     });
 });
-

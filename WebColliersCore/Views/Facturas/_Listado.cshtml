@@ -61,10 +61,10 @@
                             @Html.Raw(item.Factura.Importe)
                         </td>
                         <td>
-                            @Html.Raw(item.FechaLimitePago)
+                            @Html.Raw(item.FechaLimitePago.ToShortDateString())
                         </td>
                         <td>
-                            @Html.Raw(item.FechaPagoRealizado)
+                            @Html.Raw(item.FechaPagoRealizado.ToShortDateString())
                         </td>
                     </tr>
                 }

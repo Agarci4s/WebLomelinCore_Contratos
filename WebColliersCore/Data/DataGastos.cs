@@ -118,9 +118,8 @@ namespace WebLomelinCore.Data
         public List<FacturasPagadas> GetFacturasPagadas(int? IdRegion, int? IdInmueble)
         {
             List<MySqlParameter> mySqlParameters = new()
-            {
-                new MySqlParameter("p_IdRegion", IdRegion),
-                new MySqlParameter("p_IdInmueble", IdInmueble)
+            {                
+                new MySqlParameter("IdInmueble_in", IdInmueble)
             };
 
             DataTable data = RunStoredProcedure("sp_GetFacturasCargadas", mySqlParameters);
@@ -129,6 +128,15 @@ namespace WebLomelinCore.Data
 
             foreach (DataRow row in data.Rows)
             {
+                double import = 0;
+                double.TryParse(row["Importe"].ToString(),out import);
+
+                DateTime limitePago;
+                DateTime.TryParse(row["FechaLimitePago"].ToString(), out limitePago);
+
+                DateTime pagoRealizado;
+                DateTime.TryParse(row["FechaPagoRealizado"].ToString(), out pagoRealizado);
+
                 FacturasPagadas factura = new()
                 {
                       Inmueble = new B_inmuebles
@@ -139,12 +147,13 @@ namespace WebLomelinCore.Data
                       },
                       Factura = new Factura
                       {
-                          Concepto = row["Concepto"].ToString()
+                          Concepto = row["Concepto"].ToString(),
+                          Importe = import,
                       },
 
-                    MesPago = row["MesPago"].ToString(),
-                    FechaLimitePago = Convert.ToDateTime(row["FechaLimitePago"]),
-                    FechaPagoRealizado = Convert.ToDateTime(row["fechaPago"])
+                    MesPago = "Abril",
+                    FechaLimitePago = limitePago,
+                    FechaPagoRealizado = pagoRealizado,
                 };
 
                 response.Add(factura);
