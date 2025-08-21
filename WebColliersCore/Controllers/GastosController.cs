@@ -829,7 +829,8 @@ namespace WebLomelinCore.Controllers
             string totalImpuesto = "";
             try
             {
-                totalImpuesto = item.Attributes.GetNamedItem("TotalImpuestosTrasladados").InnerText;
+                totalImpuesto = item.Attributes.GetNamedItem("TotalImpuestosTrasladados")?.InnerText;
+                
             }
             catch (Exception ex)
             {
@@ -1092,7 +1093,8 @@ namespace WebLomelinCore.Controllers
         {
             try
             {
-                return Convert.ToDouble(document.GetElementsByTagName("cfdi:Comprobante").Item(0).Attributes.GetNamedItem("Descuento").InnerText);
+                return Convert.ToDouble(document.GetElementsByTagName("cfdi:Comprobante")?.Item(0).Attributes?.GetNamedItem("Descuento")?.InnerText);
+                
             }
             catch (Exception ex)
             {
@@ -1118,7 +1120,8 @@ namespace WebLomelinCore.Controllers
         {
             try
             {
-                return document.GetElementsByTagName("cfdi:Comprobante").Item(0).Attributes.GetNamedItem("Serie").InnerText;
+               
+                return document.GetElementsByTagName("cfdi:Comprobante")?.Item(0)?.Attributes?.GetNamedItem("Serie")?.InnerText;
 
             }
             catch (Exception ex)
@@ -1201,7 +1204,7 @@ namespace WebLomelinCore.Controllers
             {
                 try
                 {
-                    return document.GetElementsByTagName("cfdi:Comprobante").Item(0).Attributes.GetNamedItem("TipoCambio").InnerText;
+                    return document.GetElementsByTagName("cfdi:Comprobante")?.Item(0)?.Attributes?.GetNamedItem("TipoCambio")?.InnerText;
                 }
                 catch (Exception)
                 {
