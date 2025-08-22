@@ -133,24 +133,23 @@
 		rowAr["CR"] = $tds.eq(2).text().trim();
 		rowAr["UE"] = $tds.eq(3).text().trim();
 		rowAr["Contrato"] = $tds.eq(4).text().trim();
-		rowAr["fecha_inicio"] = $tds.eq(6).text().trim();
+		rowAr["fechainicio"] = $tds.eq(6).text().trim();
         var campoa = $('#selectCampo').val();
-        if (parseInt(campoa) ===  1  ) {
-            rowAr["fecha_termino"] = $tds.eq(7).text().trim();
+        if (parseInt(campoa) ==  1  ) {
+            rowAr["fechatermino"] = $tds.eq(7).text().trim();
         }
         else{
-            rowAr["fecha_revision"] = $tds.eq(7).text().trim();
+            rowAr["fecharevision"] = $tds.eq(7).text().trim();
         }
 		
-	    
 		// Capturar input editable (EditorFor)
 		rowAr["Email"] = $tds.eq(5).find('input').val();
 	
 		// Capturar checkbox
 		rowAr["Check"] = $tds.eq(0).find('input[type="checkbox"]').is(':checked');
-	
-	rows.push(rowAr);
+	    rows.push(rowAr);
 	});
+
         $.ajax({
                 url: $("#formAccion").attr('action'),
                 type: 'POST',

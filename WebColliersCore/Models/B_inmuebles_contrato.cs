@@ -43,14 +43,14 @@ namespace WebColliersCore.Models
 
         [Display(Name = "Fecha inicio")]
         [Remote(action: "VerificaFechaInicio", controller: "B_inmueblesContrato", AdditionalFields = nameof(id_b_inmuebles) + "," + nameof(id_b_inmuebles_contrato))]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         [Required(ErrorMessage = "Campo obligatorio")]
         public DateTime fecha_inicio { get; set; }
         public string fechainicio { get; set; }
 
         [Display(Name = "Fecha término")]
         [Remote(action: "VerificaFechaTermino", controller: "B_inmueblesContrato", AdditionalFields = nameof(fecha_inicio))]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime fecha_termino { get; set; }
         public string fechatermino { get; set; }
 
@@ -60,7 +60,7 @@ namespace WebColliersCore.Models
         public int fecha_anticipacion { get; set; }
 
         [Display(Name = "Fecha obligado")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime fecha_obligado { get; set; }
 
         [Display(Name = "Litigio y consignación")]
@@ -73,7 +73,7 @@ namespace WebColliersCore.Models
 
 
         [Display(Name = "Fecha revisión")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         [Remote(action: "VerificaRevision", controller: "B_inmueblesContrato", AdditionalFields = nameof(fecha_inicio) + "," + nameof(fecha_termino))]
         public DateTime fecha_revision { get; set; }
         public string fecharevision { get; set; }
