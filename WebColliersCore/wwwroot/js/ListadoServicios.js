@@ -4,7 +4,8 @@ $("#div_Predial").hide();
 
 $("#formAccionAgua").hide();
 $("#formAccionLuz").hide();
-$("#formAccionPredial").hide();
+$("#formAccionPredial").hide(); 
+
 
 $(document).ready(function () {
     $('#frmBusqueda').submit(function (e) {
@@ -51,53 +52,6 @@ $(document).ready(function () {
     });
 });
 
-function changeServicio() {
-    var idServicio = $("#IdServicio").val();
-    var url = "/ListadoServicios/getPeriodicidad";
-
-    $.getJSON(url, { IdServicio: idServicio }, function (data) {
-        var item = "";
-        $("#IdPeriodicidad").empty();
-        $.each(data, function (i, periodicidad) {
-            item += '<option value="' + periodicidad.value + '">' + periodicidad.text + '</option>';
-        });
-        $("#IdPeriodicidad").html(item);
-    });
-}
-
-// Al cambiar Periodicidad, cambia el título del combo de Bimestres
-$("#IdPeriodicidad").on("change", function () {
-    var selectedText = $("#IdPeriodicidad option:selected").text().toLowerCase();
-    var label = "Segmento temporal"; // fallback
-
-    if (selectedText.includes("mensual")) {
-        label = "Mensual";
-    } else if (selectedText.includes("bimestral")) {
-        label = "Bimestral";
-    } else if (selectedText.includes("semestral")) {
-        label = "Semestral";
-    } else if (selectedText.includes("anual")) {
-        label = "Anual";
-    }
-
-    $("#labelBimestre").text(label);
-});
-
-function changePeriodicidad() {
-    var idPeriodicidad = $("#IdPeriodicidad").val();
-    var url = "/ListadoServicios/getBimestres";
-
-    $.getJSON(url, { IdPeriodicidad: idPeriodicidad }, function (data) {
-        var item = "";
-
-        $.each(data, function (i, periodicidad) {
-            item += '<option value="' + periodicidad.value + '">' + periodicidad.text + '</option>';
-        });
-
-        $("#IdBimestre").html(item);
-    });
-}
-
 function changeRegion() {
     var newId = $("#selectRegion").val();
     var url = "/ListadoServicios/getInmuebles";
@@ -109,6 +63,8 @@ function changeRegion() {
             item += '<option value="' + inmueble.value + '">' + inmueble.text + '</option>'
         });
         $("#selectInmueble").html(item);
+        RefreshInmueble();
+      // Refresh the select picker to show new options
     });
 }
 
@@ -123,6 +79,7 @@ function changeInmueble() {
             item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
         });
         $("#selectLocalidad").html(item);
+        RefreshLocalidad();
     });
 }
 
@@ -139,6 +96,7 @@ function changeLocalidad() {
             item += '<option value="' + cuentas.value + '">' + cuentas.text + '</option>'
         });
         $("#selectCuenta").html(item);
+        RefreshCuenta();
     });
 }
 

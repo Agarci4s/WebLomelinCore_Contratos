@@ -130,6 +130,9 @@ namespace WebLomelinCore.Models
         /// </summary>
         public pagosagua ConsumoAnterior { get; set; }
 
+        public double? PorcentajeConsumo { get; set; }
+        public string ClassPorcentaje { get; set; }
+
 
         /// <summary>
         /// Escribe un motivo por el cuel reactiva este item al estar en estatus rechazdo

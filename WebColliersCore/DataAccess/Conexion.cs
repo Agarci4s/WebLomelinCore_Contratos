@@ -328,7 +328,7 @@ namespace WebColliersCore.DataAccess
         }
 
 
-        public int ExecuteNonQuerySP(string procedimiento, List<MySqlParameter> datos)
+        public int ExecuteNonQrySP(string procedimiento, List<MySqlParameter> datos)
         {
             try
             {

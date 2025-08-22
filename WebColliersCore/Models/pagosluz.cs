@@ -97,6 +97,8 @@ namespace WebLomelinCore.Models
 
         public B_inmuebles InmuebleData {  get; set; }
         public pagosluz ConsumoAnterior { get; set; }
+        public double? PorcentajeConsumo { get; set; }
+        public string ClassPorcentaje { get; set; }
 
         /*DATOS DEL FORMULARIO*/
 
