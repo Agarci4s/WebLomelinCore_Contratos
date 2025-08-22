@@ -11,6 +11,20 @@ namespace WebColliersCore.Data
     public class DataCG
     {
         private Conexion conexion = new Conexion();
+        public List<SelectListItem> b_cg_periodicidad_servicios_Get()
+        {
+
+            List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();
+            DataTable dataTable = conexion.RunStoredProcedure("b_cg_periodicidad_servicios_Get2", listSqlParameters);
+            List<SelectListItem> listSelectListItems = new List<SelectListItem>();
+            listSelectListItems.Add(new SelectListItem { Text = "Selecciona una opción", Value = "0" });
+            foreach (DataRow item in dataTable.Rows)
+            {
+                listSelectListItems.Add(new SelectListItem { Text = item["Periodicidad"].ToString(), Value = item["Id"].ToString() });
+            }
+            return listSelectListItems;
+        }
+
         public List<SelectListItem> lst_b_cg_operador_estacionamiento()
         {
 
