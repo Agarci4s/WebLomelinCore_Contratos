@@ -6,6 +6,12 @@
         <thead class="font-size-head">
             <tr>
                 <th>
+                    Notificar
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nombre)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.cr)
                 </th>
                 <th>
@@ -15,30 +21,19 @@
                     @Html.DisplayNameFor(model => model.contrato)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.renta)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.id_b_cg_contrato_tipo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.id_b_cg_contrato_estatu)
+                    @Html.DisplayNameFor(model => model.email)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.fecha_inicio)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.fecha_termino)
+                    @Html.DisplayName(ViewBag.Campo == 1 ? "Fecha de Termino":"Fecha de Revisión")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.fecha_obligado)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fecha_anticipacion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.litigio)
+                    @* @Html.DisplayNameFor(model => model.EsSeleccionado) *@
                 </th>
                 <th></th>
+
             </tr>
         </thead>
         <tbody>
@@ -47,6 +42,12 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td style="text-align: center" class="chkres">
+                            <input type="checkbox" name="Check" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.cr)
                         </td>
@@ -57,28 +58,22 @@
                             @Html.DisplayFor(modelItem => item.contrato)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.renta)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.tipo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.estatus)
+                            @Html.EditorFor(modelItem => item.email, 
+                                new { htmlAttributes = new { @class = "form-control font-size-row", 
+                                @style = "width: 18em;" } })
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.fecha_inicio)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.fecha_termino)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.fecha_obligado)
-                        </td>
-                        <td style="text-align:center">
-                            @Html.DisplayFor(modelItem => item.fecha_anticipacion)
-                        </td>
-                        <td style="text-align:center">
-                            @Html.DisplayFor(modelItem => item.litigio)
+                            @if(ViewBag.Campo == 1) { 
+                                @Html.DisplayFor(modelItem => item.fecha_termino)
+                            } 
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.fecha_revision)
+                            }
+
                         </td>
                     </tr>
                 }
@@ -92,3 +87,92 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }  
+}
+
+<script>
+            $("#btnEnviar").click(function () {
+        swal({
+            title: "¿Seguro que deseas continuar?",
+            text: "Se enviará correo a los registros seleccionados y que tengan correo",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                ProcesarEnvios();
+            } else {
+                swal("Operación cancelada por el usuario!");
+            }
+        });
+
+    });
+
+    function ProcesarEnvios(){
+        $('#btnEnviar').hide();
+        $('#btnEnviando').show();
+        Enviar();
+    }
+
+    function Enviar(){
+        let rows = [];
+
+	    $('#formAccion tbody tr').each(function () {
+		    let $tds = $(this).find('td');
+		    let rowAr = {};
+	
+		// Capturar valores visibles (DisplayFor)
+		rowAr["Nombre"] = $tds.eq(1).text().trim();
+		rowAr["CR"] = $tds.eq(2).text().trim();
+		rowAr["UE"] = $tds.eq(3).text().trim();
+		rowAr["Contrato"] = $tds.eq(4).text().trim();
+		rowAr["fecha_inicio"] = $tds.eq(6).text().trim();
+        var campoa = $('#selectCampo').val();
+        if (parseInt(campoa) ===  1  ) {
+            rowAr["fecha_termino"] = $tds.eq(7).text().trim();
+        }
+        else{
+            rowAr["fecha_revision"] = $tds.eq(7).text().trim();
+        }
+		
+	    
+		// Capturar input editable (EditorFor)
+		rowAr["Email"] = $tds.eq(5).find('input').val();
+	
+		// Capturar checkbox
+		rowAr["Check"] = $tds.eq(0).find('input[type="checkbox"]').is(':checked');
+	
+	rows.push(rowAr);
+	});
+        $.ajax({
+                url: $("#formAccion").attr('action'),
+                type: 'POST',
+                data: {
+                    movAut: JSON.stringify(rows),
+                    meses: $("#inputMeses").val(),
+                    campo: $("#selectCampo").val()
+                }, success: function (response) {
+                    swal({
+                        title: "¡Envío Exitoso!",
+                        text: "Se enviaron los correos de los registros seleccionados",
+                        icon: "success"
+                    });
+                },
+                error: function (response) {
+                    alert("Error al hacer el envío.")
+                },
+                complete: function (xhr, status) {
+                    $('#btnEnviar').show();
+                    $('#btnEnviando').hide();
+                },
+                async: false
+            });
+    }
+</script>
