@@ -17,8 +17,10 @@ namespace WebColliersCore.Models
     {
         public int id_b_inmuebles_expediente_detalle_contratos { get; set; }
 
+        [Display(Name = "ID de inmueble")]
         public int id_b_inmuebles { get; set; }
 
+        [Display(Name = "Tipo de expediente")]
         public int id_b_cg_tipo_expediente_contratos { get; set; }
 
         [Display(Name = "Tipo de periodo")]
@@ -42,9 +44,9 @@ namespace WebColliersCore.Models
         public int anio { get; set; }
 
         [Display(Name = "Periodo inicial")]
-        [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Agregue un valor valido")]
         //[Remote(action: "VerificaFecha", controller: "B_inmuebles_visitas", AdditionalFields = nameof(id_b_inmuebles) + "," + nameof(id_b_inmuebles_visita))]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime fecha_periodo_inicio { get; set; }
 
         [Display(Name = "Periodo final")]

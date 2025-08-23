@@ -128,7 +128,10 @@
                             @Html.DisplayFor(modelItem => item.regimen)
                         </td>
                         <td>
-                            @Html.ActionLink("Agregar expediente", "Create", new { id=item.id_b_inmuebles }) @* |
+                            @Html.ActionLink("Agregar expediente", "Create", new { id=item.id_b_inmuebles }) |
+                            @Html.ActionLink("Ver expediente", "DetailsVisita", new { id = item.id_b_inmuebles })
+                            
+                            @* |
                             @Html.ActionLink("Ver expediente", "lstCedulaResumen", new { id=item.id_b_inmuebles})  *@
                     @*         @Html.ActionLink("Historial", "ListVisita", new { id=item.id_b_inmuebles}) |
                             @Html.ActionLink("Comparativos", "ListComparativo", new { id=item.id_b_inmuebles }) *@
