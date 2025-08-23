@@ -321,7 +321,7 @@
             var fileExtension = FileType.substr((FileType.lastIndexOf('/') + 1));
             var Extension = fileExtension.toUpperCase();
 
-            if (Extension == 'XML') {
+            if (Extension == 'XML' || Extension == 'PDF') {
                  archivosXML.push({
                 id: fileId,
                 file: file

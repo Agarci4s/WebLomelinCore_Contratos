@@ -421,10 +421,10 @@ namespace WebLomelinCore.Controllers
                                 System.IO.File.Delete(itemMovimientoPartida.PathLocalXML);
                             }
 
-                            if (System.IO.File.Exists(itemMovimientoPartida.PathLocalPDF))
-                            {
-                                System.IO.File.Delete(itemMovimientoPartida.PathLocalPDF);
-                            }
+                            //if (System.IO.File.Exists(itemMovimientoPartida.PathLocalPDF))
+                            //{
+                            //    System.IO.File.Delete(itemMovimientoPartida.PathLocalPDF);
+                            //}
 
                             using (var localFile = System.IO.File.OpenWrite(fileNameWithPath))
                             using (var uploadedFile = formFile.OpenReadStream())
@@ -459,9 +459,9 @@ namespace WebLomelinCore.Controllers
                             //}
                             //catch (Exception)
                             //{
-                             
+
                             //}
-                            
+
 
                             itemMovimientoPartida.RowIndex = rowIndex;
                             rowIndex++;
@@ -525,6 +525,29 @@ namespace WebLomelinCore.Controllers
 
 
                             lista.Add(itemMovimientoPartida);
+                        }
+                    }
+                    else
+                    {
+                        if (formFile.ContentType.ToString().Equals("application/pdf"))
+                        {
+                            string fileNamePDF = formFile.FileName.ToString();
+                            var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "Archivos/CFDIs");
+                            string fileName = fileNamePDF[(fileNamePDF.LastIndexOf("/") + 1)..];
+                            var fileNameWithPath = string.Concat(filePath, "//", fileName);
+
+                            if (System.IO.File.Exists(fileNameWithPath))
+                            {
+                                System.IO.File.Delete(fileNameWithPath);
+                            }
+
+                            using (var stream = System.IO.File.Create(fileNameWithPath))
+                            {
+
+                                await formFile.CopyToAsync(stream);
+                                await stream.FlushAsync();
+
+                            }
                         }
                     }
 
