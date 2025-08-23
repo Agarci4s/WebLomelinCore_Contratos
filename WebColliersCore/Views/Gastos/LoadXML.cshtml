@@ -740,48 +740,50 @@
         // });
 
         $("#formCargaDetalle").submit(function (e) {
-        if (true) {
+        if (ValidaCampos()) {
             e.preventDefault();
             var table = $('#tablaRowsFacturas').serialize();
 
             var tablaRowsFacturasArray = new Array();
             var nameInmueble = "";
-            var nameGastos = "";
+            var nameGastos = "";          
             $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
-                nameInmueble = "#inputDataListInm_" +  $(this).find("td").eq(23).html() + "";                
-                nameGastos = "#inputDataListGastos_" +  $(this).find("td").eq(23).html() + "";                
+                nameInmueble = "#inputDataListInm_" +  $(this).find("td").eq(25).html() + "";                
+                nameGastos = "#inputDataListGastos_" +  $(this).find("td").eq(25).html() + "";                     
                 var itemRow = {
                     // IdInmueble: $(this).find('td').eq(0).find("input").val(),
                     IdInmueble: $(nameInmueble).val(),
                     // IdGasto: $(this).find('td').eq(1).find("input").val(),
                     IdGasto: $(nameGastos).val(),
-                    Concepto: $(this).find('td').eq(2).find("input").val(),
-                    Proveedor: $(this).find('td').eq(3).find("input").val(),
-                    FechaContable: $(this).find('td').eq(4).find("input").val(),
-                    FolioFiscal: $(this).find('td').eq(5).find("input").val(),
-                    Moneda: $(this).find('td').eq(6).find("input").val(),
-                    TipoCambio: $(this).find('td').eq(7).find("input").val(),
-                    FormaPago: $(this).find('td').eq(8).find("input").val(),
-                    Folio: $(this).find('td').eq(9).find("input").val(),
-                    Serie: $(this).find('td').eq(10).find("input").val(),
-                    ImporteUSD: $(this).find('td').eq(11).find("input").val(),
-                    Importe: $(this).find('td').eq(12).find("input").val(),
-                    Descuento: $(this).find('td').eq(13).find("input").val(),
-                    Subtotal: $(this).find('td').eq(14).find("input").val(),
-                    IVA: $(this).find('td').eq(15).find("input").val(),
-                    IEPS: $(this).find('td').eq(16).find("input").val(),
-                    IVARet: $(this).find('td').eq(17).find("input").val(),
-                    ISR: $(this).find('td').eq(18).find("input").val(),
-                    Total: $(this).find('td').eq(19).find("input").val(),
-                    Path: $(this).find('td').eq(20).find("input").val(),
-                    RFC: $(this).find('td').eq(21).find("input").val(),
-                    RFCEmisor: $(this).find('td').eq(21).find("input").val(),
-                    RowIndex: $(this).find("td").eq(22).html(),
-                    TipoComprobante: $(this).find('td').eq(32).find("input").val(),
-                    VersionCFDI: $(this).find('td').eq(33).find("input").val(),
-                    ReceptorNombre: $(this).find("td").eq(31).html(),
-                    MetodoPago: $(this).find('td').eq(34).find("input").val(),
-                    ReceptorRFC: $(this).find('td').eq(35).find("input").val(),
+                    FechaProgramacionPago: $(this).find('td').eq(2).find("input").val(),
+                    Periodo: $(this).find('td').eq(3).find("input").val(),
+                    Concepto: $(this).find('td').eq(4).find("input").val(),
+                    Proveedor: $(this).find('td').eq(5).find("input").val(),
+                    FechaContable: $(this).find('td').eq(6).find("input").val(),
+                    FolioFiscal: $(this).find('td').eq(7).find("input").val(),
+                    Moneda: $(this).find('td').eq(8).find("input").val(),
+                    TipoCambio: $(this).find('td').eq(9).find("input").val(),
+                    FormaPago: $(this).find('td').eq(10).find("input").val(),
+                    Folio: $(this).find('td').eq(11).find("input").val(),
+                    Serie: $(this).find('td').eq(12).find("input").val(),
+                    ImporteUSD: $(this).find('td').eq(13).find("input").val(),
+                    Importe: $(this).find('td').eq(14).find("input").val(),
+                    Descuento: $(this).find('td').eq(15).find("input").val(),
+                    Subtotal: $(this).find('td').eq(16).find("input").val(),
+                    IVA: $(this).find('td').eq(17).find("input").val(),
+                    IEPS: $(this).find('td').eq(18).find("input").val(),
+                    IVARet: $(this).find('td').eq(19).find("input").val(),
+                    ISR: $(this).find('td').eq(20).find("input").val(),
+                    Total: $(this).find('td').eq(21).find("input").val(),
+                    Path: $(this).find('td').eq(22).find("input").val(),
+                    RFC: $(this).find('td').eq(23).find("input").val(),
+                    RFCEmisor: $(this).find('td').eq(23).find("input").val(),
+                    RowIndex: $(this).find("td").eq(24).html(),
+                    TipoComprobante: $(this).find('td').eq(34).find("input").val(),
+                    VersionCFDI: $(this).find('td').eq(35).find("input").val(),
+                    ReceptorNombre: $(this).find("td").eq(33).html(),
+                    MetodoPago: $(this).find('td').eq(36).find("input").val(),
+                    ReceptorRFC: $(this).find('td').eq(37).find("input").val(),
                 };
 
                 tablaRowsFacturasArray.push(itemRow);
@@ -817,7 +819,7 @@
             console.log(JSON.stringify(table));
             var sss = "";
         }else{
-            return false
+            return false;
         }
     });
 
@@ -1276,48 +1278,61 @@
     }
 
     function ValidaCampos() {
-
+        alert("Validando...");
         var sinValidar = 0;
         var checkCount = 0;
         $('#tablaRowsFacturas > tbody  > tr').each(function (index, tr) {
 
 
-            var isCheck = $(this).find('td').eq(0).find("input").is(':checked');
+            // var isCheck = $(this).find('td').eq(0).find("input").is(':checked');
 
-            if (isCheck) {
-                checkCount++;
+            // if (isCheck) {
+            //     checkCount++;
 
-                var conceptoComplementario = $(this).find('td').eq(5).find("input").val();
-                var fechaSolicitudPgo = $(this).find('td').eq(6).find("input").val();
-                var claveSolicitudPago = $(this).find('td').eq(7).find("input").val();
-                var tipoCambio = $(this).find('td').eq(9).find("input").val();
-                var idProveedor = $(this).find('td').eq(27).find("input").val();
-                //var fechaReembolso = $(this).find('td').eq(11).find("input").val();
-                //var folioGastoNoDeducible = $(this).find('td').eq(22).find("input").val();
+            //     var conceptoComplementario = $(this).find('td').eq(5).find("input").val();
+            //     var fechaSolicitudPgo = $(this).find('td').eq(6).find("input").val();
+            //     var claveSolicitudPago = $(this).find('td').eq(7).find("input").val();
+            //     var tipoCambio = $(this).find('td').eq(9).find("input").val();
+            //     var idProveedor = $(this).find('td').eq(27).find("input").val();
+            //     //var fechaReembolso = $(this).find('td').eq(11).find("input").val();
+            //     //var folioGastoNoDeducible = $(this).find('td').eq(22).find("input").val();
 
-                if (conceptoComplementario == "" || fechaSolicitudPgo == "" || claveSolicitudPago == "" ||
-                    tipoCambio == "" || tipoCambio == "0" /*|| idProveedor == 0*/) {
+            //     if (conceptoComplementario == "" || fechaSolicitudPgo == "" || claveSolicitudPago == "" ||
+            //         tipoCambio == "" || tipoCambio == "0" /*|| idProveedor == 0*/) {
 
-                    if(tipoCambio =="0")
-                        $("#modalContent").html("El tipo de cambio debe ser mayor a 0");
-                    else
-                        $("#modalContent").html("Existen campos sin especificar un valor, por favor especifique un valor para continuar");
+            //         if(tipoCambio =="0")
+            //             $("#modalContent").html("El tipo de cambio debe ser mayor a 0");
+            //         else
+            //             $("#modalContent").html("Existen campos sin especificar un valor, por favor especifique un valor para continuar");
 
-                    ShowModal('modalMensajes');
-                    sinValidar++;
-                }
+            //         ShowModal('modalMensajes');
+            //         sinValidar++;
+            //     }
+            // }
+
+            var periodo = $(this).find('td').eq(3).find("input").val();
+            var fechaProgramacion = $(this).find('td').eq(2).find("input").val();
+            var nameInmueble = "#inputDataListInm_" +  $(this).find("td").eq(25).html() + "";
+            var idInmueble = $(nameInmueble).val();            
+            
+            if (periodo == "" || fechaProgramacion == "" || idInmueble == -1) {
+                sinValidar++;
             }
         });
 
-        if (checkCount == 0) {
-            $("#modalContent").html("No ha seleccionado ninguna factura, seleccione al menos una para continuar");
-            ShowModal('modalMensajes');
-            return false;
-        }
+        // if (checkCount == 0) {
+        //     $("#modalContent").html("No ha seleccionado ninguna factura, seleccione al menos una para continuar");
+        //     ShowModal('modalMensajes');
+        //     return false;
+        // }
 
         if (sinValidar > 0) {
+            $("#modalContent").html("Existen campos sin especificar un valor, por favor especifique un valor para continuar.");
+            ShowModal('modalMensajes');
+            alert("false");
             return false;
         } else {
+            alert("true");
             return true;
         }
     }

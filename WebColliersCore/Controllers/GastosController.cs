@@ -130,7 +130,7 @@ namespace WebLomelinCore.Controllers
             if (!menu.ValidaPermisoSinlistTransf_Opciones(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims))
                 return Redirect("~/Home");
             #endregion
-            periodo = "2025";                      
+            periodo = String.Format("{0:yyyy}", DateTime.Now);                      
 
             var model = await ObtieneListaFacturasAsync(archivoFactura2);
 
@@ -182,6 +182,7 @@ namespace WebLomelinCore.Controllers
                     TipoComprobante = row.TipoComprobante,
                     MetodoPago = row.MetodoPago,
                     ReceptorRFC = row.ReceptorRFC,
+                    Periodo = row.Periodo,
                 });
             }
 
@@ -291,7 +292,7 @@ namespace WebLomelinCore.Controllers
                 //item.FolioGastoNoDeducible = string.IsNullOrEmpty(item.FolioGastoNoDeducible) ? "" : item.FolioGastoNoDeducible;
                 //item.FechaContable = (string.IsNullOrEmpty(item.FechaSolicitudPago) ? DateTime.Now.ToString("yyyy-MM") : item.FechaSolicitudPago);
                 //item.FechaContable = (string.IsNullOrEmpty(item.FechaContable) ? DateTime.Now.ToString("yyyy-MM") : item.FechaContable);
-                item.Periodo = $"{(Convert.ToDateTime(item.FechaContable).ToString("yyyyMM"))}";
+                //item.Periodo = $"{(Convert.ToDateTime(item.FechaContable).ToString("yyyyMM"))}";
                 //item.Periodo = Convert.ToDateTime(item.FechaReembolso).ToString("yyyyMM");
 
                 bool existFolio = new DataGastos().ValidaExisteXML(item.FolioFiscal);
@@ -585,6 +586,7 @@ namespace WebLomelinCore.Controllers
             factura.Concepto = ObtieneConcepto(document);
             factura.Path = fileName;
             factura.FechaContable = ObtieneFechaContable(document);
+            factura.Periodo = ObtienePeriodo(document);
             factura.Moneda = ObtieneMoneda(document);
             factura.TipoCambio = ObtieneTipoCambio(document);
             factura.Folio = ObtieneFolio(document);
@@ -1259,6 +1261,19 @@ namespace WebLomelinCore.Controllers
             try
             {
                 return Convert.ToDateTime(document.GetElementsByTagName("cfdi:Comprobante").Item(0).Attributes.GetNamedItem("Fecha").InnerText).ToString("yyyy-MM-dd");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return "";
+            }
+        }
+
+        private string ObtienePeriodo(XmlDocument document)
+        {
+            try
+            {
+                return Convert.ToDateTime(document.GetElementsByTagName("cfdi:Comprobante").Item(0).Attributes.GetNamedItem("Fecha").InnerText).ToString("yyyyMM");
             }
             catch (Exception ex)
             {
