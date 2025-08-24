@@ -38,21 +38,31 @@ namespace WebLomelinCore.Models
         public int IdPagoServicio { get; set; }
         public int IdCuentaServicio { get; set; }
 
+        /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="IdInmueble"></param>
+        /// <param name="IdLocalidad"></param>
+        /// <param name="IdTipoServicio"></param>
+        /// <param name="Estatus"></param>
+        /// <param name="IdPagoServicio">id de la tabla pagosservicios</param>
+        /// <param name="IdCuentaServicio">id de la tabla cuentas servicios</param>
+        /// <returns></returns>
         public static PagoUnificadoDTO getPagoServiciosList(
             int? IdInmueble, 
             int? IdLocalidad, 
-            int? IdCuenta, 
             int? IdTipoServicio, 
             int? Estatus,
+            int? IdPagoServicio,
             int? IdCuentaServicio)
         {
             var service = new DataSelectService(); // Crear instancia
             return service.getPagoServiciosList(
                 IdInmueble, 
-                IdLocalidad, 
-                IdCuenta, 
-                IdTipoServicio, 
+                IdLocalidad,
+                IdTipoServicio,
                 Estatus,
+                IdPagoServicio,
                 IdCuentaServicio);
             
         }        

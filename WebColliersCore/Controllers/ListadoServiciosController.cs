@@ -30,7 +30,11 @@ namespace WebLomelinCore.Controllers
             ViewBag.Regiones = PagosServicios.setItem(new  DataSelectService().getRegionesList, IdRegion);
             
             IdRegion = IdRegion.HasValue ? IdRegion.Value : -1;
-            ViewBag.Inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdRegion);
+            
+            ///DataInmuebles dataInmuebles = new();
+            //ViewBag.Inmuebles = PagosServicios.setItem(dataInmuebles.GetCmbInmuebles(idCartera, IdUsuario), IdInmueble);
+            
+            ViewBag.Inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdInmueble);
             
             IdInmueble = IdInmueble.HasValue ? IdInmueble : -1;
             ViewBag.Localidades = PagosServicios.setItem(new DataLocalidades().LocalidadesGet(IdInmueble.Value), IdInmueble);
@@ -67,11 +71,12 @@ namespace WebLomelinCore.Controllers
             PagoUnificadoDTO response = PagoUnificadoDTO.getPagoServiciosList(
                 model.IdInmueble,
                 model.IdLocalidad,
-                model.idCuenta,
                 model.IdTipoServicio,
-                model.IdStatusProceso, model.IdCuentaServicio);
+                model.IdStatusProceso,
+                model.IdPagoServicio,
+                model.IdCuentaServicio);
 
-            InicializaVista(model.IdTipoServicio,model.IdRegion, model.IdInmueble, model.IdLocalidad, model.idCuenta);
+            InicializaVista(model.IdTipoServicio,model.IdRegion, model.IdInmueble, model.IdLocalidad, model.IdCuentaServicio);
             if (model.IdTipoServicio == 1)/*agua*/
             {
                 ViewBag.TipoServicioSolcitud = 1;
@@ -170,8 +175,9 @@ namespace WebLomelinCore.Controllers
             menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims);
             #endregion
 
-            DataInmuebles dataInmuebles = new DataInmuebles();
-            return Json(dataInmuebles.GetInmuebleByRegion(IdRegion, idCartera, IdUsuario).OrderBy(x => x.Value));
+            
+           var list = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion, idCartera, IdUsuario), null);
+            return Json(list);
         }
 
         [HttpGet]

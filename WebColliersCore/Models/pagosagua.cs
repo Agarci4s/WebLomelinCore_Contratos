@@ -130,7 +130,7 @@ namespace WebLomelinCore.Models
         /// </summary>
         public pagosagua ConsumoAnterior { get; set; }
 
-        public double? PorcentajeConsumo { get; set; }
+        public decimal? PorcentajeConsumo { get; set; }
         public string ClassPorcentaje { get; set; }
 
 

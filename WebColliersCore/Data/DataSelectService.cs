@@ -262,28 +262,25 @@ namespace WebLomelinCore.Data
             });
             return response;
         }
+        
         /// <summary>
         /// 
         /// </summary>
         /// <param name="IdInmueble">Busca por IdInmueble</param>
         /// <param name="IdLocalidad">IdLocalidad</param>
-        /// <param name="IdCuenta">validar con qu campo se mapea este parametro</param>
-        /// <param name="IdTipoServicio">Tipo de servicio (agua,luz, predial) </param>
         /// <param name="Estatus">pro el estatus</param>
-        /// <param name="IdPagoServicio">Id de la tabla pagos{agua,luz,predial}</param>
-        /// <param name="IdCuentaServicio">id de la tabla dtpagos_{luz,aghua,predial}</param>
+        /// <param name="IdPagoServicio">dtpagosagua</param>
+        /// <param name="IdCuentaServicio">b_cg_agua</param>
         /// <returns></returns>
-        private List<pagosagua> GetPagosAgua(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
+        private List<pagosagua> GetPagosAgua(int? IdInmueble, int? IdLocalidad, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
         {
             var listSqlParameters = new List<MySqlParameter>
                 {
-                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
-                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
-                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
-                    new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)
+                    new MySqlParameter("idinmueble_IN", IdInmueble ?? (object)DBNull.Value),
+                    new MySqlParameter("idlocalidad_IN", IdLocalidad ?? (object)DBNull.Value),
+                    new MySqlParameter("idpagosagua_IN", IdPagoServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("idcuentaagua_IN", IdCuentaServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("statusProceso_IN", Estatus ?? (object)DBNull.Value)                    
                 };
             DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_agua_Get", listSqlParameters);
 
@@ -318,17 +315,25 @@ namespace WebLomelinCore.Data
             return agualist;
 
         }
-        private List<pagosluz> GetPagosLuz(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IdInmueble"></param>
+        /// <param name="IdLocalidad"></param>
+        /// <param name="Estatus"></param>
+        /// <param name="IdPagoServicio">dtpagosluz</param>
+        /// <param name="IdCuentaServicio">b_cg_luz</param>
+        /// <returns></returns>
+        private List<pagosluz> GetPagosLuz(int? IdInmueble, int? IdLocalidad, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
         {
             var listSqlParameters = new List<MySqlParameter>
                 {
-                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
-                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
-                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
-                    /*new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)*/
+                new MySqlParameter("idpagosLuz_in", IdPagoServicio ?? (object)DBNull.Value),
+                new MySqlParameter("idcuentaLuz_in", IdCuentaServicio ?? (object)DBNull.Value) ,
+                new MySqlParameter("idinmueble_in", IdInmueble ?? (object)DBNull.Value),
+                new MySqlParameter("idlocalidad_in", IdLocalidad ?? (object)DBNull.Value),
+                new MySqlParameter("statusProceso_in", Estatus ?? (object)DBNull.Value),
                 };
             DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_luz_Get", listSqlParameters);
 
@@ -356,17 +361,25 @@ namespace WebLomelinCore.Data
 
             return luzList;
         }
-        private List<pagospredial> GetPagosPredial(int? IdInmueble, int? IdLocalidad, int? IdCuenta, int? IdTipoServicio, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IdInmueble"></param>
+        /// <param name="IdLocalidad"></param>
+        /// <param name="Estatus"></param>
+        /// <param name="IdPagoServicio">dtpagospredial</param>
+        /// <param name="IdCuentaServicio">b_cg_predial</param>
+        /// <returns></returns>
+        private List<pagospredial> GetPagosPredial(int? IdInmueble, int? IdLocalidad, int? Estatus, int? IdPagoServicio, int? IdCuentaServicio)
         {
             var listSqlParameters = new List<MySqlParameter>
                 {
-                    new MySqlParameter("IdInmueble", IdInmueble ?? (object)DBNull.Value),
-                    new MySqlParameter("IdLocalidad", IdLocalidad ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuenta", IdCuenta ?? (object)DBNull.Value),
-                    new MySqlParameter("IdTipoServicio", IdTipoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("Estatus", Estatus ?? (object)DBNull.Value),
-                    /*new MySqlParameter("IdPagoServicio", IdPagoServicio ?? (object)DBNull.Value),
-                    new MySqlParameter("IdCuentaServicio", IdCuentaServicio ?? (object)DBNull.Value)*/
+                new MySqlParameter("idpagospredial_in", IdPagoServicio ?? (object)DBNull.Value),
+                      new MySqlParameter("idcuentapredial_in", IdCuentaServicio ?? (object)DBNull.Value),
+                    new MySqlParameter("idinmueble_in", IdInmueble ?? (object)DBNull.Value),
+                    new MySqlParameter("idlocalidad_in", IdLocalidad ?? (object)DBNull.Value),
+                           new MySqlParameter("statusProceso_in", Estatus ?? (object)DBNull.Value),
                  };
 
             DataTable dataTable = conexion.RunStoredProcedure("Cuentas_pagos_predial_Get", listSqlParameters);
@@ -402,29 +415,38 @@ namespace WebLomelinCore.Data
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IdInmueble"></param>
+        /// <param name="IdLocalidad"></param>
+        /// <param name="IdTipoServicio"></param>
+        /// <param name="Estatus"></param>
+        /// <param name="IdPagoServicio">Id de la tabla donde se gudaran los pagos por servicio</param>
+        /// <param name="IdCuentaServicio">Id de la tabla donde se guardan las cuentas por servicio</param>
+        /// <returns></returns>
         public PagoUnificadoDTO getPagoServiciosList(
             int? IdInmueble,
             int? IdLocalidad,
-            int? IdCuenta,
             int? IdTipoServicio,
             int? Estatus,
-            /*int? IdPagoServicio,*/
+            int? IdPagoServicio,
             int? IdCuentaServicio)
         //agregar idpagoservicio, idcuentaservicio = int?
         {
             PagoUnificadoDTO response = new PagoUnificadoDTO();
-            double? porcentajeServicio = ObtienePorcentajePago(IdTipoServicio.Value);
+            decimal? porcentajeServicio = ObtienePorcentajePago(IdTipoServicio.Value);
 
             if (IdTipoServicio == 1)/*agua*/
             {
-                response.PagosAgua = GetPagosAgua(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus, null, IdCuentaServicio);
+                response.PagosAgua = GetPagosAgua(IdInmueble, IdLocalidad, Estatus, IdPagoServicio, IdCuentaServicio);
 
                 response.PagosAgua?.ForEach(x =>
                 {
                     x.ImporteTotal = (x.ImporteHabitacional + x.ImporteComercial + x.IvaComercial + x.Recargos + x.Actualizacion + x.Multas + x.GastosEjecucion);
                     x.PorcentajeConsumo = ObtienePorcentajePago(porcentajeServicio, x.ImporteTotal);
 
-                    List<pagosagua> agualist = GetPagosAgua(null, null, null, null, null, null, x.idCuentaAgua);
+                    List<pagosagua> agualist = GetPagosAgua(null, null, null, null, x.idCuentaAgua);
 
                     if (agualist.Any())
                     {                        
@@ -444,14 +466,14 @@ namespace WebLomelinCore.Data
             }
             else if (IdTipoServicio == 2)/*luz*/
             {
-                response.PagosLuz = GetPagosLuz(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus, null, IdCuentaServicio);
+                response.PagosLuz = GetPagosLuz(IdInmueble, IdLocalidad, Estatus, IdPagoServicio, IdCuentaServicio);
 
                 response.PagosLuz.ForEach(x =>
                 {
                     x.ImporteTotal = (x.importe + x.iva);
                     x.PorcentajeConsumo = ObtienePorcentajePago(porcentajeServicio, x.ImporteTotal);
 
-                    List<pagosluz> luzList = GetPagosLuz(null, null, null, null, null, null, x.idCuentaLuz);
+                    List<pagosluz> luzList = GetPagosLuz(null, null, null, null, x.idCuentaLuz);
                     
                     if (luzList.Any())
                     {
@@ -473,14 +495,14 @@ namespace WebLomelinCore.Data
             else if (IdTipoServicio == 3)/*predial*/
             {
 
-                response.PagosPredial = GetPagosPredial(IdInmueble, IdLocalidad, IdCuenta, IdTipoServicio, Estatus, null, IdCuentaServicio);
+                response.PagosPredial = GetPagosPredial(IdInmueble, IdLocalidad, Estatus, IdPagoServicio, IdCuentaServicio);
 
                 response.PagosPredial.ForEach(x =>
                 {
                     x.ImporteTotal = (x.importe + x.Recargos + x.Multas + x.Actualizacion + x.Diferencia + x.Honorarios + x.Notificacion + x.GastoEjecucion - x.Descuento);
                     x.PorcentajeConsumo = ObtienePorcentajePago(porcentajeServicio, x.ImporteTotal);
 
-                    List<pagospredial> predialList = GetPagosPredial(null, null, null, null, null, null, x.idCuentaPredial);
+                    List<pagospredial> predialList = GetPagosPredial(null, null, null, null, x.idCuentaPredial);
 
                     if (predialList.Any())
                     {
@@ -667,9 +689,9 @@ namespace WebLomelinCore.Data
             }
         }
 
-        public double? ObtienePorcentajePago(int idServicio)
+        public decimal? ObtienePorcentajePago(int idServicio)
         {
-            double? response = null;
+            decimal? response = null;
             List<MySqlParameter> listSqlParameters = new List<MySqlParameter>
             {
                 new("p_IdTipoServicio", idServicio)
@@ -681,20 +703,22 @@ namespace WebLomelinCore.Data
             {
                 foreach (var item in data.Rows.Cast<DataRow>())
                 {
-                    response = item.Field<double>("Porcentaje");
+                    response = item.Field<decimal>("Porcentaje");
                 }
 
             }
             return response;
         }
-        public double? ObtienePorcentajePago(double? porcentajeServicio, double? importe)
+        public decimal? ObtienePorcentajePago(decimal? porcentajeServicio, double? importe)
         {
-            double? response = null;
+            decimal? response = null;
             if (porcentajeServicio.HasValue && importe.HasValue)
             {
                 try
                 {
-                    response = (importe.Value * porcentajeServicio.Value) / 100;
+                    decimal import = 0;
+                    decimal.TryParse(importe.ToString(), out import);
+                    response = (import * porcentajeServicio.Value) / 100;
                 }
                 catch (Exception ex)
                 {
@@ -704,7 +728,7 @@ namespace WebLomelinCore.Data
             }
             return response;
         }
-        public string DefineEstiloSemaforo(double? porcentajeAnterior, double? porcentajeActual)
+        public string DefineEstiloSemaforo(decimal? porcentajeAnterior, decimal? porcentajeActual)
         {
             string response = "RowPositivo";
             if (porcentajeAnterior.HasValue && porcentajeActual.HasValue)

@@ -24,10 +24,62 @@ $(document).ready(function () {
         $("#formAccionLuz").hide();
         $("#formAccionPredial").hide();
 
+        var IdInmueble = null;
+        var inputValue = document.getElementById("inputDataListInm").value;
+        var options = document.querySelectorAll('#datalistIdInmueble option');
+
+        if (options.length > 0) {
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                if (option.getAttribute('value') === inputValue) {
+                    IdInmueble = option.getAttribute('data-value');
+                    break;
+                }
+            }
+        }
+
+        var IdLocalidad = null;
+        inputValue = document.getElementById("inputDataListLoc").value;
+        options = document.querySelectorAll('#datalistIdLocalidad option');
+
+        if (options.length > 0) {
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                if (option.getAttribute('value') === inputValue) {
+                    IdLocalidad = option.getAttribute('data-value');
+                    break;
+                }
+            }
+        }
+
+        var IdCuenta = null;
+        inputValue = document.getElementById("inputDataListCuentas").value;
+        options = document.querySelectorAll('#datalistIdCuenta option');
+
+        if (options.length > 0) {
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                if (option.getAttribute('value') === inputValue) {
+                    IdCuenta = option.getAttribute('data-value');
+                    break;
+                }
+            }
+        }
+
+        var rowObject = {
+            IdInmueble: IdInmueble,
+            IdLocalidad: IdLocalidad,
+            IdTipoServicio: tipoServicio,
+            IdStatusProceso: parseInt($("#selectIdEstatus").val()),
+            IdCuentaServicio: IdCuenta
+        };
+
         $.ajax({
             url: $(this).attr('action'), // Get action URL from the form
             type: 'POST',
-            data: $(this).serialize(), // Serialize form data
+            data: rowObject, // Serialize form data
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
             success: function (response) {
                 if (tipoServicio == 1) {
                     $('#div_Agua').html(response);
@@ -58,34 +110,52 @@ function changeRegion() {
 
     $.getJSON(url, { IdRegion: newId }, function (data) {
         var item = "";
-        $("#selectInmueble").empty();
+        
+        $("#inputDataListInm").empty();
+        $("#datalistIdInmueble").empty();
+        $("#inputIdInmueble").empty();
         $.each(data, function (i, inmueble) {
-            item += '<option value="' + inmueble.value + '">' + inmueble.text + '</option>'
+            item += '<option data-value="' + inmueble.value + '" value="' + inmueble.text + '">';
         });
-        $("#selectInmueble").html(item);
-        RefreshInmueble();
-      // Refresh the select picker to show new options
+        $("#datalistIdInmueble").html(item);
     });
 }
 
-function changeInmueble() {
-    var newId = $("#selectInmueble").val();
+function changeInmueble(idInmueble) {
+
     var url = "/ListadoServicios/getLocalidades";
 
-    $.getJSON(url, { IdInmueble: newId }, function (data) {
+    $.getJSON(url, { IdInmueble: idInmueble }, function (data) {
         var item = "";
-        $("#selectLocalidad").empty();
-        $.each(data, function (i, Localidades) {
-            item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
+        $("#datalistIdLocalidad").empty();
+        $.each(data, function (i, Localidades) {           
+            item += '<option data-value="' + Localidades.value + '" value="' + Localidades.text + '">';
         });
-        $("#selectLocalidad").html(item);
-        RefreshLocalidad();
+        $("#datalistIdLocalidad").html(item);
     });
 }
 
-function changeLocalidad() {
-    var IdInmueble = $("#selectInmueble").val();
-    var IdLocalidad = $("#selectLocalidad").val();
+function changeLocalidad(idLocalidad) {
+    var IdInmueble = $("#inputIdInmueble").val();
+    IdInmueble = $("#datalistIdInmueble").val();
+
+    var inputValue = document.getElementById("inputDataListInm").value;
+    var options = document.querySelectorAll('#datalistIdInmueble option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                IdInmueble = option.getAttribute('data-value');
+               // $("#inputIdLocalidad").val(value);
+               // changeLocalidad(value);
+                break;
+            }
+        }
+    }
+   
+
+    var IdLocalidad = idLocalidad;// $("#selectLocalidad").val();
     var IdServicio = $("#selectIdTipoSerivicio").val();
     var url = "/ListadoServicios/getCuentas";
 
@@ -96,7 +166,6 @@ function changeLocalidad() {
             item += '<option value="' + cuentas.value + '">' + cuentas.text + '</option>'
         });
         $("#selectCuenta").html(item);
-        RefreshCuenta();
     });
 }
 
@@ -142,7 +211,6 @@ $(document).ready(function () {
         });
     });
 });
-
 
 $(document).ready(function () {
     $('#formAccionLuz').submit(function (e) {
@@ -228,3 +296,65 @@ $(document).ready(function () {
     });
 });
 
+$("#inputDataListInm").on("change paste keyup", function () {
+
+    $("#inputIdInmueble").val('');
+    var inputValue = document.getElementById("inputDataListInm").value;
+    var options = document.querySelectorAll('#datalistIdInmueble option');
+
+
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                var value = option.getAttribute('data-value');
+                $("#inputIdInmueble").val(value);
+                changeInmueble(value);
+                break;
+            }
+        }
+    }
+    else
+        $("#inputIdInmueble").focus();
+});
+
+$("#inputDataListLoc").on("change paste keyup", function () {
+
+    $("#inputIdLocalidad").val('');
+    var inputValue = document.getElementById("inputDataListLoc").value;
+    var options = document.querySelectorAll('#datalistIdLocalidad option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                var value = option.getAttribute('data-value');
+                $("#inputIdLocalidad").val(value);
+                changeLocalidad(value);
+                break;
+            }
+        }
+    }
+    else
+        $("#inputIdLocalidad").focus();
+});
+
+$("#inputDataListCuentas").on("change paste keyup", function () {
+    $("#inputIdCuenta").val('');
+    var inputValue = document.getElementById("inputDataListCuentas").value;
+    var options = document.querySelectorAll('#datalistIdCuenta option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                var value = option.getAttribute('data-value');
+                $("#inputIdCuenta").val(value);
+                break;
+            }
+        }
+    }
+    else
+        $("#inputIdCuenta").focus();
+});

@@ -20,12 +20,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.FirstOrDefault().CuentaAgua)
                 </th>
-                @* <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Lectura1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Lectura2)
-                </th> *@
                 <th>
                     @Html.DisplayName("Importe Anterior")
                 </th>
@@ -89,6 +83,9 @@
             }
         </tbody>
     </table>
+
+    @if (Model.Any()  )
+    {
         <div class="container">
             <div class="row">
             <div class="form-group col-sm-4">
@@ -110,8 +107,9 @@
                 </div>                
             </div>
         </div>
+    }
 </div>
-
+i
 
 @section Scripts {
     <script src="~/js/sweetalert.min.js"></script>
