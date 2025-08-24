@@ -43,6 +43,9 @@ namespace WebLomelinCore.Models
         [Display(Name = "Fecha de Reembolso")]
         public string FechaReembolso { get; set; }
 
+        [Display(Name = "Fecha Programación de Pago")]
+        public string FechaProgramacionPago { get; set; }
+
         public string Folio { get; set; }
 
         public string FolioGastoNoDeducible { get; set; }

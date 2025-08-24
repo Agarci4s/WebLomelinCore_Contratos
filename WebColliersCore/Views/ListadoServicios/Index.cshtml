@@ -1,13 +1,17 @@
 ﻿@model WebLomelinCore.Models.PagoUnificadoDTO
 
 <header>
+    
     <script src="~/js/core.js"></script>
     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <script src="~/lib/jquery/dist/jquery.js"></script>
-
+    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+   
     <style>
 
         input::-webkit-inner-spin-button,
@@ -129,12 +133,12 @@
                     <div class="form-group col-sm-4">
                         <label asp-for="IdTipoServicio" class="control-label"></label>
                         <div class="input-group">
-                            <div class="input-group-append">
+                           @*  <div class="input-group-append">
                                 <label class="input-group-text" for="selectIdTipoSerivicio">
                                     <i class="bi bi-building"></i>
                                 </label>
-                            </div>
-                            <select id="selectIdTipoSerivicio" asp-for="IdTipoServicio" class="form-control" asp-items=@ViewBag.TipoServicios></select>
+                            </div> *@
+                            <select id="selectIdTipoSerivicio" asp-for="IdTipoServicio" class="js-example-basic-single" asp-items=@ViewBag.TipoServicios></select>
                         </div>
                         <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
                     </div>
@@ -143,11 +147,11 @@
                     <div class="form-group col-sm-4">
                         <label asp-for="IdRegion" class="control-label"></label>
                         <div class="input-group">
-                            <div class="input-group-append">
+                            @* <div class="input-group-append">
                                 <label class="input-group-text" for="selectRegion">
                                     <i class="bi bi-building"></i>
                                 </label>
-                            </div>
+                            </div> *@
                             <select id="selectRegion" asp-for="IdRegion" class="form-control" onchange="return changeRegion();" asp-items=@ViewBag.Regiones></select>
                         </div>
                         <span asp-validation-for="IdRegion" class="text-danger"></span>
@@ -157,11 +161,11 @@
                     <div class="form-group col-sm-4">
                         <label asp-for="IdInmueble" class="control-label"></label>
                         <div class="input-group">
-                            <div class="input-group-append">
+                            @* <div class="input-group-append">
                                 <label class="input-group-text" for="selectInmueble">
                                     <i class="bi bi-building"></i>
                                 </label>
-                            </div>
+                            </div> *@
                             <select id="selectInmueble" asp-for="IdInmueble" class="form-control" onchange="return changeInmueble();" asp-items=@ViewBag.Inmuebles></select>
                         </div>
                         <span asp-validation-for="IdInmueble" class="text-danger"></span>
@@ -173,11 +177,11 @@
                     <div class="form-group col-sm-4">
                         <label asp-for="IdLocalidad" class="control-label"></label>
                         <div class="input-group">
-                            <div class="input-group-append">
+                           @*  <div class="input-group-append">
                                 <label class="input-group-text" for="selectLocalidad">
                                     <i class="bi bi-building"></i>
                                 </label>
-                            </div>
+                            </div> *@
                             <select id="selectLocalidad" onchange="return changeLocalidad();" asp-for="IdLocalidad" class="form-control" asp-items=@ViewBag.Localidades></select>
                         </div>
                         <span asp-validation-for="IdLocalidad" class="text-danger"></span>
@@ -186,11 +190,11 @@
                     <div class="form-group col-sm-4">
                         <label asp-for="idCuenta" class="control-label"></label>
                         <div class="input-group">
-                            <div class="input-group-append">
+                           @*  <div class="input-group-append">
                                 <label class="input-group-text" for="selectCuenta">
                                     <i class="bi bi-building"></i>
                                 </label>
-                            </div>
+                            </div> *@
                             <select id="selectCuenta" asp-for="idCuenta" class="form-control" asp-items=@ViewBag.Cuentas></select>
                         </div>
                         <span asp-validation-for="idCuenta" class="text-danger"></span>
@@ -199,11 +203,11 @@
                     <div class="form-group col-sm-4">
                         <label asp-for="IdStatusProceso" class="control-label"></label>
                         <div class="input-group">
-                            <div class="input-group-append">
+                          @*   <div class="input-group-append">
                                 <label class="input-group-text" for="selectIdEstatus">
                                     <i class="bi bi-building"></i>
                                 </label>
-                            </div>
+                            </div> *@
                             <select id="selectIdEstatus" asp-for="IdStatusProceso" class="form-control" asp-items=@ViewBag.Estatus></select>
                         </div>
                         <span asp-validation-for="IdStatusProceso" class="text-danger"></span>
@@ -286,4 +290,27 @@
     }
 }
 
-<script src="~/js/ListadoServicios.js" />
+
+
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+     
+    
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+        $("#selectLocalidad").select2();
+        
+    });
+
+    function RefreshCuenta() {
+        // $("#selectCuenta").selectpicker('refresh');
+    }
+    function RefreshLocalidad() {
+        // $("#selectLocalidad").selectpicker('refresh');
+    }
+    function RefreshInmueble() {
+        // $("#selectInmueble").selectpicker('refresh');
+    }
+</script>
+
+<script src="~/js/ListadoServicios.js"></script>

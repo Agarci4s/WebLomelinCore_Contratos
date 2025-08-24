@@ -348,8 +348,6 @@
     <Compile Remove="Controllers\TraspasoMovimientosGastosController.cs" />
     <Compile Remove="Data\DataAgua.cs" />
     <Compile Remove="Data\DataArrendadoresBBVA.cs" />
-    <Compile Remove="Data\DataAttachmentEmail.cs" />
-    <Compile Remove="Data\DataAttachmentValidatorEmail.cs" />
     <Compile Remove="Data\DataBajaArrendatario.cs" />
     <Compile Remove="Data\DataCapturaComprobante.cs" />
     <Compile Remove="Data\DataCapturaPagos.cs" />
@@ -365,7 +363,6 @@
     <Compile Remove="Data\DataDtPagosAgua.cs" />
     <Compile Remove="Data\DataEliminarMovimiento.cs" />
     <Compile Remove="Data\DataEnvioArchivos.cs" />
-    <Compile Remove="Data\DataEnvioEmail.cs" />
     <Compile Remove="Data\DataEstadoCuenta.cs" />
     <Compile Remove="Data\DataEstadoCuentaPresupuesto.cs" />
     <Compile Remove="Data\DataExceptionEmail.cs" />
@@ -389,11 +386,9 @@
     <Compile Remove="Data\DataReportePortafolio.cs" />
     <Compile Remove="Data\DataReporteRentaAdeudos.cs" />
     <Compile Remove="Data\DataReporteResumen.cs" />
-    <Compile Remove="Data\DataResultEmail.cs" />
     <Compile Remove="Data\DataTipoInmueble.cs" />
     <Compile Remove="Data\DataTpGastos.cs" />
     <Compile Remove="Data\DataTraspasarMovimientos.cs" />
-    <Compile Remove="Data\DataValidadorEmail.cs" />
     <Compile Remove="Models\Archivo.cs" />
     <Compile Remove="Models\ArchivoTXT.cs" />
     <Compile Remove="Models\ArrendadoresBBVA.cs" />
@@ -445,7 +440,6 @@
     <Compile Remove="Models\DtTipoProveedor.cs" />
     <Compile Remove="Models\DtUbicacionServicio.cs" />
     <Compile Remove="Models\EliminarMovimientos.cs" />
-    <Compile Remove="Models\EmailDatosServidorModel.cs" />
     <Compile Remove="Models\EstadoCuentaPresupuestoFibraHD.cs" />
     <Compile Remove="Models\FactDatosComplementoTerceros.cs" />
     <Compile Remove="Models\FactDetalleGrl.cs" />

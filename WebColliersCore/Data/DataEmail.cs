@@ -1,77 +1,67 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
-using System.Net.Mail;
-using System.Net;
-using MySql.Data.MySqlClient;
+﻿using System;
 using System.Collections.Generic;
-using WebColliersCore.DataAccess;
-using WebColliersCore.Models;
-using System;
+using System.Linq;
 using System.Threading.Tasks;
-using MySqlX.XDevAPI;
-using WebColliersCore.Data;
-using Humanizer;
-using Stimulsoft.Report.Export;
 
-namespace WebLomelinCore.Data
+namespace WebColliersCore.Data
 {
+    [Serializable]
+    /// <summary>
+    ///   Obtiene o establece las propiedades  que se utilizan para el envío de un correo electrónico.
+    /// </summary
     public class DataEmail
     {
-        private MailAddress fromAddress = new MailAddress("pruebas@horebsystem.com", "Lomelín");
-        private const string fromPassword = "Pruebas1@";
-        private const string subject = "Contrato por finalizar";
-        private const string body = "Prueba de envío de correos.";
+        ///// <summary>
+        ///// Clave o nombre de la cuenta que enviará el correo electrónico.
+        ///// </summary>
+        //public string Sender { get; set; }
 
+        /// <summary>
+        ///   Dirección de correo electrónico de quien lo envía.
+        /// </summary>
+        public string From { get; set; }
 
+        /// <summary>
+        ///   Devuelve o establece una o varias direcciones de correo electrónico a las que ha de llegar el mensaje.
+        /// </summary>
+        public string Receivers { get; set; }
 
-        public bool EnviaCorreo(int idCartera, int idUsuario)
-        {
-            SmtpClient smtp = new SmtpClient()
-            {
-                Host = "smtp.hostinger.com",
-                Port = 587,/*587, 465*/
-                EnableSsl = true,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false
-            };
+        /// <summary>
+        ///   Devuelve o establece una o varias direcciones de correo electrónico a las que ha de llegar el mensaje como copia. 
+        /// </summary>
+        /// <remarks>Quienes estén en esta lista recibirán también el mensaje, pero verán que no va dirigido a ellos, 
+        /// sino a quien esté designado en el campo Para (<c>Receivers</c>). Este campo lo ven todos los que reciben 
+        /// el mensaje, tanto el destinatario principal como los de éste campo pueden ver la lista completa.</remarks>
+        public string Cc { get; set; }
 
-            DataInmueblesContratos dataInmueblesContratos = new DataInmueblesContratos();
-            DataInmueblesContratosCorreos dataInmueblesContratosCorreos = new DataInmueblesContratosCorreos();
-            DateTime inicio = new DateTime(1900, 1, 1);
-            DateTime fin = DateTime.Now;
-            List<B_inmuebles_contrato> b_Inmuebles_Contratos = dataInmueblesContratos.GetReporteAll(idCartera, idUsuario, false, inicio, fin);
+        /// <summary>
+        ///   Devuelve o establece una o varias direcciones de correo electrónico a las que ha de llegar el mensaje como copia. 
+        ///   Los destinatarios que reciban el mensaje no aparecerán en ninguna lista. 
+        /// </summary>
+        /// <remarks>Los destinatarios recibirán el mensaje sin aparecer en ninguna lista.</remarks>
+        public string Bcc { get; set; }
 
-            foreach (var item in b_Inmuebles_Contratos)
-            {
-                try
-                {
-                    if (item.fecha_termino.AddDays(-item.fecha_anticipacion) <= DateTime.Now)
-                    {
-                        List<B_inmuebles_contrato_correos> b_Inmuebles_Contrato_Correos = dataInmueblesContratosCorreos.Get(idCartera, idUsuario, item.id_b_inmuebles_contrato);
-                        MailMessage message = new MailMessage()
-                        {
-                            Subject = subject,
-                            Body = body
-                        };
-                        message.From = fromAddress;
-                        foreach (var item2 in b_Inmuebles_Contrato_Correos)
-                        {
-                            MailAddress toAddress = new MailAddress(item2.correo, item2.nombre);
-                            message.To.Add(toAddress);
-                        }
-                        if (b_Inmuebles_Contrato_Correos.Count > 0)
-                        {
-                            smtp.Send(message);
-                            //Actualiza correo enviado
-                            dataInmueblesContratos.CorreoEnviado(item.id_b_inmuebles_contrato);
-                        }
+        /// <summary>
+        ///   Descripción corta que verá la persona que lo reciba antes de abrir el correo
+        /// </summary>
+        public string Subject { get; set; }
 
-                    }
-                }
-                catch (Exception) { }
-            }
-            return true;
-        }
+        /// <summary>
+        ///   Texto del mensaje a enviar, puede ser sólo texto, o incluir formato.
+        /// </summary>
+        public string Body { get; set; }
+
+        /// <summary>
+        ///   Colección de archivos o documentos adjuntos.
+        /// </summary>
+        /// <remarks>Si no hay archivos o documentos adjuntos, esta propiedad es <c>null</c> o vacía.</remarks>
+        public List<DataAttachmentEmail> Attachments { get; set; }
+
+        /// <summary>
+        ///   Especifica si el cuerpo del mensaje está en formato HTML. 
+        /// </summary>
+        /// <remarks>Sí el cuerpo del mensaje está en formato HTML el valor es <c>true</c>.</remarks>
+        public bool IsHtmlFormat { get; set; }
 
     }
 }

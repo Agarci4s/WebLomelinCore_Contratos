@@ -25,6 +25,11 @@ namespace WebColliersCore.Models
         [Range(1, int.MaxValue, ErrorMessage = "Agregue un valor valido")]
         public int id_b_cg_contrato_estatu { get; set; }
 
+        [Display(Name = "Nombre")]
+        public string nombre { get; set; }
+
+        [Display(Name = "Email")]
+        public string email { get; set; }
 
         [Display(Name = "Contrato")]
         [Required(ErrorMessage = "Agregue un valor valido")]
@@ -38,14 +43,16 @@ namespace WebColliersCore.Models
 
         [Display(Name = "Fecha inicio")]
         [Remote(action: "VerificaFechaInicio", controller: "B_inmueblesContrato", AdditionalFields = nameof(id_b_inmuebles) + "," + nameof(id_b_inmuebles_contrato))]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [Required(ErrorMessage = "Campo obligatorio")]
         public DateTime fecha_inicio { get; set; }
+        public string fechainicio { get; set; }
 
         [Display(Name = "Fecha término")]
         [Remote(action: "VerificaFechaTermino", controller: "B_inmueblesContrato", AdditionalFields = nameof(fecha_inicio))]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime fecha_termino { get; set; }
+        public string fechatermino { get; set; }
 
         [Display(Name = "Días de anticipación para negociación")]
         [Remote(action: "VerificaAnticipacion", controller: "B_inmueblesContrato", AdditionalFields = nameof(fecha_inicio) + "," + nameof(fecha_termino))]
@@ -53,7 +60,7 @@ namespace WebColliersCore.Models
         public int fecha_anticipacion { get; set; }
 
         [Display(Name = "Fecha obligado")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime fecha_obligado { get; set; }
 
         [Display(Name = "Litigio y consignación")]
@@ -66,9 +73,10 @@ namespace WebColliersCore.Models
 
 
         [Display(Name = "Fecha revisión")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [Remote(action: "VerificaRevision", controller: "B_inmueblesContrato", AdditionalFields = nameof(fecha_inicio) + "," + nameof(fecha_termino))]
         public DateTime fecha_revision { get; set; }
+        public string fecharevision { get; set; }
 
         [Display(Name = "Plazo revisión")]
         [Range(1, int.MaxValue, ErrorMessage = "Agregue un valor valido")]
@@ -152,6 +160,7 @@ namespace WebColliersCore.Models
         [Display(Name = "Número de Referencia (Mtto)")]
         public string NumeroReferenciadoMtto { get; set; }
         [Display(Name = "Fecha de Ocupación")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime fechaOcupacion { get; set; }
         [Display(Name = "Años")]
         public int plazoPFAnio { get; set; }
@@ -181,6 +190,8 @@ namespace WebColliersCore.Models
         public double revisionPorcentajeAdicional { get; set; }
         [Display(Name = "Comentarios de Revisión")]
         public string ComentariosRevision { get; set; }
+
+        public bool Check { get; set; }
 
         /*
           ==================================================================================          

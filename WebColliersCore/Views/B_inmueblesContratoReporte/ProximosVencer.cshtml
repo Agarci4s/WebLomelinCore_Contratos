@@ -117,19 +117,19 @@
 <h3>Listado de Contratos Próximos a Vencer</h3>
 
 <div class="row">
-    @* <div class="form-group col-sm-1">
+    <div class="form-group col-sm-1">
         <label>Meses</label>
         <input id="inputMeses" class="form-control" type="number" value="0" />
-    </div> *@
-    <div class="form-group col-md-3 " id="divClasificacion">
+    </div>
+    @* <div class="form-group col-md-3 " id="divClasificacion">
         <label class="control-label">Fecha de inicio</label>
         <input type="date" id="fecha" class="form-control" value="@DateTime.Now.ToString("yyyy")-01-01" />
-    </div>
+    </div> *@
 
-    <div class="form-group col-md-3 " id="divClasificacion">
+    @* <div class="form-group col-md-3 " id="divClasificacion">
         <label class="control-label">Fecha de fin</label>
         <input type="date" id="fecha2" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-    </div>
+    </div> *@
     <div class="form-group col-sm-3">
         <label>Fecha de:</label>
         <select id="selectCampo" asp-items=ViewBag.Campos class="form-control"></select>
@@ -137,22 +137,22 @@
     <div class="form-group col-sm-2 align-self-end">
         <button class="btn btn-primary mt-4" onclick="return Search();">Buscar...<i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
-    @* <div class="form-group col-sm-2 align-self-end">
+    <div class="form-group col-sm-2 align-self-end">
         <button class="btn btn-primary mt-4" id="btnEnviar">Enviar...<i class="fa-solid fa-paper-plane"></i></button>
         <button class="btn btn-primary" type="button" disabled id="btnEnviando" style="display: none;">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Enviando...<i class="fa-solid fa-paper-plane"></i>
         </button>
-    </div> *@
-    @* <div class="form-group col-sm-2 align-self-end offset-md-2">
+    </div>
+    <div class="form-group col-sm-2 align-self-end offset-md-2">
         <div class="checkbox">
             <label><input type="checkbox" id="chkTodos" value="1"> Seleccionar todos</label>
         </div>
-    </div> *@
+    </div>
 </div>
 <hr/>
 <br/>
-@using (Html.BeginForm("GetListContratos", "B_inmueblesContratoReporte", null, FormMethod.Post, false, new { id = "formAccion" }))
+@using (Html.BeginForm("Enviar", "B_inmueblesContratoReporte", null, FormMethod.Post, false, new { id = "formAccion" }))
 {
     <div id="divLista">
         @{
@@ -184,9 +184,10 @@
             type: "POST",
             url: "getListadoContratosParametrizado",
             data:{                
-                FechaInicio: fecha,
-                FechaFin: fecha2,
-                Campo: $("#selectCampo").val()                
+                // FechaInicio: fecha,
+                // FechaFin: fecha2,
+                Campo: $("#selectCampo").val(),
+                Meses: $("#inputMeses").val()
             },
             success: function(response){
                 $("#divLista").html(response);
@@ -196,4 +197,13 @@
             }
         });
     };
+        $("#chkTodos").click(function () {
+        var status = $("#chkTodos").prop('checked');
+        toggleChecked(status);
+    });
+    function toggleChecked(status) {
+            $(".chkres input").each(function () {
+                $(this).prop("checked", status);
+            });
+    }
 </script>

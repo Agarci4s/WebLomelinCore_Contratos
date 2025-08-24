@@ -48,7 +48,8 @@
             {
                 @foreach (pagosagua item in Model)
                 {
-                    <tr>
+                    
+                    <tr class="@item.ClassPorcentaje">
                         <td>
                             @Html.Raw(item.InmuebleData.cr)
                         </td>

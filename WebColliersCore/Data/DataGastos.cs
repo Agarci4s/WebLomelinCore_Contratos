@@ -99,7 +99,9 @@ namespace WebLomelinCore.Data
                     new("Receptor_In", movimientos.ReceptorNombre),
                     new("RFCReceptor_In", movimientos.ReceptorRFC ?? ""),
                     new("PathXML_In", movimientos.PathLocalXML ?? ""),
-                    new("PathPDF_In", movimientos.PathLocalPDF ?? "")
+                    new("PathPDF_In", movimientos.PathLocalPDF ?? ""),
+                    new("IdEgreso_In", movimientos.IdGasto),
+                    new("FechaProgramacionPago_In", movimientos.FechaProgramacionPago ?? "1900-01-01")
                 };
 
 

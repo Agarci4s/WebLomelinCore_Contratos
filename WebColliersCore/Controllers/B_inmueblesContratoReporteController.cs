@@ -1,36 +1,38 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Humanizer.Localisation;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using MySqlX.XDevAPI.Common;
+using Newtonsoft.Json;
+using NPOI.SS.Formula.Functions;
+using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using OfficeOpenXml.Table;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Components;
+using Stimulsoft.Report.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using WebColliersCore;
 using WebColliersCore.Data;
 using WebColliersCore.Models;
-using WebColliersCore;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Logging;
 using WebLomelinCore.Data;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using NPOI.SS.Formula.Functions;
-using System.Linq;
-using Humanizer.Localisation;
-using System.Data;
-using Stimulsoft.Report;
-using Stimulsoft.Report.Mvc;
-using Stimulsoft.Report.Components;
-using System.Drawing;
-using MySqlX.XDevAPI.Common;
-using DocumentFormat.OpenXml.Spreadsheet;
-
-using OfficeOpenXml;
-using OfficeOpenXml.Table;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
-using static Stimulsoft.Report.StiOptions.Export;
-using System.ComponentModel;
 using static Stimulsoft.Report.Func;
-using System.Diagnostics;
+using static Stimulsoft.Report.StiOptions.Export;
 
 namespace WebLomelinCore.Controllers
 {
@@ -70,7 +72,7 @@ namespace WebLomelinCore.Controllers
             
             //envìo de correos
             DataEmail dataEmail = new DataEmail();
-            dataEmail.EnviaCorreo(idCartera,IdUsuario);
+            //dataEmail.EnviaCorreo(idCartera,IdUsuario);
             //DataCG dataCG = new DataCG();
             //ViewBag.lstFechas = dataCG.fecha();
             //ViewBag.lstEstatusVisita = dataCG.b_cg_estatus_visita_inmueble(1);
@@ -99,7 +101,7 @@ namespace WebLomelinCore.Controllers
         }
 
         [HttpPost]
-        public ActionResult getListadoContratosParametrizado(DateTime FechaInicio, DateTime FechaFin, int Campo)
+        public ActionResult getListadoContratosParametrizado(int Campo, int Meses)
         {
             #region Validación de permisos
             var claims = HttpContext.User.Claims;
@@ -110,9 +112,9 @@ namespace WebLomelinCore.Controllers
             #endregion            
 
             DataInmueblesContratos dataInmueblesContratos = new DataInmueblesContratos();
-            List<B_inmuebles_contrato> reporte = dataInmueblesContratos.GetReporte(idCartera, IdUsuario, FechaInicio, FechaFin, Campo);
+            List<B_inmuebles_contrato> reporte = dataInmueblesContratos.GetReporte(idCartera, IdUsuario, Campo, Meses);
 
-            //ViewBag.Campo = campo == 1 ? "Fecha de Termino" : "Fecha de Revisión";
+            ViewBag.Campo = Campo; // == 1 ? "Fecha de Termino" : "Fecha de Revisión";
 
             return PartialView("_ListContratosPV", reporte);
         }
@@ -212,6 +214,158 @@ namespace WebLomelinCore.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult Enviar(string movAut, int meses, int campo)
+        {
+            List<B_inmuebles_contrato> lista = new List<B_inmuebles_contrato>();
+
+            string TmpDataStr = movAut.Replace("&quot;", "\"");
+            TmpDataStr = TmpDataStr.Replace("12:00:00 a. m.", "");
+            lista = JsonConvert.DeserializeObject<List<B_inmuebles_contrato>>(TmpDataStr);
+
+            #region Validación de permisos
+            var claims = HttpContext.User.Claims;
+            Menu menu = new Menu();
+            int IdUsuario = 0, idCartera = 0, tipoNivel = 0;//0 , 1-detalle,2-editar y detalle, 3 crear-eliminar, editar y detalle   
+            if (!menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims))
+                return Redirect("~/Home");
+            #endregion
+
+            List<B_inmuebles_contrato> listaMovimientos = new List<B_inmuebles_contrato>();
+            string mensaje = "";
+            ModelState.Clear();
+
+            B_inmuebles_contrato Movimiento = new B_inmuebles_contrato();
+            foreach (var item in lista)
+            {
+                if (item.Check && !string.IsNullOrEmpty(item.email))
+                {
+                    Movimiento = item;
+                    string lblFecha = "";
+                    string fldFecha;
+                    DataEnvioEmail dataMail = new DataEnvioEmail();
+                    StringBuilder html = new StringBuilder();
+                    string _subject = "Contrato próximo a vencer";
+                    if (campo == 1)
+                    {
+                        html.AppendLine($"Estimad@, le informamos que el (los) siguiente (s) Contrato(s) de Arrendamiento vencerá pronto:");
+                        lblFecha = "Fecha de Termino";
+                        fldFecha = item.fechatermino;
+                        _subject = "Contrato próximo a vencer";
+                    }
+                    else
+                    {
+                        html.AppendLine($"Estimad@, le informamos que al (los) siguiente (s) Contrato(s) de Arrendamiento le corresponde el incremento anual el presente mes:");
+                        lblFecha = "Fecha de Revisión";
+                        fldFecha = item.fecharevision;
+                        _subject = "Contrato próximo a incremento anual";
+                    }
+
+                    DataEmail modelMail = new DataEmail()
+                    {
+                        Receivers = Movimiento.email,
+                        //Bcc = dataOrdenCompra.getCorreosAutorizacion(Movimiento.Id, usuario.IdUsuario),
+                        Subject = _subject,
+                        //Attachments = dataAttachments,
+                        IsHtmlFormat = true
+                    };
+
+
+
+                    html.AppendLine("<header> ");
+                    html.AppendLine("    <style> ");
+
+                    html.AppendLine("       table tr th {");
+                    html.AppendLine("       cursor: pointer;");
+                    html.AppendLine("           -webkit - user - select: none;");
+                    html.AppendLine("           -moz - user - select: none;");
+                    html.AppendLine("           -ms - user - select: none;");
+                    html.AppendLine("           user - select: none;");
+                    html.AppendLine("       }");
+
+                    html.AppendLine(" ");
+                    html.AppendLine("        .tableFixHead { ");
+                    html.AppendLine("        overflow-y: auto; ");
+                    html.AppendLine("        height: 480px; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("        .tableFixHead table { ");
+                    html.AppendLine("        border-collapse: collapse; ");
+                    html.AppendLine("        width: 100%; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("        .tableFixHead th, ");
+                    html.AppendLine("        .tableFixHead td { ");
+                    html.AppendLine("        padding: 8px 16px; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("        .tableFixHead td { ");
+                    html.AppendLine("        text-align: center; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("        .tableFixHead th { ");
+                    html.AppendLine("        position: sticky; ");
+                    html.AppendLine("        top: 0; ");
+                    html.AppendLine("        /* background-color: white; ");
+                    html.AppendLine("        border: 0px solid white; */ ");
+                    html.AppendLine("        text-align: center; ");
+                    html.AppendLine("        background: rgb(37, 64, 143); ");
+                    html.AppendLine("        color: white; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("        .form-group-custom { ");
+                    html.AppendLine("        margin-bottom: 6px; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("        .font-size-row { ");
+                    html.AppendLine("        font-size: 12px !important; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("        .font-size-head { ");
+                    html.AppendLine("        font-size: 12px !important; ");
+                    html.AppendLine("        } ");
+                    html.AppendLine(" ");
+                    html.AppendLine("    </style> ");
+                    html.AppendLine("</header> ");
+
+                    html.AppendLine("<br/><br/>");
+                    html.AppendLine("<div class=\"tableFixHead\">");
+                    html.AppendLine("<table class=\"table table-responsive-sm table-sm small\" id=\"tab\">");
+                    html.AppendLine("<thead class=\"font-size-head\">");
+                    html.AppendLine("<tr>");
+                    html.AppendLine("<th>Nombre</th>");
+                    html.AppendLine("<th>Contrato</th>");
+                    html.AppendLine("<th>Fecha Inicio</th>");
+                    html.AppendLine($"<th>{lblFecha}</th>");
+                    html.AppendLine("</tr>");
+                    html.AppendLine("</thead>");
+                    html.AppendLine("<tbody>");
+                    html.AppendLine("<tr>");
+                    html.AppendLine($"<td>{Movimiento.nombre }</td>");
+                    html.AppendLine($"<td>{Movimiento.contrato}</td>");
+                    html.AppendLine($"<td>{String.Format("{0:dd-MM-yyyy}", Movimiento.fechainicio)}</td>");
+                    html.AppendLine($"<td>{String.Format("{0:dd-MM-yyyy}", fldFecha)}</td>");
+                    html.AppendLine("</tr>");
+                    html.AppendLine("</tbody>");
+                    html.AppendLine("</table>");
+                    html.AppendLine("</div>");
+
+                    modelMail.Body = html.ToString();
+
+                    dataMail.EmailSendOC(modelMail);
+                }
+                //}
+                //}
+
+                //return PartialView("_ReviewOrden", listaMovimientos);
+
+            }
+
+            //listaMovimientos = ObtieneListaMovimientosAutorizar(idInmueble, periodo, "P", usuario.IdUsuario);
+            Response.StatusCode = (int)HttpStatusCode.OK;
+            return PartialView("_ListContratosPV");
         }
     }
 }

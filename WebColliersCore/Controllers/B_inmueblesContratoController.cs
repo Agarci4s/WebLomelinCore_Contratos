@@ -102,6 +102,7 @@ namespace WebLomelinCore.Controllers
             b_Inmuebles_Contrato.id_b_inmuebles = id;
             b_Inmuebles_Contrato.fecha_inicio = DateTime.Now;
             b_Inmuebles_Contrato.fecha_termino = DateTime.Now;
+            b_Inmuebles_Contrato.fechaOcupacion = DateTime.Now;
             b_Inmuebles_Contrato.fecha_obligado = DateTime.Now;
             b_Inmuebles_Contrato.fecha_anticipacion = 90;
             b_Inmuebles_Contrato.fecha_revision = DateTime.Now;
@@ -125,24 +126,24 @@ namespace WebLomelinCore.Controllers
             try
             {
                 //string filePath = Environment.CurrentDirectory;
-                string filePath = Path.Combine("Archivos", b_Inmuebles_Contrato.id_b_inmuebles.ToString("000"));
-                filePath = Path.Combine(filePath, b_Inmuebles_Contrato.id_b_inmuebles_contrato.ToString("000"));
+                //string filePath = Path.Combine("Archivos", b_Inmuebles_Contrato.id_b_inmuebles.ToString("000"));
+                //filePath = Path.Combine(filePath, b_Inmuebles_Contrato.id_b_inmuebles_contrato.ToString("000"));
 
-                if (!Directory.Exists(filePath))
-                {
-                    DirectoryInfo di = Directory.CreateDirectory(filePath);
-                }
+                //if (!Directory.Exists(filePath))
+                //{
+                //    DirectoryInfo di = Directory.CreateDirectory(filePath);
+                //}
 
-                IFormFile file = b_Inmuebles_Contrato.File;
-                if (file != null && file.Length != 0)
-                {
-                    filePath = Path.Combine(filePath, "contrato" + Path.GetExtension(Path.GetExtension(file.FileName)));
-                    using (Stream fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyToAsync(fileStream);
+                //IFormFile file = b_Inmuebles_Contrato.File;
+                //if (file != null && file.Length != 0)
+                //{
+                //    filePath = Path.Combine(filePath, "contrato" + Path.GetExtension(Path.GetExtension(file.FileName)));
+                //    using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                //    {
+                //        file.CopyToAsync(fileStream);
 
-                    }
-                }
+                //    }
+                //}
                 
 
 
@@ -509,11 +510,11 @@ namespace WebLomelinCore.Controllers
             DataInmueblesContratos dataInmueblesContratos = new DataInmueblesContratos();
             List<B_inmuebles_contrato> b_Inmuebles_Contratos = dataInmueblesContratos.Get(idCartera, IdUsuario, id_b_inmuebles);
 
-            bool exist = b_Inmuebles_Contratos.Any(d => d.fecha_termino >= fecha_inicio && d.id_b_inmuebles_contrato != id_b_inmuebles_contrato);
+            //bool exist = b_Inmuebles_Contratos.Any(d => d.fecha_termino >= fecha_inicio && d.id_b_inmuebles_contrato != id_b_inmuebles_contrato);
 
-            if (exist)
-                return Json($"Existe un contrato con la misma fecha");
-            else
+            //if (exist)
+            //    return Json($"Existe un contrato con la misma fecha");
+            //else
                 return Json(true);
         }
 

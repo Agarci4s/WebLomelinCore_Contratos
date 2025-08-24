@@ -39,6 +39,8 @@ else
             <tr>
                 @* 0 *@<th>Inmueble</th>
                 @* 1 *@<th>Gasto</th>
+                @* 1 *@<th>Fecha Programación de Pago</th>
+                @* 1 *@<th>Periodo</th>
                 @* 2 *@<th>Concepto</th>
                 @* 3 *@<th>Proveedor</th>
                 @* 4 *@<th>Fecha Contable</th>
@@ -85,14 +87,22 @@ else
 
                                 </div>
                             </td>
+                            <td style="width: 10rem;">
+                                @Html.EditorFor(m => m[i].FechaProgramacionPago, new { htmlAttributes = new { @value = $"{DateTime.Now.ToString("yyyy-MM-dd")}", @type = "date", @placeholder = "yyyy-MM-dd", @class = "form-control", @autocomplete = "off", @onkeydown = "return false" } })
+                            </td>
+                            @* 2 *@<td>
+                                <div style="width: 5rem">
+                                    @Html.EditorFor(m => m[i].Periodo, new { htmlAttributes = new { @class = "form-control font-size-row" } })
+                                </div>
+                            </td>
                             @* 2 *@<td>
                                 <div style="width: 20rem">
-                                    @Html.EditorFor(m => m[i].Concepto, new { htmlAttributes = new { @class = "form-control font-size-row", @style = "width:21.5rem", @readonly = "true" } })
+                                    @Html.EditorFor(m => m[i].Concepto, new { htmlAttributes = new { @class = "form-control font-size-row", @style = "width:20rem", @readonly = "true" } })
                                 </div>
                             </td>
                             @* 3 *@<td>
                                 <div style="width: 18rem">
-                                    @Html.EditorFor(m => m[i].Proveedor, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:19.5rem", @readonly = "true" } })
+                                    @Html.EditorFor(m => m[i].Proveedor, new { htmlAttributes = new { @class = "form-control font-size-row ", @style = "width:18rem", @readonly = "true" } })
                                 </div>
                             </td>
                             @* 4 *@<td>

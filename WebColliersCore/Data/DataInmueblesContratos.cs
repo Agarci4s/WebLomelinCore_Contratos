@@ -1,14 +1,15 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebColliersCore.DataAccess;
-using System.Data;
-using MySql.Data.MySqlClient;
 using WebColliersCore.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using DocumentFormat.OpenXml.Wordprocessing;
-using System.ComponentModel.DataAnnotations;
 
 namespace WebColliersCore.Data
 {
@@ -29,16 +30,18 @@ namespace WebColliersCore.Data
             return DataToModel(dataTable);
         }
 
-        public List<B_inmuebles_contrato> GetReporte(int idCartera, int idUsuario, DateTime fecha, DateTime fecha2, int campo)
+        public List<B_inmuebles_contrato> GetReporte(int idCartera, int idUsuario, int campo, int meses)
         {
             List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();
             listSqlParameters.Add(new MySqlParameter("idCarteraIn", idCartera));
             listSqlParameters.Add(new MySqlParameter("idUsuarioIn", idUsuario));            
-            listSqlParameters.Add(new MySqlParameter("fechaIn", fecha));
-            listSqlParameters.Add(new MySqlParameter("fecha2In", fecha2));
+            //listSqlParameters.Add(new MySqlParameter("fechaIn", fecha));
+            //listSqlParameters.Add(new MySqlParameter("fecha2In", fecha2));
             listSqlParameters.Add(new MySqlParameter("CampoIn", campo));
+            listSqlParameters.Add(new MySqlParameter("pMeses", meses));
 
-            DataTable dataTable = conexion.RunStoredProcedure("b_inmuebles_contratoGetListado", listSqlParameters);
+            //DataTable dataTable = conexion.RunStoredProcedure("b_inmuebles_contratoGetListado", listSqlParameters);
+            DataTable dataTable = conexion.RunStoredProcedure("b_inmuebles_contratosPVGetList", listSqlParameters);
             return DataToModel(dataTable);
         }
 
@@ -226,6 +229,15 @@ namespace WebColliersCore.Data
                     b_Inmuebles_Contrato.id_b_cg_contrato_tipo = int.Parse(item["id_b_cg_contrato_tipo"].ToString());
                     b_Inmuebles_Contrato.id_b_cg_contrato_estatu = int.Parse(item["id_b_cg_contrato_estatu"].ToString());
                     b_Inmuebles_Contrato.contrato = item["contrato"].ToString();
+                    b_Inmuebles_Contrato.nombre = item["nombre"].ToString();
+                    try
+                    {
+                        b_Inmuebles_Contrato.email = item["email"].ToString();
+                    }
+                    catch (Exception)
+                    {
+                        b_Inmuebles_Contrato.email = "";
+                    }                    
                     b_Inmuebles_Contrato.renta = decimal.Parse(item["renta"].ToString());
                     b_Inmuebles_Contrato.fecha_inicio = Convert.ToDateTime(item["fecha_inicio"].ToString());
                     b_Inmuebles_Contrato.fecha_termino = Convert.ToDateTime(item["fecha_termino"].ToString());
