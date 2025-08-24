@@ -33,7 +33,7 @@ namespace WebLomelinCore.Models
         public string CuentaPredial { get; set; }
 
         [Required(ErrorMessage = "Ingrese el periodo de pago")]
-        [Display(Name = "Periodo de pago")]
+        [Display(Name = "Periodo de Pago")]
         public string periodoPago { get; set; }
 
         [Display(Name = "Recargos")]
@@ -50,7 +50,7 @@ namespace WebLomelinCore.Models
         public double importe { get; set; }//
 
         [Required(ErrorMessage = "Ingrese el IVA")]
-        [Display(Name = "IVA")]
+        [Display(Name = "I.V.A.")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un iva correcto")]
         public double iva { get; set; }
 
@@ -58,21 +58,21 @@ namespace WebLomelinCore.Models
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "El campo Actualización es incorrecto")]
         public double Actualizacion { get; set; }
 
-        [Display(Name = "Concepto de pago")]
+        [Display(Name = "Concepto de Pago")]
         public string conceptoPago { get; set; }
 
         [Required(ErrorMessage = "Ingrese línea de captura")]
-        [Display(Name = "Línea de captura")]
+        [Display(Name = "Línea de Captura")]
         public string LineaCaptura { get; set; }
 
         // Fecha límite para realizar el pago
         [Required(ErrorMessage = "Ingrese la fecha límite de pago")]
-        [Display(Name = "Fecha límite de pago")]
+        [Display(Name = "Fecha Límite de Pago")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime fechaPagolimite { get; set; }
 
-        [Display(Name = "Línea de captura de pago")]
+        [Display(Name = "Línea de Captura de Pago")]
         public string LineaCapturaPago { get; set; }
 
         public int UsuarioAutoriza { get; set; }

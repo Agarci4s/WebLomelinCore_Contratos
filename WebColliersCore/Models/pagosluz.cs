@@ -30,12 +30,12 @@ namespace WebLomelinCore.Models
         public string CuentaLuz { get; set; }
 
         [Required(ErrorMessage = "Ingrese la fecha de pago")]
-        [Display(Name = "fecha de Pago")]
+        [Display(Name = "Fecha de Pago")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime fechaPago { get; set; }
 
-        [Display(Name = "Periodo de pago")]
+        [Display(Name = "Periodo de Pago")]
         [Required(ErrorMessage ="Ingrese el periodo de pago")]
         public string periodoPago { get; set; }//
 
@@ -44,16 +44,16 @@ namespace WebLomelinCore.Models
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un importe válido")]
         public double importe { get; set; }
 
-        [Display(Name ="Iva")]
+        [Display(Name ="I.V.A.")]
         [Required(ErrorMessage ="Ingrese el iva")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage ="Ingrese el iva válido")]
         public double iva { get; set; }
 
-        [Display(Name ="Concepto pago")]
+        [Display(Name ="Concepto de Pago")]
         public string conceptoPago { get; set; }
 
         [Required(ErrorMessage = "Ingrese línea de captura")]
-        [Display(Name = "Línea de captura")]
+        [Display(Name = "Línea de Captura")]
         public string LineaCaptura { get; set; }
         
         public int UsuarioAutoriza { get; set; }
@@ -76,13 +76,13 @@ namespace WebLomelinCore.Models
         public bool EsSeleccionado {  get; set; }
 
         [Required(ErrorMessage = "Ingrese Fecha Limite de Pago")]
-        [Display(Name = "Fecha limite de pago")]
+        [Display(Name = "Fecha Limite de Pago")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime FechaLimitePago { get; set; }
 
         [Required(ErrorMessage = "Ingrese Fecha de Corte")]
-        [Display(Name = "Fecha de corte")]
+        [Display(Name = "Fecha de Corte")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime FechaCorte { get; set; }

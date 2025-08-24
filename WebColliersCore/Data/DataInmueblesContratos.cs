@@ -230,7 +230,14 @@ namespace WebColliersCore.Data
                     b_Inmuebles_Contrato.id_b_cg_contrato_estatu = int.Parse(item["id_b_cg_contrato_estatu"].ToString());
                     b_Inmuebles_Contrato.contrato = item["contrato"].ToString();
                     b_Inmuebles_Contrato.nombre = item["nombre"].ToString();
-                    b_Inmuebles_Contrato.email = item["email"].ToString();
+                    try
+                    {
+                        b_Inmuebles_Contrato.email = item["email"].ToString();
+                    }
+                    catch (Exception)
+                    {
+                        b_Inmuebles_Contrato.email = "";
+                    }                    
                     b_Inmuebles_Contrato.renta = decimal.Parse(item["renta"].ToString());
                     b_Inmuebles_Contrato.fecha_inicio = Convert.ToDateTime(item["fecha_inicio"].ToString());
                     b_Inmuebles_Contrato.fecha_termino = Convert.ToDateTime(item["fecha_termino"].ToString());

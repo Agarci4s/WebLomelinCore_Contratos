@@ -15,11 +15,11 @@ namespace WebLomelinCore.Models
         /* DATOS FORMULARIO */
         public int idPagoAgua { get; set; }
 
-        [Required(ErrorMessage = "Seleccione el inmueble")]
+        [Required(ErrorMessage = "Seleccione el Inmueble")]
         [Display(Name = "Inmueble")]
         public int IdInmueble { get; set; }
 
-        [Required(ErrorMessage = "Seleccione la localidad")]
+        [Required(ErrorMessage = "Seleccione la Localidad")]
         [Display(Name = "Localidad")]
         public int IdLocalidad { get; set; }
 
@@ -30,11 +30,11 @@ namespace WebLomelinCore.Models
         public string CuentaAgua { get; set; }
 
         [Required(ErrorMessage = "Ingrese el periodo de pago")]
-        [Display(Name = "Periodo de pago")]
+        [Display(Name = "Periodo Pago")]
         public string periodoPago { get; set; }
 
         [Required(ErrorMessage ="Ingrese la fecha de lectura 1")]
-        [Display(Name = "Fecha de lectura 1")]
+        [Display(Name = "Fecha Lectura 1")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date, ErrorMessage ="Ingrese una fecha valida")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         //[DisplayFormat(DataFormatString = "{0:d}")]
@@ -45,7 +45,7 @@ namespace WebLomelinCore.Models
         public float Lectura1 { get; set; }
 
         [Required(ErrorMessage = "Ingrese la fecha de lectura 2")]
-        [Display(Name = "Fecha de lectura 2")]
+        [Display(Name = "Fecha Lectura 2")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime FechaLectura2 { get; set; }
@@ -54,7 +54,7 @@ namespace WebLomelinCore.Models
         [Required(ErrorMessage = "Ingrese Lectura 2")]
         public float Lectura2 { get; set; }
 
-        [Display(Name = "Importe habitacional")]
+        [Display(Name = "Importe Habitacional")]
         [Required(ErrorMessage = "Ingrese el importe habitacional")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un importe habitacional válidao")]
         public double ImporteHabitacional { get; set; }
@@ -64,8 +64,8 @@ namespace WebLomelinCore.Models
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese un importe comercial válidao")]        
         public double ImporteComercial { get; set; }
 
-        [Display(Name = "Iva comercial")]
-        [Required(ErrorMessage = "Ingrese el iva comercial")]
+        [Display(Name = "I.V.A. Comercial")]
+        [Required(ErrorMessage = "Ingrese el I.V.A. Comercial")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "Ingrese el iva comercial válidao")]
         public double IvaComercial { get; set; }
 
@@ -84,26 +84,26 @@ namespace WebLomelinCore.Models
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "El campo Multas es incorrecto")]
         public double Multas { get; set; }
 
-        [Display(Name = "Gastos ejecución")]
+        [Display(Name = "Gastos Ejecución")]
         //[Required(ErrorMessage = "Ingrese el iva habitacional")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency, ErrorMessage = "El campo Gastos ejecución es incorrecto")]
         public double GastosEjecucion { get; set; }
 
-        [Display(Name = "Concepto de pago")]
+        [Display(Name = "Concepto Pago")]
         public string ConceptoPago { get; set; } /*conceptopago*/
 
         [Required(ErrorMessage = "Ingrese Fecha Limite de Pago")]
-        [Display(Name = "Fecha limite de pago")]
+        [Display(Name = "Fecha Limite de Pago")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime FechaVencimiento { get; set; }
 
         [Required(ErrorMessage = "Ingrese línea de captura")]
-        [Display(Name = "Línea de captura")]
+        [Display(Name = "Línea de Captura")]
         public string LineaCaptura { get; set; }
 
         [Required(ErrorMessage = "Ingrese consumo bimestral")]
-        [Display(Name = "Consumo bimestral")]
+        [Display(Name = "Consumo Bimestral")]
         public double ConsumoBimestral { get; set; }
 
         public int UsuarioAutoriza { get; set; }
