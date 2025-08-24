@@ -62,7 +62,7 @@ namespace WebColliersCore.Data
             }
         }
 
-        public List<SelectListItem> LocalidadesGet(int IdInmueble)
+        public List<SelectListItem> LocalidadesGet(int? IdInmueble)
         {
             try
             {

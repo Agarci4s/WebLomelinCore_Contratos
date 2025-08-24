@@ -5,25 +5,31 @@
     $("#CargaPredial").hide();
     $("#CargaArchivos").hide();
     $("#CargaManual").hide();
+    $("#Filters").hide();
+    
 
     // Evento cambio del combo
     $('#cmbTipoServicio').on('change', function () {
         var typeService = parseInt($(this).val(), 10);
-
+        LoadInmueble();
         if (typeService === 1) {
+            $("#Filters").show();
             $("#CargaAgua").show();
             $("#CargaLuz").hide();
             $("#CargaPredial").hide();
         } else if (typeService === 2) {
+            $("#Filters").show();
             $("#CargaManual").show(); 
             $("#CargaLuz").show();
             $("#CargaAgua").hide();
             $("#CargaPredial").hide();
         } else if (typeService === 3) {
+            $("#Filters").show();
             $("#CargaPredial").show();
             $("#CargaLuz").hide();
             $("#CargaAgua").hide();
         } else {
+            $("#Filters").hide();
             $("#CargaAgua").hide();
             $("#CargaLuz").hide();
             $("#CargaPredial").hide();
@@ -32,9 +38,11 @@
 
     $('#cbTipoCarga').change(function () {
         if ($(this).is(':checked')) {
+            $("#Filters").hide();
             $("#CargaLuz").hide();
             $("#CargaArchivos").show();
         } else {
+            $("#Filters").show();
             $("#CargaLuz").show();
             $("#CargaArchivos").hide();
         }
@@ -42,36 +50,92 @@
 
 });
 
-function changeInmuebleAgua()
+function changeInmueble(IdInmueble)
 {
-    var newId = $("#selectInmuebleAgua").val();
+   // var IdInmueble = getIdInmueble();
     var url = "/ComprobanteServicios/getLocalidades";
 
-    $.getJSON(url, { IdInmueble: newId }, function (data) {
+    $.getJSON(url, { IdInmueble: IdInmueble }, function (data) {
         var item = "";
-        $("#selectLocalidadAgua").empty();
+        $("#datalistIdLocalidad").empty();
         $.each(data, function (i, Localidades) {
-            item += '<option value="' + Localidades.value + '">' + Localidades.text + '</option>'
+            item += '<option data-value="' + Localidades.value + '" value="' + Localidades.text + '">';
         });
-        $("#selectLocalidadAgua").html(item);
+        $("#datalistIdLocalidad").html(item);
     });
-
 }
 
-function changeLocalidadAgua()
+function changeLocalidad(IdLocalidad)
 {
-    var newId = $("#selectCuentaAgua").val();
-    var url = "/ComprobanteServicios/getCuentasAgua";
+    var IdInmueble = getIdInmueble();
+    var IdLocalidad = getIdLocalidad();
+    var IdServicio = parseInt($("#cmbTipoServicio").val(), 10);
 
-    $.getJSON(url, { IdLocalidad: newId }, function (data) {
+    var url = "/ComprobanteServicios/getCuentas";
+
+    $.getJSON(url, { IdInmueble: IdInmueble, IdLocalidad: IdLocalidad, IdTipoServicio: IdServicio  }, function (data) {
         var item = "";
-        $("#selectCuentaAgua").empty();
-        $.each(data, function (i, cuentasAgua) {
-            item += '<option value="' + cuentasAgua.value + '">' + cuentasAgua.text + '</option>'
+        $("#datalistIdCuenta").empty();
+        $.each(data, function (i, cuentas) {
+            item += '<option data-value="' + cuentas.value + '" value="' + cuentas.text + '">';
         });
-        $("#selectCuentaAgua").html(item);
+        $("#datalistIdCuenta").html(item);
     });
 }
+
+function getIdLocalidad() {
+    var IdLocalidad = null;
+    var inputValue = document.getElementById("inputDataListLoc").value;
+    var options = document.querySelectorAll('#datalistIdLocalidad option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                IdLocalidad = option.getAttribute('data-value');
+                break;
+            }
+        }
+    }
+
+    return parseInt(IdLocalidad);
+}
+
+function getIdInmueble()
+{
+    var IdInmueble = null;
+    var inputValue = document.getElementById("inputDataListInm").value;
+    var options = document.querySelectorAll('#datalistIdInmueble option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                IdInmueble = option.getAttribute('data-value');
+                break;
+            }
+        }
+    }
+    return parseInt(IdInmueble);
+}
+
+function getIdCuenta() {
+    var IdCuenta = null;
+    var inputValue = document.getElementById("inputDataListCuentas").value;
+    var options = document.querySelectorAll('#datalistIdCuenta option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                IdCuenta = option.getAttribute('data-value');
+                break;
+            }
+        }
+    }
+    return parseInt(IdCuenta);
+}
+    
 
  function changeInmuebleLuz()
     {
@@ -185,6 +249,7 @@ $(document).ready(function () {
             //dataType: "json",
             success: function (response) {
                 if (response != null) {
+                    $("#Filters").show();
                     $("#CargaLuz").show();
                     $("#CargaArchivos").hide();
                     $("#CargaManual").hide();
@@ -314,7 +379,176 @@ function calcularConsumoLuz() {
     input.addEventListener("change", calcularConsumoLuz);
 });
 
+function LoadInmueble() {
+    var url = "/ComprobanteServicios/getInmuebles";
 
+    $.getJSON(url, { IdRegion: 1 }, function (data) {
+        var item = "";
+
+        $("#inputDataListInm").empty();
+        $("#datalistIdInmueble").empty();
+        $("#inputIdInmueble").empty();
+        $.each(data, function (i, inmueble) {
+            item += '<option data-value="' + inmueble.value + '" value="' + inmueble.text + '">';
+        });
+        $("#datalistIdInmueble").html(item);
+    });
+}
+
+$("#inputDataListInm").on("change paste keyup", function () {
+
+    $("#inputIdInmueble").val('');
+    var inputValue = document.getElementById("inputDataListInm").value;
+    var options = document.querySelectorAll('#datalistIdInmueble option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                var value = option.getAttribute('data-value');
+                $("#inputIdInmueble").val(value);
+                changeInmueble(value);
+                break;
+            }
+        }
+    }
+    else
+        $("#inputIdInmueble").focus();
+});
+
+$("#inputDataListLoc").on("change paste keyup", function () {
+
+    $("#inputIdLocalidad").val('');
+    var inputValue = document.getElementById("inputDataListLoc").value;
+    var options = document.querySelectorAll('#datalistIdLocalidad option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                var value = option.getAttribute('data-value');
+                $("#inputIdLocalidad").val(value);
+                changeLocalidad(value);
+                break;
+            }
+        }
+    }
+    else
+        $("#inputIdLocalidad").focus();
+});
+
+$("#inputDataListCuentas").on("change paste keyup", function () {
+    $("#inputIdCuenta").val('');
+    var inputValue = document.getElementById("inputDataListCuentas").value;
+    var options = document.querySelectorAll('#datalistIdCuenta option');
+
+    if (options.length > 0) {
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (option.getAttribute('value') === inputValue) {
+                var value = option.getAttribute('data-value');
+                $("#inputIdCuenta").val(value);
+                break;
+            }
+        }
+    }
+    else
+        $("#inputIdCuenta").focus();
+});
+
+
+$(document).ready(function () {
+    $('#CargaAgua').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+        
+        var IdInmueble = getIdInmueble();
+        var IdLocalidad = getIdLocalidad();
+        var IdCuenta = getIdCuenta();
+
+        var formData = new FormData(this); // Create FormData object from the form
+
+        // Add additional data to the FormData object
+        formData.append('PagosAgua.IdInmueble', IdInmueble);
+        formData.append('PagosAgua.IdLocalidad', IdLocalidad);
+        formData.append('PagosAgua.idCuentaAgua', IdCuenta);
+
+        $.ajax({
+            url: $(this).attr('action'), // Get action URL from the form
+            type: 'POST',
+            data: formData, // Serialize form data
+            processData: false, // Important: Don't process the data
+            contentType: false, // Important: Don't set content type
+            success: function (response) {
+                alert("Se inserto correctamente");
+            },
+            error: function (error) {
+                console.error("Error submitting form:", error);
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    $('#CargaLuz').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        var IdInmueble = getIdInmueble();
+        var IdLocalidad = getIdLocalidad();
+        var IdCuenta = getIdCuenta();
+
+        var formData = new FormData(this); // Create FormData object from the form
+
+        // Add additional data to the FormData object
+        formData.append('PagosLuz.IdInmueble', IdInmueble);
+        formData.append('PagosLuz.IdLocalidad', IdLocalidad);
+        formData.append('PagosLuz.idCuentaLuz', IdCuenta);
+
+        $.ajax({
+            url: $(this).attr('action'), // Get action URL from the form
+            type: 'POST',
+            data: formData, // Serialize form data
+            processData: false, // Important: Don't process the data
+            contentType: false, // Important: Don't set content type
+            success: function (response) {
+                alert("Se inserto correctamente");
+            },
+            error: function (error) {
+                console.error("Error submitting form:", error);
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    $('#CargaPredial').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        var IdInmueble = getIdInmueble();
+        var IdLocalidad = getIdLocalidad();
+        var IdCuenta = getIdCuenta();
+
+        var formData = new FormData(this); // Create FormData object from the form
+
+        // Add additional data to the FormData object
+        formData.append('PagosPredial.IdInmueble', IdInmueble);
+        formData.append('PagosPredial.IdLocalidad', IdLocalidad);
+        formData.append('PagosPredial.idCuentaPredial', IdCuenta);
+
+        $.ajax({
+            url: $(this).attr('action'), // Get action URL from the form
+            type: 'POST',
+            data: formData, // Serialize form data
+            processData: false, // Important: Don't process the data
+            contentType: false, // Important: Don't set content type
+            success: function (response) {
+                alert("Se inserto correctamente");
+            },
+            error: function (error) {
+                console.error("Error submitting form:", error);
+            }
+        });
+    });
+});
 
     
 

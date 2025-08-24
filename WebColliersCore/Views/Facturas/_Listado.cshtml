@@ -28,9 +28,6 @@
                     @Html.DisplayName("Importe")
                 </th>
                 <th>
-                    @Html.DisplayName("Fecha limite de pago")
-                </th>
-                <th>
                     @Html.DisplayName("Fecha de pago realizado")
                 </th>
             </tr>
@@ -58,10 +55,7 @@
                             @Html.Raw(item.Factura.Concepto)
                         </td>
                         <td>
-                            @Html.Raw(item.Factura.Importe)
-                        </td>
-                        <td>
-                            @Html.Raw(item.FechaLimitePago.ToShortDateString())
+                            @Html.Raw(item.Factura.Importe.ToString("C"))
                         </td>
                         <td>
                             @Html.Raw(item.FechaPagoRealizado.ToShortDateString())

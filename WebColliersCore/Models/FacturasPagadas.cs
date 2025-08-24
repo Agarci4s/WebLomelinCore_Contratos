@@ -23,6 +23,10 @@ namespace WebLomelinCore.Models
         [Display(Name = "Región")]
         public int IdRegion { get; set; }
 
+        [Required(ErrorMessage = "Seleccione un concepto")]
+        [Display(Name = "Concepto")]
+        public int IdConcepto { get; set; }
+
         [Display(Name = "Estatus")]
         public int IdStatusProceso { get; set; }   // 1=Autorizado, 2=Rechazado, etc.
 

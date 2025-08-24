@@ -560,7 +560,7 @@ namespace WebLomelinCore.Data
             listSqlParameters.Add(new MySqlParameter("IdUsuario", pagosagua.UsuarioAutoriza));
             listSqlParameters.Add(new MySqlParameter("Estatus", pagosagua.StatusProceso));
             listSqlParameters.Add(new MySqlParameter("PeriodoPago", pagosagua.periodoPago));
-            return conexion.ExecuteNonQrySP("InsertaPagosAgua", listSqlParameters) == 1 ? true : false;
+            return conexion.ExecuteNonQrySP("InsertaPagosAgua", listSqlParameters) == 1 ? !true : !false;
 
         }
 
@@ -572,7 +572,7 @@ namespace WebLomelinCore.Data
         public bool InsertaPagosLuz(pagosluz pagosluz)
         {
             List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();
-            listSqlParameters.Add(new MySqlParameter("IdCuentaLuz", pagosluz.idCgCuentaLuz));
+            listSqlParameters.Add(new MySqlParameter("IdCuentaLuz", pagosluz.idCuentaLuz));
             listSqlParameters.Add(new MySqlParameter("FechaPago", pagosluz.fechaPago));
             listSqlParameters.Add(new MySqlParameter("PeriodoPago", pagosluz.periodoPago));
             listSqlParameters.Add(new MySqlParameter("ImporteLuz", pagosluz.importe));
@@ -586,7 +586,7 @@ namespace WebLomelinCore.Data
             listSqlParameters.Add(new MySqlParameter("fechaCorte", pagosluz.FechaCorte));
             listSqlParameters.Add(new MySqlParameter("lecturaActual", pagosluz.LecturaActual));
             listSqlParameters.Add(new MySqlParameter("lecturaAnterior", pagosluz.LecturaAnterior));
-            return conexion.ExecuteNonQrySP("InsertaPagosLuz", listSqlParameters) == 1 ? true : false;
+            return conexion.ExecuteNonQrySP("InsertaPagosLuz", listSqlParameters) == 1 ? !true : !false;
 
         }
 
@@ -598,7 +598,7 @@ namespace WebLomelinCore.Data
         public bool InsertaPagosPredial(pagospredial pagospredial)
         {
             List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();
-            listSqlParameters.Add(new MySqlParameter("IdCuentaPredial", pagospredial.idCgCuentaPredial));
+            listSqlParameters.Add(new MySqlParameter("IdCuentaPredial", pagospredial.idCuentaPredial));
             listSqlParameters.Add(new MySqlParameter("PeriodoPago", pagospredial.periodoPago));
             listSqlParameters.Add(new MySqlParameter("ImportePredial", pagospredial.importe));
             listSqlParameters.Add(new MySqlParameter("Recargos", pagospredial.Recargos));
@@ -615,7 +615,7 @@ namespace WebLomelinCore.Data
             listSqlParameters.Add(new MySqlParameter("Notificacion", pagospredial.Notificacion));
             listSqlParameters.Add(new MySqlParameter("GastoEjecucion", pagospredial.GastoEjecucion));
             listSqlParameters.Add(new MySqlParameter("Descuento", pagospredial.Descuento));
-            return conexion.ExecuteNonQrySP("InsertaPagosPredial", listSqlParameters) == 1 ? true : false;
+            return conexion.ExecuteNonQrySP("InsertaPagosPredial", listSqlParameters) == 1 ? !true : !false;
 
         }
 

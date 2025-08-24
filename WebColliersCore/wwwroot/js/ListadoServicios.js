@@ -161,11 +161,11 @@ function changeLocalidad(idLocalidad) {
 
     $.getJSON(url, { IdInmueble: IdInmueble, IdLocalidad: IdLocalidad, IdServicio: IdServicio }, function (data) {
         var item = "";
-        $("#selectCuenta").empty();
+        $("#datalistIdCuenta").empty();
         $.each(data, function (i, cuentas) {
-            item += '<option value="' + cuentas.value + '">' + cuentas.text + '</option>'
+            item += '<option data-value="' + cuentas.value + '" value="' + cuentas.text + '">';
         });
-        $("#selectCuenta").html(item);
+        $("#datalistIdCuenta").html(item);
     });
 }
 

@@ -16,7 +16,7 @@ namespace WebColliersCore.Data
     {
         private Conexion conexion = new Conexion();
 
-        public List<SelectListItem> GetInmuebleByRegion(int IdRegion,int IdCartera, int IdUsuario)
+        public List<SelectListItem> GetInmuebleByRegion(int? IdRegion,int? IdCartera, int? IdUsuario)
         {
             List<SelectListItem> response =new List<SelectListItem>();
             List <MySqlParameter> listSqlParameters =

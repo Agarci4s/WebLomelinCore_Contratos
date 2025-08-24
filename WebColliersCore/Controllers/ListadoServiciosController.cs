@@ -31,9 +31,6 @@ namespace WebLomelinCore.Controllers
             
             IdRegion = IdRegion.HasValue ? IdRegion.Value : -1;
             
-            ///DataInmuebles dataInmuebles = new();
-            //ViewBag.Inmuebles = PagosServicios.setItem(dataInmuebles.GetCmbInmuebles(idCartera, IdUsuario), IdInmueble);
-            
             ViewBag.Inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdInmueble);
             
             IdInmueble = IdInmueble.HasValue ? IdInmueble : -1;

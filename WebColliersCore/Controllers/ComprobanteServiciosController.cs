@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using WebColliersCore;
 using WebColliersCore.Data;
+using WebColliersCore.Models;
 using WebLomelinCore.Data;
 using WebLomelinCore.Models;
 
@@ -28,11 +29,10 @@ namespace WebLomelinCore.Controllers
             #endregion
             
             ViewBag.TipoServicios = new DataSelectService().getTipoServicio;
-            
-            DataLocalidades dataLocalidades = new DataLocalidades();
-            ViewBag.Inmuebles = dataLocalidades.InmueblesGet(IdUsuario, idCartera);
-            ViewBag.Localidades = dataLocalidades.LocalidadesGet(-1);
-                        return View();
+            ViewBag.Inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(null, idCartera, IdUsuario), null);            
+            ViewBag.Localidades = PagosServicios.setItem(new DataLocalidades().LocalidadesGet(null), null);            
+            ViewBag.Cuentas = PagosServicios.setItem(new DataSelectService().getCuentas(null, null, null), null);
+            return View();
         }
         
         [HttpPost]
@@ -237,25 +237,30 @@ namespace WebLomelinCore.Controllers
         }
 
         [HttpGet]
-        public JsonResult getLocalidades(int IdInmueble)
+        public JsonResult getInmuebles(int IdRegion)
         {
-            DataLocalidades dataLocalidades = new DataLocalidades();
-            return Json(dataLocalidades.LocalidadesGet(IdInmueble));
+            #region Validación de permisos
+            var claims = HttpContext.User.Claims;
+            Menu menu = new Menu();
+            int IdUsuario = 0, idCartera = 0, tipoNivel = 2;//0 , 1-detalle,2-editar y detalle, 3 crear-eliminar, editar y detalle   
+            menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims);
+
+            var inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(null, idCartera, IdUsuario), null);
+            #endregion
+            return Json(inmuebles);
         }
 
         [HttpGet]
-        public JsonResult getCuentasAgua(int IdLocalidad)
+        public JsonResult getLocalidades(int IdInmueble)
         {
-            DataLocalidades dataLocalidades = new DataLocalidades();
-            List<SelectListItem> list = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text="101010101",
-                    Value="1"
-                }
-            };
-            return Json(list);
+            return Json(PagosServicios.setItem(new DataLocalidades().LocalidadesGet(IdInmueble), null));
+        }
+
+        [HttpGet]
+        public JsonResult getCuentas(int IdInmueble, int IdLocalidad, int IdTipoServicio)
+        {
+            var response = PagosServicios.setItem(new DataSelectService().getCuentas(IdInmueble, IdLocalidad, IdTipoServicio), null);
+            return Json(response);
         }
 
         [HttpGet]

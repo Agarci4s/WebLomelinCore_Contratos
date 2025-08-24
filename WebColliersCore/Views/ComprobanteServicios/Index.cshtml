@@ -1,9 +1,14 @@
 ﻿@model WebLomelinCore.Models.PagosServicios
 
 <head>
+    <script src="~/js/core.js"></script>
     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-    
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
     <style>
 
         input::-webkit-inner-spin-button,
@@ -194,6 +199,40 @@
         }
     </div> 
 
+    <div class="container-fluid" id="Filters" name="Filters">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title m-1">Datos del inmueble</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    
+                    <div class="form-group col-sm-4">                        
+                        <label class="control-label">Inmueble</label>
+                        <input placeholder="Inmueble" id="inputDataListInm" type="text" list="datalistIdInmueble" class="form-control" />
+                        <datalist id="datalistIdInmueble"></datalist>
+                        <select id="inputIdInmueble" class="form-control" style="visibility:hidden; height:0px"></select>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label class="control-label">Localidad</label>
+                        <input placeholder="Localidad" id="inputDataListLoc" type="text" list="datalistIdLocalidad" class="form-control" />
+                        <datalist id="datalistIdLocalidad"></datalist>
+                        <select id="inputIdLocalidad" class="form-control" style="visibility:hidden; height:0px"></select>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label class="control-label">Cuenta Servicio</label>
+                        <input placeholder="Cuentas" id="inputDataListCuentas" type="text" list="datalistIdCuenta" class="form-control" />
+                        <datalist id="datalistIdCuenta"></datalist>
+                        <select id="inputIdCuenta" class="form-control" style="visibility:hidden; height:0px"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <form asp-action="ServicioAgua" asp-controller="ComprobanteServicios" id="CargaAgua" name="CargaAgua">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="container-fluid">
@@ -202,8 +241,9 @@
                     <h6 class="card-title m-1">Servicio de agua</h6>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="form-group col-sm-4">
+                    @* <div class="row"> *@
+                        
+                       @*  <div class="form-group col-sm-4">
                             <label asp-for="PagosAgua.IdInmueble" class="control-label"></label>
                             <div class="input-group">
                                 <div class="input-group-append">
@@ -218,8 +258,8 @@
                                     asp-items=@ViewBag.Inmuebles></select>
                             </div>
                             <span asp-validation-for="PagosAgua.IdInmueble" class="text-danger"></span>
-                        </div>
-
+                        </div> *@
+@* 
                         <div class="form-group col-sm-4">
                             <label asp-for="PagosAgua.IdLocalidad" class="control-label"></label>
                             <div class="input-group">
@@ -235,10 +275,10 @@
                                     asp-items=@ViewBag.Localidades></select>
                             </div>
                             <span asp-validation-for="PagosAgua.IdLocalidad" class="text-danger"></span>
-                        </div>
+                        </div> *@
 
 
-                        <div class="form-group col-sm-4">
+                        @* <div class="form-group col-sm-4">
                             <label asp-for="PagosAgua.idCuentaAgua" class="control-label"></label>
                             <div class="input-group">
                                 <div class="input-group-append">
@@ -253,8 +293,8 @@
                                     asp-items=@ViewBag.Localidades></select>
                             </div>
                             <span asp-validation-for="PagosAgua.idCuentaAgua" class="text-danger"></span>
-                        </div>
-                    </div>
+                        </div> *@
+                    @* </div> *@
 
                     <div class="row">
                         <div class="form-group col-sm-4">
@@ -552,62 +592,7 @@
                     <h6 class="card-title m-1">Servicio de luz</h6>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <!-- INMUEBLE -->
-                        <div class="form-group col-sm-4">
-                            <label asp-for="PagosLuz.IdInmueble" class="control-label"></label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <label class="input-group-text" for="selectInmuebleLuz">
-                                        <i class="bi bi-building"></i>
-                                    </label>
-                                </div>
-                                <select id="selectInmuebleLuz"
-                                        asp-for="PagosLuz.IdInmueble"
-                                        class="form-control"
-                                        onchange="return changeInmuebleLuz();"
-                                        asp-items="@ViewBag.Inmuebles"></select>
-                            </div>
-                            <span asp-validation-for="PagosLuz.IdInmueble" class="text-danger"></span>
-                        </div>
-
-                        <!-- LOCALIDAD -->
-                        <div class="form-group col-sm-4">
-                            <label asp-for="PagosLuz.IdLocalidad" class="control-label"></label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <label class="input-group-text" for="selectLocalidadLuz">
-                                        <i class="bi bi-geo-alt-fill"></i>
-                                    </label>
-                                </div>
-                                <select id="selectLocalidadLuz"
-                                        asp-for="PagosLuz.IdLocalidad"
-                                        class="form-control"
-                                        onchange="return changeLocalidadLuz();"
-                                        asp-items="@ViewBag.Localidades"></select>
-                            </div>
-                            <span asp-validation-for="PagosLuz.IdLocalidad" class="text-danger"></span>
-                        </div>
-
-                        <!-- CUENTA LUZ -->
-                        <div class="form-group col-sm-4">
-                            <label asp-for="PagosLuz.idCuentaLuz" class="control-label"></label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <label class="input-group-text" for="selectCuentaLuz">
-                                        <i class="bi bi-lightning-charge-fill"></i>
-                                    </label>
-                                </div>
-                                <select id="selectCuentaLuz"
-                                        asp-for="PagosLuz.idCuentaLuz"
-                                        class="form-control"
-                                        onchange="return changeCuentaLuz();"
-                                        asp-items="@ViewBag.Localidades"></select>
-                            </div>
-                            <span asp-validation-for="PagosLuz.idCuentaLuz" class="text-danger"></span>
-                        </div>
-                    </div>
-
+                    
                     <div class="row">
                         <!-- FECHA DE PAGO -->
                         <div class="form-group col-sm-4">
@@ -816,63 +801,7 @@
                 <div class="card-header">
                     <h6 class="card-title m-1">Servicio predial</h6>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <!-- INMUEBLE -->
-                        <div class="form-group col-sm-4">
-                            <label asp-for="PagosPredial.IdInmueble" class="control-label"></label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <label class="input-group-text" for="selectInmueblePredial">
-                                        <i class="bi bi-building"></i>
-                                    </label>
-                                </div>
-                                <select id="selectInmueblePredial" 
-                                    asp-for="PagosPredial.IdInmueble" 
-                                    class="form-control" 
-                                    onchange="return changeInmueblePredial();" 
-                                    asp-items="@ViewBag.Inmuebles"></select>
-                            </div>
-                            <span asp-validation-for="PagosPredial.IdInmueble" class="text-danger"></span>
-                        </div>
-
-                        <!-- LOCALIDAD -->
-                        <div class="form-group col-sm-4">
-                            <label asp-for="PagosPredial.IdLocalidad" class="control-label"></label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <label class="input-group-text" for="selectLocalidadPredial">
-                                        <i class="bi bi-geo-alt-fill"></i>
-                                    </label>
-                                </div>
-                                <select id="selectLocalidadPredial" 
-                                    asp-for="PagosPredial.IdLocalidad" 
-                                    class="form-control" 
-                                    onchange="return changeLocalidadPredial();" 
-                                    asp-items="@ViewBag.Localidades"></select>
-                            </div>
-                            <span asp-validation-for="PagosPredial.IdLocalidad" class="text-danger"></span>
-                        </div>
-
-                        <!-- CUENTA PREDIAL -->
-                        <div class="form-group col-sm-4">
-                            <label asp-for="PagosPredial.idCuentaPredial" class="control-label"></label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <label class="input-group-text" for="selectCuentaPredial">
-                                        <i class="bi bi-list-check"></i>
-                                    </label>
-                                </div>
-                                <select id="selectCuentaPredial" 
-                                    asp-for="PagosPredial.idCuentaPredial" 
-                                    class="form-control" 
-                                    onchange="return changeCuentaPredial();"
-                                        asp-items="@ViewBag.Localidades"></select>
-                            </div>
-                            <span asp-validation-for="PagosPredial.idCuentaPredial" class="text-danger"></span>
-                        </div>
-                    </div>
-
+                <div class="card-body">                    
                     <div class="row">
                         <!-- FECHALIMITEPAGO -->
                         <div class="form-group col-sm-4">
@@ -1095,4 +1024,17 @@
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <script src="~/lib/JQuery_Versiones/jquery_2.2.4/dist/jquery.min.js"></script>
+
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+}
 <script src="/js/ComprobanteServicios.js"></script>

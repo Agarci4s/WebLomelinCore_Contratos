@@ -30,8 +30,8 @@ namespace WebLomelinCore.Controllers
             IdRegion = IdRegion.HasValue ? IdRegion.Value : -1;
             ViewBag.Inmuebles = PagosServicios.setItem(new DataInmuebles().GetInmuebleByRegion(IdRegion.Value, idCartera, IdUsuario), IdInmueble);
 
-            //IdInmueble = IdInmueble.HasValue ? IdInmueble : -1;
-            //ViewBag.Localidades = PagosServicios.setItem(new DataLocalidades().LocalidadesGet(IdInmueble.Value), IdLocalidad);
+        
+            ViewBag.Conceptos = PagosServicios.setItem(new DataGastos().GetEgresosAll(), null);
 
             return response;
         }
@@ -63,7 +63,7 @@ namespace WebLomelinCore.Controllers
                 //IEnumerable<FacturasPagadas> model = new List<FacturasPagadas>();
                 DataGastos data = new DataGastos();
                 var model = data.GetFacturasPagadas(
-                       collection.IdRegion,
+                       collection.IdConcepto,
                        collection.IdInmueble
                 );
                 return PartialView("_Listado", model);
@@ -75,9 +75,9 @@ namespace WebLomelinCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult DescargaExcel(int? IdRegion, int? IdInmueble)
+        public IActionResult DescargaExcel(FacturasPagadas collection)
         {
-            var data = new DataGastos().GetFacturasPagadas(IdRegion, IdInmueble);
+            var data = new DataGastos().GetFacturasPagadas(collection.IdConcepto, collection.IdInmueble);
 
             using var workbook = new ClosedXML.Excel.XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Facturas");
@@ -89,7 +89,6 @@ namespace WebLomelinCore.Controllers
             worksheet.Cell(1, 4).Value = "Concepto";
             worksheet.Cell(1, 5).Value = "Importe";
             worksheet.Cell(1, 6).Value = "Mes de Pago";
-            worksheet.Cell(1, 7).Value = "Fecha Limite Pago";
             worksheet.Cell(1, 8).Value = "Fecha Pago Realizado";
 
             //Datos
@@ -102,7 +101,6 @@ namespace WebLomelinCore.Controllers
                 worksheet.Cell(i + 2, 4).Value = item.Factura.Concepto;
                 worksheet.Cell(i + 2, 5).Value = item.Factura.Importe;
                 worksheet.Cell(i + 2, 6).Value = item.MesPago;
-                worksheet.Cell(i + 2, 7).Value = item.FechaLimitePago.ToShortDateString();
                 worksheet.Cell(i + 2, 8).Value = item.FechaPagoRealizado.ToShortDateString();
             }
             using var stream = new MemoryStream();
