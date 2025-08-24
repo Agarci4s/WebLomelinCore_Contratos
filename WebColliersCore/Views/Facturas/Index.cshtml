@@ -120,6 +120,8 @@
 <h3>Facturas Cargadas</h3>
 
 <form asp-action="Busqueda" asp-controller="Facturas" id="frmBusqueda" name="frmBusqueda">
+    <input type="hidden" id="urlBuscar" value="@Url.Action("Busqueda", "Facturas")" />
+    <input type="hidden" id="urlDescargar" value="@Url.Action("DescargaExcel", "Facturas")" />
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
@@ -172,11 +174,10 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="row" id="Descargar">
+                    <div class="row mt-2">
                         <div class="form-group col-sm-4">
-                            <button onclick="Descargar();"  id="Descargar" name="Descargar" value="Descargar" class="btn btn-warning btn-sm">
-                                <i class="bi bi-floppy2"></i>
+                            <button type="submit" id="btnDescargar" name="descargar" value="1" class="btn btn-warning btn-sm">
+                                <i class="bi bi-download"></i> 
                                 Descargar
                             </button>
                         </div>
@@ -184,8 +185,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <input type="hidden" id="hdnIdRegion" name="IdRegion" />
+    <input type="hidden" id="hdnIdInmueble" name="IdInmueble" />
+    <input type="hidden" id="hdnIdConcepto" name="IdConcepto" />
 </form>
-<input asp-action="DescargaExcel" asp-controller="Facturas" type="url" id="urlDescargar" name="urlDescargar" hidden />
 <hr />
 <div id="tableData" name="tableData" class="table-responsive">
     @{

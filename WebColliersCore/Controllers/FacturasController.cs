@@ -89,7 +89,7 @@ namespace WebLomelinCore.Controllers
             worksheet.Cell(1, 4).Value = "Concepto";
             worksheet.Cell(1, 5).Value = "Importe";
             worksheet.Cell(1, 6).Value = "Mes de Pago";
-            worksheet.Cell(1, 8).Value = "Fecha Pago Realizado";
+            worksheet.Cell(1, 7).Value = "Fecha Pago Realizado";
 
             //Datos
             for (int i = 0; i < data.Count; i++)
@@ -101,7 +101,7 @@ namespace WebLomelinCore.Controllers
                 worksheet.Cell(i + 2, 4).Value = item.Factura.Concepto;
                 worksheet.Cell(i + 2, 5).Value = item.Factura.Importe;
                 worksheet.Cell(i + 2, 6).Value = item.MesPago;
-                worksheet.Cell(i + 2, 8).Value = item.FechaPagoRealizado.ToShortDateString();
+                worksheet.Cell(i + 2, 7).Value = item.FechaPagoRealizado.ToShortDateString();
             }
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
