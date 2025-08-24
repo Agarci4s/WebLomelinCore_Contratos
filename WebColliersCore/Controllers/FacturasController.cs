@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WebColliersCore;
 using WebColliersCore.Data;
@@ -70,6 +72,46 @@ namespace WebLomelinCore.Controllers
             {
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpPost]
+        public IActionResult DescargaExcel(int? IdRegion, int? IdInmueble)
+        {
+            var data = new DataGastos().GetFacturasPagadas(IdRegion, IdInmueble);
+
+            using var workbook = new ClosedXML.Excel.XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Facturas");
+
+            //Encabezados
+            worksheet.Cell(1, 1).Value = "ue";
+            worksheet.Cell(1, 2).Value = "cr";
+            worksheet.Cell(1, 3).Value = "Nombre Sucursal";
+            worksheet.Cell(1, 4).Value = "Concepto";
+            worksheet.Cell(1, 5).Value = "Importe";
+            worksheet.Cell(1, 6).Value = "Mes de Pago";
+            worksheet.Cell(1, 7).Value = "Fecha Limite Pago";
+            worksheet.Cell(1, 8).Value = "Fecha Pago Realizado";
+
+            //Datos
+            for (int i = 0; i < data.Count; i++)
+            {
+                var item = data[i];
+                worksheet.Cell(i + 2, 1).Value = item.Inmueble.ue;
+                worksheet.Cell(i + 2, 2).Value = item.Inmueble.cr;
+                worksheet.Cell(i + 2, 3).Value = item.Inmueble.nombre;
+                worksheet.Cell(i + 2, 4).Value = item.Factura.Concepto;
+                worksheet.Cell(i + 2, 5).Value = item.Factura.Importe;
+                worksheet.Cell(i + 2, 6).Value = item.MesPago;
+                worksheet.Cell(i + 2, 7).Value = item.FechaLimitePago.ToShortDateString();
+                worksheet.Cell(i + 2, 8).Value = item.FechaPagoRealizado.ToShortDateString();
+            }
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            stream.Position = 0;
+
+            return File(stream.ToArray(),
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "FacturasCargadas.xlsx");
         }
 
         [HttpGet]

@@ -265,9 +265,8 @@
                                         <i class="fa-solid fa-calendar-days"></i>
                                     </label>
                                 </div>
-                                <input asp-for="PagosAgua.FechaLectura1" 
-                                class="form-control"
-                                min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                <input asp-for="PagosAgua.FechaLectura1"
+                                       class="form-control" />
                             </div>
                             <span asp-validation-for="PagosAgua.FechaLectura1" class="text-danger"></span>
                         </div>
@@ -280,8 +279,7 @@
                                     </label>
                                 </div>
                                 <input asp-for="PagosAgua.FechaLectura2"
-                                       class="form-control"
-                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                       class="form-control"/>
                             </div>
                             <span asp-validation-for="PagosAgua.FechaLectura2" class="text-danger"></span>
                         </div>
@@ -510,8 +508,7 @@
                                     </label>
                                 </div>
                                 <input asp-for="PagosAgua.FechaVencimiento" 
-                                    class="form-control"
-                                     min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                    class="form-control"/>
                             </div>
                             <span asp-validation-for="PagosAgua.FechaVencimiento" class="text-danger"></span>
                         </div>
@@ -624,7 +621,7 @@
                                 <input asp-for="PagosLuz.fechaPago" 
                                         class="form-control" 
                                         type="date"
-                                        min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                        @* min="@DateTime.Today.ToString("yyyy-MM-dd")" *@ />
                             </div>
                             <span asp-validation-for="PagosLuz.fechaPago" class="text-danger"></span>
                         </div>
@@ -641,7 +638,7 @@
                                 <input asp-for="PagosLuz.FechaLimitePago" 
                                     class="form-control" 
                                     type="date"
-                                    min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                    @* min="@DateTime.Today.ToString("yyyy-MM-dd")" *@ />
                             </div>
                             <span asp-validation-for="PagosLuz.FechaLimitePago" class="text-danger"></span>
                         </div>
@@ -658,7 +655,7 @@
                                 <input asp-for="PagosLuz.FechaCorte"
                                        class="form-control"
                                        type="date"
-                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                       @* min="@DateTime.Today.ToString("yyyy-MM-dd")" *@ />
                             </div>
                             <span asp-validation-for="PagosLuz.FechaCorte" class="text-danger"></span>
                         </div>
@@ -888,7 +885,7 @@
                                 </div>
                                 <input asp-for="PagosPredial.fechaPagolimite" 
                                        class="form-control"
-                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                       @* min="@DateTime.Today.ToString("yyyy-MM-dd")" *@ />
                             </div>
                             <span asp-validation-for="PagosPredial.fechaPagolimite" class="text-danger"></span>
                         </div>
