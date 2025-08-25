@@ -132,5 +132,7 @@ namespace WebLomelinCore.Controllers
             return Json(dataLocalidades.LocalidadesGet(IdInmueble));
         }
 
+
+
     }
 }

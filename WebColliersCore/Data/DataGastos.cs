@@ -163,5 +163,30 @@ namespace WebLomelinCore.Data
 
             return response;
         }
+
+        public int ActualizaComprobante(long id, int envioIcoi, int comprobantePago, string rutaComprobante)
+        {
+            try
+            {
+                List<MySqlParameter> parametros = new()
+        {
+            new MySqlParameter("p_Id", id),
+            new MySqlParameter("p_EnvioIcoi", envioIcoi),
+            new MySqlParameter("p_ComprobantePago", comprobantePago),
+            new MySqlParameter("p_RutaComprobante", rutaComprobante)
+        };
+
+                // Ejecutar el stored procedure directamente
+                int filasAfectadas = ExecuteNonQrySP("sp_UpdateEnvioIcoi_ComprobantePago", parametros);
+
+                return filasAfectadas; // 1 si fue exitoso, 0 si no actualizó nada
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al actualizar comprobante: " + ex.Message);
+                return 0;
+            }
+        }
+
     }
 }

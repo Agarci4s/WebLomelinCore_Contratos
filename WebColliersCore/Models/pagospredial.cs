@@ -122,6 +122,9 @@ namespace WebLomelinCore.Models
         public decimal? PorcentajeConsumo { get; set; }
         public string ClassPorcentaje { get; set; }
 
+        public int ComprobantePago { get; set; }
+        public string RutaComprobante { get; set; }
+
 
         /*DATOS DEL FORMULARIO*/
 

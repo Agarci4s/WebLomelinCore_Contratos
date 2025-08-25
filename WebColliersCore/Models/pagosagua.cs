@@ -145,9 +145,12 @@ namespace WebLomelinCore.Models
         public DateTime FechaAltaRegistro { get; set; }
         public DateTime FechaUpdateRegistro { get; set; }
 
+        public int ComprobantePago { get; set; }
+        public string RutaComprobante { get; set; }
+
         /* DATOS FORMULARIO */
 
-  
+
         public DateTime FechaPago { get; set; }        
         public string funsionaMedidor { get; set; }        
         public string boletaDeclaracion { get; set; }

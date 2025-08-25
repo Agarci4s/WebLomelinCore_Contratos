@@ -310,7 +310,9 @@ namespace WebLomelinCore.Data
                                                 cr = item.Field<string>("cr"),
                                                 nombre = item.Field<string>("nombre")
                                             },
-                                            FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro")
+                                            FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro"),
+                                            ComprobantePago = item.Field<int>("ComprobantePago"),
+                                            RutaComprobante = item.Field<string>("RutaComprobante")
                                         }).ToList();
             return agualist;
 
@@ -356,7 +358,9 @@ namespace WebLomelinCore.Data
                                           },
                                           FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro"),
                                           FechaUpdateRegistro = item.Field<DateTime>("FechaUpdateRegistro"),
-                                          FechaLimitePago = item.Field<DateTime>("FechaLimitePago")
+                                          FechaLimitePago = item.Field<DateTime>("FechaLimitePago"),
+                                          ComprobantePago = item.Field<int>("ComprobantePago"),
+                                          RutaComprobante = item.Field<string>("RutaComprobante")
                                       }).OrderByDescending(x => x.FechaAltaRegistro).ToList();
 
             return luzList;
@@ -409,7 +413,9 @@ namespace WebLomelinCore.Data
                                                       nombre = item.Field<string>("nombre")
                                                   },
                                                   FechaAltaRegistro = item.Field<DateTime>("FechaAltaRegistro"),
-                                                  FechaUpdateRegistro = item.Field<DateTime>("FechaUpdateRegistro")
+                                                  FechaUpdateRegistro = item.Field<DateTime>("FechaUpdateRegistro"),
+                                                  ComprobantePago = item.Field<int>("ComprobantePago"),
+                                                  RutaComprobante = item.Field<string>("RutaComprobante")
                                               }).ToList();
             return predialList;
 
