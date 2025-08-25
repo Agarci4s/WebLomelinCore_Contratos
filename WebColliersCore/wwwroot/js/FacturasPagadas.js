@@ -74,31 +74,52 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Acción del botón "Descargar"
+    $('#btnDescargar').click(function () {
+        var IdRegion = $('#selectRegion').val();
+        var IdInmueble = getIdInmueble();
+        var IdConcepto = $('#selectIdConcepto').val();
+
+        // Construir y enviar un formulario temporal
+        var form = $('<form>', {
+            method: 'POST',
+            action: $('#urlDescargar').val()
+        });
+
+        form.append($('<input>', { type: 'hidden', name: 'IdRegion', value: IdRegion }));
+        form.append($('<input>', { type: 'hidden', name: 'IdInmueble', value: IdInmueble }));
+        form.append($('<input>', { type: 'hidden', name: 'IdConcepto', value: IdConcepto }));
+
+        $('body').append(form);
+        form.submit();
+        form.remove();
+    });
 });
 
 
-function Descargar() {
+//function Descargar() {
     
-    var IdInmueble = getIdInmueble();
+//    var IdInmueble = getIdInmueble();
 
-    let form = document.getElementById("frmBusqueda");
-    let formData = new FormData(form);
+//    let form = document.getElementById("frmBusqueda");
+//    let formData = new FormData(form);
 
    
-    const urlInput = document.getElementById('urlInput');
-    const urlValue = urlInput.value;
+//    const urlInput = document.getElementById('urlDescargar');
+//    const urlValue = urlInput.value;
 
-    $.ajax({
-        url: urlValue, // Get action URL from the form
-        type: 'POST',
-        data: formData, // Serialize form data
-        processData: false, // Important: Don't process the data
-        contentType: false, // Important: Don't set content type
-        success: function (response) {
-           // $("#tableData").html(response); // Renderiza la tabla en el div
-        },
-        error: function () {
-            alert("Error al cargar los datos.");
-        }
-    });
-}
+//    $.ajax({
+//        url: urlValue, // Get action URL from the form
+//        type: 'POST',
+//        data: formData, // Serialize form data
+//        processData: false, // Important: Don't process the data
+//        contentType: false, // Important: Don't set content type
+//        success: function (response) {
+//           // $("#tableData").html(response); // Renderiza la tabla en el div
+//        },
+//        error: function () {
+//            alert("Error al cargar los datos.");
+//        }
+//    });
+//}
