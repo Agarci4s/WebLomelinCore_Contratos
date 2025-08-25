@@ -227,7 +227,9 @@ namespace WebLomelinCore.Controllers
              */
 
             Uri uri = new Uri("http://sicoiweb.lomelin.com.mx/LomelinFacturasWebAPI/api/Facturas/EnviofacturasSICOI");
-            var response = await  DataApi.CallPostMethod(uri, listToIcoi);
+            string key = "LomelinFacturasKey";
+            string keyValue = "L0melIn@AppK3y";
+            var response = await  DataApi.CallPostMethod(uri, listToIcoi, key, keyValue);
             if (response.IsSuccessStatusCode)
             {
                 /*
@@ -255,7 +257,10 @@ namespace WebLomelinCore.Controllers
             IFormFile response = null;
             try
             {
-                response=new FormFile(new FileStream(path, FileMode.Open), 0, new FileInfo(path).Length, "file", Path.GetFileName(path));
+                if (!string.IsNullOrEmpty(path))
+                {
+                    response = new FormFile(new FileStream(path, FileMode.Open), 0, new FileInfo(path).Length, "file", Path.GetFileName(path));
+                }
             }
             catch (Exception ex)
             {

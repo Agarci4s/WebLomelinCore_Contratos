@@ -6,6 +6,19 @@
 </header>
 
 <div class="tableFixHead">
+    @if (Model.Any())
+    {
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <button type="submit" id="btnAceptar" value="Aceptar" class="btn btn-success btn-sm">
+                        <i class="bi bi-floppy2"></i>
+                        Enviar a ICOI
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
     <table class="table table-responsive-sm table-sm small" name = "tableData" id="tableData">
         <thead class="font-size-head">
             <tr>
