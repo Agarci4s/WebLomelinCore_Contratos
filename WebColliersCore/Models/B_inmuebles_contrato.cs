@@ -159,7 +159,7 @@ namespace WebColliersCore.Models
         public string NumeroReferenciado { get; set; }
         [Display(Name = "Número de Referencia (Mtto)")]
         public string NumeroReferenciadoMtto { get; set; }
-        [Display(Name = "Fecha de Ocupación")]
+        [Display(Name = "Fecha de Recepción")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime fechaOcupacion { get; set; }
         [Display(Name = "Años")]

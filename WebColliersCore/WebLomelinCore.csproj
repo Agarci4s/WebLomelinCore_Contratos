@@ -527,4 +527,7 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Archivos\CFDIs\" />
+  </ItemGroup>
 </Project>

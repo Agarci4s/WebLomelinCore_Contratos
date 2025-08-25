@@ -66,7 +66,7 @@ namespace WebColliersCore.Models
         public DateTime FechaTermino { get; set; }
         [Display(Name = "Fecha de Revisión")]
         public DateTime FechaRevision { get; set; }
-        [Display(Name = "Fecha de Ocupación")]
+        [Display(Name = "Fecha de Recepción")]
         public DateTime FechaOcupacion { get; set; }
         [Display(Name = "Fecha Inicio 1er. Contrato")]
         public DateTime FechaInicioContratoUno { get; set; }
