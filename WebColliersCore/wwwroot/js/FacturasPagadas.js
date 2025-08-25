@@ -6,13 +6,13 @@
         var item = "";
         $("#datalistIdInmueble").empty();
         $.each(data, function (i, inmueble) {
-            item += '<option data-value="' + inmueble.value + '">' + inmueble.text + '</option>'
+            item += '<option data-value="' + inmueble.value + '" value="' + inmueble.text + '">';
         });
         $("#datalistIdInmueble").html(item);
     });
 }
 
-$("#inputDataListInm").on("change paste keyup", function () {
+$("#datalistIdInmueble").on("change paste keyup", function () {
 
     $("#inputIdInmueble").val('');
     var inputValue = document.getElementById("inputDataListInm").value;

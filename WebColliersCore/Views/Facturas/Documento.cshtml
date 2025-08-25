@@ -1,0 +1,208 @@
+﻿@model WebLomelinCore.Models.FacturasPagadas;
+@using WebLomelinCore.Models;
+
+@{
+    ViewData["Title"] = "Carga documento";
+}
+<header>
+    <script src="~/js/core.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/5b1471f5e3.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+
+    <style>
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="button"] {
+            cursor: pointer;
+        }
+
+        input::-webkit-clear-button {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "...";
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 200;
+        }
+
+            .tableFixHead table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .tableFixHead th,
+            .tableFixHead td {
+                padding: 8px 16px;
+            }
+
+            .tableFixHead td {
+                text-align: center;
+            }
+
+            .tableFixHead th {
+                position: sticky;
+                top: 0;
+                /* background-color: white;
+                        border: 0px solid white; */
+                text-align: center;
+                background: rgb(37, 64, 143);
+                color: white;
+            }
+
+        .form-group-custom {
+            margin-bottom: 6px;
+        }
+
+        .font-size-row {
+            font-size: 12px !important;
+        }
+
+        .font-size-head {
+            font-size: 12px !important;
+        }
+
+        .RowNegativo {
+            background-color: red;
+            border-color: red;
+        }
+
+        .RowPositivo {
+            background-color: green;
+            border-color: green;
+        }
+
+        .ColorTextRed {
+            color: red;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+
+        table tr th {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .sorting {
+        }
+
+        .asc:after {
+            content: ' ↑';
+        }
+
+        .desc:after {
+            content: " ↓";
+        }
+
+    </style>
+</header>
+<div class="tableFixHead">
+    <table class="table table-responsive-sm table-sm small" name = "tableData" id="tableData">
+        <thead class="font-size-head">
+            <tr>
+                <th>
+                    @Html.DisplayName("cr")
+                </th>
+                <th>
+                    @Html.DisplayName("ue")
+                </th>
+                <th>
+                    @Html.DisplayName("Nombre de la sucursal")
+                </th>
+                <th>
+                    @Html.DisplayName("Mes de pago")
+                </th>
+                <th>
+                    @Html.DisplayName("Concepto de pago")
+                </th>
+                <th>
+                    @Html.DisplayName("Importe")
+                </th>
+                <th>
+                    @Html.DisplayName("Fecha de pago realizado")
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model!=null)
+            {
+                
+                    <tr>
+                        <td>
+                        @Html.Raw(Model.Inmueble.cr)
+                        </td>
+                        <td>
+                        @Html.Raw(Model.Inmueble.ue)
+                        </td>
+                        <td>
+                        @Html.Raw(Model.Inmueble.nombre)
+                        </td>
+                        <td>
+                        @Html.Raw(Model.MesPago)
+                        </td>
+                        <td>
+                        @Html.Raw(Model.Factura.Concepto)
+                        </td>
+                        <td>
+                        @Html.Raw(Model.Factura.Importe.ToString("C"))
+                        </td>
+                        <td>
+                        @Html.Raw(Model.FechaPagoRealizado.ToShortDateString())                        
+                        </td>
+                    </tr>                
+            }
+            else
+            {
+                <tr>
+                    <td colspan="10" style="color: red;">Sin información para mostrar</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+<div class="row col-md-15" id="documents" name="documents">
+    @{
+        DocumentsUpload model = new DocumentsUpload();
+        model.IdRegistro = Model.IdRegistro;
+            await Html.RenderPartialAsync("_Files.cshtml", model);
+    }
+</div>
+
+@section Scripts {
+    <script src="~/lib/JQuery_Versiones/jquery_2.2.4/dist/jquery.min.js"></script>
+
+    <script src="~/js/sweetalert.min.js"></script>
+    <link href="~/css/sweetalert.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+}
