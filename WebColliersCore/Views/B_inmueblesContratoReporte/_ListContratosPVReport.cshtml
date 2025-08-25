@@ -1,0 +1,23 @@
+﻿@* @model IEnumerable<WebColliersCore.Models.B_inmuebles_contrato>
+ *@
+@using Stimulsoft.Report.Web;
+@using Stimulsoft.Report.Mvc;
+
+<div>
+    @Html.StiNetCoreViewer(new StiNetCoreViewerOptions()
+        {
+        Actions = {
+            GetReport = "GetReport",
+        ViewerEvent = "ViewerEvent"
+        },
+        Toolbar = {
+            ShowPrintButton = false,
+        Zoom = 75
+        },
+        Server =
+        {
+            RequestTimeout = 50
+        }
+    })
+    
+</div>

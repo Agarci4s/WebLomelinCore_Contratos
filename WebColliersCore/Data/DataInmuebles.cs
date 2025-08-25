@@ -67,6 +67,17 @@ namespace WebColliersCore.Data
             return DataToModel(dataTable);
         }
 
+        public List<B_inmuebles> GetWithContrato(int IdCartera, int IdUsuario)
+        {
+
+            List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();
+            listSqlParameters.Add(new MySqlParameter("IdCartera_In", IdCartera));
+            listSqlParameters.Add(new MySqlParameter("IdUsuario_In", IdUsuario));
+            DataTable dataTable = conexion.RunStoredProcedure("b_inmueblesGetWithContrato", listSqlParameters);
+
+            return DataToModel(dataTable);
+        }
+
         public B_inmuebles Get(int IdCartera, int IdUsuario, int id_b_inmuebles)
         {
             List<MySqlParameter> listSqlParameters = new List<MySqlParameter>();

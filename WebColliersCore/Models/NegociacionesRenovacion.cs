@@ -2,27 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using WebColliersCore.Data;
 using WebColliersCore.Models;
 
 namespace WebLomelinCore.Models
 {
     public class NegociacionesRenovacion
     {
-        public int Id { get; set; }
+        //[DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
+
+
+        public int id_negociacion_contratos { get; set; }
+
         [Display(Name = "Inmueble")]
-        public int IdInmueble { get; set; }
+        public int id_b_inmuebles { get; set; }
+
         [Display(Name = "Contrato")]
-        public int IdContrato { get; set; }
+        public int id_b_inmuebles_contrato { get; set; }
+
+
+
 
         #region "Distribución..."
         [Display(Name = "Uso")]
         public string Uso { get; set; }
         [Display(Name = "Superficie")]
-        public double Superficie { get; set; }
+        public decimal Superficie { get; set; }
         [Display(Name = "Precio x M2")]
-        public double PrecioM2 { get; set; }
+        public decimal PrecioM2 { get; set; }
         [Display(Name = "Precio x Superficie")]
-        public double PrecioSuperficie { get; set; }
+        public decimal PrecioSuperficie { get; set; }
         public List<B_inmuebles_contrato_distribucion> b_Inmuebles_Contrato_Distribucions { get; set; }
 
         #endregion
@@ -30,27 +39,27 @@ namespace WebLomelinCore.Models
         #region "Revisión..."
 
         [Display(Name = "Mínima")]
-        public double Rentaminima { get; set; }
+        public decimal Rentaminima { get; set; }
         [Display(Name = "Máxima")]
-        public double Rentamaxima { get; set; }
+        public decimal Rentamaxima { get; set; }
         [Display(Name = "Vigente al")]
         public DateTime VigenteAl { get; set; }
         [Display(Name = "Renta")]
-        public double RentaActual { get; set; }
+        public decimal RentaActual { get; set; }
         [Display(Name = "Precio por M2")]
-        public double PrecioM2RentaActual { get; set; }
+        public decimal PrecioM2RentaActual { get; set; }
         [Display(Name = "Renta")]
-        public double RentaPropuesta { get; set; }
+        public decimal RentaPropuesta { get; set; }
         [Display(Name = "Precio por M2")]
-        public double PrecioM2RentaPropuesta { get; set; }
+        public decimal PrecioM2RentaPropuesta { get; set; }
         [Display(Name = "Renta")]
-        public double TopeRenta { get; set; }
+        public decimal TopeRenta { get; set; }
         [Display(Name = "Precio por M2")]
-        public double PrecioM2TopeRenta { get; set; }
+        public decimal PrecioM2TopeRenta { get; set; }
         [Display(Name = "Nueva Renta")]
-        public double RentaPactada { get; set; }
+        public decimal RentaPactada { get; set; }
         [Display(Name = "Precio por M2")]
-        public double PrecioM2RentaPactada { get; set; }
+        public decimal PrecioM2RentaPactada { get; set; }
 
         #endregion
 
@@ -61,21 +70,21 @@ namespace WebLomelinCore.Models
         [Display(Name = "Número de Prorrateo")]
         public string NumProrrateo { get; set; }
         [Display(Name = "% de renta para el CEPRO")]
-        public double PorcRtaCepro { get; set; }
+        public decimal PorcRtaCepro { get; set; }
         [Display(Name = "¿Pierde diferencias?")]
         public string PierdeDif { get; set; }
         [Display(Name = "Meses anticipados")]
         public int MesesAnticipados { get; set; }
         [Display(Name = "% de descuento")]
-        public double PorcDescuento { get; set; }
+        public decimal PorcDescuento { get; set; }
         [Display(Name = "Importe anticipado")]
-        public double ImporteAnticipado { get; set; }
+        public decimal ImporteAnticipado { get; set; }
         [Display(Name = "Importe descontado")]
-        public double ImporteDescontado { get; set; }
+        public decimal ImporteDescontado { get; set; }
         [Display(Name = "DECIL RANK")]
         public string DecilRankAdela { get; set; }
         [Display(Name = "Importe Total")]
-        public double ImporteTotal { get; set; }
+        public decimal ImporteTotal { get; set; }
 
         [Display(Name = "Fecha revisión")]
         [DisplayFormat(DataFormatString = "{0:d}")]        
@@ -96,11 +105,9 @@ namespace WebLomelinCore.Models
 
         [Display(Name = "% Sugerido para Negociar")]
         [Range(.01, double.MaxValue, ErrorMessage = "Agregue un valor valido")]
-        public decimal PorcentajeNegociar { get; set; }
+        public decimal porcentaje_negociar { get; set; }
 
         #endregion
-
-        public B_inmuebles b_inmuebles;
 
         [Display(Name = "UE")]
         [DefaultValue("000")]
@@ -227,5 +234,7 @@ namespace WebLomelinCore.Models
         public int DAIV { get; set; }
 
         #endregion
+
+        public B_inmuebles inmueble { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Google.Protobuf.WellKnownTypes;
 using Humanizer.Localisation;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +22,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -32,6 +35,7 @@ using WebColliersCore.Data;
 using WebColliersCore.Models;
 using WebLomelinCore.Data;
 using static Stimulsoft.Report.Func;
+using static Stimulsoft.Report.Import.OleUnit;
 using static Stimulsoft.Report.StiOptions.Export;
 
 namespace WebLomelinCore.Controllers
@@ -69,7 +73,7 @@ namespace WebLomelinCore.Controllers
             #endregion
 
             EstablecerPermisos(IdUsuario, System.Reflection.MethodBase.GetCurrentMethod(), idCartera);
-            
+
             //envìo de correos
             DataEmail dataEmail = new DataEmail();
             //dataEmail.EnviaCorreo(idCartera,IdUsuario);
@@ -99,6 +103,8 @@ namespace WebLomelinCore.Controllers
 
             return View();
         }
+
+
 
         [HttpPost]
         public ActionResult getListadoContratosParametrizado(int Campo, int Meses)
@@ -148,8 +154,8 @@ namespace WebLomelinCore.Controllers
             else
                 correo_enviado = false;
 
-            b_Inmuebles_Contrato_Correos = dataInmueblesContratos.GetReporte(idCartera,  IdUsuario, correo_enviado, fecha, fecha2);
-             
+            b_Inmuebles_Contrato_Correos = dataInmueblesContratos.GetReporte(idCartera, IdUsuario, correo_enviado, fecha, fecha2);
+
             return PartialView("List", b_Inmuebles_Contrato_Correos);
         }
 
@@ -214,6 +220,81 @@ namespace WebLomelinCore.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult getListadoContratosParametrizadoReporte(int Campo, int Meses)
+        {
+            #region Validación de permisos
+            var claims = HttpContext.User.Claims;
+            Menu menu = new Menu();
+            int IdUsuario = 0, idCartera = 0, tipoNivel = 0;//0 , 1-detalle,2-editar y detalle, 3 crear-eliminar, editar y detalle   
+            if (!menu.ValidaPermiso(System.Reflection.MethodBase.GetCurrentMethod(), ref IdUsuario, ref idCartera, ref tipoNivel, claims))
+                return Redirect("~/Home");
+            #endregion            
+
+            DataInmueblesContratos dataInmueblesContratos = new DataInmueblesContratos();
+
+            TempData["idCartera"] = idCartera;
+            TempData["IdUsuario"] = IdUsuario;
+            TempData["Campo"] = Campo;
+            TempData["Meses"] = Meses;
+
+
+            //List<B_inmuebles_contrato> reporte = dataInmueblesContratos.GetReporte(idCartera, IdUsuario, Campo, Meses);
+
+            //ViewBag.Campo = Campo; // == 1 ? "Fecha de Termino" : "Fecha de Revisión";
+
+            return PartialView("_ListContratosPVReport");
+        }
+
+
+       
+        //[HttpPost]
+        public IActionResult GetReport()
+        {
+            //bool correo_enviado = (bool)TempData["correo_enviado"];
+            int idCartera = (int)TempData["idCartera"];
+            int IdUsuario = (int)TempData["IdUsuario"];
+            int Campo = (int)TempData["Campo"];
+            int Meses = (int)TempData["Meses"];
+            //DateTime fecha = (DateTime)TempData["fecha"];
+            //DateTime fecha2 = (DateTime)TempData["fecha2"];
+
+            DataInmueblesContratos dataInmueblesContratos = new DataInmueblesContratos();
+            List<B_inmuebles_contrato> reporte = dataInmueblesContratos.GetReporte(idCartera, IdUsuario, Campo, Meses);
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(reporte);
+            DataTable pDt = JsonConvert.DeserializeObject<DataTable>(json);
+
+            //DataTable dataTableCR = dataInmueblesVisita.GetResumenCedular(id);
+
+
+          
+
+
+
+
+
+
+
+            StiReport report = new StiReport();
+            string filePath = "";
+            filePath = Directory.GetCurrentDirectory() + "\\Report\\ContratoVencerListado.mrt";
+
+
+            report.Load(filePath);
+            report.Dictionary.Databases.Clear();
+            report.RegData("Demo", pDt);
+
+            return StiNetCoreViewer.InteractionResult(this, report);
+
+
+        }
+
+        public IActionResult ViewerEvent()
+        {
+            return StiNetCoreViewer.ViewerEventResult(this);
         }
 
         [HttpPost]
@@ -343,7 +424,7 @@ namespace WebLomelinCore.Controllers
                     html.AppendLine("</thead>");
                     html.AppendLine("<tbody>");
                     html.AppendLine("<tr>");
-                    html.AppendLine($"<td>{Movimiento.nombre }</td>");
+                    html.AppendLine($"<td>{Movimiento.nombre}</td>");
                     html.AppendLine($"<td>{Movimiento.contrato}</td>");
                     html.AppendLine($"<td>{String.Format("{0:dd-MM-yyyy}", Movimiento.fechainicio)}</td>");
                     html.AppendLine($"<td>{String.Format("{0:dd-MM-yyyy}", fldFecha)}</td>");

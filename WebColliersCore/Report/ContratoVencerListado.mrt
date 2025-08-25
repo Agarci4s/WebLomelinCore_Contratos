@@ -1,0 +1,713 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <CalculationMode>Interpretation</CalculationMode>
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="2">
+      <CSV Ref="2" type="Stimulsoft.Report.Dictionary.StiCsvDatabase" isKey="true">
+        <Alias>CSV</Alias>
+        <CodePage>65001</CodePage>
+        <Key />
+        <Name>CSV</Name>
+        <PathData>C:\Users\Villeda Páez\Desktop\ejempo.csv</PathData>
+        <Separator>,</Separator>
+      </CSV>
+      <Desktop Ref="3" type="Stimulsoft.Report.Dictionary.StiCsvDatabase" isKey="true">
+        <Alias>Desktop</Alias>
+        <CodePage>65001</CodePage>
+        <Key />
+        <Name>Desktop</Name>
+        <PathData>C:\Users\Villeda Páez\Desktop</PathData>
+        <Separator>,</Separator>
+      </Desktop>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <ContratoListado Ref="4" type="DataTableSource" isKey="true">
+        <Alias>ContratoListado</Alias>
+        <Columns isList="true" count="48">
+          <value>cr,System.String</value>
+          <value>ue,System.String</value>
+          <value>nombre,System.String</value>
+          <value>email,System.String</value>
+          <value>id_b_inmuebles_contrato,System.String</value>
+          <value>id_b_inmuebles,System.String</value>
+          <value>id_b_cg_contrato_tipo,System.String</value>
+          <value>id_b_cg_contrato_estatu,System.String</value>
+          <value>contrato,System.String</value>
+          <value>renta,System.String</value>
+          <value>fecha_inicio,System.String</value>
+          <value>fecha_termino,System.String</value>
+          <value>fecha_anticipacion,System.String</value>
+          <value>fecha_obligado,System.String</value>
+          <value>litigio,System.String</value>
+          <value>fecha_revision,System.String</value>
+          <value>plazo,System.String</value>
+          <value>base_revision,System.String</value>
+          <value>especial,System.String</value>
+          <value>correo_especial,System.String</value>
+          <value>observaciones,System.String</value>
+          <value>fecha_envio,System.String</value>
+          <value>incp,System.String</value>
+          <value>base_revision_otro,System.String</value>
+          <value>LocalesAgrupados,System.String</value>
+          <value>PropTer,System.String</value>
+          <value>DepRta,System.String</value>
+          <value>Pagare,System.String</value>
+          <value>DiaPago,System.String</value>
+          <value>categoria,System.String</value>
+          <value>ObservacionDepGarantia,System.String</value>
+          <value>NumeroReferenciado,System.String</value>
+          <value>NumeroReferenciadoMtto,System.String</value>
+          <value>fechaOcupacion,System.String</value>
+          <value>plazoPFAnio,System.String</value>
+          <value>plazoPFMes,System.String</value>
+          <value>plazoPFdia,System.String</value>
+          <value>plazoIFAnio,System.String</value>
+          <value>plazoIFMes,System.String</value>
+          <value>plazoIFDia,System.String</value>
+          <value>plazoPVAnio,System.String</value>
+          <value>plazoPVMes,System.String</value>
+          <value>plazoPVDia,System.String</value>
+          <value>plazoIVAnio,System.String</value>
+          <value>plazoIVMes,System.String</value>
+          <value>plazoIVDia,System.String</value>
+          <value>revisionPorcentajeAdicional,System.String</value>
+          <value>ComentariosRevision,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>72e70d6320f748b5a90695925f0ee840</Key>
+        <Name>ContratoListado</Name>
+        <NameInSource>Desktop.ContratoListado</NameInSource>
+      </ContratoListado>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <UserFunctions isList="true" count="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>8e791be0fa9e481cb5eda0877fbbb417</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="5" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="4">
+        <ReportTitle Ref="6" type="ReportTitleBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,19,1.4</ClientRectangle>
+          <Components isList="true" count="1">
+            <ReportTitleText Ref="7" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,19,1.4</ClientRectangle>
+              <ComponentStyle>Ocher_Report_Title1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,14,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>ReportTitleText</Name>
+              <Page isRef="5" />
+              <Parent isRef="6" />
+              <Text>CONTRATOS PRÓXIMOS A VENCER</Text>
+              <TextBrush>[102:60:70]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </ReportTitleText>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>ReportTitle</Name>
+          <Page isRef="5" />
+          <Parent isRef="5" />
+        </ReportTitle>
+        <Header Ref="8" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,2.6,19,0.6</ClientRectangle>
+          <Components isList="true" count="7">
+            <HeaderText1 Ref="9" type="Text" isKey="true">
+              <Border>None;White;1;Solid;False;4;Black;True</Border>
+              <Brush>[214:129:44]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Header1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderText1</Name>
+              <Page isRef="5" />
+              <Parent isRef="8" />
+              <Text>Nombre</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderText1>
+            <HeaderText2 Ref="10" type="Text" isKey="true">
+              <Border>None;White;1;Solid;False;4;Black;True</Border>
+              <Brush>[214:129:44]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>2.8,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Header1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderText2</Name>
+              <Page isRef="5" />
+              <Parent isRef="8" />
+              <Text>CR</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderText2>
+            <HeaderText3 Ref="11" type="Text" isKey="true">
+              <Border>None;White;1;Solid;False;4;Black;True</Border>
+              <Brush>[214:129:44]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>5.6,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Header1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderText3</Name>
+              <Page isRef="5" />
+              <Parent isRef="8" />
+              <Text>UE</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderText3>
+            <HeaderText4 Ref="12" type="Text" isKey="true">
+              <Border>None;White;1;Solid;False;4;Black;True</Border>
+              <Brush>[214:129:44]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>8.4,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Header1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderText4</Name>
+              <Page isRef="5" />
+              <Parent isRef="8" />
+              <Text>Contrato</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderText4>
+            <HeaderText5 Ref="13" type="Text" isKey="true">
+              <Border>None;White;1;Solid;False;4;Black;True</Border>
+              <Brush>[214:129:44]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>11.2,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Header1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderText5</Name>
+              <Page isRef="5" />
+              <Parent isRef="8" />
+              <Text>E-mail</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderText5>
+            <HeaderText6 Ref="14" type="Text" isKey="true">
+              <Border>None;White;1;Solid;False;4;Black;True</Border>
+              <Brush>[214:129:44]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>14,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Header1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderText6</Name>
+              <Page isRef="5" />
+              <Parent isRef="8" />
+              <Text>Fecha de inicio</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderText6>
+            <HeaderText7 Ref="15" type="Text" isKey="true">
+              <Border>None;White;1;Solid;False;4;Black;True</Border>
+              <Brush>[214:129:44]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>16.8,0,2.2,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Header1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderText7</Name>
+              <Page isRef="5" />
+              <Parent isRef="8" />
+              <Text>Fecha obligado</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderText7>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>Header</Name>
+          <Page isRef="5" />
+          <Parent isRef="5" />
+        </Header>
+        <Data Ref="16" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,4,19,0.6</ClientRectangle>
+          <Components isList="true" count="7">
+            <DataText1 Ref="17" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataText1</Name>
+              <Page isRef="5" />
+              <Parent isRef="16" />
+              <Text>{ContratoListado.nombre}</Text>
+              <TextBrush>[4:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <VertAlignment>Center</VertAlignment>
+            </DataText1>
+            <DataText2 Ref="18" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>2.8,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataText2</Name>
+              <Page isRef="5" />
+              <Parent isRef="16" />
+              <Text>{ContratoListado.cr}</Text>
+              <TextBrush>[4:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <VertAlignment>Center</VertAlignment>
+            </DataText2>
+            <DataText3 Ref="19" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>5.6,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataText3</Name>
+              <Page isRef="5" />
+              <Parent isRef="16" />
+              <Text>{ContratoListado.ue}</Text>
+              <TextBrush>[4:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <VertAlignment>Center</VertAlignment>
+            </DataText3>
+            <DataText4 Ref="20" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>8.4,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataText4</Name>
+              <Page isRef="5" />
+              <Parent isRef="16" />
+              <Text>{ContratoListado.contrato}</Text>
+              <TextBrush>[4:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <VertAlignment>Center</VertAlignment>
+            </DataText4>
+            <DataText5 Ref="21" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>11.2,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataText5</Name>
+              <Page isRef="5" />
+              <Parent isRef="16" />
+              <Text>{ContratoListado.email}</Text>
+              <TextBrush>[4:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <VertAlignment>Center</VertAlignment>
+            </DataText5>
+            <DataText6 Ref="22" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>14,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataText6</Name>
+              <Page isRef="5" />
+              <Parent isRef="16" />
+              <Text>{ContratoListado.fecha_inicio}</Text>
+              <TextBrush>[4:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <VertAlignment>Center</VertAlignment>
+            </DataText6>
+            <DataText7 Ref="23" type="Text" isKey="true">
+              <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>16.8,0,2.8,0.6</ClientRectangle>
+              <ComponentStyle>Ocher_Data1</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataText7</Name>
+              <Page isRef="5" />
+              <Parent isRef="16" />
+              <Text>{ContratoListado.fecha_obligado}</Text>
+              <TextBrush>[4:0:0]</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <VertAlignment>Center</VertAlignment>
+            </DataText7>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName>ContratoListado</DataSourceName>
+          <EvenStyle>Ocher_Data1_Even Style</EvenStyle>
+          <Expressions isList="true" count="0" />
+          <FilterMode>Or</FilterMode>
+          <Filters isList="true" count="0" />
+          <Name>Data</Name>
+          <OddStyle>Ocher_Data1_Odd Style</OddStyle>
+          <Page isRef="5" />
+          <Parent isRef="5" />
+          <Sort isList="true" count="0" />
+        </Data>
+        <Footer Ref="24" type="FooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,5.4,19,0.6</ClientRectangle>
+          <Components isList="true" count="0" />
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>Footer</Name>
+          <Page isRef="5" />
+          <Parent isRef="5" />
+        </Footer>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>5dce1e513af3422c9e713670c20f7272</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportAuthor>Jose Alberto Valeriano Villegas</ReportAuthor>
+  <ReportChanged>8/23/2025 10:16:00 AM</ReportChanged>
+  <ReportCreated>8/23/2025 10:11:31 AM</ReportCreated>
+  <ReportFile>C:\Users\Villeda Páez\Desktop\ContratoListado.mrt</ReportFile>
+  <ReportGuid>5e08eadb20004527ad39f49824432f61</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2024.1.2.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="12">
+    <Ocher_Report_Title1 Ref="25" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item25 Ref="26" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>ReportTitle</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item25>
+      </Conditions>
+      <Font>Arial,14,Bold</Font>
+      <Name>Ocher_Report_Title1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[102:60:70]</TextBrush>
+    </Ocher_Report_Title1>
+    <Ocher_Report_Title2 Ref="27" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item27 Ref="28" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>ReportTitle</Placement>
+          <PlacementNestedLevel>2</PlacementNestedLevel>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item27>
+      </Conditions>
+      <Font>Arial,10,Bold</Font>
+      <Name>Ocher_Report_Title2</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[102:60:70]</TextBrush>
+    </Ocher_Report_Title2>
+    <Ocher_Report_Summary Ref="29" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item29 Ref="30" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>ReportSummary</Placement>
+          <Type>ComponentType, Placement</Type>
+        </Item29>
+      </Conditions>
+      <Font>Arial,10,Bold</Font>
+      <Name>Ocher_Report_Summary</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[204:119:34]</TextBrush>
+    </Ocher_Report_Summary>
+    <Ocher_Page_Header Ref="31" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item31 Ref="32" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>PageHeader</Placement>
+          <Type>ComponentType, Placement</Type>
+        </Item31>
+      </Conditions>
+      <Font>Arial,10</Font>
+      <Name>Ocher_Page_Header</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[204:119:34]</TextBrush>
+    </Ocher_Page_Header>
+    <Ocher_Page_Footer Ref="33" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item33 Ref="34" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>PageFooter</Placement>
+          <Type>ComponentType, Placement</Type>
+        </Item33>
+      </Conditions>
+      <Font>Arial,10</Font>
+      <Name>Ocher_Page_Footer</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[204:119:34]</TextBrush>
+    </Ocher_Page_Footer>
+    <Ocher_Group_Header1 Ref="35" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item35 Ref="36" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>GroupHeader</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item35>
+      </Conditions>
+      <Font>Arial,13,Bold</Font>
+      <Name>Ocher_Group_Header1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[153:90:26]</TextBrush>
+    </Ocher_Group_Header1>
+    <Ocher_Group_Footer1 Ref="37" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item37 Ref="38" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>GroupFooter</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item37>
+      </Conditions>
+      <Font>Arial,13,Bold</Font>
+      <Name>Ocher_Group_Footer1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[153:90:26]</TextBrush>
+    </Ocher_Group_Footer1>
+    <Ocher_Header1 Ref="39" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;White;1;Solid;False;4;Black;True</Border>
+      <Brush>[214:129:44]</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item39 Ref="40" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>Header</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item39>
+      </Conditions>
+      <Font>Arial,8,Bold</Font>
+      <Name>Ocher_Header1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>White</TextBrush>
+    </Ocher_Header1>
+    <Ocher_Data1 Ref="41" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>None;[154:69:0];1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item41 Ref="42" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image, CheckBox</ComponentType>
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>Data</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item41>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Ocher_Data1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[4:0:0]</TextBrush>
+    </Ocher_Data1>
+    <Ocher_Data1_Odd_x0020_Style Ref="43" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>All;White;1;Solid;False;4;Black</Border>
+      <Brush>[255:194:109]</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item43 Ref="44" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>DataOddStyle</Placement>
+          <Type>Placement, PlacementNestedLevel</Type>
+        </Item43>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Ocher_Data1_Odd Style</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[4:0:0]</TextBrush>
+    </Ocher_Data1_Odd_x0020_Style>
+    <Ocher_Data1_Even_x0020_Style Ref="45" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>All;White;1;Solid;False;4;Black</Border>
+      <Brush>[241:156:71]</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item45 Ref="46" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <OperationPlacementNestedLevel>GreaterThanOrEqualTo</OperationPlacementNestedLevel>
+          <Placement>DataEvenStyle</Placement>
+          <Type>Placement, PlacementNestedLevel</Type>
+        </Item45>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Ocher_Data1_Even Style</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[4:0:0]</TextBrush>
+    </Ocher_Data1_Even_x0020_Style>
+    <Ocher_Footer1 Ref="47" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Border>Top;[154:69:0];3;Solid;False;4;Black</Border>
+      <Brush>White</Brush>
+      <CollectionName>Ocher</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item47 Ref="48" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <ComponentType>Text, Primitive, Image</ComponentType>
+          <Placement>Footer</Placement>
+          <Type>ComponentType, Placement, PlacementNestedLevel</Type>
+        </Item47>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Ocher_Footer1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[4:0:0]</TextBrush>
+    </Ocher_Footer1>
+  </Styles>
+</StiSerializer>
