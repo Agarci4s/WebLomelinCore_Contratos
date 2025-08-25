@@ -507,6 +507,9 @@
     <None Include="Views\Puesto\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Archivos\ComprobantesPagos\json.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Views\B_inmueblesContrato\Inmueble2.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

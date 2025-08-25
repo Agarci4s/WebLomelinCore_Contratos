@@ -1,0 +1,22 @@
+﻿@model WebLomelinCore.Models.DocumentsUpload;
+
+@* <form asp-action="Documento" asp-controller="Facturas" method="post" id="documentUpload" name="documentUpload" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="file" class="form-label">Selecciona archivo:</label>
+        <input type="file" asp-for="Archivo" class="form-control" name="file" accept=".jpg, .jpeg, .pdf, .png" required />
+    </div>
+    @Html.HiddenFor(model => Model.IdRegistro)
+    <button type="submit" class="btn btn-primary">Guardar archivo</button>
+</form> *@
+
+
+@using (Html.BeginForm("Documento", "Facturas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.IdRegistro)
+    <br />
+    @Html.LabelFor(m => m.Archivo)
+    <input type="file" name="Archivo" asp-for="Archivo" />
+    <br />
+    <input type="submit" value="Guardar Archivo" />
+}
+

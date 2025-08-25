@@ -191,6 +191,10 @@
     <input type="hidden" id="hdnIdConcepto" name="IdConcepto" />
 </form>
 <hr />
+
+
+@using (Html.BeginForm("EnvioIcoi", "Facturas", null, FormMethod.Post, false, new { id = "frmIcoi" }))
+{
 <div id="tableData" name="tableData" class="table-responsive">
     @{
         try
@@ -202,6 +206,7 @@
         }
     }
 </div>
+}
 
 @section Scripts {
     <script src="~/lib/JQuery_Versiones/jquery_2.2.4/dist/jquery.min.js"></script>
@@ -215,4 +220,5 @@
         }
 }
 
-<script src="~/js/FacturasPagadas.js" />
+<script src="~/js/FacturasPagadas.js"></script>
+<script src="~/js/EnvioIcoi.js" />

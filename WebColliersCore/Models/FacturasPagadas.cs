@@ -9,7 +9,7 @@ namespace WebLomelinCore.Models
     public class FacturasPagadas
     {
 
-        public FacturasPagadas() 
+        public FacturasPagadas()
         {
             Inmueble = new B_inmuebles();
             Factura = new Factura();
@@ -35,5 +35,14 @@ namespace WebLomelinCore.Models
         public DateTime FechaLimitePago { get; set; }
         public DateTime FechaPagoRealizado { get; set; }
         public string MesPago { get; set; }
+
+        public bool EnvioIcoi { get; set; } = false;
+        public bool ComprobantePago { get; set; } = false;
+        public int IdRegistro { get; set; } = 0;
+        public string? RutaXml { get; set; }
+        public string? RutaPdf { get; set; }
+
+
+
     }
 }

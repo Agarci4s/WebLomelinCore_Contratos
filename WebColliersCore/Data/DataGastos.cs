@@ -117,12 +117,13 @@ namespace WebLomelinCore.Data
         }
 
 
-        public List<FacturasPagadas> GetFacturasPagadas(int? IdConcepto, int? IdInmueble)
+        public List<FacturasPagadas> GetFacturasPagadas(int? IdConcepto, int? IdInmueble, int? IdRegistro)
         {
             List<MySqlParameter> mySqlParameters = new()
             {                
                 new MySqlParameter("IdInmueble_in", IdInmueble) ,
-                new MySqlParameter("IdConcepto_in", IdConcepto)
+                new MySqlParameter("IdConcepto_in", IdConcepto),
+                new MySqlParameter("IdRegistro_in", IdRegistro.HasValue ? IdRegistro.Value.ToString(): (object)DBNull.Value)
             };
 
             DataTable data = RunStoredProcedure("sp_GetFacturasCargadas", mySqlParameters);
@@ -152,10 +153,22 @@ namespace WebLomelinCore.Data
                       {
                           Concepto = row["Concepto"].ToString(),
                           Importe = import,
+                          FolioFiscal = row["FolioFiscal"].ToString(),
+                          RFCEmisor = row["RFC"].ToString(),
+                          ReceptorRFC = row["RFCReceptor"].ToString(),
+                          Serie = row["Serie"].ToString(),
+                          Total = Convert.ToDouble(row["Total"]),
+                          
+
                       },
 
                     MesPago = mesPago,
                     FechaPagoRealizado = pagoRealizado,
+                    EnvioIcoi = Convert.ToInt32(row["EnvioIcoi"]) ==1,
+                    ComprobantePago = Convert.ToInt32(row["ComprobantePago"]) == 1,
+                    IdRegistro = Convert.ToInt32(row["Id"]),
+                    RutaPdf = row["PathPDF"] != DBNull.Value ? row["PathPDF"].ToString() : null,
+                    RutaXml = row["PathXML"] != DBNull.Value ? row["PathXML"].ToString() : null,
                 };
 
                 response.Add(factura);

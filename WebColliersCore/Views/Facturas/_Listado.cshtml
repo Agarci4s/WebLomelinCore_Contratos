@@ -30,6 +30,12 @@
                 <th>
                     @Html.DisplayName("Fecha de pago realizado")
                 </th>
+                <th>
+                    @Html.DisplayName("Cargar Documento")
+                </th>
+                <th>
+                    @Html.DisplayName("Enviar Icoi")
+                </th>
             </tr>
         </thead>
 
@@ -59,6 +65,20 @@
                         </td>
                         <td>
                             @Html.Raw(item.FechaPagoRealizado.ToShortDateString())
+                        </td>
+                        <td>
+                            @Html.ActionLink("Comprobante Pago", "Documento", "Facturas", new { id = item.IdRegistro })
+                        </td>
+                        <td>
+                            @if (item.EnvioIcoi)
+                            {
+                                @Html.CheckBoxFor(model => item.EnvioIcoi, new { @class = "form-check-input", @disabled = !item.EnvioIcoi })
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(model => item.EnvioIcoi, new { @class = "form-check-input" })
+                            }                            
+                            @Html.HiddenFor(model => item.IdRegistro, new { @class = "form-id" })
                         </td>
                     </tr>
                 }
